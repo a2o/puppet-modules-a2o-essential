@@ -1,0 +1,633 @@
+#!/bin/bash
+
+
+
+### Global definitions
+export MAX_WAIT_START="5"
+export MAX_WAIT_STOP="15"
+export MAX_WAIT_KILL="10"
+
+
+
+### Function app_start
+#
+# Starts the application
+#
+# @uses env_var: PROC_NAME
+# @uses env_var: APP_CMD_START
+# @uses env_var: PID_FILE
+# @uses env_var: PID_FILE_GENERATE
+# @return: 0 if application is successfully started, 1 if not
+app_start() {
+
+    # Check if it is already running
+    _app_start__is_app_already_running
+    RESULT=$?
+    if [ "$RESULT" -eq "1" ]; then
+	echo "$PROC_NAME: already running"
+	return 0
+    fi
+
+    # Copy APP_START_CMD from PROC_NAME if required
+    if [ "x$APP_CMD_START" == "x" ]; then
+	APP_CMD_START="$PROC_NAME"
+    fi
+
+    # Start it
+    echo -n "Starting $PROC_NAME..."
+    eval $APP_CMD_START
+    if [ $? -ne 0 ]; then
+	echo " application start FAILED!"
+	exit 1
+    fi
+
+    # Wait and check if it has started
+    for i in `seq $MAX_WAIT_START`; do
+	_app_start__has_app_already_started
+	RESULT=$?
+	if [ "$RESULT" == "1" ]; then
+	    echo " done."
+	    return 0
+	fi
+	sleep 1
+	echo -n "."
+    done
+
+    # Signal error
+    echo " FAILED!"
+    exit 1
+}
+
+
+
+### Function app_stop
+#
+# Stops the application
+#
+# @uses env_var: PROC_NAME
+# @uses env_var: APP_CMD_STOP
+# @uses env_var: PID_FILE
+# @uses env_var: PID_FILE_REMOVE
+# @return: 0 if application is successfully stopped, 1 if not
+app_stop() {
+
+    # Check if it is 
+    _app_stop__is_app_already_terminated
+    RESULT=$?
+    if [ "$RESULT" -eq "1" ]; then
+	echo "$PROC_NAME: already stopped"
+	return 0
+    fi
+
+    # If there is no command specified, generate one
+    if [ -z "$APP_CMD_STOP" ]; then
+	if [ -e $PID_FILE ]; then
+	    APP_CMD_STOP="kill -15 `cat $PID_FILE`"
+	else
+	    echo "WARNING: Pid file is missing: $PID_FILE"
+	    echo "Will try to retrieve pid from process table..."
+
+	    # Check if this is the only process
+	    _does_single_process_exist_by_proc_name
+	    RESULT=$?
+	    if [ "$RESULT" -eq "0" ]; then
+		echo "ERROR: Multiple processes of the same kind found in process table."
+		echo "Exiting..."
+		exit 250
+	    fi
+
+	    # Get the pid now
+	    PID=""
+	    _get_pid_by_proc_name
+	    echo "Pid found: $PID"
+	    APP_CMD_STOP="kill -15 $PID"
+	fi
+    fi
+
+    # Kill the application
+    echo -n "Stopping $PROC_NAME..."
+    eval $APP_CMD_STOP
+    if [ $? -ne 0 ]; then
+	echo " application termination FAILED!"
+	exit 1
+    fi
+
+    # Wait for it's termination
+    for i in `seq $MAX_WAIT_STOP`; do
+	_app_stop__is_app_already_terminated
+	RESULT=$?
+	if [ "$RESULT" == "1" ]; then
+	    echo " done."
+	    return 0
+	fi
+	usleep 500000
+	echo -n "."
+    done
+
+    # Signal failure
+    echo " FAILED (timeout)! Use 'kill' option to forcibly stop the application."
+    exit 1
+}
+
+
+
+### Function app_restart
+#
+# Restart the application
+#
+# @uses env_var: PROC_NAME
+# @uses env_var: PID_FILE
+# @uses env_var: APP_CMD_START
+# @uses env_var: APP_CMD_STOP
+# @return: 0 if application is successfully restarted, 1 if not
+app_restart() {
+    app_stop
+    app_start
+}
+
+
+
+### Function app_kill
+#
+# Kills the application
+#
+# @uses env_var: PROC_NAME
+# @uses env_var: PID_FILE
+# @return: 0 if application is successfully killed, 1 if not
+app_kill() {
+  if ! is_app_running $PROC_NAME $PID_FILE; then
+    echo "$PROC_NAME: already stopped" && return 0
+  fi
+
+  echo -n "Killing $PROC_NAME..."
+  PIDS=`pidof $PROC_NAME`
+  kill -9 $PIDS
+  for i in `seq $MAX_WAIT_KILL`; do
+    if ! is_app_running $PROC_NAME $PID_FILE; then
+	echo " done."   && return 0
+    fi
+    sleep 1
+    echo -n "."
+  done
+
+  echo " FAILED! Probably system reboot is needed." && return 1
+}
+
+
+
+### Function is_app_running__info
+#
+# Notifies user about status of application execution via STDOUT and return status
+#
+# @uses env_var: PROC_NAME
+# @uses env_var: PID_FILE
+# @return: 0 for yes, 1 for no
+is_app_running__info ()
+{
+  if is_app_running; then
+    echo "$PROC_NAME: running"
+    return 0
+  else
+    echo "$PROC_NAME: stopped"
+    return 1
+  fi
+}
+
+
+
+### Function is_app_running
+#
+# Checks if given application is running
+#
+# @uses env_var PROC_NAME
+# @uses env_var PID_FILE
+# @return: 0 for yes, 1 for no
+is_app_running ()
+{
+    _is_app_running
+    RESULT=$?
+
+    if [ "$RESULT" -eq "0" ]; then
+	return 1
+    else
+	return 0
+    fi
+}
+
+
+
+### Function _app_start__is_app_already_running
+#
+# Checks if application is already running
+#
+# @uses env_var: PID
+# @uses env_var: PROC_NAME
+# @return: 1 if application is already running, 0 if not
+_app_start__is_app_already_running() {
+
+    # Check the pid file
+    if [ -e "$PID_FILE" ]; then
+
+	# Yes, there is a pid file, let us get the pid from there
+	PID=""
+	_get_pid_from_pid_file
+
+	# Is the process alive?
+	_does_process_exist_by_pid
+	RESULT1=$?
+	if [ "$RESULT1" -eq "0" ]; then
+	    # No, there is no such process
+	    echo "WARNING: Pid file $PID_FILE exists but process with pid $PID does not."
+	    echo "INFO: Removing stale pid file $PID_FILE"
+	    rm $PID_FILE
+	else
+	    # Yes, process with pid $PID is alive
+
+	    # Is it our process?
+	    _does_pid_represent_proc_name
+	    RESULT2=$?
+	    if [ "$RESULT2" -eq "1" ]; then
+		# Yes, it is our process
+		return 1
+	    else
+		# Some other process then
+		echo "WARNING: Pid file $PID_FILE exists but process with pid $PID is something else."
+		echo "INFO: Removing stale pid file $PID_FILE"
+		rm $PID_FILE
+
+		# If process table should be ignored return zero
+		if [ "x$APP_START_IGNORE_PROCESS_TABLE" != "x" ]; then
+		    return 0
+		fi
+
+		# Check if our process exists
+		_does_process_exist_by_proc_name
+		RESULT3=$?
+		if [ "$RESULT3" -eq "0" ]; then
+		    # No, it does not, so tell the parent so
+		    return 0
+		else
+		    # Yes, something has been found in process table
+		    echo "ERROR: Process $PROC_NAME already exists in process table."
+		    echo "Exiting..."
+		    exit 252
+		fi
+	    fi
+	fi
+    else
+	# If process table should be ignored return zero
+	if [ "x$APP_START_IGNORE_PROCESS_TABLE" != "x" ]; then
+	    return 0
+	fi
+
+	# No pid file exists, so we only check the process table
+	_does_process_exist_by_proc_name
+	RESULT3=$?
+	if [ "$RESULT3" -eq "0" ]; then
+	    # No, it does not, so tell the parent so
+	    return 0
+	else
+	    # Yes, something has been found in process table
+	    echo "ERROR: Process $PROC_NAME already exists in process table."
+	    echo "Exiting..."
+	    exit 252
+	fi
+    fi
+}
+
+
+
+### Function _app_start__has_app_already_started
+#
+# Checks if application has already finished the startup sequence
+#
+# @uses env_var: PROC_NAME
+# @return: 1 if application has already started, 0 if not
+_app_start__has_app_already_started() {
+
+    # No pid file exists so far, so we only check the process table
+    _does_process_exist_by_proc_name
+    RESULT3=$?
+    if [ "$RESULT3" -eq "0" ]; then
+	return 0
+    else
+	# If we manage pid file, create it
+        if [ "$PID_FILE_GENERATE" == "1" ]; then
+	    _app_start__generate_pid_file
+	fi
+	return 1
+    fi
+}
+
+
+
+### Function _app_start__generate_pid_file
+#
+# Gets the pid from process table
+#
+# @uses env_var: PROC_NAME
+# @return: 1 if successful, 0 if not
+_app_start__generate_pid_file() {
+
+    # Delay if required
+    if [ "x$PID_FILE_GENERATE_DELAY" != "x" ]; then
+	sleep $PID_FILE_GENERATE_DELAY
+    fi
+    
+    # Check if there is only one instance of given process
+    _does_single_process_exist_by_proc_name
+    RESULT=$?
+    if [ "$RESULT" -eq "0" ]; then
+	echo "WARNING: Unable to generate pid file because there has been more than process found: $PROC_NAME"
+	return 0
+    fi
+
+    # Get the pid
+    PID=""
+    _get_pid_by_proc_name
+
+    # Write the file
+    echo "$PID" > $PID_FILE
+    return 1
+}
+
+
+
+### Function _app_stop__is_app_already_terminated
+#
+# Checks if application has already been terminated
+#
+# @uses env_var: PID_FILE
+# @uses env_var: PROC_NAME
+# @return: 1 if application has already terminated, 0 if not
+_app_stop__is_app_already_terminated() {
+
+    # No pid file exists, so we only check the process table
+    _does_process_exist_by_proc_name
+    RESULT3=$?
+    if [ "$RESULT3" -eq "0" ]; then
+	# No, it does not, so tell the parent the application has terminated
+	if [ -e $PID_FILE ]; then
+	    # If we manage the pid file (not the app) remove it then, else signal error
+	    if [ "$PID_FILE_REMOVE" == "1" ]; then
+		rm $PID_FILE
+	    else
+		if [ "$APP_STOP_STALE_PID_FILE_NOWARNING" != "1" ]; then
+		    echo "WARNING: Process $PROC_NAME is already terminated but pid file $PID_FILE has been found, removing..."
+		fi
+		rm $PID_FILE
+	    fi
+	fi
+	return 1
+    else
+	return 0
+    fi
+}
+
+
+
+### Function _is_app_running
+#
+# Checks if application is running or not
+#
+# @uses env_var: PID_FILE
+# @uses env_var: PROC_NAME
+# @return: 1 if application is running, 0 if not
+_is_app_running() {
+
+    # Save pid here
+    PID=""
+
+    # First try to get the pid
+    if [ -e "$PID_FILE" ]; then
+	_get_pid_from_pid_file
+
+	# Check if process exists
+	_does_process_exist_by_pid
+        RESULT=$?
+	if [ "$RESULT" -eq "0" ]; then
+	    echo "WARNING: Process with pid $PID from pid file $PID_FILE does not exist."
+	    echo "INFO: Removing stale pid file: $PID_FILE"
+	    rm $PID_FILE
+
+	    echo "INFO: Trying to get pid from process table by process name: $PROC_NAME"
+	    _does_process_exist_by_proc_name
+	else
+	    # Check if it is the right process
+	    _does_pid_represent_proc_name
+    	    RESULT=$?
+	    if [ "$RESULT" -eq "1" ]; then
+		return 1
+	    else
+		echo "WARNING: Process with pid $PID from pid file $PID_FILE is not $PROC_NAME."
+		echo "INFO: Removing stale pid file: $PID_FILE"
+		rm $PID_FILE
+
+		echo "INFO: Trying to get pid from process table by process name: $PROC_NAME"
+		_does_process_exist_by_proc_name
+	    fi
+	fi
+    else
+	_does_process_exist_by_proc_name
+    fi
+
+    RESULT=$?
+    if [ "$RESULT" -eq "1" ]; then
+	echo "WARNING: Process $PROC_NAME exists but pid file $PID_FILE was not found,"
+	return 1
+    else
+	return 0
+    fi
+}
+
+
+
+
+
+################################################################################
+# Helpers
+################################################################################
+
+
+
+
+
+### Function _get_pid_from_pid_file
+#
+# Retrieves process pid from pid file and checks if it is a number
+#
+# @uses env_var: PID_FILE
+# @return: 0 if pid is successfully found, 1 if not
+_get_pid_from_pid_file() {
+
+    # Check if pid file exists
+    if [ ! -e "$PID_FILE" ]; then
+	echo "ERROR: Pid file not found: $PID_FILE"
+	echo "Exiting..."
+	exit 252
+    fi
+
+    # Check pid
+    LINE_COUNT=`cat $PID_FILE | grep -v '^$' | grep -c .`
+    if [ "$LINE_COUNT" -ne "1" ]; then
+	echo "ERROR: Invalid line count ($LINE_COUNT) in pid file: $PID_FILE"
+	exit 252
+    fi
+
+    PID_VALID=`cat $PID_FILE | grep '^[0-9]\+$' | grep -c .`
+    if [ "$PID_VALID" -ne "1" ]; then
+	echo "ERROR: Invalid pid in pid file: $PID_FILE"
+	exit 252
+    fi
+
+    # Get pid
+    PID=`cat $PID_FILE`
+    return 0
+}
+
+
+
+### Function _get_pid_by_proc_name
+#
+# Tries to find pid of application by searching the process table for given $PROC_NAME
+# If there is more than one match, the search is failed
+#
+# @uses env_var: PROC_NAME
+# @return: 0 if pid is successfully found, 1 if not
+_get_pid_by_proc_name() {
+
+    if [ "$PROC_REGEX" != "" ]; then
+	REGEX="$PROC_REGEX"
+    else
+	REGEX="$PROC_NAME"
+    fi
+
+    # Get process count
+    PROCESS_COUNT=`ps ax | grep " $REGEX" | grep -v ' grep ' | grep -c .`
+    if [ "$PROCESS_COUNT" -eq "0" ]; then
+	echo "ERROR: No process found by the name: $PROC_NAME"
+	echo "Exiting..."
+	exit 252
+    fi
+    if [ "$PROCESS_COUNT" -gt "1" ]; then
+	echo "More than one process found by the name: $PROC_NAME"
+	echo "Process list:"
+	ps aux | grep " $REGEX" | grep -v ' grep '
+	echo "Exiting..."
+	exit 252
+    fi
+
+    # Get the pid    
+    PID=`ps ax | grep " $REGEX" | grep -v ' grep ' | sed -e 's/^ *//' | cut -d ' ' -f 1`
+    return 0
+}
+
+
+
+### Function _does_process_exist_by_pid
+#
+# Checks if pid really exists in the process table
+#
+# @uses env_var: PID
+# @return: 1 if yes, 0 if no
+_does_process_exist_by_pid() {
+
+    CMD="ps ax | grep '^ *$PID ' | grep -c ."
+    PROCESS_COUNT=`eval "$CMD"`
+    if [ "$PROCESS_COUNT" -eq "0" ]; then
+	return 0
+    elif [ "$PROCESS_COUNT" -eq "1" ]; then
+	return 1
+    else
+	# Error condition, should not occur
+        echo "ERROR: More than one process matches given pid criteria."
+	echo "Exiting..."
+	exit 252
+    fi
+}
+
+
+
+### Function _does_process_exist_by_proc_name
+#
+# Checks if proc_name exists in the process table
+#
+# @uses env_var: PROC_NAME
+# @return: 1 if yes, 0 if no, 2 if more than one process is found
+_does_process_exist_by_proc_name() {
+
+    if [ "$PROC_REGEX" != "" ]; then
+	REGEX="$PROC_REGEX"
+    else
+	REGEX="$PROC_NAME"
+    fi
+
+    PROCESS_COUNT=`ps ax | grep " $REGEX" | grep -v ' grep ' | grep -c .`
+    if [ "$PROCESS_COUNT" -eq "0" ]; then
+	return 0
+    elif [ "$PROCESS_COUNT" -eq "1" ]; then
+	return 1
+    else
+	return 2
+    fi
+}
+
+
+
+### Function _does_single_process_exist_by_proc_name
+#
+# Checks if only one proc_name exists in the process table
+#
+# @uses env_var: PROC_NAME
+# @return: 1 if yes, 0 if no
+_does_single_process_exist_by_proc_name() {
+
+    if [ "$PROC_REGEX" != "" ]; then
+	REGEX="$PROC_REGEX"
+    else
+	REGEX="$PROC_NAME"
+    fi
+
+    PROCESS_TABLE=`ps ax | grep " $REGEX" | grep -v ' grep '`
+    PROCESS_COUNT=`echo "$PROCESS_TABLE" | grep -c .`
+    if [ "$PROCESS_COUNT" -eq "1" ]; then
+	return 1
+    else
+	echo
+	echo "$PROCESS_TABLE"
+	echo
+	return 0
+    fi
+}
+
+
+
+### Function _does_pid_represent_proc_name
+#
+# Checks if pid really is from given process name
+#
+# @uses env_var: PID
+# @uses env_var: PROC_NAME
+# @uses env_var: PROC_REGEX
+# @return: 1 if pid matches the process name, 0 if not
+_does_pid_represent_proc_name() {
+
+    if [ "$PROC_REGEX" != "" ]; then
+	REGEX="$PROC_REGEX"
+    else
+	REGEX="$PROC_NAME"
+    fi
+
+    PROCESS_COUNT=`ps ax | grep " $REGEX" | grep "^ *$PID " | grep -c .`
+    if [ "$PROCESS_COUNT" -eq "0" ]; then
+	return 0
+    fi
+    if [ "$PROCESS_COUNT" -eq "1" ]; then
+	return 1
+    fi
+
+    # Error condition, should not occur
+    echo "ERROR: More than one process matches given pid/proc_name criteria."
+    echo "Exiting..."
+    exit 252
+}

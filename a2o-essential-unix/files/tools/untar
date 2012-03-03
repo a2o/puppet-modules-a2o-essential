@@ -1,0 +1,15 @@
+#!/bin/bash
+
+
+
+PFILE="$1"
+if [[ ! -z `echo $PFILE | grep '\.\(tar\.gz\|tgz\)$'` ]]; then
+    tar -xzf $PFILE
+elif [[ ! -z `echo $PFILE | grep '\.tar\.bz2$'` ]]; then
+    tar -xjf $PFILE
+elif [[ ! -z `echo $PFILE | grep '\.tar$'` ]]; then
+    tar -xf $PFILE
+else
+    echo "ERROR - unknown archive $PFILE"
+    exit 1
+fi

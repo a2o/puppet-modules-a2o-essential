@@ -1,0 +1,50 @@
+# modules/a2o/a2o-essential-unix/manifests/compiletool.pp
+
+
+
+### Compilation tools
+class a2o-essential-unix::compiletool inherits a2o-essential-unix::base {
+
+    # Template
+    File {
+        owner    => root,
+        group    => root,
+        mode     => 755,
+    }
+
+
+    # Build directories
+    file { [
+	'/var/src',
+	'/var/src/apps',
+	'/var/src/bench',
+	'/var/src/daemons',
+	'/var/src/interpreters',
+	'/var/src/libs',
+	'/var/src/migrations',
+	'/var/src/sys',
+	'/var/src/test',
+	'/var/src/tmp',
+	'/var/src/tools',
+	'/var/src/upgrades'
+	]:
+	ensure   => directory,
+    }
+
+
+    # Build log directory - serves as indicator of what is already installed
+    file { "/var/log/packages_compiled":
+	ensure   => directory,
+    }
+
+
+    # Script with compilation helper functions
+    file { '/var/src/build_functions.sh':
+        source  => "puppet:///modules/$thisPuppetModule/compiletool/build_functions.sh",
+	require => File['/var/log/packages_compiled'],
+    }
+    file { '/var/src/_functions.sh':
+	ensure  => 'build_functions.sh',
+	require => File['/var/src/build_functions.sh'],
+    }
+}
