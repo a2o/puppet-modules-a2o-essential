@@ -1,0 +1,19 @@
+################################################################################
+###
+### a2o Essential Puppet Modules
+###
+################################################################################
+
+Essential modules for server management with Puppet Configuration Management
+Tool.
+
+
+1. Bootstraping:
+
+    To bootstrap puppet environment, please follow README in bootstrap/
+    directory.
+
+
+2. Additional documentation:
+
+    Can be found in doc/ directory.
