@@ -1,0 +1,67 @@
+#!/bin/sh
+. /etc/rc.d/rc._functions
+
+PROC_NAME="/usr/local/puppet/sbin/puppetd"
+PID_FILE="/var/lib/puppet/run/agent.pid"
+APP_CMD_START="$PROC_NAME"
+
+puppetd_start() {
+  if app_start; then
+    ln -sf $PID_FILE /var/run/puppetd.pid
+  fi
+}
+
+puppetd_run() {
+  if is_app_running $PROC_NAME $PID_FILE; then
+    echo -n "Sending SIGUSR1 (10) to $PROC_NAME... "
+    kill -10 `cat $PID_FILE`
+    echo "done."
+  else
+    is_app_running__info
+  fi
+}
+
+puppetd_stop() {
+  if app_stop; then
+    rm -f /var/run/puppetd.pid
+  fi
+}
+
+puppetd_restart() {
+  app_stop
+  app_start
+}
+
+puppetd_status() {
+  is_app_running__info
+}
+
+puppetd_kill() {
+  if app_kill; then
+    rm -f $PID_FILE
+    rm -f /var/run/puppetd.pid
+  fi
+}
+
+case "$1" in
+'start')
+  puppetd_start
+  ;;
+'run')
+  puppetd_run
+  ;;
+'stop')
+  puppetd_stop
+  ;;
+'restart')
+  puppetd_restart
+  ;;
+'status')
+  puppetd_status
+  ;;
+'kill')
+  puppetd_kill
+  ;;
+*)
+  echo "usage $0 start|stop|restart|status|kill|run"
+esac
