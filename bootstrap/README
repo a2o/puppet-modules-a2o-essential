@@ -1,0 +1,14 @@
+################################################################################
+###
+### Bootstraping guide
+###
+################################################################################
+
+Bootstrapping the puppet environment from a2o-essential collection is fairly
+easy*. All you have to do is execute scripts from this directory in the
+alphabetic order, configure /etc/puppet-sys/puppet.conf and run the following
+command:
+
+    puppet-sys agent --test
+
+(* fairly easy: presuming you already have a working puppetmaster installation)
