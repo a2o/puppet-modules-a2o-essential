@@ -1,11 +1,18 @@
+###########################################################################
+# a2o Essential Puppet Modules                                            #
+#-------------------------------------------------------------------------#
+# Copyright (c) 2012 Bostjan Skufca                                       #
+#-------------------------------------------------------------------------#
+# This source file is subject to version 2.0 of the Apache License,       #
+# that is bundled with this package in the file LICENSE, and is           #
+# available through the world-wide-web at the following url:              #
+# http://www.apache.org/licenses/LICENSE-2.0                              #
+#-------------------------------------------------------------------------#
+# Authors: Bostjan Skufca <bostjan@a2o.si>                                #
+###########################################################################
 #
 # Command line utility provider for managing MySQL database grants.
 #
-# Author: Bostjan Skufca (bostjan {[A|T]} a2o.si)
-#
-
-
-
 require 'puppet/provider/package'
 require 'puppet/provider/mysql_cli_common'
 Puppet::Type.type(:mysql_grant_db).provide :mysql_cli, :parent => Puppet::Provider::Package do

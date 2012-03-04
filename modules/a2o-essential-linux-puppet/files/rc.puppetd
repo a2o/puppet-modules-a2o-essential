@@ -1,67 +1,88 @@
 #!/bin/sh
+###########################################################################
+# a2o Essential Puppet Modules                                            #
+#-------------------------------------------------------------------------#
+# Copyright (c) 2012 Bostjan Skufca                                       #
+#-------------------------------------------------------------------------#
+# This source file is subject to version 2.0 of the Apache License,       #
+# that is bundled with this package in the file LICENSE, and is           #
+# available through the world-wide-web at the following url:              #
+# http://www.apache.org/licenses/LICENSE-2.0                              #
+#-------------------------------------------------------------------------#
+# Authors: Bostjan Skufca <bostjan@a2o.si>                                #
+###########################################################################
+
+
+
 . /etc/rc.d/rc._functions
+
+
 
 PROC_NAME="/usr/local/puppet/sbin/puppetd"
 PID_FILE="/var/lib/puppet/run/agent.pid"
 APP_CMD_START="$PROC_NAME"
 
+
+
 puppetd_start() {
-  if app_start; then
-    ln -sf $PID_FILE /var/run/puppetd.pid
-  fi
+    if app_start; then
+	ln -sf $PID_FILE /var/run/puppetd.pid
+    fi
 }
 
 puppetd_run() {
-  if is_app_running $PROC_NAME $PID_FILE; then
-    echo -n "Sending SIGUSR1 (10) to $PROC_NAME... "
-    kill -10 `cat $PID_FILE`
-    echo "done."
-  else
-    is_app_running__info
-  fi
+    if is_app_running $PROC_NAME $PID_FILE; then
+	echo -n "Sending SIGUSR1 (10) to $PROC_NAME... "
+	kill -10 `cat $PID_FILE`
+	echo "done."
+    else
+	is_app_running__info
+    fi
 }
 
 puppetd_stop() {
-  if app_stop; then
-    rm -f /var/run/puppetd.pid
-  fi
+    if app_stop; then
+	rm -f /var/run/puppetd.pid
+    fi
 }
 
 puppetd_restart() {
-  app_stop
-  app_start
+    app_stop
+    app_start
 }
 
 puppetd_status() {
-  is_app_running__info
+    is_app_running__info
 }
 
 puppetd_kill() {
-  if app_kill; then
-    rm -f $PID_FILE
-    rm -f /var/run/puppetd.pid
-  fi
+    if app_kill; then
+	rm -f $PID_FILE
+	rm -f /var/run/puppetd.pid
+    fi
 }
 
+
+
 case "$1" in
-'start')
-  puppetd_start
-  ;;
-'run')
-  puppetd_run
-  ;;
-'stop')
-  puppetd_stop
-  ;;
-'restart')
-  puppetd_restart
-  ;;
-'status')
-  puppetd_status
-  ;;
-'kill')
-  puppetd_kill
-  ;;
-*)
-  echo "usage $0 start|stop|restart|status|kill|run"
+    'start')
+	puppetd_start
+	;;
+    'run')
+	puppetd_run
+	;;
+    'stop')
+	puppetd_stop
+	;;
+    'restart')
+	puppetd_restart
+	;;
+    'status')
+	puppetd_status
+	;;
+    'kill')
+	puppetd_kill
+	;;
+    *)
+	echo "usage $0 start|stop|restart|status|kill|run"
 esac
