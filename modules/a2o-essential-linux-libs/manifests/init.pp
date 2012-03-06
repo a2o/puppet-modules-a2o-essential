@@ -14,8 +14,8 @@
 
 
 ### Base class
-class a2o-basic-linux-libs::base {
-    $thisPuppetModule = "a2o-basic-linux-libs"
+class a2o-essential-linux-libs::base {
+    $thisPuppetModule = "a2o-essential-linux-libs"
 
     # External packages
     $externalPackageDestdir_openssl = '/usr/local/openssl-1.0.0g-1'
@@ -27,6 +27,19 @@ class a2o-basic-linux-libs::base {
 
 
 ### Final all-containing class
-class a2o-basic-linux-libs {
-    include 'a2o-basic-linux-libs::confuse'
+class a2o-essential-linux-libs {
+    include 'a2o-essential-linux-libs::apr'
+    include 'a2o-essential-linux-libs::apr-util'
+    include 'a2o-essential-linux-libs::cairo'
+    include 'a2o-essential-linux-libs::confuse'
+    include 'a2o-essential-linux-libs::expat'
+    include 'a2o-essential-linux-libs::fontconfig'
+    include 'a2o-essential-linux-libs::freetype'
+    include 'a2o-essential-linux-libs::glib'
+    include 'a2o-essential-linux-libs::libffi'
+    include 'a2o-essential-linux-libs::libiconv'
+    include 'a2o-essential-linux-libs::libpng'
+    include 'a2o-essential-linux-libs::pango'
+    include 'a2o-essential-linux-libs::pixman'
+    include 'a2o-essential-linux-libs::rrdtool'
 }
