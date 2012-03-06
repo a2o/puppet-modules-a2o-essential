@@ -34,8 +34,8 @@ class a2o-essential-unix::fhs inherits a2o-essential-unix::base {
     file { '/opt':                 }
     file { '/opt/daemons':         }
     file { '/opt/scripts':         }
-    file { '/proc':                }
-    file { '/root':                mode => 710, }
+#    file { '/proc':                }   # SuSE 555
+#    file { '/root':                mode => 710, }   # SuSE 700
     file { '/sbin':                }
     file { '/srv':                 }
     file { '/sys':                 }
@@ -51,7 +51,7 @@ class a2o-essential-unix::fhs inherits a2o-essential-unix::base {
     file { '/usr/sbin':            }
     file { '/usr/share':           }
     file { '/usr/src':             }
-    file { '/usr/tmp':             ensure => '/var/tmp', }
+#    file { '/usr/tmp':             ensure => '/var/tmp', }   # SuSE ../var/tmp
 
     file { '/usr/local':           }
     file { '/usr/local/bin':       }
