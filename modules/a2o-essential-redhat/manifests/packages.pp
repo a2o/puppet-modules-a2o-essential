@@ -25,7 +25,9 @@ class   a2o-essential-redhat::packages   inherits   a2o-essential-redhat::base {
     package { 'gcc-c++':      }
     package { 'libtool':      }
     package { 'make':         }
+    package { 'mc':           }
     package { 'patch':        }
     package { 'xz':           }
+    package { 'zlib':         }
     package { 'zlib-devel':   }
 }

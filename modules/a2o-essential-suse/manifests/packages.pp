@@ -21,9 +21,12 @@ class   a2o-essential-suse::packages   inherits   a2o-essential-suse::base {
 	ensure   => present,
     }
 
-    package { 'gcc':     }
-    package { 'gcc-c++': }
-    package { 'libtool': }
-    package { 'make':    }
-    package { 'patch':   }
+    package { 'gcc':           }
+    package { 'gcc-c++':       }
+    package { 'libtool':       }
+    package { 'make':          }
+    package { 'mc':            }
+    package { 'patch':         }
+    package { 'zlib':          }
+    package { 'zlib-devel':    }
 }

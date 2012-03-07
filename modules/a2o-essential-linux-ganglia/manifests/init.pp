@@ -81,7 +81,7 @@ class   a2o-essential-linux-ganglia::package   inherits   a2o-essential-linux-ga
 	provider => 'a2o_linux_compiletool',
         ensure   => "$packageEnsure",
 	source   => "$compileDir/$installScript",
-	require  => [ 
+	require  => [
 	    File["$compileDir/$installScript"],
 	    Package['apr'],
 	    Package['apr-util'],

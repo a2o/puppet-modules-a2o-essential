@@ -1,0 +1,10 @@
+Bootstrap prerequisites
+
+Packages installed:
+- zlib
+- zlib-devel
+- gcc
+- gcc-c++
+- libtool
+- make
+- patch
