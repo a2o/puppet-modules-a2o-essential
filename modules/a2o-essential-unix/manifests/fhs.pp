@@ -16,6 +16,11 @@
 ### Filesystem Hierarchy Standard directories
 class a2o-essential-unix::fhs inherits a2o-essential-unix::base {
 
+    $mode_osdep = $operatingsystem ? {
+	redhat  => 555,
+	default => 755,
+    }
+
     File {
 	ensure   => directory,
         owner    => root,
@@ -23,32 +28,32 @@ class a2o-essential-unix::fhs inherits a2o-essential-unix::base {
         mode     => 755,
     }
 
-    file { '/bin':                 }
-    file { '/boot':                }
+    file { '/bin':                 mode => $mode_osdep, }
+    file { '/boot':                mode => $mode_osdep, }
     file { '/dev':                 }
     file { '/etc':                 }
     # /etc/rc.d is env-dependent (symlink or dir)
     # /home     is env-dependent (symlink or dir)
-    file { '/lib':                 }
+    file { '/lib':                 mode => $mode_osdep, }
     file { '/mnt':                 }
     file { '/opt':                 }
     file { '/opt/daemons':         }
     file { '/opt/scripts':         }
 #    file { '/proc':                }   # SuSE 555
 #    file { '/root':                mode => 710, }   # SuSE 700
-    file { '/sbin':                }
+    file { '/sbin':                mode => $mode_osdep, }
     file { '/srv':                 }
     file { '/sys':                 }
     file { '/tmp':                 mode => 1777, }
 
     file { '/usr':                 }
-    file { '/usr/bin':             }
+    file { '/usr/bin':             mode => $mode_osdep, }
     file { '/usr/etc':             }
     file { '/usr/include':         }
-    file { '/usr/lib':             }
+    file { '/usr/lib':             mode => $mode_osdep, }
     file { '/usr/libexec':         }
     file { '/usr/man':             }
-    file { '/usr/sbin':            }
+    file { '/usr/sbin':            mode => $mode_osdep, }
     file { '/usr/share':           }
     file { '/usr/src':             }
 #    file { '/usr/tmp':             ensure => '/var/tmp', }   # SuSE ../var/tmp
@@ -73,7 +78,7 @@ class a2o-essential-unix::fhs inherits a2o-essential-unix::base {
     file { '/var/run':             }
     file { '/var/spool':           }
     file { '/var/tmp':             mode => 1777, }
-    file { '/var/www':             mode => 775,  group => undef, }
+    file { '/var/www':             mode => undef,  group => undef, }
 
     # Empty dir
     file { '/var/empty':
