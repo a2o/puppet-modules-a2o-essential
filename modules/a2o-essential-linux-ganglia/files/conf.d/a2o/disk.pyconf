@@ -1,0 +1,33 @@
+modules {
+    module {
+	name     = "a2o_disk"
+	language = "python"
+    }
+}
+
+
+
+collection_group {
+    collect_every  = 10
+    time_threshold = 60
+    metric {
+	name            = "disk_ops_read"
+	title           = "Disk read OPS"
+	value_threshold = 0.1
+    }
+    metric {
+	name            = "disk_ops_write"
+	title           = "Disk write OPS"
+	value_threshold = 0.1
+    }
+    metric {
+	name            = "disk_time_read"
+	title           = "Disk read time"
+	value_threshold = 1.0
+    }
+    metric {
+	name            = "disk_time_write"
+	title           = "Disk write time"
+	value_threshold = 1.0
+    }
+}

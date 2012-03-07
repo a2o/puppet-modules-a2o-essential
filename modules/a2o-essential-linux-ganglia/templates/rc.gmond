@@ -1,0 +1,62 @@
+#!/bin/sh
+. /etc/rc.d/rc._functions
+
+
+
+export LD_LIBRARY_PATH="<%= externalPackageDestDir_python %>/lib"
+
+
+
+PROC_NAME="/usr/local/ganglia/sbin/gmond"
+PID_FILE="/var/run/gmond.pid"
+PID_FILE_GENERATE="1"
+PID_FILE_GENERATE_DELAY="1"
+PID_FILE_REMOVE="1"
+APP_CMD_START="$PROC_NAME"
+
+
+
+gmond_start() {
+    ldconfig
+    app_start
+}
+
+gmond_stop() {
+    app_stop
+}
+
+gmond_restart() {
+    app_restart
+}
+
+gmond_status() {
+    is_app_running__info
+}
+
+gmond_kill() {
+    if app_kill; then
+	rm -f $PID_FILE
+    fi
+}
+
+
+
+case "$1" in
+    'start')
+	gmond_start
+	;;
+    'stop')
+	gmond_stop
+	;;
+    'restart')
+	gmond_restart
+	;;
+    'status')
+	gmond_status
+	;;
+    'kill')
+	gmond_kill
+	;;
+    *)
+	echo "usage $0 start|stop|restart|status|kill"
+esac

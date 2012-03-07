@@ -1,0 +1,17 @@
+modules {
+    module {
+	name     = "a2o_raid"
+	language = "python"
+    }
+}
+
+
+
+collection_group {
+    collect_every  = 600
+    time_threshold = 2400
+    metric {
+	name            = "raid_status"
+	title           = "Raid status"
+    }
+}

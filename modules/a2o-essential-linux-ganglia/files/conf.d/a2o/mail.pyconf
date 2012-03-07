@@ -1,0 +1,18 @@
+modules {
+    module {
+	name     = "a2o_mail"
+	language = "python"
+    }
+}
+
+
+
+collection_group {
+    collect_every  = 10
+    time_threshold = 60
+    metric {
+	name            = "mail_queue"
+	title           = "Mail queue size"
+	value_threshold = 0.1
+    }
+}
