@@ -23,4 +23,7 @@ class   a2o-essential-suse::packages   inherits   a2o-essential-suse::base {
 
     package { 'gcc':     }
     package { 'gcc-c++': }
+    package { 'libtool': }
+    package { 'make':    }
+    package { 'patch':   }
 }

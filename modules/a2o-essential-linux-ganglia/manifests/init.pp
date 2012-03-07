@@ -83,6 +83,8 @@ class   a2o-essential-linux-ganglia::package   inherits   a2o-essential-linux-ga
 	source   => "$compileDir/$installScript",
 	require  => [ 
 	    File["$compileDir/$installScript"],
+	    Package['apr'],
+	    Package['apr-util'],
 	    Package['pcre'],
 	    Package['python'],
 	    Package['rrdtool'],
