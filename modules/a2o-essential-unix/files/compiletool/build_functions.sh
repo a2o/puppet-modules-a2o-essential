@@ -1,3 +1,4 @@
+#!/bin/bash
 ###########################################################################
 # a2o Essential Puppet Modules                                            #
 #-------------------------------------------------------------------------#
@@ -18,6 +19,16 @@ export FAILURE=255
 
 
 
+### Get configuration if exists
+if [ -f /var/src/build_functions.conf-site ]; then
+    . /var/src/build_functions.conf-site
+fi
+if [ -f /var/src/build_functions.conf ]; then
+    . /var/src/build_functions.conf
+fi
+
+
+
 CheckSrcRoot ()
 {
     if [ ! -n "$SRCROOT" ]; then
@@ -35,21 +46,38 @@ GetNoTestArchive ()
     CheckSrcRoot &&
     cd $SRCROOT &&
 
-    # Download from source.a2o.si
-    RES=`echo "$PURI" | grep -c 'source.a2o.si' | cat` &&
-    if [ "$RES" -gt "0" ]; then
-	wget -c --no-check-certificate --inet4-only --timeout=10 --tries=4 $PURI
+    if [ "x$CTOOL_PROXY_URI" != "x" ]; then
+	# Proxy-ed download
+        RES=`echo "$PURI" | grep -c "$CTOOL_PROXY_EXCEPTION_REGEX" | cat` &&
+	if [ "$RES" -gt "0" ]; then
+	    wget -c --no-check-certificate --inet4-only --timeout=10 --tries=4 $PURI
 
-    elif [ "`wget --help | grep -c content-disposition | cat`" -gt "0" ]; then
-        wget -c --no-check-certificate --inet4-only --timeout=120 --tries=2 \
-	  --content-disposition "http://source.a2o.si/source-package/?uri=$PURI"
+	elif [ "`wget --help | grep -c content-disposition | cat`" -gt "0" ]; then
+    	    wget -c --no-check-certificate --inet4-only --timeout=120 --tries=2 \
+	    --content-disposition "${CTOOL_PROXY_URI}${PURI}"
+
+	else
+	    # Older wget, does not support --content-disposition switch (1.10 for example)
+	    FILENAME=`echo $PURI | awk -F/ '{print $NF}'`
+    	    wget -c --no-check-certificate --inet4-only --timeout=120 --tries=2 \
+	    --output-document=$FILENAME "${CTOOL_PROXY_URI}${PURI}"
+	fi
 
     else
-	# Older wget, does not support --content-disposition switch (1.10 for example)
-	FILENAME=`echo $PURI | awk -F/ '{print $NF}'`
-        wget -c --no-check-certificate --inet4-only --timeout=120 --tries=2 \
-	  --output-document=$FILENAME "http://source.a2o.si/source-package/?uri=$PURI"
-    fi
+
+	# Direct download
+	if [ "`wget --help | grep -c content-disposition | cat`" -gt "0" ]; then
+    	    wget -c --no-check-certificate --inet4-only --timeout=120 --tries=2 \
+	    --content-disposition "${PURI}"
+
+	else
+	    # Older wget, does not support --content-disposition switch (1.10 for example)
+	    FILENAME=`echo $PURI | awk -F/ '{print $NF}'`
+    	    wget -c --no-check-certificate --inet4-only --timeout=120 --tries=2 \
+		--output-document=$FILENAME "${PURI}"
+	fi
+
+    fi # CTOOL_PROXY_URI
 
     RES=$?
     if [ "$RES" != "0" ]; then
