@@ -40,8 +40,10 @@ Puppet::Type.type(:service).provide :a2o_linux_rctool do
 
 	if @resource[:start]
 	    `#{@resource[:start]}`
-	else
+	elsif doesRctoolCommandExist
 	    `rctool #{rcName} start`
+	else
+	    `bash /etc/rc.d/rc.#{rcName} start`
 	end
 
 	serviceStatus = $?
@@ -62,8 +64,10 @@ Puppet::Type.type(:service).provide :a2o_linux_rctool do
 
 	if @resource[:restart]
 	    `#{@resource[:restart]}`
-	else
+	elsif doesRctoolCommandExist
 	    `rctool #{rcName} restart`
+	else
+	    `bash /etc/rc.d/rc.#{rcName} restart`
 	end
 
 	serviceStatus = $?
@@ -84,8 +88,10 @@ Puppet::Type.type(:service).provide :a2o_linux_rctool do
 
 	if @resource[:stop]
 	    `bash #{@resource[:stop]}`
-	else
+	elsif doesRctoolCommandExist
 	    `rctool #{rcName} stop`
+	else
+	    `bash /etc/rc.d/rc.#{rcName} stop`
 	end
 
 	serviceStatus = $?
@@ -115,8 +121,10 @@ Puppet::Type.type(:service).provide :a2o_linux_rctool do
 	# Get status by appropriate means
 	if @resource[:status]
 	    `bash #{@resource[:status]}`
-	else
+	elsif doesRctoolCommandExist
 	    `rctool #{rcName} status`
+	else
+	    `bash /etc/rc.d/rc.#{rcName} status`
 	end
 
 	# Evaluate result
@@ -189,7 +197,7 @@ Puppet::Type.type(:service).provide :a2o_linux_rctool do
     #
     def getRctoolName (nameDirty)
 
-	regex = %r{^a2o-linux-}
+	regex = %r{^a2o(-essential)?-linux-}
 	if match = regex.match(nameDirty)
     	    rcName = match.post_match
 	else
@@ -197,5 +205,18 @@ Puppet::Type.type(:service).provide :a2o_linux_rctool do
 	end
 
 	return rcName
+    end
+
+
+
+    #
+    # Check if /bin/rctool command exists
+    #
+    def doesRctoolCommandExist
+	if File.exists?("/bin/rctool") and File.executable("/bin/rctool")
+	    return true
+	else
+	    return false
+	end
     end
 end
