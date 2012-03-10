@@ -14,7 +14,7 @@
 
 
 ### Base class
-class a2o-essential-linux-puppet::base {
+class   a2o-essential-linux-puppet::base {
 
     # This puppet module name
     $thisPuppetModule = 'a2o-essential-linux-puppet'
@@ -31,7 +31,7 @@ class   a2o-essential-linux-puppet::package::base   inherits   a2o-essential-lin
     $packageName_puppet            = "puppet"
     $packageSoftwareName_puppet    = "puppet"
 
-    # Don't upgrade to 2.7.6 ($variable-text issue with dash)
+    # Don't upgrade to 2.7.x ($variable-text issue with dash)
     # CheckURI: http://puppetlabs.com/puppet/puppet-enterprise/
     $packageSoftwareVersion_puppet = '2.6.14'
     $packageRelease_puppet         = '1'
@@ -105,6 +105,7 @@ class   a2o-essential-linux-puppet::package::ruby   inherits   a2o-essential-lin
 	require  => [
 	    File["$compileDir/$installScript"],
 	    Package['openssl'],
+	    Package['zlib'],
 	],
     }
 }
@@ -170,8 +171,8 @@ class   a2o-essential-linux-puppet::package::puppet   inherits   a2o-essential-l
 	provider => 'a2o_linux_compiletool',
         ensure   => "$packageEnsure",
 	source   => "$compileDir/$installScript",
-	require  => [ 
-	    File["$compileDir/$installScript"], 
+	require  => [
+	    File["$compileDir/$installScript"],
 	    Package["$packageName_facter"]
 	],
     }
@@ -193,7 +194,7 @@ class   a2o-essential-linux-puppet::package::puppet   inherits   a2o-essential-l
 
 
 ### All packages in single class
-class a2o-essential-linux-puppet::packages {
+class   a2o-essential-linux-puppet::packages {
     include 'a2o-essential-linux-puppet::package::ruby'
     include 'a2o-essential-linux-puppet::package::facter'
     include 'a2o-essential-linux-puppet::package::puppet'
@@ -202,7 +203,7 @@ class a2o-essential-linux-puppet::packages {
 
 
 ### Configuration files and directories
-class a2o-essential-linux-puppet::files inherits a2o-essential-linux-puppet::base {
+class   a2o-essential-linux-puppet::files   inherits   a2o-essential-linux-puppet::base {
 
     file { "/etc/puppet":
 	ensure => directory,
@@ -236,7 +237,7 @@ class a2o-essential-linux-puppet::files inherits a2o-essential-linux-puppet::bas
 
 
 ### The final all-containing classes
-class a2o-essential-linux-puppet {
+class   a2o-essential-linux-puppet {
     include 'a2o-essential-linux-puppet::packages'
     include 'a2o-essential-linux-puppet::files'
 }

@@ -35,7 +35,9 @@ export PVERSION="$PVERSION_PUPPET" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
 export PURI="http://www.puppetlabs.com/downloads/puppet/$PFILE" &&
-GetUnpackClean &&
+
+rm -rf $PDIR &&
+GetUnpackCd &&
 
 # Add modulepath globbing support
 wget http://source.a2o.si/patches/puppet-modulepath-globbing.diff &&

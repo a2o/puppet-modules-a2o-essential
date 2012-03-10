@@ -35,7 +35,10 @@ export PVERSION="$PVERSION_FACTER" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
 export PURI="http://www.puppetlabs.com/downloads/facter/$PFILE" &&
-GetUnpackClean &&
+
+rm -rf $PDIR &&
+GetUnpackCd &&
+
 $PDESTDIR/bin/ruby install.rb &&
 
 cd $SRCROOT &&
