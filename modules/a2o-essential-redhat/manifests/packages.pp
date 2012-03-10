@@ -27,6 +27,7 @@ class   a2o-essential-redhat::packages   inherits   a2o-essential-redhat::base {
     package { 'make':         }
     package { 'mc':           }
     package { 'patch':        }
+    package { 'pkgconfig':    }
     package { 'xz':           }
     package { 'zlib':         }
     package { 'zlib-devel':   }
