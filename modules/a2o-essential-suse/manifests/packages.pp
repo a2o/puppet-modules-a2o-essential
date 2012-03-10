@@ -27,6 +27,7 @@ class   a2o-essential-suse::packages   inherits   a2o-essential-suse::base {
     package { 'make':          }
     package { 'mc':            }
     package { 'patch':         }
+    package { 'pkg-config':    }
 # CHECK in which repo is this one?
 #    package { 'xz':            }
     package { 'zlib':          }
