@@ -41,6 +41,7 @@ GetUnpackCd &&
 ./configure &&
 make -j 2 &&
 make install &&
+ldconfig &&
 
 cd $SRCROOT &&
 rm -rf $PDIR &&
