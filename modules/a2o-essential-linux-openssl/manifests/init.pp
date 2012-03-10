@@ -54,10 +54,6 @@ class   a2o-essential-linux-openssl::package::current   inherits   a2o-essential
     $destDirSymlinkMajor      = "/usr/local/openssl-$packageVersionMajor"
     $destDirSymlinkMajor_dest = "$packageTag"
 
-    # Global destination directory
-    $destDirSymlink      = "/usr/local/openssl"
-    $destDirSymlink_dest = "openssl-$packageVersionMajor"
-
 
 
     # Installation
@@ -85,13 +81,6 @@ class   a2o-essential-linux-openssl::package::current   inherits   a2o-essential
     file { "$destDirSymlinkMajor":
 	ensure   => "$destDirSymlinkMajor_dest",
 	require  => Package["$packageName"],
-	backup   => false,
-    }
-
-    # Final version symlink
-    file { "$destDirSymlink":
-	ensure   => "openssl-$packageVersionMajor",
-	require  => File["$destDirSymlinkMajor"],
 	backup   => false,
     }
 }
@@ -126,6 +115,10 @@ class   a2o-essential-linux-openssl::package::compat-1   inherits   a2o-essentia
     $destDirSymlinkMajor      = "/usr/local/openssl-$packageVersionMajor"
     $destDirSymlinkMajor_dest = "$packageTag"
 
+    # Global destination directory
+    $destDirSymlink      = "/usr/local/openssl"
+    $destDirSymlink_dest = "openssl-$packageVersionMajor"
+
 
     # Installation
     file { "$compileDir/$installScript":
@@ -153,6 +146,13 @@ class   a2o-essential-linux-openssl::package::compat-1   inherits   a2o-essentia
 	require  => Package["$packageName"],
 	backup   => false,
     }
+
+    # Final version symlink
+    file { "$destDirSymlink":
+	ensure   => "openssl-$packageVersionMajor",
+	require  => File["$destDirSymlinkMajor"],
+	backup   => false,
+    }
 }
 
 
@@ -167,7 +167,7 @@ class   a2o-essential-linux-openssl::files::base   inherits   a2o-essential-linu
 class   a2o-essential-linux-openssl::files::dirs   inherits   a2o-essential-linux-openssl::files::base {
     file { '/etc/ssl':           ensure => directory, }
     file { '/etc/ssl/certs':     ensure => directory, }
-    file { '/etc/ssl/private':   ensure => directory, mode => 700, }
+    file { '/etc/ssl/private':   ensure => directory, } # No mode here, debian has special ownership
 }
 
 class a2o-essential-linux-openssl::files {
