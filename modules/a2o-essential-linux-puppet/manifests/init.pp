@@ -105,7 +105,7 @@ class   a2o-essential-linux-puppet::package::ruby   inherits   a2o-essential-lin
 	require  => [
 	    File["$compileDir/$installScript"],
 	    Package['openssl'],
-	    Package['zlib'],
+#	    Package['zlib'],
 	],
     }
 }
