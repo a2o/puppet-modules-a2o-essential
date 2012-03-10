@@ -19,7 +19,7 @@ class   a2o-essential-linux-libs::pcre   inherits   a2o-essential-linux-libs::ba
     # Software details
     $packageName            = 'pcre'
     $packageSoftware        = 'pcre'
-    $packageSoftwareVersion = '8.13'
+    $packageSoftwareVersion = '8.30'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
