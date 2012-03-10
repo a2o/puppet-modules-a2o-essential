@@ -55,19 +55,19 @@ class a2o-essential-unix::fhs inherits a2o-essential-unix::base {
     file { '/usr/man':             }
     file { '/usr/sbin':            mode => $mode_osdep, }
     file { '/usr/share':           }
-    file { '/usr/src':             }
+    file { '/usr/src':             group => undef, mode => undef }
 #    file { '/usr/tmp':             ensure => '/var/tmp', }   # SuSE ../var/tmp
 
-    file { '/usr/local':           }
-    file { '/usr/local/bin':       }
-    file { '/usr/local/etc':       }
-    file { '/usr/local/include':   }
-    file { '/usr/local/lib':       }
-    file { '/usr/local/libexec':   }
-    file { '/usr/local/man':       }
-    file { '/usr/local/sbin':      }
-    file { '/usr/local/share':     }
-    file { '/usr/local/var':       }
+    file { '/usr/local':           group => undef, mode => undef }
+    file { '/usr/local/bin':       group => undef, mode => undef }
+    file { '/usr/local/etc':       group => undef, mode => undef }
+    file { '/usr/local/include':   group => undef, mode => undef }
+    file { '/usr/local/lib':       group => undef, mode => undef }
+    file { '/usr/local/libexec':   group => undef, mode => undef }
+#    file { '/usr/local/man':       group => undef, mode => undef } # Debian symlink to share/man
+    file { '/usr/local/sbin':      group => undef, mode => undef }
+    file { '/usr/local/share':     group => undef, mode => undef }
+    file { '/usr/local/var':       group => undef, mode => undef }
 
     file { '/var':                 }
     file { '/var/lib':             }
