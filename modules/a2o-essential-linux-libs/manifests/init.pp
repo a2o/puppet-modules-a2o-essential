@@ -39,6 +39,7 @@ class a2o-essential-linux-libs {
     include 'a2o-essential-linux-libs::libffi'
     include 'a2o-essential-linux-libs::libiconv'
     include 'a2o-essential-linux-libs::libpng'
+    include 'a2o-essential-linux-libs::libxml2'
     include 'a2o-essential-linux-libs::pango'
     include 'a2o-essential-linux-libs::pcre'
     include 'a2o-essential-linux-libs::pixman'

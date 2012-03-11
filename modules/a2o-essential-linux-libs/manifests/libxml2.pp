@@ -13,13 +13,13 @@
 
 
 
-### Software package: rrdtool
-class   a2o-essential-linux-libs::rrdtool   inherits   a2o-essential-linux-libs::base {
+### Software package: libxml2
+class   a2o-essential-linux-libs::libxml2   inherits   a2o-essential-linux-libs::base {
 
     # Software details
-    $packageName            = 'rrdtool'
-    $packageSoftware        = 'rrdtool'
-    $packageSoftwareVersion = '1.4.7'
+    $packageName            = 'libxml2'
+    $packageSoftware        = 'libxml2'
+    $packageSoftwareVersion = '2.7.8'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
@@ -34,7 +34,7 @@ class   a2o-essential-linux-libs::rrdtool   inherits   a2o-essential-linux-libs:
         group    => root,
         mode     => 755,
 	require  => [
-	    File['/var/src/build_functions.sh'],
+	    File["/var/src/build_functions.sh"],
 	],
     }
     package { "$packageName":
@@ -43,9 +43,6 @@ class   a2o-essential-linux-libs::rrdtool   inherits   a2o-essential-linux-libs:
 	source   => "$compileDir/$installScript",
 	require  => [
 	    File["$compileDir/$installScript"],
-	    Package['cairo'],
-	    Package['libxml2'],
-	    Package['pango'],
 	],
     }
 }

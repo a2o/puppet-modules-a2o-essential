@@ -49,9 +49,9 @@ export APR_1_CONFIG_PATH=`PATH="/usr/local/apr/bin:$PATH" which apr-1-config` &&
 ./configure --prefix=$PDESTDIR --sysconfdir=/etc/ganglia \
   --enable-setuid=ganglia \
   --enable-setgid=ganglia \
+  --with-gmetad \
   --with-python=$PDESTDIR_PYTHON/bin/python \
   --with-libapr=$APR_1_CONFIG_PATH &&
-#  --with-gmetad \
 make CPPFLAGS=-DREMOVE_BOGUS_SPIKES &&
 
 # Let's preserve original gmetad config file

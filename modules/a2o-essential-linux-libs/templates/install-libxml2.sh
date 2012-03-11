@@ -22,31 +22,26 @@ cd $SRCROOT &&
 
 
 ### Set versions and directories
-export PVERSION_RRDTOOL="<%= packageSoftwareVersion %>" &&
+export PVERSION_LIBXML2="<%= packageSoftwareVersion %>" &&
 
 
 
-### rrdtool
-# CheckURI: http://oss.oetiker.ch/rrdtool/pub/?M=D
-# Req: cairo, pango, intltool, libxml2
-# ReqBy: ganglia (gmetad), symon, collectd
-cd $SRCROOT && . ../_functions.sh &&
-export PNAME="rrdtool" &&
-export PVERSION="$PVERSION_RRDTOOL" &&
+### libxml2
+# CheckURI: ftp://xmlsoft.org/libxml2/
+cd $SRCROOT && . ../build_functions.sh &&
+export PNAME="libxml2" &&
+export PVERSION="$PVERSION_LIBXML2" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
-export PURI="http://oss.oetiker.ch/rrdtool/pub/$PFILE" &&
+export PURI="ftp://xmlsoft.org/libxml2/$PFILE" &&
+
 rm -rf $PDIR &&
 GetUnpackCd &&
 
-export PKG_CONFIG_PATH='/usr/local/lib/pkgconfig' &&
-
-./configure --prefix=/usr/local --disable-perl --disable-ruby --disable-lua &&
+./configure &&
 make -j 2 &&
 make install &&
 ldconfig &&
-
-unset PKG_CONFIG_PATH &&
 
 cd $SRCROOT &&
 rm -rf $PDIR &&
