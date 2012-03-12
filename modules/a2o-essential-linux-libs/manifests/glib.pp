@@ -34,7 +34,7 @@ class   a2o-essential-linux-libs::glib   inherits   a2o-essential-linux-libs::ba
         group    => root,
         mode     => 755,
 	require  => [
-	    File["/var/src/build_functions.sh"],
+	    File['/var/src/build_functions.sh'],
 	],
     }
     package { "$packageName":
@@ -43,9 +43,11 @@ class   a2o-essential-linux-libs::glib   inherits   a2o-essential-linux-libs::ba
 	source   => "$compileDir/$installScript",
 	require  => [
 	    File["$compileDir/$installScript"],
-#	    Package["gettext"],
-	    Package["libiconv"],
-	    Package["libffi"],
+# FIXME
+#	    Package['gettext'],
+	    Package['libiconv'],
+	    Package['libffi'],
+	    Package['zlib'],
 	],
     }
 }

@@ -28,7 +28,7 @@ export PVERSION_LIBFFI="<%= packageSoftwareVersion %>" &&
 
 ### libffi
 # CheckURI: http://sourceware.org/libffi/
-cd $SRCROOT && . ../_functions.sh &&
+cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="libffi" &&
 export PVERSION="$PVERSION_LIBFFI" &&
 export PDIR="$PNAME-$PVERSION" &&

@@ -29,7 +29,7 @@ export PVERSION_GLIB="<%= packageSoftwareVersion %>" &&
 ### glib2
 # CheckURI: http://ftp.gnome.org/pub/gnome/sources/glib/
 # Requires: gettext,libiconv,libffi
-cd $SRCROOT && . ../_functions.sh &&
+cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="glib" &&
 export PVERSION="$PVERSION_GLIB" &&
 export PVERSION_MAJOR=`echo $PVERSION | cut -d. -f1,2` &&

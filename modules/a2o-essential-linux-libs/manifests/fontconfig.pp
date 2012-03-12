@@ -34,7 +34,7 @@ class   a2o-essential-linux-libs::fontconfig   inherits   a2o-essential-linux-li
         group    => root,
         mode     => 755,
 	require  => [
-	    File["/var/src/build_functions.sh"],
+	    File['/var/src/build_functions.sh'],
 	],
     }
     package { "$packageName":
@@ -43,8 +43,9 @@ class   a2o-essential-linux-libs::fontconfig   inherits   a2o-essential-linux-li
 	source   => "$compileDir/$installScript",
 	require  => [
 	    File["$compileDir/$installScript"],
-	    Package["expat"],
-	    Package["freetype"],
+	    Package['expat'],
+	    Package['freetype'],
+	    Package['zlib'],
 	],
     }
 }

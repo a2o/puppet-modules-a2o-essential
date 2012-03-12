@@ -44,6 +44,8 @@ class   a2o-essential-linux-libs::rrdtool   inherits   a2o-essential-linux-libs:
 	require  => [
 	    File["$compileDir/$installScript"],
 	    Package['cairo'],
+	    Package['glib'],
+	    Package['libpng'],
 	    Package['libxml2'],
 	    Package['pango'],
 	],

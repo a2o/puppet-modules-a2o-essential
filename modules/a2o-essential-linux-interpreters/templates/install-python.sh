@@ -17,7 +17,7 @@ export PDESTDIR="<%= destDir %>" &&
 
 ### Python
 # CheckURI: http://www.python.org/download/
-cd $SRCROOT && . /var/src/_functions.sh &&
+cd $SRCROOT && . /var/src/build_functions.sh &&
 export PNAME="Python" &&
 export PVERSION="$PVERSION_PYTHON" &&
 export PDIR="$PNAME-$PVERSION" &&

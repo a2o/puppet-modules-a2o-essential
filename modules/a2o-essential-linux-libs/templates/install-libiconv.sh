@@ -28,7 +28,7 @@ export PVERSION_LIBICONV="<%= packageSoftwareVersion %>" &&
 
 ### libIconv
 # CheckURI: http://ftp.gnu.org/pub/gnu/libiconv/
-cd $SRCROOT && . ../_functions.sh &&
+cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="libiconv" &&
 export PVERSION="$PVERSION_LIBICONV" &&
 export PDIR="$PNAME-$PVERSION" &&

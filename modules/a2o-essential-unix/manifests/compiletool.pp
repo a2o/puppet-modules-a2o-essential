@@ -54,6 +54,8 @@ class a2o-essential-unix::compiletool inherits a2o-essential-unix::base {
         source  => "puppet:///modules/$thisPuppetModule/compiletool/build_functions.sh",
 	require => File['/var/log/packages_compiled'],
     }
+
+    # FIXME remove at some point
     file { '/var/src/_functions.sh':
 	ensure  => 'build_functions.sh',
 	require => File['/var/src/build_functions.sh'],

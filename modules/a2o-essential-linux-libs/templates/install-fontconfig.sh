@@ -29,7 +29,7 @@ export PVERSION_FONTCONFIG="<%= packageSoftwareVersion %>" &&
 ### Fontconfig
 # CheckURI: http://fontconfig.org/release/
 # Req: FreeType2, expat
-cd $SRCROOT && . ../_functions.sh &&
+cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="fontconfig" &&
 export PVERSION="$PVERSION_FONTCONFIG" &&
 export PDIR="$PNAME-$PVERSION" &&

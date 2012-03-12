@@ -18,7 +18,7 @@ export PDESTDIR_PYTHON="<%= externalPackageDestDir_python %>" &&
 ### ganglia - gmond
 # CheckURI: http://sourceforge.net/project/showfiles.php?group_id=43021&package_id=35280
 # Req: libconfuse
-cd $SRCROOT && . ../_functions.sh &&
+cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="ganglia" &&
 export PVERSION="$PVERSION_GANGLIA" &&
 export PDIR="$PNAME-$PVERSION" &&

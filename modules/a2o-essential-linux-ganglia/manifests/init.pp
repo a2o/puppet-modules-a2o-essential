@@ -75,7 +75,7 @@ class   a2o-essential-linux-ganglia::package   inherits   a2o-essential-linux-ga
         owner    => root,
         group    => root,
         mode     => 755,
-	require  => File['/var/src/_functions.sh'],
+	require  => File['/var/src/build_functions.sh'],
     }
     package { "$packageName":
 	provider => 'a2o_linux_compiletool',

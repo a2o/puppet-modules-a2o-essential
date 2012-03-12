@@ -34,7 +34,7 @@ class   a2o-essential-linux-tools::xz   inherits   a2o-essential-linux-tools::ba
         group    => root,
         mode     => 755,
 	require  => [
-	    File["/var/src/build_functions.sh"],
+	    File['/var/src/build_functions.sh'],
 	],
     }
     package { "$packageName":

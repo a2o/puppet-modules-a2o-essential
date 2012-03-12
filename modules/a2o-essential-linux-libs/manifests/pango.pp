@@ -34,7 +34,7 @@ class   a2o-essential-linux-libs::pango   inherits   a2o-essential-linux-libs::b
         group    => root,
         mode     => 755,
 	require  => [
-	    File["/var/src/build_functions.sh"],
+	    File['/var/src/build_functions.sh'],
 	],
     }
     package { "$packageName":
@@ -43,8 +43,11 @@ class   a2o-essential-linux-libs::pango   inherits   a2o-essential-linux-libs::b
 	source   => "$compileDir/$installScript",
 	require  => [
 	    File["$compileDir/$installScript"],
-	    Package["cairo"],
-	    Package["glib"],
+	    Package['cairo'],
+	    Package['fontconfig'],
+	    Package['freetype'],
+	    Package['glib'],
+	    Package['zlib'],
 	],
     }
 }

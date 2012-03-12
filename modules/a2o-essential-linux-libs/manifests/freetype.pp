@@ -34,7 +34,7 @@ class   a2o-essential-linux-libs::freetype   inherits   a2o-essential-linux-libs
         group    => root,
         mode     => 755,
 	require  => [
-	    File["/var/src/build_functions.sh"],
+	    File['/var/src/build_functions.sh'],
 	],
     }
     package { "$packageName":
@@ -43,6 +43,7 @@ class   a2o-essential-linux-libs::freetype   inherits   a2o-essential-linux-libs
 	source   => "$compileDir/$installScript",
 	require  => [
 	    File["$compileDir/$installScript"],
+	    Package['zlib'],
 	],
     }
 }

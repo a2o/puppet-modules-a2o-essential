@@ -29,7 +29,7 @@ export PDESTDIR="<%= destDir %>" &&
 
 ### Fracter
 # CheckURI: http://www.puppetlabs.com/downloads/facter/
-cd $SRCROOT && . /var/src/_functions.sh &&
+cd $SRCROOT && . /var/src/build_functions.sh &&
 export PNAME="facter" &&
 export PVERSION="$PVERSION_FACTER" &&
 export PDIR="$PNAME-$PVERSION" &&

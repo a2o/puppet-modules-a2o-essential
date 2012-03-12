@@ -32,7 +32,7 @@ export PDESTDIR_OPENSSL="<%= externalDestDir_openssl %>" &&
 
 ### Ruby
 # CheckURI: http://www.ruby-lang.org/en/downloads/
-cd $SRCROOT && . /var/src/_functions.sh &&
+cd $SRCROOT && . /var/src/build_functions.sh &&
 export PNAME="ruby" &&
 export PVERSION="$PVERSION_RUBY" &&
 export PDIR="$PNAME-$PVERSION" &&
@@ -55,7 +55,7 @@ rm -rf $PDIR &&
 
 ### Gems
 # CheckURI: http://rubyforge.org/frs/?group_id=126
-cd $SRCROOT && . ../_functions.sh &&
+cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="rubygems" &&
 export PVERSION="$PVERSION_GEMS" &&
 export PDIR="$PNAME-$PVERSION" &&

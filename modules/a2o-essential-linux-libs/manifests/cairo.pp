@@ -34,7 +34,7 @@ class   a2o-essential-linux-libs::cairo   inherits   a2o-essential-linux-libs::b
         group    => root,
         mode     => 755,
 	require  => [
-	    File["/var/src/build_functions.sh"],
+	    File['/var/src/build_functions.sh'],
 	],
     }
     package { "$packageName":
@@ -43,9 +43,11 @@ class   a2o-essential-linux-libs::cairo   inherits   a2o-essential-linux-libs::b
 	source   => "$compileDir/$installScript",
 	require  => [
 	    File["$compileDir/$installScript"],
-	    Package["fontconfig"],
-	    Package["libpng"],
-	    Package["pixman"],
+	    Package['fontconfig'],
+	    Package['freetype'],
+	    Package['libpng'],
+	    Package['pixman'],
+	    Package['zlib'],
 	],
     }
 }

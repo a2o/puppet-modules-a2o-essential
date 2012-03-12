@@ -30,7 +30,7 @@ export PVERSION_RRDTOOL="<%= packageSoftwareVersion %>" &&
 # CheckURI: http://oss.oetiker.ch/rrdtool/pub/?M=D
 # Req: cairo, pango, intltool, libxml2
 # ReqBy: ganglia (gmetad), symon, collectd
-cd $SRCROOT && . ../_functions.sh &&
+cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="rrdtool" &&
 export PVERSION="$PVERSION_RRDTOOL" &&
 export PDIR="$PNAME-$PVERSION" &&

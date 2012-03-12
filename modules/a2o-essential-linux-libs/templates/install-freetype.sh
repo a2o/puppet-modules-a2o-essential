@@ -28,7 +28,7 @@ export PVERSION_FREETYPE="<%= packageSoftwareVersion %>" &&
 
 ### FreeType2
 # CheckURI: http://mirrors.zerg.biz/nongnu/freetype/
-cd $SRCROOT && . ../_functions.sh &&
+cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="freetype" &&
 export PVERSION="$PVERSION_FREETYPE" &&
 export PDIR="$PNAME-$PVERSION" &&

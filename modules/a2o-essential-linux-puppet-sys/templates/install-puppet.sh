@@ -29,7 +29,7 @@ export PDESTDIR="<%= destDir %>" &&
 
 ### Puppet
 # CheckURI: http://www.puppetlabs.com/downloads/puppet/
-cd $SRCROOT && . /var/src/_functions.sh &&
+cd $SRCROOT && . /var/src/build_functions.sh &&
 export PNAME="puppet" &&
 export PVERSION="$PVERSION_PUPPET" &&
 export PDIR="$PNAME-$PVERSION" &&

@@ -34,7 +34,7 @@ class   a2o-essential-linux-libs::apr   inherits   a2o-essential-linux-libs::bas
         group    => root,
         mode     => 755,
 	require  => [
-	    File["/var/src/build_functions.sh"],
+	    File['/var/src/build_functions.sh'],
 	],
     }
     package { "$packageName":
