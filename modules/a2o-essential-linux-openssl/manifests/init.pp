@@ -35,7 +35,7 @@ class   a2o-essential-linux-openssl::package::current   inherits   a2o-essential
     # (check legacy compatibility versions below)
     # CheckURI: http://openssl.org/
     $packageVersionMajor = '0.9.8'
-    $packageVersionMinor = 't'
+    $packageVersionMinor = 'u'
     $packageVersion      = "$packageVersionMajor$packageVersionMinor"
 
     $packageRelease   = '1'
@@ -96,7 +96,7 @@ class   a2o-essential-linux-openssl::package::compat-1   inherits   a2o-essentia
 
     # CheckURI: http://openssl.org/
     $packageVersionMajor = '1.0.0'
-    $packageVersionMinor = 'g'
+    $packageVersionMinor = 'h'
     $packageVersion      = "${packageVersionMajor}${packageVersionMinor}"
 
     $packageRelease   = '1'

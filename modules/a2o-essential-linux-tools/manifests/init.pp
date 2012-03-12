@@ -18,7 +18,7 @@ class a2o-essential-linux-tools::base {
     $thisPuppetModule = "a2o-essential-linux-tools"
 
     # External packages
-    $externalPackageDestdir_openssl = '/usr/local/openssl-1.0.0g-1'
+    $externalPackageDestdir_openssl = '/usr/local/openssl-1.0.0h-1'
 
     # Where the packages will be compiled
     $compileDir = '/var/src/tools'

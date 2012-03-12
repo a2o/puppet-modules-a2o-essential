@@ -19,7 +19,7 @@ class   a2o-essential-linux-interpreters::python::base   inherits   a2o-essentia
     $packageName_python                    = "python"
     $packageSoftwareName_python            = "python"
     # CheckURI: http://www.python.org/download/
-    $packageSoftwareVersion_python         = '2.6.6'
+    $packageSoftwareVersion_python         = '2.6.7'
     $packageRelease_python                 = '1'
     $packageEnsure_python                  = "$packageSoftwareVersion_python-$packageRelease_python"
     $packageTag_python                     = "$packageName_python-$packageEnsure_python"

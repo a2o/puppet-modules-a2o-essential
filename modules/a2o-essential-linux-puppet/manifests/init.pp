@@ -20,7 +20,7 @@ class   a2o-essential-linux-puppet::base {
     $thisPuppetModule = 'a2o-essential-linux-puppet'
 
     # External software versions
-    $externalDestDir_openssl = '/usr/local/openssl-1.0.0g-1'
+    $externalDestDir_openssl = '/usr/local/openssl-1.0.0h-1'
 }
 
 
@@ -34,7 +34,7 @@ class   a2o-essential-linux-puppet::package::base   inherits   a2o-essential-lin
     # Don't upgrade to 2.7.x ($variable-text issue with dash)
     # CheckURI: http://puppetlabs.com/puppet/puppet-enterprise/
     $packageSoftwareVersion_puppet = '2.6.14'
-    $packageRelease_puppet         = '1'
+    $packageRelease_puppet         = '2'
     $packageEnsure_puppet          = "${packageSoftwareVersion_puppet}-${packageRelease_puppet}"
     $packageTag_puppet             = "${packageName_puppet}-${packageEnsure_puppet}"
 

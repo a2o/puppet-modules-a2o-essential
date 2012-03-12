@@ -23,7 +23,7 @@ class a2o-essential-linux-interpreters::base {
 
 
     # External software versions
-    $externalDestDir_openssl   = '/usr/local/openssl-1.0.0g-1'
+    $externalDestDir_openssl   = '/usr/local/openssl-1.0.0h-1'
 }
 
 
