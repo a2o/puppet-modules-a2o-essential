@@ -50,11 +50,15 @@ class a2o-essential-linux-libs::ganglia {
 class a2o-essential-linux-libs::all {
     include 'a2o-essential-linux-libs::apr'
     include 'a2o-essential-linux-libs::apr-util'
+    include 'a2o-essential-linux-libs::berkeley-db'
     include 'a2o-essential-linux-libs::cairo'
     include 'a2o-essential-linux-libs::confuse'
+    include 'a2o-essential-linux-libs::eventlog'
     include 'a2o-essential-linux-libs::expat'
     include 'a2o-essential-linux-libs::fontconfig'
     include 'a2o-essential-linux-libs::freetype'
+    include 'a2o-essential-linux-libs::gdbm'
+    include 'a2o-essential-linux-libs::gettext'
     include 'a2o-essential-linux-libs::glib'
     include 'a2o-essential-linux-libs::libffi'
     include 'a2o-essential-linux-libs::libiconv'
@@ -64,6 +68,7 @@ class a2o-essential-linux-libs::all {
     include 'a2o-essential-linux-libs::pcre'
     include 'a2o-essential-linux-libs::pixman'
     include 'a2o-essential-linux-libs::rrdtool'
+    include 'a2o-essential-linux-libs::zlib'
 }
 
 #class a2o-essential-linux-libs::package::libs {
