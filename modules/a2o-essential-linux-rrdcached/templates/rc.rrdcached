@@ -1,0 +1,64 @@
+#!/bin/sh
+. /etc/rc.d/rc._functions
+
+
+
+PROC_NAME="/usr/local/bin/rrdcached"
+PID_FILE="/var/run/rrdcached.pid"
+APP_CMD_START="$PROC_NAME -p $PID_FILE -w 600 -z 30 -f 3600 -t 10 -F \
+-s root -m 770 -l unix:/var/run/rrdcached.sock
+-s nogroup -m 777 -P FLUSH,STATS,HELP -l unix:/var/run/rrdcached.sock.nogroup"
+
+
+
+rrdcached_start() {
+    app_start
+}
+
+rrdcached_stop() {
+    app_stop
+}
+
+rrdcached_restart() {
+    rrdcached_stop
+    rrdcached_start
+}
+
+rrdcached_status() {
+    is_app_running__info
+}
+
+rrdcached_kill() {
+    if app_kill; then
+	rm -f $PID_FILE
+    fi
+}
+
+rrdcached_flushall() {
+    echo "FLUSHALL" | socat - unix-connect:/var/run/rrdcached.sock
+}
+
+
+
+case "$1" in
+    'start')
+	rrdcached_start
+	;;
+    'stop')
+	rrdcached_stop
+	;;
+    'restart')
+	rrdcached_restart
+	;;
+    'status')
+	rrdcached_status
+	;;
+    'kill')
+	rrdcached_kill
+	;;
+    'flushall')
+	rrdcached_flushall
+	;;
+    *)
+	echo "usage $0 start|stop|restart|status|kill|flushall"
+esac

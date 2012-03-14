@@ -1,0 +1,59 @@
+#!/bin/sh
+. /etc/rc.d/rc._functions
+
+
+
+PROC_NAME="/usr/local/ganglia/sbin/gmetad"
+PID_FILE="/var/run/gmetad.pid"
+APP_CMD_START="$PROC_NAME --pid-file=$PID_FILE"
+APP_STOP_STALE_PID_FILE_NOWARNING=1
+
+
+
+gmetad_start() {
+    ldconfig
+    /etc/rc.d/rc.rrdcached start
+    export RRDCACHED_ADDRESS="unix:/var/run/rrdcached.sock"
+    app_start
+}
+
+gmetad_stop() {
+    app_stop
+}
+
+gmetad_restart() {
+    gmetad_stop
+    gmetad_start
+}
+
+gmetad_status() {
+    is_app_running__info
+}
+
+gmetad_kill() {
+    if app_kill; then
+	rm -f $PID_FILE
+    fi
+}
+
+
+
+case "$1" in
+    'start')
+	gmetad_start
+	;;
+    'stop')
+	gmetad_stop
+	;;
+    'restart')
+	gmetad_restart
+	;;
+    'status')
+	gmetad_status
+	;;
+    'kill')
+	gmetad_kill
+	;;
+    *)
+	echo "usage $0 start|stop|restart|status|kill"
+esac
