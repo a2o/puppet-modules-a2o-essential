@@ -17,9 +17,6 @@
 class a2o-essential-linux-libs::base {
     $thisPuppetModule = "a2o-essential-linux-libs"
 
-    # External packages
-    $externalPackageDestdir_openssl = '/usr/local/openssl-1.0.0h-1'
-
     # Where the packages will be compiled
     $compileDir = '/var/src/libs'
 }
@@ -60,14 +57,18 @@ class a2o-essential-linux-libs::all {
     include 'a2o-essential-linux-libs::gdbm'
     include 'a2o-essential-linux-libs::gettext'
     include 'a2o-essential-linux-libs::glib'
+    include 'a2o-essential-linux-libs::libevent'
     include 'a2o-essential-linux-libs::libffi'
     include 'a2o-essential-linux-libs::libiconv'
+    include 'a2o-essential-linux-libs::libpcap'
     include 'a2o-essential-linux-libs::libpng'
     include 'a2o-essential-linux-libs::libxml2'
+    include 'a2o-essential-linux-libs::neon'
     include 'a2o-essential-linux-libs::pango'
     include 'a2o-essential-linux-libs::pcre'
     include 'a2o-essential-linux-libs::pixman'
     include 'a2o-essential-linux-libs::rrdtool'
+    include 'a2o-essential-linux-libs::sqlite'
     include 'a2o-essential-linux-libs::zlib'
 }
 
