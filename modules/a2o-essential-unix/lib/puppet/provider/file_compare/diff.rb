@@ -8,7 +8,7 @@
 # available through the world-wide-web at the following url:              #
 # http://www.apache.org/licenses/LICENSE-2.0                              #
 #-------------------------------------------------------------------------#
-# Authors: Bostjan Skufca <bostjan@a2o.si>                                #
+# Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
 ###########################################################################
 #
 # Command line utility provider for comparing text files
