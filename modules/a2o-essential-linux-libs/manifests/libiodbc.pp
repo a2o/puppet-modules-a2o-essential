@@ -13,21 +13,18 @@
 
 
 
-### Software package: neon
-class   a2o-essential-linux-libs::neon   inherits   a2o-essential-linux-libs::base {
+### Software package: libiodbc
+class   a2o-essential-linux-libs::libiodbc   inherits   a2o-essential-linux-libs::base {
 
     # Software details
-    $packageName            = 'neon'
-    $packageSoftware        = 'neon'
-    $packageSoftwareVersion = '0.29.6'
+    $packageName            = 'libiodbc'
+    $packageSoftware        = 'libiodbc'
+    $packageSoftwareVersion = '3.52.7'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
     $installScriptTpl       = "install-$packageSoftware.sh"
     $installScript          = "install-$packageTag.sh"
-
-    # External packages
-    $externalDestdir_openssl = '/usr/local/openssl-1.0.0h-1'
 
 
     # Installation
@@ -46,9 +43,6 @@ class   a2o-essential-linux-libs::neon   inherits   a2o-essential-linux-libs::ba
 	source   => "$compileDir/$installScript",
 	require  => [
 	    File["$compileDir/$installScript"],
-	    Package['libxml2'],
-	    Package['openssl'],
-	    Package['zlib'],
 	],
     }
 }

@@ -13,13 +13,13 @@
 
 
 
-### Software package: neon
-class   a2o-essential-linux-libs::neon   inherits   a2o-essential-linux-libs::base {
+### Software package: freetds
+class   a2o-essential-linux-libs::freetds   inherits   a2o-essential-linux-libs::base {
 
     # Software details
-    $packageName            = 'neon'
-    $packageSoftware        = 'neon'
-    $packageSoftwareVersion = '0.29.6'
+    $packageName            = 'freetds'
+    $packageSoftware        = 'freetds'
+    $packageSoftwareVersion = '0.91'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
@@ -46,9 +46,9 @@ class   a2o-essential-linux-libs::neon   inherits   a2o-essential-linux-libs::ba
 	source   => "$compileDir/$installScript",
 	require  => [
 	    File["$compileDir/$installScript"],
-	    Package['libxml2'],
+	    Package['libiodbc'],
 	    Package['openssl'],
-	    Package['zlib'],
+	    Package['unixodbc'],
 	],
     }
 }
