@@ -75,6 +75,7 @@ class a2o-essential-linux-libs::all {
     include 'a2o-essential-linux-libs::libiodbc'
     include 'a2o-essential-linux-libs::libjpeg'
     include 'a2o-essential-linux-libs::libmcrypt'
+    include 'a2o-essential-linux-libs::libmilter'
     include 'a2o-essential-linux-libs::libpcap'
     include 'a2o-essential-linux-libs::libpng'
     include 'a2o-essential-linux-libs::libxml2'
