@@ -50,6 +50,11 @@ class a2o-essential-linux-libs::nagios {
     include 'a2o-essential-linux-libs::libpng'
 }
 
+class a2o-essential-linux-libs::testing {
+    include 'a2o-essential-linux-libs::net-snmp'
+    include 'a2o-essential-linux-libs::openipmi'
+}
+
 ### Final all-containing class
 class a2o-essential-linux-libs::all {
     include 'a2o-essential-linux-libs::apr'
