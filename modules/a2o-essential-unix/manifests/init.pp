@@ -14,7 +14,7 @@
 
 
 ### Base class
-class   a2o-essential-unix::base   {
+class   a2o-essential-unix::base {
     $thisPuppetModule = 'a2o-essential-unix'
 
     File {
@@ -27,17 +27,18 @@ class   a2o-essential-unix::base   {
 
 
 ### Miscelaneous tools
-class a2o-essential-unix::tools-misc inherits a2o-essential-unix::base {
+class   a2o-essential-unix::tools-misc    inherits   a2o-essential-unix::base {
 
     file { '/bin/pidfind':     source => "puppet:///modules/$thisPuppetModule/tools/pidfind",  mode => 755, }
     file { '/bin/psfind':      source => "puppet:///modules/$thisPuppetModule/tools/psfind",   mode => 755, }
+    file { '/bin/taillog':     source => "puppet:///modules/$thisPuppetModule/tools/taillog",  mode => 755, }
     file { '/usr/bin/untar':   source => "puppet:///modules/$thisPuppetModule/tools/untar",    mode => 755, }
 }
 
 
 
 ### The final all-containing class
-class a2o-essential-unix::server {
+class   a2o-essential-unix::server {
     include 'a2o-essential-unix::fhs'
     include 'a2o-essential-unix::compiletool'
     include 'a2o-essential-unix::rctool'
@@ -47,7 +48,7 @@ class a2o-essential-unix::server {
 
 
 ### Minimal variation
-class a2o-essential-unix::server-minimal {
+class   a2o-essential-unix::server-minimal {
     include 'a2o-essential-unix::fhs'
     include 'a2o-essential-unix::compiletool'
     include 'a2o-essential-unix::rctool'
