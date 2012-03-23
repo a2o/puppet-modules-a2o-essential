@@ -13,18 +13,20 @@
 
 
 
-### Fake package class
-# If package is installed by means not manageable by puppet, create fake package to trick
-# puppet into thinking that 'require' dependencies are satisfied.
+### Fake package definition
 #
-# In separate file so puppet finds it if called from other namespaces
+# If package is installed by means not manageable by puppet, create a fake
+# package in your manifest to trick puppet into thinking that resource
+# dependencies are satisfied.
 #
+# This definition is in separate file because otherwise puppet is unable to
+# find it if called from other namespaces
 
-class   a2o-essential-unix::compiletool::fake-package($name, $ensure='0.0.0-0')   inherits   a2o-essential-unix::base {
+define   a2o-essential-unix::compiletool::fake-package   ($ensure='0.0.0-0') {
     $installFile = "/var/src/fake/install-${name}-${ensure}.sh"
     file { "$installFile":
         ensure  => present,
-        source  => "puppet:///modules/$thisPuppetModule/compiletool/install-fake-package.sh",
+        source  => "puppet:///modules/a2o-essential-unix/compiletool/install-fake-package.sh",
         owner   => root,
         group   => root,
         mode    => 0755,

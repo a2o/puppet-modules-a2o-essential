@@ -111,9 +111,8 @@ class a2o-essential-linux-libs::all {
 
 ### Packages to include into a2o server linux distribution
 class a2o-essential-linux-libs::package::libs {
-    ### Require all libs
-    ### Create fake package libs with nothing to install
-    class{'a2o-essential-unix::compiletool::fake-package':   name => 'a2o-essential-linux-libs', }
+    a2o-essential-unix::compiletool::fake-package { 'a2o-essential-linux-libs': }
+    Class['a2o-essential-linux-libs::all'] -> Package['a2o-essential-linux-libs']
 }
 
 class a2o-essential-linux-libs {
