@@ -28,5 +28,8 @@ class a2o-essential-linux-tools::base {
 
 ### Final all-containing class
 class a2o-essential-linux-tools {
+    include 'a2o-essential-linux-tools::git'
+    include 'a2o-essential-linux-tools::git::symlinks'
+    include 'a2o-essential-linux-tools::tig'
     include 'a2o-essential-linux-tools::xz'
 }

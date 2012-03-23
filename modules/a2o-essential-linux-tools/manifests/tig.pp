@@ -45,6 +45,7 @@ class   a2o-essential-linux-tools::tig   inherits   a2o-essential-linux-tools::b
 	    File["$compileDir/$installScript"],
 	    Package['git'],
 # FIXME add
+# but if git package is provided by other means, we can't provide this file then, can we?
 #	    File['/usr/bin/git'],
 	],
     }
