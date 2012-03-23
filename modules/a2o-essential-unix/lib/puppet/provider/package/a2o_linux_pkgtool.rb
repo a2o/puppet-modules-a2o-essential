@@ -46,9 +46,7 @@ Puppet::Type.type(:package).provide :a2o_linux_pkgtool, :source => :tgz, :parent
 
         # list out all of the packages
         begin
-	    # FIXME
-	    #execpipe("ls /var/log/packages | sort") { |process|
-            execpipe("ls /var/log/packages | grep -v '^packages.list$' | sort") { |output|
+            execpipe("ls /var/log/packages | grep '^[^-]\\+-[^-]\\+-[^-]\\+' | sort") { |output|
 
                 # now turn each returned line into a package hash
                 output.each { |line|
@@ -119,7 +117,7 @@ Puppet::Type.type(:package).provide :a2o_linux_pkgtool, :source => :tgz, :parent
 	packageName = File.basename(sourceUri, '.tgz')
 	packageName = File.basename(sourceUri, '.txz')
 
-	warning("Installing #{packageName}...")
+	notice("Installing #{packageName}...")
 	`mkdir -p #{packageDir}`
 	`rm -f #{packageFile}`
 
@@ -133,9 +131,9 @@ Puppet::Type.type(:package).provide :a2o_linux_pkgtool, :source => :tgz, :parent
 	unless $? == 0
 	    @resource.fail "ERROR: Install from #{packageFile} FAILED"
 	end
-	
+
 	`rm #{packageFile}`
-	warning("...done.")
+	notice("...done.")
     end
 end
 
