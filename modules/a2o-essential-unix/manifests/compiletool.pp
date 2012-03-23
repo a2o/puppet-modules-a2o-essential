@@ -30,6 +30,7 @@ class a2o-essential-unix::compiletool inherits a2o-essential-unix::base {
 	'/var/src/apps',
 	'/var/src/bench',
 	'/var/src/daemons',
+	'/var/src/fake',
 	'/var/src/interpreters',
 	'/var/src/libs',
 	'/var/src/migrations',
@@ -59,5 +60,30 @@ class a2o-essential-unix::compiletool inherits a2o-essential-unix::base {
     file { '/var/src/_functions.sh':
 	ensure  => 'build_functions.sh',
 	require => File['/var/src/build_functions.sh'],
+    }
+}
+
+
+
+### Fake package class
+# If package is installed by means not manageable by puppet, create fake package to trick
+# puppet into thinking that 'require' dependencies are satisfied.
+#
+class   a2o-essential-unix::compiletool::fake-package($name, $ensure='0.0.0-0')   inherits a2o-essential-unix::base {
+    $installFile = "/var/src/fake/install-${name}-${ensure}.sh"
+    file { "$installFile":
+        ensure  => present,
+        source  => "puppet:///modules/$thisPuppetModule/compiletool/install-fake-package.sh",
+        owner   => root,
+        group   => root,
+        mode    => 0755,
+    }
+    package { "$name":
+        provider => 'a2o_linux_compiletool',
+        ensure   => "$ensure",
+        source   => "$installFile",
+        require  => [
+    	    File["$installFile"],
+	],
     }
 }
