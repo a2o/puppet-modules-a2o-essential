@@ -94,24 +94,30 @@ class a2o-essential-linux-libs::all {
     include 'a2o-essential-linux-libs::liboping'
     include 'a2o-essential-linux-libs::libpcap'
     include 'a2o-essential-linux-libs::libpng'
-    include 'a2o-essential-linux-libs::libpopt'
     include 'a2o-essential-linux-libs::libxml2'
     include 'a2o-essential-linux-libs::libxslt'
     include 'a2o-essential-linux-libs::neon'
     include 'a2o-essential-linux-libs::pango'
     include 'a2o-essential-linux-libs::pcre'
     include 'a2o-essential-linux-libs::pixman'
+    include 'a2o-essential-linux-libs::popt'
     include 'a2o-essential-linux-libs::rrdtool'
     include 'a2o-essential-linux-libs::sqlite'
     include 'a2o-essential-linux-libs::unixodbc'
     include 'a2o-essential-linux-libs::zlib'
 }
 
-#class a2o-essential-linux-libs::package::libs {
+
+
+### Packages to include into a2o server linux distribution
+class a2o-essential-linux-libs::package::libs {
     ### Require all libs
     ### Create fake package libs with nothing to install
-#}
+    class{'a2o-essential-unix::compiletool::fake-package':   name => 'a2o-essential-linux-libs', }
+}
 
-#class a2o-essential-linux-libs {
+class a2o-essential-linux-libs {
     ### Include all libs and libs package
-#}
+    include 'a2o-essential-linux-libs::all'
+    include 'a2o-essential-linux-libs::package::libs'
+}

@@ -30,7 +30,7 @@ class   a2o-essential-linux-libs::imap   inherits   a2o-essential-linux-libs::ba
     $destDir                = "/usr/local/$packageTag"
 
     # External packages
-    $externalDestdir_openssl = '/usr/local/openssl-1.0.0h-1'
+    $externalDestDir_openssl = '/usr/local/openssl-1.0.0h-1'
 
 
     # Installation
