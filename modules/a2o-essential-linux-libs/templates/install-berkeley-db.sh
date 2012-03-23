@@ -31,7 +31,7 @@ export PVERSION_BDB="<%= packageSoftwareVersion %>" &&
 cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="db" &&
 # Don't migrate to 5.x.x because PHP does not support it yet - maybe we should remove it alltogether
-export PVERSION="$PDESTDIR_BDB" &&
+export PVERSION="$PVERSION_BDB" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
 export PURI="http://download.oracle.com/berkeley-db/$PFILE" &&

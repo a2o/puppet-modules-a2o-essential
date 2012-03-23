@@ -30,7 +30,7 @@ export PVERSION_SQLITE="<%= packageSoftwareVersion %>" &&
 # CheckURI: http://www.sqlite.org/download.html
 cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="sqlite-autoconf" &&
-export PVERSION="$PDESTDIR_SQLITE" &&
+export PVERSION="$PVERSION_SQLITE" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PNAME-$PVERSION.tar.gz" &&
 export PURI="http://www.sqlite.org/$PFILE" &&

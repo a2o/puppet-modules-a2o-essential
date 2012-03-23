@@ -43,8 +43,7 @@ class   a2o-essential-linux-libs::glib   inherits   a2o-essential-linux-libs::ba
 	source   => "$compileDir/$installScript",
 	require  => [
 	    File["$compileDir/$installScript"],
-# FIXME
-#	    Package['gettext'],
+	    Package['gettext'],
 	    Package['libiconv'],
 	    Package['libffi'],
 	    Package['zlib'],

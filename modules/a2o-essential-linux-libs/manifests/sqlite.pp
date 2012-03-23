@@ -19,7 +19,7 @@ class   a2o-essential-linux-libs::sqlite   inherits   a2o-essential-linux-libs::
     # Software details
     $packageName            = 'sqlite'
     $packageSoftware        = 'sqlite'
-    $packageSoftwareVersion = '3071000'
+    $packageSoftwareVersion = '3071100'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"

@@ -46,7 +46,7 @@ class   a2o-essential-linux-libs::curl   inherits   a2o-essential-linux-libs::ba
 	source   => "$compileDir/$installScript",
 	require  => [
 	    File["$compileDir/$installScript"],
-# FIXME TODO
+# TODO
 #	    Package['libssh'],
 	    Package['openssl'],
 	    Package['zlib'],
