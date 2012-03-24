@@ -94,6 +94,7 @@ class a2o-essential-linux-libs::all {
     include 'a2o-essential-linux-libs::liboping'
     include 'a2o-essential-linux-libs::libpcap'
     include 'a2o-essential-linux-libs::libpng'
+    include 'a2o-essential-linux-libs::libssh2'
     include 'a2o-essential-linux-libs::libxml2'
     include 'a2o-essential-linux-libs::libxslt'
     include 'a2o-essential-linux-libs::neon'
