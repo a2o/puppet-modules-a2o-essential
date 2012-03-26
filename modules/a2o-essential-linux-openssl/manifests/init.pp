@@ -157,28 +157,8 @@ class   a2o-essential-linux-openssl::package::compat-1   inherits   a2o-essentia
 
 
 
-### Configuration files and directories
-class   a2o-essential-linux-openssl::files::base   inherits   a2o-essential-linux-openssl::base {
-    File {
-	require  => File['/usr/local/openssl'],
-    }
-}
-
-class   a2o-essential-linux-openssl::files::dirs   inherits   a2o-essential-linux-openssl::files::base {
-    file { '/etc/ssl':           ensure => directory, }
-    file { '/etc/ssl/certs':     ensure => directory, }
-    file { '/etc/ssl/private':   ensure => directory, } # No mode here, debian has special ownership
-}
-
-class a2o-essential-linux-openssl::files {
-    include 'a2o-essential-linux-openssl::files::dirs'
-}
-
-
-
 ### The final all-containing classes
 class   a2o-essential-linux-openssl {
     include 'a2o-essential-linux-openssl::package::current'
     include 'a2o-essential-linux-openssl::package::compat-1'
-    include 'a2o-essential-linux-openssl::files'
 }
