@@ -61,7 +61,7 @@ class   a2o-essential-linux-interpreters::python::package   inherits   a2o-essen
 	provider => 'a2o_linux_compiletool',
         ensure   => "$packageEnsure",
 	source   => "$compileDir/$installScript",
-	require  => [ 
+	require  => [
 	    File["$compileDir/$installScript"], 
 	    Package['openssl'],
 	 ],
@@ -71,7 +71,7 @@ class   a2o-essential-linux-interpreters::python::package   inherits   a2o-essen
     # Symlink
     file { "$destDirSymlink":
 	ensure   => "$destDirSymlink_dest",
-	require  => [ 
+	require  => [
 	    Package["$packageName_python"],
 	],
 	backup   => false,
