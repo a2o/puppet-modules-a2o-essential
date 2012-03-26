@@ -24,6 +24,13 @@ class a2o-essential-linux-libs::base {
 
 
 ### Libs required for ganglia installation
+class a2o-essential-linux-libs::ganglia-gmond {
+    include 'a2o-essential-linux-libs::apr'
+    include 'a2o-essential-linux-libs::apr-util'
+    include 'a2o-essential-linux-libs::confuse'
+    include 'a2o-essential-linux-libs::expat'
+    include 'a2o-essential-linux-libs::pcre'
+}
 class a2o-essential-linux-libs::ganglia {
     include 'a2o-essential-linux-libs::apr'
     include 'a2o-essential-linux-libs::apr-util'

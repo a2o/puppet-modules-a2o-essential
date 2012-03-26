@@ -18,7 +18,7 @@ class   a2o-essential-linux-ganglia::base {
     $thisPuppetModule = 'a2o-essential-linux-ganglia'
 
     # External package references
-    $externalPackageDestDir_python = '/usr/local/python-2.6.6-1'
+    $externalPackageDestDir_python = '/usr/local/python-2.6.7-1'
 }
 
 
@@ -103,6 +103,61 @@ class   a2o-essential-linux-ganglia::package   inherits   a2o-essential-linux-ga
 
 
 
+### Software package
+class   a2o-essential-linux-ganglia::package::gmond   inherits   a2o-essential-linux-ganglia::base {
+
+    # Software details
+    $packageName      = 'ganglia-gmond'
+    $packageSoftware  = 'ganglia-gmond'
+    $packageVersion   = '3.1.7'
+    $packageRelease   = '7'
+    $packageEnsure    = "$packageVersion-$packageRelease"
+    $packageTag       = "$packageSoftware-$packageEnsure"
+    $installScriptTpl = "install-$packageSoftware.sh"
+    $installScript    = "install-$packageTag.sh"
+
+    # Where the packages will be compiled
+    $compileDir = "/var/src/daemons"
+
+    # Global destination directory
+    $destDir             = "/usr/local/$packageTag"
+    $destDirSymlink      = "/usr/local/$packageSoftware"
+    $destDirSymlink_dest = "$packageTag"
+
+
+    # Installation
+    file { "$compileDir/$installScript":
+	content  => template("$thisPuppetModule/$installScriptTpl"),
+        owner    => root,
+        group    => root,
+        mode     => 755,
+	require  => File['/var/src/build_functions.sh'],
+    }
+    package { "$packageName":
+	provider => 'a2o_linux_compiletool',
+        ensure   => "$packageEnsure",
+	source   => "$compileDir/$installScript",
+	require  => [
+	    File["$compileDir/$installScript"],
+	    Package['apr'],
+	    Package['apr-util'],
+	    Package['pcre'],
+	    Package['python'],
+	    User['ganglia'],
+	],
+    }
+
+
+    # Symlink
+    file { "$destDirSymlink":
+	ensure   => "$destDirSymlink_dest",
+	require  => Package["$packageName"],
+	backup   => false,
+    }
+}
+
+
+
 ### Configuration files and directories
 class   a2o-essential-linux-ganglia::files   inherits   a2o-essential-linux-ganglia::base {
 
@@ -123,7 +178,10 @@ class a2o-essential-linux-ganglia::files::gmond   inherits   a2o-essential-linux
         owner    => root,
         group    => root,
         mode     => 644,
-	require  => Package['ganglia'],
+	require  => [
+	    File['/etc/ganglia'],
+	    File['/usr/local/ganglia-gmond'],
+	],
     }
 
     file { '/etc/ganglia/conf.d':                ensure => directory, mode => 755, }
@@ -208,7 +266,7 @@ class a2o-essential-linux-ganglia::service::gmond   inherits   a2o-essential-lin
 	stop        => "/etc/rc.d/rc.$serviceName stop",
 	status      => "/etc/rc.d/rc.$serviceName status",
 	subscribe   => [
-	    Package['ganglia'],
+	    Package['ganglia-gmond'],
 	    File['/etc/ganglia/gmond.conf'],
 	    File['/etc/ganglia/conf.d/modpython.conf'],
 	    File['/etc/ganglia/conf.d/a2o'],
@@ -218,8 +276,8 @@ class a2o-essential-linux-ganglia::service::gmond   inherits   a2o-essential-lin
 	    Group['ganglia'],
 	],
 	require     => [
-	    Package['ganglia'],
-	    File['/usr/local/ganglia'],
+	    Package['ganglia-gmond'],
+	    File['/usr/local/ganglia-gmond'],
 	    File['/etc/ganglia/gmond.conf'],
 	    File['/etc/ganglia/conf.d/modpython.conf'],
 	    File['/etc/ganglia/conf.d/a2o'],
@@ -291,7 +349,7 @@ class a2o-essential-linux-ganglia::service::gmetad   inherits   a2o-essential-li
 ### The final all-containing classes
 class a2o-essential-linux-ganglia::gmond {
     include 'a2o-essential-linux-ganglia::users'
-    include 'a2o-essential-linux-ganglia::package'
+    include 'a2o-essential-linux-ganglia::package::gmond'
     include 'a2o-essential-linux-ganglia::files'
     include 'a2o-essential-linux-ganglia::files::gmond'
     include 'a2o-essential-linux-ganglia::service::gmond'

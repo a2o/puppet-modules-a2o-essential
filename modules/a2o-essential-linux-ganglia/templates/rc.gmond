@@ -7,7 +7,8 @@ export LD_LIBRARY_PATH="<%= externalPackageDestDir_python %>/lib"
 
 
 
-PROC_NAME="/usr/local/ganglia/sbin/gmond"
+PROC_NAME="/usr/local/ganglia-gmond/sbin/gmond"
+PROC_REGEX='/usr/local/ganglia\(-gmond\)\?/sbin/gmond'
 PID_FILE="/var/run/gmond.pid"
 PID_FILE_GENERATE="1"
 PID_FILE_GENERATE_DELAY="1"
