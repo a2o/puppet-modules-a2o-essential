@@ -55,17 +55,17 @@ rm -rf $PDIR &&
 
 ### Gems
 # CheckURI: http://rubyforge.org/frs/?group_id=126
-cd $SRCROOT && . ../build_functions.sh &&
-export PNAME="rubygems" &&
-export PVERSION="$PVERSION_GEMS" &&
-export PDIR="$PNAME-$PVERSION" &&
-export PFILE="$PDIR.tgz" &&
-export PURI="http://production.cf.rubygems.org/rubygems/$PFILE" &&
-GetUnpackClean &&
-$PDESTDIR/bin/ruby setup.rb &&
-
-cd $SRCROOT &&
-rm -rf $PDIR &&
+#cd $SRCROOT && . ../build_functions.sh &&
+#export PNAME="rubygems" &&
+#export PVERSION="$PVERSION_GEMS" &&
+#export PDIR="$PNAME-$PVERSION" &&
+#export PFILE="$PDIR.tgz" &&
+#export PURI="http://production.cf.rubygems.org/rubygems/$PFILE" &&
+#GetUnpackClean &&
+#$PDESTDIR/bin/ruby setup.rb &&
+#
+#cd $SRCROOT &&
+#rm -rf $PDIR &&
 
 
 
