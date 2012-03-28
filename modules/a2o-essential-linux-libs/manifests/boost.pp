@@ -43,6 +43,8 @@ class   a2o-essential-linux-libs::boost   inherits   a2o-essential-linux-libs::b
 	source   => "$compileDir/$installScript",
 	require  => [
 	    File["$compileDir/$installScript"],
+# FIXME add dependency
+#	    Package['bzip2'],
 	],
     }
 }

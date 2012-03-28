@@ -24,6 +24,23 @@ class a2o-essential-linux-libs::base {
 
 
 ### Libs required for ganglia installation
+class a2o-essential-linux-libs::httpd {
+    include 'a2o-essential-linux-libs::apr'
+    include 'a2o-essential-linux-libs::apr-util'
+    include 'a2o-essential-linux-libs::boost'
+    include 'a2o-essential-linux-libs::confuse'
+    include 'a2o-essential-linux-libs::expat'
+    include 'a2o-essential-linux-libs::imap'
+    include 'a2o-essential-linux-libs::libgcrypt'
+    include 'a2o-essential-linux-libs::libgearman'
+    include 'a2o-essential-linux-libs::libgpg-error'
+    include 'a2o-essential-linux-libs::libgcrypt'
+    include 'a2o-essential-linux-libs::libiconv'
+    include 'a2o-essential-linux-libs::libmemcached'
+    include 'a2o-essential-linux-libs::libxml2'
+    include 'a2o-essential-linux-libs::libxslt'
+    include 'a2o-essential-linux-libs::pcre'
+}
 class a2o-essential-linux-libs::ganglia-gmond {
     include 'a2o-essential-linux-libs::apr'
     include 'a2o-essential-linux-libs::apr-util'

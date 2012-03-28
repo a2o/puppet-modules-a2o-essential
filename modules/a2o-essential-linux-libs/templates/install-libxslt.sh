@@ -33,7 +33,8 @@ export PNAME="libxslt" &&
 export PVERSION="$PVERSION_LIBXSLT" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
-export PURI="ftp://fr.rpmfind.net/pub/libxml/$PFILE" &&
+#export PURI="ftp://fr.rpmfind.net/pub/libxml/$PFILE" &&
+export PURI="http://source.a2o.si/source-packages/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&
