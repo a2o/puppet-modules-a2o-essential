@@ -15,7 +15,7 @@
 
 ### Base class
 class a2o-essential-linux-libs::base {
-    $thisPuppetModule = "a2o-essential-linux-libs"
+    $thisPuppetModule = 'a2o-essential-linux-libs'
 
     # Where the packages will be compiled
     $compileDir = '/var/src/libs'
@@ -67,6 +67,7 @@ class a2o-essential-linux-libs::ganglia {
     include 'a2o-essential-linux-libs::rrdtool'
 }
 
+### Libs required for nagios installation
 class a2o-essential-linux-libs::nagios {
     include 'a2o-essential-linux-libs::gd'
     include 'a2o-essential-linux-libs::libiconv'
@@ -74,12 +75,17 @@ class a2o-essential-linux-libs::nagios {
     include 'a2o-essential-linux-libs::libpng'
 }
 
+
+
+### Libs in testing phase - to be migrated to ::all
 class a2o-essential-linux-libs::testing {
     include 'a2o-essential-linux-libs::net-snmp'
     include 'a2o-essential-linux-libs::openipmi'
 }
 
-### Final all-containing class
+
+
+### All defined libs
 class a2o-essential-linux-libs::all {
     include 'a2o-essential-linux-libs::apr'
     include 'a2o-essential-linux-libs::apr-util'
@@ -114,7 +120,9 @@ class a2o-essential-linux-libs::all {
     include 'a2o-essential-linux-libs::libmcrypt'
     include 'a2o-essential-linux-libs::libmemcached'
     include 'a2o-essential-linux-libs::libmilter'
+    include 'a2o-essential-linux-libs::libnetfilter-conntrack'
     include 'a2o-essential-linux-libs::libnettle'
+    include 'a2o-essential-linux-libs::libnfnetlink'
     include 'a2o-essential-linux-libs::liboping'
     include 'a2o-essential-linux-libs::libpcap'
     include 'a2o-essential-linux-libs::libpng'
@@ -140,8 +148,11 @@ class a2o-essential-linux-libs::package::libs {
     Class['a2o-essential-linux-libs::all'] -> Package['a2o-essential-linux-libs']
 }
 
+
+
+### Final all-containing class
 class a2o-essential-linux-libs {
-    ### Include all libs and libs package
+    ### Include all libs and the libs package
     include 'a2o-essential-linux-libs::all'
     include 'a2o-essential-linux-libs::package::libs'
 }
