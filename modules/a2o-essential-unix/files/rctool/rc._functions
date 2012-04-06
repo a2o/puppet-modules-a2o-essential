@@ -197,7 +197,9 @@ app_kill() {
 is_app_running__info ()
 {
   if is_app_running; then
-    echo "$PROC_NAME: running"
+    PID=""
+    _get_pid_from_pid_file
+    echo "$PROC_NAME: running (pid $PID)"
     return 0
   else
     echo "$PROC_NAME: stopped"
