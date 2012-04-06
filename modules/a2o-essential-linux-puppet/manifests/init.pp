@@ -48,12 +48,12 @@ class   a2o-essential-linux-puppet::package::base   inherits   a2o-essential-lin
     $packageTag_ruby               = "${packageName_ruby}-${packageEnsure_ruby}"
 
     # CheckURI: http://rubygems.org/
-    $packageSoftwareVersion_gems   = '1.8.17'
+    $packageSoftwareVersion_gems   = '1.8.21'
 
     $packageName_facter            = "${packageTag_puppet}-facter"
     $packageSoftwareName_facter    = "facter"
     # CheckURI:http://projects.puppetlabs.com/projects/1/wiki/Downloading_Puppet
-    $packageSoftwareVersion_facter = '1.6.6'
+    $packageSoftwareVersion_facter = '1.6.7'
     $packageRelease_facter         = '1'
     $packageEnsure_facter          = "${packageSoftwareVersion_facter}-${packageRelease_facter}"
     $packageTag_facter             = "${packageName_facter}-${packageEnsure_facter}"

@@ -19,6 +19,7 @@ class   a2o-essential-linux-tools::xz   inherits   a2o-essential-linux-tools::ba
     # Software details
     $packageName            = 'xz'
     $packageSoftware        = 'xz'
+    # CheckURI: http://tukaani.org/xz/
     $packageSoftwareVersion = '5.0.3'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"

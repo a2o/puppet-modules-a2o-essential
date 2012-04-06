@@ -19,7 +19,8 @@ class   a2o-essential-linux-libs::libpng   inherits   a2o-essential-linux-libs::
     # Software details
     $packageName            = 'libpng'
     $packageSoftware        = 'libpng'
-    $packageSoftwareVersion = '1.5.7'
+    # CheckURI: http://www.libpng.org/pub/png/libpng.html
+    $packageSoftwareVersion = '1.5.10'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
