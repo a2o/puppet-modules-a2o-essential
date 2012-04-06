@@ -34,12 +34,15 @@ export PVERSION="$PVERSION_FREETYPE" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
 export PURI="http://mirrors.zerg.biz/nongnu/freetype/$PFILE" &&
+
 rm -rf $PDIR &&
 GetUnpackCd &&
+
 ./configure &&
 make -j 2 &&
 make install &&
 ldconfig &&
+
 cd $SRCROOT &&
 rm -rf $PDIR &&
 
