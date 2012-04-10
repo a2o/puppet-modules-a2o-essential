@@ -28,7 +28,7 @@ export PVERSION_LIBMILTER="<%= packageSoftwareVersion %>" &&
 
 ### Libmilter
 # CheckURI: http://www.sendmail.com/sm/open_source/download/
-cd $SRCROOT && . ../_functions.sh &&
+cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="sendmail" &&
 export PVERSION="$PVERSION_LIBMILTER" &&
 export PDIR="$PNAME-$PVERSION" &&

@@ -29,11 +29,11 @@ export PVERSION_GMP="<%= packageSoftwareVersion %>" &&
 ### GNU GMP
 # CheckURI: http://gmplib.org/
 # ReqBy: PHP
-cd $SRCROOT && . ../_functions.sh &&
+cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="gmp" &&
 export PVERSION="$PVERSION_GMP" &&
 export PDIR="$PNAME-$PVERSION" &&
-export PFILE="$PDIR.tar.gz" &&
+export PFILE="$PDIR.tar.bz2" &&
 export PURI="ftp://ftp.gmplib.org/pub/$PDIR/$PFILE" &&
 
 rm -rf $PDIR &&

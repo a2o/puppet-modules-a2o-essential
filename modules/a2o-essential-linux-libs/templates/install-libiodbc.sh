@@ -29,7 +29,7 @@ export PVERSION_LIBIODBC="<%= packageSoftwareVersion %>" &&
 ### iODBC
 # CheckURI: http://www.iodbc.org/dataspace/iodbc/wiki/iODBC/Downloads
 # Req by: PHP for iodbc
-cd $SRCROOT && . ../_functions.sh &&
+cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="libiodbc" &&
 export PVERSION="$PVERSION_LIBIODBC" &&
 export PDIR="$PNAME-$PVERSION" &&

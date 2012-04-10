@@ -29,7 +29,7 @@ export PVERSION_GNUTLS="<%= packageSoftwareVersion %>" &&
 ### GnuTLS
 # CheckURI: ftp://ftp.gnu.org/pub/gnu/gnutls/
 # ReqBy: logrotate
-cd $SRCROOT && . ../_functions.sh &&
+cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="gnutls" &&
 export PVERSION="$PVERSION_GNUTLS" &&
 export PDIR="$PNAME-$PVERSION" &&

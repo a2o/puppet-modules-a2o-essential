@@ -29,7 +29,7 @@ export PVERSION_ICU="<%= packageSoftwareVersion %>" &&
 ### ICU
 # CheckURI: http://site.icu-project.org/download
 # ReqBy: PHP pecl intl extension
-cd $SRCROOT && . ../_functions.sh &&
+cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="icu" &&
 export PVERSION="$PVERSION_ICU" &&
 export PVERSION_USCORES=`echo $PVERSION | sed -e 's/\./_/g'` &&

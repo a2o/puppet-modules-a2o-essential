@@ -30,7 +30,7 @@ export PDESTDIR_OPENSSL="<%= externalDestDir_openssl %>" &&
 ### FreeTDS
 # CheckURI: http://ibiblio.org/pub/Linux/ALPHA/freetds/stable/
 # Req by: PHP for mssql
-cd $SRCROOT && . ../_functions.sh &&
+cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="freetds" &&
 export PVERSION="$PVERSION_FREETDS" &&
 export PDIR="$PNAME-$PVERSION" &&

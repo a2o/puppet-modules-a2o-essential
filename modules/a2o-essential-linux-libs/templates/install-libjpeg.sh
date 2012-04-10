@@ -28,7 +28,7 @@ export PVERSION_LIBJPEG="<%= packageSoftwareVersion %>" &&
 
 ### libjpeg
 # CheckURI: http://www.ijg.org/files/
-cd $SRCROOT && . ../_functions.sh &&
+cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="jpegsrc" &&
 export PVERSION="$PVERSION_LIBJPEG" &&
 export PDIR="jpeg-$PVERSION" &&

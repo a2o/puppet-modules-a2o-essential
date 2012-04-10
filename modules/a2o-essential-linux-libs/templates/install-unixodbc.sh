@@ -28,7 +28,7 @@ export PVERSION_UNIXODBC="<%= packageSoftwareVersion %>" &&
 
 ### UnixODBC
 # CheckURI: http://www.unixodbc.org/
-cd $SRCROOT && . ../_functions.sh &&
+cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="unixODBC" &&
 export PVERSION="$PVERSION_UNIXODBC" &&
 export PDIR="$PNAME-$PVERSION" &&

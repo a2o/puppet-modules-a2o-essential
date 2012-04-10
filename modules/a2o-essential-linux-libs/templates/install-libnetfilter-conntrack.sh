@@ -28,7 +28,7 @@ export PVERSION_LIBNETFILTER_CONNTRACK="<%= packageSoftwareVersion %>" &&
 
 ### libnetfilter_conntrack
 # CheckURI: http://www.netfilter.org/projects/libnetfilter_conntrack/downloads.html
-cd $SRCROOT && . ../_functions.sh &&
+cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="libnetfilter_conntrack" &&
 export PVERSION="$PVERSION_LIBNETFILTER_CONNTRACK" &&
 export PDIR="$PNAME-$PVERSION" &&

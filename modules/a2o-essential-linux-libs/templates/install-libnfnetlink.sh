@@ -28,7 +28,7 @@ export PVERSION_LIBNFNETLINK="<%= packageSoftwareVersion %>" &&
 
 ### libnfnetlink
 # CheckURI: http://www.netfilter.org/projects/libnfnetlink/downloads.html
-cd $SRCROOT && . ../_functions.sh &&
+cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="libnfnetlink" &&
 export PVERSION="$PVERSION_LIBNFNETLINK" &&
 export PDIR="$PNAME-$PVERSION" &&

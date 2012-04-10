@@ -55,7 +55,7 @@ rm -rf $PDIR &&
 ### intltool
 # CheckURI: http://ftp.gnome.org/pub/gnome/sources/intltool/
 # Req: Perl XML::Parser module
-cd $SRCROOT && . ../_functions.sh &&
+cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="intltool" &&
 export PVERSION="$PVERSION_INTLTOOL" &&
 export PVERSION_MAJOR=`echo $PVERSION | cut -d. -f1,2` &&

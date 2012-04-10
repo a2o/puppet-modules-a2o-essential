@@ -28,7 +28,7 @@ export PVERSION_GD="<%= packageSoftwareVersion %>" &&
 
 ### GDlib
 # CheckURI: http://www.libgd.org/Downloads
-cd $SRCROOT && . ../_functions.sh &&
+cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="gd" &&
 export PVERSION="$PVERSION_GD" &&
 export PDIR="$PNAME-$PVERSION" &&

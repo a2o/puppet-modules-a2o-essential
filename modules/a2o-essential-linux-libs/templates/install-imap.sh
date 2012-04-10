@@ -30,7 +30,7 @@ export PDESTDIR_OPENSSL="<%= externalDestDir_openssl %>" &&
 
 ### Imap (Washington)
 # CheckURI: ftp://ftp.cac.washington.edu/imap/
-cd $SRCROOT && . ../_functions.sh &&
+cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="imap" &&
 export PVERSION="$PVERSION_IMAP" &&
 export PDIR="$PNAME-$PVERSION" &&
