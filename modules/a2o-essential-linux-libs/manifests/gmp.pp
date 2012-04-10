@@ -19,7 +19,7 @@ class   a2o-essential-linux-libs::gmp   inherits   a2o-essential-linux-libs::bas
     # Software details
     $packageName            = 'gmp'
     $packageSoftware        = 'gmp'
-    $packageSoftwareVersion = '5.0.2'
+    $packageSoftwareVersion = '5.0.4'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
