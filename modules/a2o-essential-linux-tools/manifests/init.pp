@@ -32,6 +32,7 @@ class a2o-essential-linux-tools::all {
     include 'a2o-essential-linux-tools::git'
     include 'a2o-essential-linux-tools::git::symlinks'
     include 'a2o-essential-linux-tools::tig'
+    include 'a2o-essential-linux-tools::vmtouch'
     include 'a2o-essential-linux-tools::xz'
 }
 class a2o-essential-linux-tools::all-tmp {
