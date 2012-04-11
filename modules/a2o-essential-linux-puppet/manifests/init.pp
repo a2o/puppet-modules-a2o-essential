@@ -33,8 +33,8 @@ class   a2o-essential-linux-puppet::package::base   inherits   a2o-essential-lin
 
     # Don't upgrade to 2.7.x ($variable-text issue with dash)
     # CheckURI: http://puppetlabs.com/puppet/puppet-enterprise/
-    $packageSoftwareVersion_puppet = '2.6.14'
-    $packageRelease_puppet         = '2'
+    $packageSoftwareVersion_puppet = '2.6.16'
+    $packageRelease_puppet         = '1'
     $packageEnsure_puppet          = "${packageSoftwareVersion_puppet}-${packageRelease_puppet}"
     $packageTag_puppet             = "${packageName_puppet}-${packageEnsure_puppet}"
 
@@ -107,6 +107,17 @@ class   a2o-essential-linux-puppet::package::ruby   inherits   a2o-essential-lin
 	    Package['openssl'],
 #	    Package['zlib'],
 	],
+    }
+
+
+    # Add RRD module manually
+    $rrdFile = "$destDir/lib/ruby/site_ruby/1.8/$hardwaremodel-linux/RRDtool.so"
+    file { "$rrdFile":
+        source   => "puppet:///modules/$thisPuppetModule/RRDtool.so",
+	owner    => root,
+        group    => root,
+	mode     => 755,
+        require  => Package["$packageName"],
     }
 }
 
@@ -204,22 +215,12 @@ class   a2o-essential-linux-puppet::packages {
 
 ### Configuration files and directories
 class   a2o-essential-linux-puppet::files   inherits   a2o-essential-linux-puppet::base {
-
     file { "/etc/puppet":
 	ensure => directory,
         owner  => root,
         group  => root,
         mode   => 755,
     }
-    file { "/var/lib/puppet":
-	ensure => directory,
-        owner  => root,
-        group  => root,
-        mode   => 755,
-    }
-
-
-    # Configuration files
     file { "/etc/puppet/puppet.conf":
 	content => template("$thisPuppetModule/puppet.conf"),
         owner   => root,
@@ -233,6 +234,15 @@ class   a2o-essential-linux-puppet::files   inherits   a2o-essential-linux-puppe
         mode    => 644,
     }
 }
+class   a2o-essential-linux-puppet::dirs   inherits   a2o-essential-linux-puppet::base {
+    file { "/var/lib/puppet":
+	ensure => directory,
+        owner  => root,
+        group  => root,
+        mode   => 755,
+    }
+}
+
 
 
 
@@ -240,4 +250,5 @@ class   a2o-essential-linux-puppet::files   inherits   a2o-essential-linux-puppe
 class   a2o-essential-linux-puppet {
     include 'a2o-essential-linux-puppet::packages'
     include 'a2o-essential-linux-puppet::files'
+    include 'a2o-essential-linux-puppet::dirs'
 }
