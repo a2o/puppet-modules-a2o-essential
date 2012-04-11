@@ -19,6 +19,7 @@ class   a2o-essential-linux-libs::libmemcached   inherits   a2o-essential-linux-
     # Software details
     $packageName            = 'libmemcached'
     $packageSoftware        = 'libmemcached'
+    # CheckURI: http://libmemcached.org/Release_Information.html
     $packageSoftwareVersion = '1.0.2'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"

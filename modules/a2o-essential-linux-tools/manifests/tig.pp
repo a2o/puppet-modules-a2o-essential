@@ -19,6 +19,7 @@ class   a2o-essential-linux-tools::tig   inherits   a2o-essential-linux-tools::b
     # Software details
     $packageName            = 'tig'
     $packageSoftware        = 'tig'
+     # CheckURI: http://jonas.nitro.dk/tig/releases/
     $packageSoftwareVersion = '0.18'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"

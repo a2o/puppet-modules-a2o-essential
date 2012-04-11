@@ -26,6 +26,7 @@ class   a2o-essential-linux-openldap::package   inherits   a2o-essential-linux-o
     # Software details
     $packageName            = 'openldap'
     $packageSoftware        = 'openldap'
+    # CheckURI: http://www.openldap.org/software/download/
     $packageSoftwareVersion = '2.4.30'
     $packageRelease         = '2'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
