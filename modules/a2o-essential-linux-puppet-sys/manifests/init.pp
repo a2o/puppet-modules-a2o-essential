@@ -32,7 +32,7 @@ class   a2o-essential-linux-puppet-sys::package::base   inherits   a2o-essential
     $packageSoftwareName_puppet    = "puppet"
 
     # CheckURI: http://puppetlabs.com/puppet/puppet-enterprise/
-    $packageSoftwareVersion_puppet = '2.7.12'
+    $packageSoftwareVersion_puppet = '2.7.13'
     $packageRelease_puppet         = '1'
     $packageEnsure_puppet          = "${packageSoftwareVersion_puppet}-${packageRelease_puppet}"
     $packageTag_puppet             = "${packageName_puppet}-${packageEnsure_puppet}"
@@ -106,6 +106,17 @@ class   a2o-essential-linux-puppet-sys::package::ruby   inherits   a2o-essential
 	    Package['openssl'],
 #	    Package['zlib'],
 	],
+    }
+
+
+    # Add RRD module manually
+    $rrdFile = "$destDir/lib/ruby/site_ruby/1.8/$hardwaremodel-linux/RRDtool.so"
+    file { "$rrdFile":
+        source   => "puppet:///modules/$thisPuppetModule/RRDtool.so",
+	owner    => root,
+        group    => root,
+	mode     => 755,
+        require  => Package["$packageName"],
     }
 }
 
@@ -208,22 +219,12 @@ class   a2o-essential-linux-puppet-sys::packages {
 
 ### Configuration files and directories
 class   a2o-essential-linux-puppet-sys::files   inherits   a2o-essential-linux-puppet-sys::base {
-
     file { "/etc/puppet-sys":
 	ensure => directory,
         owner  => root,
         group  => root,
         mode   => 755,
     }
-    file { "/var/lib/puppet-sys":
-	ensure => directory,
-        owner  => root,
-        group  => root,
-        mode   => 755,
-    }
-
-
-    # Configuration files
     file { "/etc/puppet-sys/puppet.conf":
 	content => template("$thisPuppetModule/puppet.conf"),
         owner   => root,
@@ -238,10 +239,21 @@ class   a2o-essential-linux-puppet-sys::files   inherits   a2o-essential-linux-p
     }
 }
 
+class   a2o-essential-linux-puppet-sys::dirs   inherits   a2o-essential-linux-puppet-sys::base {
+    file { "/var/lib/puppet-sys":
+	ensure => directory,
+        owner  => root,
+        group  => root,
+        mode   => 755,
+    }
+}
+
+
 
 
 ### The final all-containing classes
 class   a2o-essential-linux-puppet-sys {
     include 'a2o-essential-linux-puppet-sys::packages'
     include 'a2o-essential-linux-puppet-sys::files'
+    include 'a2o-essential-linux-puppet-sys::dirs'
 }
