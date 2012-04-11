@@ -29,7 +29,7 @@ export PVERSION_TIG="<%= packageSoftwareVersion %>" &&
 ### Tig
 # CheckURI: http://jonas.nitro.dk/tig/releases/
 # Requires: git
-cd $SRCROOT && . ../_functions.sh &&
+cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="tig" &&
 export PVERSION="$PVERSION_TIG" &&
 export PDIR="$PNAME-$PVERSION" &&

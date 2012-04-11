@@ -31,7 +31,7 @@ export PDESTDIR_OPENSSL="<%= externalDestDir_openssl %>" &&
 ### Git
 # CheckURI: http://www.git-scm.org/
 # Requires: openssl, curl, expat
-cd $SRCROOT && . ../_functions.sh &&
+cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="git" &&
 export PVERSION="$PVERSION_GIT" &&
 export PDIR="$PNAME-$PVERSION" &&
