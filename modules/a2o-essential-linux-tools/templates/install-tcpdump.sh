@@ -22,21 +22,42 @@ cd $SRCROOT &&
 
 
 ### Set versions and directories
-export PVERSION_TIG="<%= packageSoftwareVersion %>" &&
+export PVERSION_SW="<%= packageSoftwareVersion %>" &&
+export PDESTDIR_OPENSSL="<%= externalDestDir_openssl %>" &&
 
 
 
-### Vmtouch
-# CheckURI: http://hoytech.com/vmtouch/
+### TCPdump
+# CheckURI: http://www.tcpdump.org/#latest
+# Req: libpcap
 cd $SRCROOT && . ../build_functions.sh &&
-export PNAME="vmtouch" &&
-export PFILE="$PNAME.c" &&
-export PURI="https://raw.github.com/hoytech/vmtouch/master/$PFILE" &&
+export PNAME="tcpdump" &&
+export PVERSION="$PVERSION_SW" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="http://www.tcpdump.org/release/$PFILE" &&
 
-GetArchive &&
+rm -rf $PDIR &&
+GetUnpackCd &&
 
-gcc -Wall -O3 -o vmtouch vmtouch.c &&
-mv vmtouch /usr/local/bin &&
+# FIXME remove - bugfix - missing ppi.h
+cat <<EOF > ppi.h &&
+typedef struct ppi_header {
+    uint8_t		ppi_ver;
+    uint8_t		ppi_flags;
+    uint16_t	ppi_len;
+    uint32_t	ppi_dlt;
+} ppi_header_t;
+
+#define	PPI_HDRLEN	8
+EOF
+
+./configure --disable-smb &&
+make &&
+make install &&
+
+cd $SRCROOT &&
+rm -rf $PDIR &&
 
 
 

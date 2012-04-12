@@ -22,21 +22,28 @@ cd $SRCROOT &&
 
 
 ### Set versions and directories
-export PVERSION_TIG="<%= packageSoftwareVersion %>" &&
+export PVERSION_SW="<%= packageSoftwareVersion %>" &&
 
 
 
-### Vmtouch
-# CheckURI: http://hoytech.com/vmtouch/
+### PipeViewer
+# CheckURI: http://code.google.com/p/pipeviewer/downloads/list
 cd $SRCROOT && . ../build_functions.sh &&
-export PNAME="vmtouch" &&
-export PFILE="$PNAME.c" &&
-export PURI="https://raw.github.com/hoytech/vmtouch/master/$PFILE" &&
+export PNAME="pv" &&
+export PVERSION="$PVERSION_SW" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="http://pipeviewer.googlecode.com/files/$PFILE" &&
 
-GetArchive &&
+rm -rf $PDIR &&
+GetUnpackCd &&
 
-gcc -Wall -O3 -o vmtouch vmtouch.c &&
-mv vmtouch /usr/local/bin &&
+./configure &&
+make &&
+make install &&
+
+cd $SRCROOT &&
+rm -rf $PDIR &&
 
 
 

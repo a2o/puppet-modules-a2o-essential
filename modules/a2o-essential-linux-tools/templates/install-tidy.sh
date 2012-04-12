@@ -22,21 +22,30 @@ cd $SRCROOT &&
 
 
 ### Set versions and directories
-export PVERSION_TIG="<%= packageSoftwareVersion %>" &&
+export PVERSION_SW="<%= packageSoftwareVersion %>" &&
 
 
 
-### Vmtouch
-# CheckURI: http://hoytech.com/vmtouch/
+### Tidy
+# CheckURI: 
 cd $SRCROOT && . ../build_functions.sh &&
-export PNAME="vmtouch" &&
-export PFILE="$PNAME.c" &&
-export PURI="https://raw.github.com/hoytech/vmtouch/master/$PFILE" &&
+export PNAME="tidy" &&
+export PVERSION="$PVERSION_SW" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="http://source.a2o.si/custom-packages/$PFILE" &&
 
-GetArchive &&
+rm -rf $PDIR &&
+GetUnpackCd &&
 
-gcc -Wall -O3 -o vmtouch vmtouch.c &&
-mv vmtouch /usr/local/bin &&
+sh build/gnuauto/setup.sh &&
+./configure &&
+make &&
+make install &&
+ldconfig &&
+
+cd $SRCROOT &&
+rm -rf $PDIR &&
 
 
 

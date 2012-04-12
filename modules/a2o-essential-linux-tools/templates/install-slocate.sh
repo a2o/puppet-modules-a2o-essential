@@ -22,21 +22,27 @@ cd $SRCROOT &&
 
 
 ### Set versions and directories
-export PVERSION_TIG="<%= packageSoftwareVersion %>" &&
+export PVERSION_SW="<%= packageSoftwareVersion %>" &&
 
 
 
-### Vmtouch
-# CheckURI: http://hoytech.com/vmtouch/
-cd $SRCROOT && . ../build_functions.sh &&
-export PNAME="vmtouch" &&
-export PFILE="$PNAME.c" &&
-export PURI="https://raw.github.com/hoytech/vmtouch/master/$PFILE" &&
+### Slocate
+# CheckURI: http://slocate.trakker.ca/
+cd $SRCROOT && . ../_functions.sh &&
+export PNAME="slocate" &&
+export PVERSION="$PVERSION_SW" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="http://slocate.trakker.ca/files/$PFILE" &&
 
-GetArchive &&
+rm -rf $PDIR &&
+GetUnpackCd &&
 
-gcc -Wall -O3 -o vmtouch vmtouch.c &&
-mv vmtouch /usr/local/bin &&
+make &&
+make install &&
+
+cd $SRCROOT &&
+rm -rf $PDIR &&
 
 
 

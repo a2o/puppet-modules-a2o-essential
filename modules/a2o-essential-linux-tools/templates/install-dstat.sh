@@ -22,21 +22,28 @@ cd $SRCROOT &&
 
 
 ### Set versions and directories
-export PVERSION_TIG="<%= packageSoftwareVersion %>" &&
+export PVERSION_SW="<%= packageSoftwareVersion %>" &&
 
 
 
-### Vmtouch
-# CheckURI: http://hoytech.com/vmtouch/
+### Dstat
+# CheckURI: http://dag.wieers.com/home-made/dstat/
 cd $SRCROOT && . ../build_functions.sh &&
-export PNAME="vmtouch" &&
-export PFILE="$PNAME.c" &&
-export PURI="https://raw.github.com/hoytech/vmtouch/master/$PFILE" &&
+export PNAME="dstat" &&
+export PVERSION="$PVERSION_SW" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PDIR.tar.bz2" &&
+export PURI="http://dag.wieers.com/home-made/dstat/$PFILE" &&
 
-GetArchive &&
+rm -rf $PDIR &&
+GetUnpack &&
 
-gcc -Wall -O3 -o vmtouch vmtouch.c &&
-mv vmtouch /usr/local/bin &&
+rm -rf /usr/local/$PDIR &&
+mv $PDIR /usr/local &&
+rm -f /usr/local/dstat &&
+ln -s $PDIR /usr/local/dstat &&
+rm -f /usr/local/bin/dstat &&
+ln -s /usr/local/dstat/dstat /usr/local/bin/dstat &&
 
 
 

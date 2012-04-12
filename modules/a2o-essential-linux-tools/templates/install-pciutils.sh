@@ -22,21 +22,43 @@ cd $SRCROOT &&
 
 
 ### Set versions and directories
-export PVERSION_TIG="<%= packageSoftwareVersion %>" &&
+export PVERSION_SW="<%= packageSoftwareVersion %>" &&
+export PDESTDIR_OPENSSL="<%= externalDestDir_openssl %>" &&
 
 
 
-### Vmtouch
-# CheckURI: http://hoytech.com/vmtouch/
+### PCIutils - ker za KVM nucas shared library
+# CheckURI: ftp://atrey.karlin.mff.cuni.cz/pub/linux/pci/
 cd $SRCROOT && . ../build_functions.sh &&
-export PNAME="vmtouch" &&
-export PFILE="$PNAME.c" &&
-export PURI="https://raw.github.com/hoytech/vmtouch/master/$PFILE" &&
+export PNAME="pciutils" &&
+export PVERSION="$PVERSION_SW" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="ftp://atrey.karlin.mff.cuni.cz/pub/linux/pci/$PFILE" &&
 
-GetArchive &&
+rm -rf $PDIR &&
+GetUnpackCd &&
 
-gcc -Wall -O3 -o vmtouch vmtouch.c &&
-mv vmtouch /usr/local/bin &&
+make ZLIB=no SHARED=no &&
+(
+  removepkg pciutils;
+  make PREFIX=/usr install;
+  make PREFIX=/usr install-lib
+) &&
+make distclean &&
+make ZLIB=no SHARED=yes &&
+(
+  removepkg pciutils;
+  make PREFIX=/usr install &&
+  make PREFIX=/usr install-lib &&
+  ldconfig &&
+  export LD_LIBRARY_PATH=$PDESTDIR_OPENSSL/lib &&
+  ./update-pciids &&
+  unset LD_LIBRARY_PATH
+) &&
+
+cd $SRCROOT &&
+rm -rf $PDIR &&
 
 
 

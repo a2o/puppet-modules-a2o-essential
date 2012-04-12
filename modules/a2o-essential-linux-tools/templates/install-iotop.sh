@@ -22,21 +22,28 @@ cd $SRCROOT &&
 
 
 ### Set versions and directories
-export PVERSION_TIG="<%= packageSoftwareVersion %>" &&
+export PVERSION_SW="<%= packageSoftwareVersion %>" &&
 
 
 
-### Vmtouch
-# CheckURI: http://hoytech.com/vmtouch/
+### Iotop
+# CheckURI: http://guichaz.free.fr/iotop/
 cd $SRCROOT && . ../build_functions.sh &&
-export PNAME="vmtouch" &&
-export PFILE="$PNAME.c" &&
-export PURI="https://raw.github.com/hoytech/vmtouch/master/$PFILE" &&
+export PNAME="iotop" &&
+export PVERSION="$PVERSION_SW" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="http://guichaz.free.fr/iotop/files/$PFILE" &&
 
-GetArchive &&
+rm -rf $PDIR &&
+GetUnpack &&
 
-gcc -Wall -O3 -o vmtouch vmtouch.c &&
-mv vmtouch /usr/local/bin &&
+rm -rf /usr/local/$PDIR &&
+mv $PDIR /usr/local &&
+rm -f /usr/local/iotop &&
+ln -s $PDIR /usr/local/iotop &&
+rm -f /usr/local/bin/iotop &&
+ln -s /usr/local/iotop/iotop.py /usr/local/bin/iotop &&
 
 
 

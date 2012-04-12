@@ -22,21 +22,28 @@ cd $SRCROOT &&
 
 
 ### Set versions and directories
-export PVERSION_TIG="<%= packageSoftwareVersion %>" &&
+export PVERSION_SW="<%= packageSoftwareVersion %>" &&
 
 
 
-### Vmtouch
-# CheckURI: http://hoytech.com/vmtouch/
+### QuotaTools
+# CheckURI: http://sourceforge.net/projects/linuxquota/
 cd $SRCROOT && . ../build_functions.sh &&
-export PNAME="vmtouch" &&
-export PFILE="$PNAME.c" &&
-export PURI="https://raw.github.com/hoytech/vmtouch/master/$PFILE" &&
+export PNAME="quota" &&
+export PVERSION="$PVERSION_SW" &&
+export PDIR="quota-tools" &&
+export PFILE="$PNAME-$PVERSION.tar.gz" &&
+export PURI="http://surfnet.dl.sourceforge.net/sourceforge/linuxquota/$PFILE" &&
 
-GetArchive &&
+rm -rf $PDIR &&
+GetUnpackCd &&
 
-gcc -Wall -O3 -o vmtouch vmtouch.c &&
-mv vmtouch /usr/local/bin &&
+./configure &&
+make &&
+make install &&
+
+cd $SRCROOT &&
+rm -rf $PDIR &&
 
 
 

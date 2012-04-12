@@ -17,9 +17,6 @@
 class a2o-essential-linux-tools::base {
     $thisPuppetModule = "a2o-essential-linux-tools"
 
-    # External packages - TODO migrate to per-tool class file
-    $externalPackageDestdir_openssl = '/usr/local/openssl-1.0.0h-1'
-
     # Where the packages will be compiled
     $compileDir = '/var/src/tools'
 }
@@ -28,15 +25,38 @@ class a2o-essential-linux-tools::base {
 
 ### All defined tools
 class a2o-essential-linux-tools::all {
+    include 'a2o-essential-linux-tools::bc'
+    include 'a2o-essential-linux-tools::bridge-utils'
     include 'a2o-essential-linux-tools::conntrack-tools'
+    include 'a2o-essential-linux-tools::dstat'
     include 'a2o-essential-linux-tools::git'
     include 'a2o-essential-linux-tools::git::symlinks'
+    include 'a2o-essential-linux-tools::hdparm'
+    include 'a2o-essential-linux-tools::imagemagick'
+    include 'a2o-essential-linux-tools::inotify-tools'
+    include 'a2o-essential-linux-tools::iotop'
+    include 'a2o-essential-linux-tools::iperf'
+    include 'a2o-essential-linux-tools::iptables'
+# Disabled because compilation fails on 64-bit platforms
+#    include 'a2o-essential-linux-tools::latencytop'
+    include 'a2o-essential-linux-tools::netcat'
+    include 'a2o-essential-linux-tools::nmap'
+    include 'a2o-essential-linux-tools::pciutils'
+    include 'a2o-essential-linux-tools::procps'
+    include 'a2o-essential-linux-tools::psmisc'
+    include 'a2o-essential-linux-tools::pstre'
+    include 'a2o-essential-linux-tools::pv'
+    include 'a2o-essential-linux-tools::quota'
+    include 'a2o-essential-linux-tools::sdparm'
+    include 'a2o-essential-linux-tools::slocate'
+    include 'a2o-essential-linux-tools::socat'
+    include 'a2o-essential-linux-tools::tcpdump'
+    include 'a2o-essential-linux-tools::tidy'
     include 'a2o-essential-linux-tools::tig'
     include 'a2o-essential-linux-tools::vmtouch'
+    include 'a2o-essential-linux-tools::wget'
+    include 'a2o-essential-linux-tools::wput'
     include 'a2o-essential-linux-tools::xz'
-}
-class a2o-essential-linux-tools::all-tmp {
-    include 'a2o-essential-linux-tools::conntrack-tools'
 }
 
 

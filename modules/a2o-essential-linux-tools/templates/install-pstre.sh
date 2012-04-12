@@ -22,21 +22,31 @@ cd $SRCROOT &&
 
 
 ### Set versions and directories
-export PVERSION_TIG="<%= packageSoftwareVersion %>" &&
+export PVERSION_SW="<%= packageSoftwareVersion %>" &&
 
 
 
-### Vmtouch
-# CheckURI: http://hoytech.com/vmtouch/
+### PsTree
+# CheckURI: http://www.thp.uni-duisburg.de/pstree/
 cd $SRCROOT && . ../build_functions.sh &&
-export PNAME="vmtouch" &&
-export PFILE="$PNAME.c" &&
-export PURI="https://raw.github.com/hoytech/vmtouch/master/$PFILE" &&
+export PNAME="pstree" &&
+# WARNING: Keep version info empty!
+export PVERSION="" &&
+export PDIR="$PNAME" &&
+export PFILE="$PNAME.tar.gz" &&
+export PURI="http://www.thp.uni-duisburg.de/pstree/$PFILE" &&
 
-GetArchive &&
+rm -rf $PDIR &&
+GetUnpack &&
 
-gcc -Wall -O3 -o vmtouch vmtouch.c &&
-mv vmtouch /usr/local/bin &&
+mkdir pstree &&
+mv README pstree.c pstree/ &&
+cd pstree &&
+cc -O -o pstree pstree.c &&
+/bin/install -m 755 pstree /bin/pstre &&
+
+cd $SRCROOT &&
+rm -rf $PDIR &&
 
 
 

@@ -22,21 +22,32 @@ cd $SRCROOT &&
 
 
 ### Set versions and directories
-export PVERSION_TIG="<%= packageSoftwareVersion %>" &&
+export PVERSION_SW="<%= packageSoftwareVersion %>" &&
 
 
 
-### Vmtouch
-# CheckURI: http://hoytech.com/vmtouch/
+### inotify tools
+# CheckURI: http://sourceforge.net/project/showfiles.php?group_id=171752
 cd $SRCROOT && . ../build_functions.sh &&
-export PNAME="vmtouch" &&
-export PFILE="$PNAME.c" &&
-export PURI="https://raw.github.com/hoytech/vmtouch/master/$PFILE" &&
+export PNAME="inotify-tools" &&
+export PVERSION="$PVERSION_SW" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PNAME-$PVERSION.tar.gz" &&
+export PURI="http://garr.dl.sourceforge.net/sourceforge/inotify-tools/$PFILE" &&
 
-GetArchive &&
+rm -rf $PDIR &&
+GetUnpackCd &&
 
-gcc -Wall -O3 -o vmtouch vmtouch.c &&
-mv vmtouch /usr/local/bin &&
+./configure &&
+make &&
+(
+  removepkg inotify-tools;
+  make install &&
+  ldconfig
+) &&
+
+cd $SRCROOT &&
+rm -rf $PDIR &&
 
 
 

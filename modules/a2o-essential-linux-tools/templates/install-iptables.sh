@@ -22,21 +22,36 @@ cd $SRCROOT &&
 
 
 ### Set versions and directories
-export PVERSION_TIG="<%= packageSoftwareVersion %>" &&
+export PVERSION_SW="<%= packageSoftwareVersion %>" &&
 
 
 
-### Vmtouch
-# CheckURI: http://hoytech.com/vmtouch/
+### IpTables
+# CheckURI: http://www.netfilter.org/projects/iptables/downloads.html
 cd $SRCROOT && . ../build_functions.sh &&
-export PNAME="vmtouch" &&
-export PFILE="$PNAME.c" &&
-export PURI="https://raw.github.com/hoytech/vmtouch/master/$PFILE" &&
+export PNAME="iptables" &&
+export PVERSION="$PVERSION_SW" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PNAME-$PVERSION.tar.bz2" &&
+export PURI="http://www.netfilter.org/projects/iptables/files/$PFILE" &&
+rm -rf $PDIR &&
+GetUnpackCd &&
+./configure --bindir=/bin --sbindir=/sbin &&
+make &&
+make install &&
 
-GetArchive &&
-
-gcc -Wall -O3 -o vmtouch vmtouch.c &&
-mv vmtouch /usr/local/bin &&
+# FIXME how about we remove slackware package?
+rm -f /usr/local/bin/iptables-xml &&
+rm -f /usr/local/sbin/iptables &&
+rm -f /usr/local/sbin/iptables-multi &&
+rm -f /usr/local/sbin/iptables-restore &&
+rm -f /usr/local/sbin/iptables-save &&
+rm -f /usr/local/sbin/ip6tables &&
+rm -f /usr/local/sbin/ip6tables-multi &&
+rm -f /usr/local/sbin/ip6tables-restore &&
+rm -f /usr/local/sbin/ip6tables-save &&
+cd $SRCROOT &&
+rm -rf $PDIR &&
 
 
 

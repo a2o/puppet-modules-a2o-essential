@@ -22,21 +22,32 @@ cd $SRCROOT &&
 
 
 ### Set versions and directories
-export PVERSION_TIG="<%= packageSoftwareVersion %>" &&
+export PVERSION_SW="<%= packageSoftwareVersion %>" &&
 
 
 
-### Vmtouch
-# CheckURI: http://hoytech.com/vmtouch/
+### BRIDGEutils - za VPSje
+# CheckURI: http://sourceforge.net/project/showfiles.php?group_id=26089
 cd $SRCROOT && . ../build_functions.sh &&
-export PNAME="vmtouch" &&
-export PFILE="$PNAME.c" &&
-export PURI="https://raw.github.com/hoytech/vmtouch/master/$PFILE" &&
+export PNAME="bridge-utils" &&
+export PVERSION="$PVERSION_SW" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="http://switch.dl.sourceforge.net/sourceforge/bridge/$PFILE" &&
 
-GetArchive &&
+rm -rf $PDIR &&
+GetUnpackCd &&
 
-gcc -Wall -O3 -o vmtouch vmtouch.c &&
-mv vmtouch /usr/local/bin &&
+autoconf &&
+./configure --prefix=/usr &&
+make &&
+(
+  removepkg bridge-utils;
+  make install
+) &&
+
+cd $SRCROOT &&
+rm -rf $PDIR &&
 
 
 

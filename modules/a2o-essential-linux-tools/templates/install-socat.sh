@@ -22,21 +22,38 @@ cd $SRCROOT &&
 
 
 ### Set versions and directories
-export PVERSION_TIG="<%= packageSoftwareVersion %>" &&
+export PVERSION_SW="<%= packageSoftwareVersion %>" &&
+export PDESTDIR_OPENSSL="<%= externalDestDir_openssl %>" &&
 
 
 
-### Vmtouch
-# CheckURI: http://hoytech.com/vmtouch/
+### socat
+# CheckURI: http://www.dest-unreach.org/socat/
+# ReqBy: kvm (za ukaze posiljat v monitor socket)
 cd $SRCROOT && . ../build_functions.sh &&
-export PNAME="vmtouch" &&
-export PFILE="$PNAME.c" &&
-export PURI="https://raw.github.com/hoytech/vmtouch/master/$PFILE" &&
+export PNAME="socat" &&
+# INFO: 1.7.2.0 does not compile on betafix, weird (on slack 12.2 32bit in general)
+# INFO: it does if config.h is modified with #define HAVE_LINUX_ERRQUEUE_H 1
+# INFO: Old version was 1.7.1.3
+export PVERSION="$PVERSION_SW" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="http://www.dest-unreach.org/socat/download/$PFILE" &&
 
-GetArchive &&
+rm -rf $PDIR &&
+GetUnpackCd &&
 
-gcc -Wall -O3 -o vmtouch vmtouch.c &&
-mv vmtouch /usr/local/bin &&
+./configure &&
+
+# TODO FIXME remove when obsolete
+cp config.h config.h.orig &&
+cat config.h.orig | sed -e 's@/\* #undef HAVE_LINUX_ERRQUEUE_H \*/@#define HAVE_LINUX_ERRQUEUE_H 1@' > config.h &&
+
+make &&
+make install &&
+
+cd $SRCROOT &&
+rm -rf $PDIR &&
 
 
 
