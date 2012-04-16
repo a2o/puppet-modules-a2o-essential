@@ -38,6 +38,8 @@ export PURI="http://www.openssl.org/source/$PFILE" &&
 rm -rf $PDIR &&
 GetUnpackCd &&
 ./config --prefix=$PDESTDIR_OPENSSL shared &&
+
+# WARNING: Don't argument make with -jX, it will compile but it won't work (tnx for notice David)
 make &&
 make install &&
 
