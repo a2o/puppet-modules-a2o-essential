@@ -44,6 +44,7 @@ class   a2o-essential-linux-libs::libgearman   inherits   a2o-essential-linux-li
 	require  => [
 	    File["$compileDir/$installScript"],
 	    Package['boost'],
+	    Package['libevent'],
 	],
     }
 }
