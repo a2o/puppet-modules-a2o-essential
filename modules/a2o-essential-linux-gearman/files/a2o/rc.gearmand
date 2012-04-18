@@ -1,0 +1,85 @@
+#!/bin/sh
+###########################################################################
+# a2o Essential Puppet Modules                                            #
+#-------------------------------------------------------------------------#
+# Copyright (c) 2012 Bostjan Skufca                                       #
+#-------------------------------------------------------------------------#
+# This source file is subject to version 2.0 of the Apache License,       #
+# that is bundled with this package in the file LICENSE, and is           #
+# available through the world-wide-web at the following url:              #
+# http://www.apache.org/licenses/LICENSE-2.0                              #
+#-------------------------------------------------------------------------#
+# Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
+###########################################################################
+. /etc/rc.d/rc._functions
+
+
+
+PROC_NAME="/usr/local/gearman/sbin/gearmand"
+PID_FILE="/var/gearman/run/gearmand.pid"
+APP_CMD_START="$PROC_NAME --daemon --pid-file=$PID_FILE --user=gearman --log-file=/var/log/gearmand.log"
+
+
+
+gearmand_start() {
+    if app_start; then
+	ln -sf $PID_FILE /var/run/gearmand.pid
+    fi
+}
+
+
+
+gearmand_stop() {
+    if app_stop; then
+	rm -f /var/run/gearmand.pid
+    fi
+}
+
+
+
+gearmand_restart() {
+    gearmand_stop
+    gearmand_start
+}
+
+
+
+gearmand_status() {
+    is_app_running__info
+}
+
+
+
+gearmand_kill() {
+    if app_kill; then
+	rm -f $PID_FILE
+	rm -f /var/run/gearmand.pid
+    fi
+}
+
+
+
+case "$1" in
+    'start')
+	gearmand_start
+	;;
+
+    'stop')
+	gearmand_stop
+	;;
+
+    'restart')
+	gearmand_restart
+	;;
+
+    'status')
+	gearmand_status
+	;;
+
+    'kill')
+	gearmand_kill
+	;;
+
+    *)
+	echo "usage $0 start|stop|restart|status|kill"
+esac
