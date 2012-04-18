@@ -31,6 +31,7 @@ class a2o-essential-linux-libs::httpd {
     include 'a2o-essential-linux-libs::confuse'
     include 'a2o-essential-linux-libs::expat'
     include 'a2o-essential-linux-libs::imap'
+    include 'a2o-essential-linux-libs::libevent'
     include 'a2o-essential-linux-libs::libgcrypt'
     include 'a2o-essential-linux-libs::libgearman'
     include 'a2o-essential-linux-libs::libgpg-error'
