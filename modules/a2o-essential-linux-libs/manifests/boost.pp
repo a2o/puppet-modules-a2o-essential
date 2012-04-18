@@ -26,6 +26,9 @@ class   a2o-essential-linux-libs::boost   inherits   a2o-essential-linux-libs::b
     $installScriptTpl       = "install-$packageSoftware.sh"
     $installScript          = "install-$packageTag.sh"
 
+    # External links
+    $externalDestDir_python = '/usr/local/python-2.6.7-1'
+
 
     # Installation
     file { "$compileDir/$installScript":
@@ -45,6 +48,7 @@ class   a2o-essential-linux-libs::boost   inherits   a2o-essential-linux-libs::b
 	    File["$compileDir/$installScript"],
 # FIXME add dependency
 #	    Package['bzip2'],
+	    Package['python'],
 	],
     }
 }

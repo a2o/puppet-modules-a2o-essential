@@ -23,6 +23,7 @@ cd $SRCROOT &&
 
 ### Set versions and directories
 export PVERSION_BOOST="<%= packageSoftwareVersion %>" &&
+export PDESTDIR_PYTHON="<%= externalDestDir_python %>" &&
 
 
 
@@ -39,6 +40,7 @@ rm -rf $PDIR &&
 GetUnpackCd &&
 
 ./bootstrap.sh &&
+#./bootstrap.sh --includedir=$PDESTDIR_PYTHON/include --libdir=$PDESTDIR_PYTHON/lib &&
 ./b2 &&
 ./b2 install &&
 ldconfig &&
