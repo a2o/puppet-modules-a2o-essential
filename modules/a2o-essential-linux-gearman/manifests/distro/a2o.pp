@@ -14,46 +14,61 @@
 
 
 ### Base class
-class   a2o-essential-linux-gearman::dist::suse::base   inherits   a2o-essential-linux-gearman::base {
+class   a2o-essential-linux-gearman::distro::a2o::base   inherits   a2o-essential-linux-gearman::base {
 }
 
 
 
 ### Service: gearmand
-class   a2o-essential-linux-gearman::dist::suse::service   inherits   a2o-essential-linux-gearman::dist::suse::base {
+class   a2o-essential-linux-gearman::distro::a2o::service   inherits   a2o-essential-linux-gearman::distro::a2o::base {
 
     # Service details
     $serviceName      = 'gearmand'
     $serviceState     = 'running'
 
     # Startup file
-    file { "/etc/init.d/$serviceName":
-        source   => "puppet:///modules/$thisPuppetModule/suse/$serviceName",
+    file { "/etc/rc.d/rc.$serviceName":
+        source   => "puppet:///modules/$thisPuppetModule/a2o/rc.$serviceName",
         owner    => root,
         group    => root,
-        mode     => 755,
-        require  => [
-	    Package['gearman'],
-            File['/usr/local/gearman'],
-        ],
+        mode     => $serviceState ? {
+	    running => 755,
+	    stopped => 644,
+	    default => 644,
+	},
+	require  => File['/etc/rc.d/rc._functions'],
     }
 
 
     # Service definition
-    service { "$serviceName":
+    service { "a2o-linux-$serviceName":
         enable      => $serviceState ? {
 	    running => true,
 	    stopped => false,
 	    default => false,
 	},
         ensure      => $serviceState,
-        provider    => 'redhat',
+	hasrestart  => true,
+        hasstatus   => true,
+        provider    => 'a2o_linux_rctool',
+        binary      => "/etc/rc.d/rc.$serviceName",
+        start       => "/etc/rc.d/rc.$serviceName start",
+        restart     => "/etc/rc.d/rc.$serviceName restart",
+        stop        => "/etc/rc.d/rc.$serviceName stop",
+        status      => "/etc/rc.d/rc.$serviceName status",
         subscribe   => [
             Package['gearman'],
             File['/usr/local/gearman'],
             File['/var/gearman'],
             File['/var/gearman/run'],
-            File["/etc/init.d/$serviceName"],
+            File["/etc/rc.d/rc.$serviceName"],
+        ],
+        require     => [
+            Package['gearman'],
+            File['/usr/local/gearman'],
+            File['/var/gearman'],
+            File['/var/gearman/run'],
+            File["/etc/rc.d/rc.$serviceName"],
         ],
     }
 }
@@ -61,7 +76,7 @@ class   a2o-essential-linux-gearman::dist::suse::service   inherits   a2o-essent
 
 
 ### Final all-containing class
-class a2o-essential-linux-gearman::dist::suse {
+class a2o-essential-linux-gearman::distro::a2o {
     include 'a2o-essential-linux-gearman'
-    include 'a2o-essential-linux-gearman::dist::suse::service'
+    include 'a2o-essential-linux-gearman::distro::a2o::service'
 }
