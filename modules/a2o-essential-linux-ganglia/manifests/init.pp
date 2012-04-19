@@ -27,19 +27,17 @@ class   a2o-essential-linux-ganglia::base {
 class   a2o-essential-linux-ganglia::users   inherits   a2o-essential-linux-ganglia::base {
     group { 'ganglia':
 	ensure     => present,
-#FIXME gids, uids, yes, no?
-#	gid        => 8649,
+	gid        => 8649,
     }
     user  { 'ganglia':
         require    => Group['ganglia'],
         provider   => useradd,
         allowdupe  => false,
         ensure     => present,
-#        uid        => 8649,
-#	gid        => 8649,
-	gid        => ganglia,
+        uid        => 8649,
+	gid        => 8649,
 	# TODO fix add entry to shadow file?
-	#password   => '*',
+	password   => '!',
 	shell      => '/bin/bash',
 	managehome => false,
     }

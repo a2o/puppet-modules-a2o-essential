@@ -1,0 +1,107 @@
+#!/bin/sh
+###########################################################################
+# a2o Essential Puppet Modules                                            #
+#-------------------------------------------------------------------------#
+# Copyright (c) 2012 Bostjan Skufca                                       #
+#-------------------------------------------------------------------------#
+# This source file is subject to version 2.0 of the Apache License,       #
+# that is bundled with this package in the file LICENSE, and is           #
+# available through the world-wide-web at the following url:              #
+# http://www.apache.org/licenses/LICENSE-2.0                              #
+#-------------------------------------------------------------------------#
+# Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
+###########################################################################
+#
+# /etc/init.d/gmond
+#
+### BEGIN INIT INFO
+# Provides:          gmond
+# Required-Start:    $remote_fs $syslog $network
+# Required-Stop:     $remote_fs $syslog $network
+# Default-Start:     3 5
+# Default-Stop:      0 1 2 6
+# Short-Description: Ganglia metrics daemon
+# Description:       Ganglia metrics daemon
+### END INIT INFO
+
+
+# Init the startup script and reset status of this service
+. /etc/rc.status
+rc_reset
+
+
+# Export path to libs
+export LD_LIBRARY_PATH="<%= externalPackageDestDir_python %>/lib"
+
+
+# Configuration of binary and parameters
+GMOND_BIN="/usr/local/ganglia-gmond/sbin/gmond"
+GMOND_PIDFILE="/var/run/gmond.pid"
+
+
+# Test binary existence - THINK is this good? What if program in uninstalled but
+# is left running in the background, effectively forgotten?
+test -x $GMOND_BIN || {
+    echo "$GMOND_BIN not installed";
+    if [ "$1" = "stop" ] ; then
+	exit 0
+    else
+	exit 5
+    fi
+}
+
+
+# Execute command
+case "$1" in
+    start)
+	if [ -e $GMOND_PIDFILE ]; then
+	    if checkproc $GMOND_BIN ; then
+		echo "Gmond already started. Not starting."
+		exit 0;
+	    else
+		echo "Removing stale PID file $GMOND_PIDFILE";
+		rm -f $GMOND_PIDFILE;
+	    fi
+	fi
+	echo -n "Starting gmond "
+	startproc $GMOND_BIN
+	rc_status -v
+	;;
+
+    stop)
+	echo -n "Stopping gmond "
+	killproc -TERM $GMOND_BIN
+	rc_status -v
+	;;
+
+    try-restart|condrestart)
+	$0 status
+	if test $? = 0; then
+	    $0 restart
+	else
+	    rc_reset
+	fi
+	rc_status
+	;;
+
+    restart)
+	$0 stop
+	$0 start
+	rc_status
+	;;
+
+    status)
+	echo -n "Checking for service gmond "
+	checkproc $GMOND_BIN
+	rc_status -v
+	;;
+
+    *)
+	echo "Usage: $0 {start|stop|try-restart|restart|status}"
+	exit 1
+	;;
+esac
+
+
+# Signal exit of a script
+rc_exit
