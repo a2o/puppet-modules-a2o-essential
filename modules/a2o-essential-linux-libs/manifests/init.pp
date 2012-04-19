@@ -23,7 +23,7 @@ class a2o-essential-linux-libs::base {
 
 
 
-### Libs required for ganglia installation
+### Libs required for Apache HTTPD
 class a2o-essential-linux-libs::httpd {
     include 'a2o-essential-linux-libs::apr'
     include 'a2o-essential-linux-libs::apr-util'
@@ -42,6 +42,16 @@ class a2o-essential-linux-libs::httpd {
     include 'a2o-essential-linux-libs::libxslt'
     include 'a2o-essential-linux-libs::pcre'
 }
+
+### Libs required for gearman
+class a2o-essential-linux-libs::gearman {
+    include 'a2o-essential-linux-libs::boost'
+    include 'a2o-essential-linux-libs::libevent'
+    include 'a2o-essential-linux-libs::libgearman'
+    include 'a2o-essential-linux-libs::libmemcached'
+}
+
+### Libs required for ganglia
 class a2o-essential-linux-libs::ganglia-gmond {
     include 'a2o-essential-linux-libs::apr'
     include 'a2o-essential-linux-libs::apr-util'
@@ -68,7 +78,7 @@ class a2o-essential-linux-libs::ganglia {
     include 'a2o-essential-linux-libs::rrdtool'
 }
 
-### Libs required for nagios installation
+### Libs required for nagios
 class a2o-essential-linux-libs::nagios {
     include 'a2o-essential-linux-libs::gd'
     include 'a2o-essential-linux-libs::libiconv'
