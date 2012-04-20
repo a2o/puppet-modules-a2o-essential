@@ -19,7 +19,7 @@ class   a2o-essential-linux-libs::pixman   inherits   a2o-essential-linux-libs::
     # Software details
     $packageName            = 'pixman'
     $packageSoftware        = 'pixman'
-    $packageSoftwareVersion = '0.24.0'
+    $packageSoftwareVersion = '0.24.4'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
