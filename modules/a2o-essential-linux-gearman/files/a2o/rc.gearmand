@@ -15,62 +15,71 @@
 
 
 
-PROC_NAME="/usr/local/bin/rrdcached"
-PID_FILE="/var/run/rrdcached.pid"
-APP_CMD_START="$PROC_NAME -p $PID_FILE -w 600 -z 30 -f 3600 -t 10 -F \
--s root -m 770 -l unix:/var/run/rrdcached.sock \
--s nogroup -m 777 -P FLUSH,STATS,HELP -l unix:/var/run/rrdcached.sock.nogroup"
+PROC_NAME="/usr/local/gearman/sbin/gearmand"
+PID_FILE="/var/gearman/run/gearmand.pid"
+APP_CMD_START="$PROC_NAME --daemon --pid-file=$PID_FILE --user=gearman --log-file=/var/log/gearmand.log"
 
 
 
-rrdcached_start() {
-    app_start
-}
-
-rrdcached_stop() {
-    app_stop
-}
-
-rrdcached_restart() {
-    rrdcached_stop
-    rrdcached_start
-}
-
-rrdcached_status() {
-    is_app_running__info
-}
-
-rrdcached_kill() {
-    if app_kill; then
-	rm -f $PID_FILE
+gearmand_start() {
+    if app_start; then
+	ln -sf $PID_FILE /var/run/gearmand.pid
     fi
 }
 
-rrdcached_flushall() {
-    echo "FLUSHALL" | socat - unix-connect:/var/run/rrdcached.sock
+
+
+gearmand_stop() {
+    if app_stop; then
+	rm -f /var/run/gearmand.pid
+    fi
+}
+
+
+
+gearmand_restart() {
+    gearmand_stop
+    gearmand_start
+}
+
+
+
+gearmand_status() {
+    is_app_running__info
+}
+
+
+
+gearmand_kill() {
+    if app_kill; then
+	rm -f $PID_FILE
+	rm -f /var/run/gearmand.pid
+    fi
 }
 
 
 
 case "$1" in
     'start')
-	rrdcached_start
+	gearmand_start
 	;;
+
     'stop')
-	rrdcached_stop
+	gearmand_stop
 	;;
+
     'restart')
-	rrdcached_restart
+	gearmand_restart
 	;;
+
     'status')
-	rrdcached_status
+	gearmand_status
 	;;
+
     'kill')
-	rrdcached_kill
+	gearmand_kill
 	;;
-    'flushall')
-	rrdcached_flushall
-	;;
+
     *)
-	echo "usage $0 start|stop|restart|status|kill|flushall"
+	echo "usage $0 start|stop|restart|status|kill"
 esac
