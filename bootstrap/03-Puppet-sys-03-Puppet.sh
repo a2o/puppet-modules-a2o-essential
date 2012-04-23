@@ -44,7 +44,7 @@ cat $PDESTDIR/lib/ruby/site_ruby/1.8/puppet/util/run_mode.rb \
   | sed -e 's#"/etc/puppet"#"/etc/puppet-sys"#' \
   | sed -e 's#"/var/lib/puppet"#"/var/lib/puppet-sys"#' \
   > /tmp/run_mode.rb &&
-mv /tmp/run_mode.rb $PDESTDIR/lib/ruby/site_ruby/1.8/puppet/util/run_mode.rb &&
+mv -f /tmp/run_mode.rb $PDESTDIR/lib/ruby/site_ruby/1.8/puppet/util/run_mode.rb &&
 
 
 
