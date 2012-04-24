@@ -45,6 +45,27 @@ class   a2o-essential-linux-openssl::packages {
 
 
 
+### Remove old packages
+class   a2o-essential-linux-openssl::cleanup {
+    $compileDir  = '/var/src/libs'
+    $requireDefs = [
+	Package['openssl'],
+	File['/usr/local/openssl'],
+	File['/usr/local/openssl-0.9.8'],
+    ]
+
+    a2o-essential-unix::compiletool::remove_package { 'openssl-0.9.8m-1': compileDir => $compileDir, requireDefs => $requireDefs, }
+    a2o-essential-unix::compiletool::remove_package { 'openssl-0.9.8n-1': compileDir => $compileDir, requireDefs => $requireDefs, }
+    a2o-essential-unix::compiletool::remove_package { 'openssl-0.9.8o-1': compileDir => $compileDir, requireDefs => $requireDefs, }
+    a2o-essential-unix::compiletool::remove_package { 'openssl-0.9.8p-1': compileDir => $compileDir, requireDefs => $requireDefs, }
+    a2o-essential-unix::compiletool::remove_package { 'openssl-0.9.8q-1': compileDir => $compileDir, requireDefs => $requireDefs, }
+    a2o-essential-unix::compiletool::remove_package { 'openssl-0.9.8r-1': compileDir => $compileDir, requireDefs => $requireDefs, }
+    a2o-essential-unix::compiletool::remove_package { 'openssl-0.9.8s-1': compileDir => $compileDir, requireDefs => $requireDefs, }
+    a2o-essential-unix::compiletool::remove_package { 'openssl-1.0.0d-1': compileDir => $compileDir, requireDefs => $requireDefs, }
+}
+
+
+
 ### Symbolic links
 class   a2o-essential-linux-openssl::symlinks {
 
@@ -83,5 +104,6 @@ class   a2o-essential-linux-openssl::symlinks {
 ### The final all-containing classes
 class   a2o-essential-linux-openssl {
     include 'a2o-essential-linux-openssl::packages'
+    include 'a2o-essential-linux-openssl::cleanup'
     include 'a2o-essential-linux-openssl::symlinks'
 }
