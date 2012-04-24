@@ -1,0 +1,119 @@
+#!/bin/bash
+###########################################################################
+# a2o Essential Puppet Modules                                            #
+#-------------------------------------------------------------------------#
+# Copyright (c) 2012 Bostjan Skufca                                       #
+#-------------------------------------------------------------------------#
+# This source file is subject to version 2.0 of the Apache License,       #
+# that is bundled with this package in the file LICENSE, and is           #
+# available through the world-wide-web at the following url:              #
+# http://www.apache.org/licenses/LICENSE-2.0                              #
+#-------------------------------------------------------------------------#
+# Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
+###########################################################################
+#
+# gmond        This starts and stops gmond
+#
+# chkconfig: - 13 99
+# description: This starts the Ganglia monitoring daemon, \
+#              which collects system metrics and sends them \
+#              to other gmond instances
+#
+# processname: /usr/local/ganglia-gmond/sbin/gmond
+# pidfile: /var/run/gmond.pid
+#
+# Return values according to LSB for all commands but status:
+# 0 - success
+# 1 - generic or unspecified error
+# 2 - invalid or excess argument(s)
+# 3 - unimplemented feature (e.g. "reload")
+# 4 - insufficient privilege
+# 5 - program is not installed
+# 6 - program is not configured
+# 7 - program is not running
+#
+
+
+# Settings
+PROG_NAME="gmond"
+EXEC_PATH="/usr/local/ganglia-gmond/sbin/gmond"
+
+
+# Source function library.
+. /etc/init.d/functions
+
+
+# Allow anyone to run status
+if [ "$1" = "status" ] ; then
+	status $EXEC_PATH
+	RETVAL=$?
+	exit $RETVAL
+fi
+# Check that we are root ... so non-root users stop here
+test $EUID = 0  ||  exit 4
+
+RETVAL=0
+
+start(){
+	test -x $EXEC_PATH  || exit 5
+
+	echo -n $"Starting $PROG_NAME: "
+
+	unset HOME MAIL USER USERNAME
+	daemon $EXEC_PATH
+	RETVAL=$?
+	echo
+	if test $RETVAL = 0 ; then
+		touch /var/lock/subsys/$PROG_NAME
+	fi
+	return $RETVAL
+}
+
+stop(){
+	echo -n $"Stopping $PROG_NAME: "
+	killproc $EXEC_PATH
+	RETVAL=$?
+	echo
+	rm -f /var/lock/subsys/$PROG_NAME
+	return $RETVAL
+}
+
+reload(){
+	stop
+	start
+}
+
+restart(){
+	stop
+	start
+}
+
+condrestart(){
+	[ -e /var/lock/subsys/$PROG_NAME ] && restart
+	return 0
+}
+
+
+# See how we were called.
+case "$1" in
+    start)
+	start
+	;;
+    stop)
+	stop
+	;;
+    restart)
+	restart
+	;;
+    reload|force-reload)
+	reload
+	;;
+    condrestart|try-restart)
+	condrestart
+	;;
+    *)
+	echo $"Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload}"
+	RETVAL=3
+esac
+
+exit $RETVAL
