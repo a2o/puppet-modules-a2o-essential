@@ -23,6 +23,7 @@ class   a2o-essential-redhat::packages   inherits   a2o-essential-redhat::base {
 
     package { 'gcc':          }
     package { 'gcc-c++':      }
+    package { 'gettext':      }
     package { 'libtool':      }
     package { 'make':         }
     package { 'mc':           }
