@@ -25,7 +25,7 @@ class a2o-essential-suse::fhs inherits a2o-essential-suse::base {
 
     file { '/etc/init.d':   }
     file { '/etc/rc.d':     ensure => 'init.d', }
-    file { '/home':         }
-    file { '/proc':         mode => 555 }
-    file { '/root':         mode => 700 }
+    file { '/home':         links  => follow }
+    file { '/proc':         mode   => 555 }
+    file { '/root':         mode   => 700 }
 }

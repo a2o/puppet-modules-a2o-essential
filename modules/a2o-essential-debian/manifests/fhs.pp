@@ -25,7 +25,7 @@ class a2o-essential-debian::fhs inherits a2o-essential-debian::base {
 
     file { '/etc/init.d':   }
     file { '/etc/rc.d':     }
-    file { '/home':         }
-    file { '/proc':         mode => 555 }
-    file { '/root':         mode => 755 }
+    file { '/home':         links  => follow }
+    file { '/proc':         mode   => 555 }
+    file { '/root':         mode   => 755 }
 }
