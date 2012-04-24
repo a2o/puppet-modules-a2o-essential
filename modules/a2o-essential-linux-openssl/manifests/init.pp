@@ -20,137 +20,60 @@ class   a2o-essential-linux-openssl::base {
 
 
 
-### Software package: current
-class   a2o-essential-linux-openssl::package::current   inherits   a2o-essential-linux-openssl::base {
+### All packages class
+class   a2o-essential-linux-openssl::packages {
 
-    # Software details
-    $packageName      = 'openssl'
-    $packageSoftware  = 'openssl'
+    # CheckURI: http://www.openssl.org/
+    #
+    # Packages 0.9.8x are old and kept here for legacy reasons, but to be removed ASAP
+    # Packages 1.0.0x are current
+    # Packages 1.0.1x and up are new, do not add them
+    #
+    # To add new version, just add new line below with new version
+    #
+    # The latest version (latest as in alphabetically) must not be defined as ::generic, but as ::latest
+    # (puppet package name quirk)
+    #
+    # WARNING: If you add/remove packages, update symlinks below
 
-    # WARNING
-    # Latest version must have "packageName" as id, others "packageTag"
-    # All compat must have before => Package['openssl']
-    # Otherwise it just starts recompiling package over and over again
-
-    # (check legacy compatibility versions below)
-    # CheckURI: http://openssl.org/
-    $packageVersionMajor = '0.9.8'
-    $packageVersionMinor = 'u'
-    $packageVersion      = "$packageVersionMajor$packageVersionMinor"
-
-    $packageRelease   = '1'
-    $packageEnsure    = "${packageVersion}-${packageRelease}"
-    $packageTag       = "${packageSoftware}-${packageEnsure}"
-    $installScriptTpl = "install-${packageSoftware}-0.9.8.sh"
-    $installScript    = "install-${packageTag}.sh"
-
-    # Where the packages will be compiled
-    $compileDir = "/var/src/libs"
-
-    # Installation destination directory
-    $destDir                  = "/usr/local/$packageTag"
-
-    # Destination directory symlink - major version
-    $destDirSymlinkMajor      = "/usr/local/openssl-$packageVersionMajor"
-    $destDirSymlinkMajor_dest = "$packageTag"
-
-
-
-    # Installation
-    file { "$compileDir/$installScript":
-	content  => template("$thisPuppetModule/$installScriptTpl"),
-        owner    => root,
-        group    => root,
-        mode     => 755,
-	require  => [
-	    File['/var/src/build_functions.sh']
-	],
-    }
-    package { "$packageTag":
-	provider => 'a2o_linux_compiletool',
-        ensure   => "$packageEnsure",
-	source   => "$compileDir/$installScript",
-	require  => [
-	    File["$compileDir/$installScript"],
-	],
-	before   => Package["$packageName"],
-    }
-
-
-    # Major version symlink
-    file { "$destDirSymlinkMajor":
-	ensure   => "$destDirSymlinkMajor_dest",
-	require  => Package["$packageName"],
-	backup   => false,
-    }
+    a2o-essential-linux-openssl::package::generic { 'openssl-0.9.8t-1': }
+    a2o-essential-linux-openssl::package::generic { 'openssl-0.9.8u-1': }
+    a2o-essential-linux-openssl::package::generic { 'openssl-0.9.8w-1': }
+    a2o-essential-linux-openssl::package::generic { 'openssl-1.0.0h-1': }
+    a2o-essential-linux-openssl::package::latest  { 'openssl-1.0.0i-1': }
 }
 
 
 
-### Software package: compat-1
-class   a2o-essential-linux-openssl::package::compat-1   inherits   a2o-essential-linux-openssl::base {
+### Symbolic links
+class   a2o-essential-linux-openssl::symlinks {
 
-    # Software details
-    $packageName      = 'openssl'
-    $packageSoftware  = 'openssl'
+    # WARNING:
+    # WARNING: Don't change symlinks unless you know what you are doing
+    # WARNING:
 
-    # CheckURI: http://openssl.org/
-    $packageVersionMajor = '1.0.0'
-    $packageVersionMinor = 'h'
-    $packageVersion      = "${packageVersionMajor}${packageVersionMinor}"
-
-    $packageRelease   = '1'
-    $packageEnsure    = "${packageVersion}-${packageRelease}"
-    $packageTag       = "${packageSoftware}-${packageEnsure}"
-    $installScriptTpl = "install-${packageSoftware}-1.0.0.sh"
-    $installScript    = "install-${packageTag}.sh"
-
-    # Where the packages will be compiled
-    $compileDir = "/var/src/libs"
-
-    # Global destination directory
-    $destDir             = "/usr/local/$packageTag"
-
-    # Destination directory symlink - major version
-    $destDirSymlinkMajor      = "/usr/local/openssl-$packageVersionMajor"
-    $destDirSymlinkMajor_dest = "$packageTag"
-
-    # Global destination directory
-    $destDirSymlink      = "/usr/local/openssl"
-    $destDirSymlink_dest = "openssl-$packageVersionMajor"
-
-
-    # Installation
-    file { "$compileDir/$installScript":
-	content  => template("$thisPuppetModule/$installScriptTpl"),
-        owner    => root,
-        group    => root,
-        mode     => 755,
-	require  => [
-	    File['/var/src/build_functions.sh']
-	],
-    }
-    package { "$packageName":
-	provider => 'a2o_linux_compiletool',
-        ensure   => "$packageEnsure",
-	source   => "$compileDir/$installScript",
-	require  => [
-	    File["$compileDir/$installScript"],
-	],
-    }
-
-
+    ### Legacy symlink
     # Major version symlink
-    file { "$destDirSymlinkMajor":
-	ensure   => "$destDirSymlinkMajor_dest",
-	require  => Package["$packageName"],
+    file { '/usr/local/openssl-0.9.8':
+	ensure   => 'openssl-0.9.8u-1',
+	require  => Package['openssl-0.9.8u-1'],
 	backup   => false,
     }
 
+    ### Current symlink
+    # Major version symlink
+    file { '/usr/local/openssl-1.0.0':
+	ensure   => 'openssl-1.0.0h-1',
+	require  => [
+	    Package['openssl-1.0.0h-1'],
+	    Package['openssl'],
+	],
+	backup   => false,
+    }
     # Final version symlink
-    file { "$destDirSymlink":
-	ensure   => "openssl-$packageVersionMajor",
-	require  => File["$destDirSymlinkMajor"],
+    file { '/usr/local/openssl':
+	ensure   => 'openssl-1.0.0',
+	require  => File['/usr/local/openssl-1.0.0'],
 	backup   => false,
     }
 }
@@ -159,6 +82,6 @@ class   a2o-essential-linux-openssl::package::compat-1   inherits   a2o-essentia
 
 ### The final all-containing classes
 class   a2o-essential-linux-openssl {
-    include 'a2o-essential-linux-openssl::package::current'
-    include 'a2o-essential-linux-openssl::package::compat-1'
+    include 'a2o-essential-linux-openssl::packages'
+    include 'a2o-essential-linux-openssl::symlinks'
 }

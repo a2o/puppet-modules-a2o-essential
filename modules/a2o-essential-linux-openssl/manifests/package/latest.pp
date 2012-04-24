@@ -1,4 +1,3 @@
-#!/bin/bash
 ###########################################################################
 # a2o Essential Puppet Modules                                            #
 #-------------------------------------------------------------------------#
@@ -14,40 +13,9 @@
 
 
 
-# Compile directory
-export SRCROOT="<%= compileDir %>" &&
-mkdir -p $SRCROOT &&
-cd $SRCROOT &&
+### Latest OpenSSL package definition
+### Differs only how package is named
+define   a2o-essential-linux-openssl::package::latest   () {
 
-
-
-### Set versions and directories
-export PVERSION_OPENSSL=`echo "<%= softwareVersion %>" | sed -e 's/_/-/'` &&
-export PDESTDIR_OPENSSL="<%= destDir %>" &&
-
-
-
-### OpenSSL
-# CheckURI: http://openssl.org/
-cd $SRCROOT && . ../build_functions.sh &&
-export PNAME="openssl" &&
-export PVERSION="$PVERSION_OPENSSL" &&
-export PDIR="$PNAME-$PVERSION" &&
-export PFILE="$PDIR.tar.gz" &&
-export PURI="http://www.openssl.org/source/$PFILE" &&
-rm -rf $PDIR &&
-GetUnpackCd &&
-./config --prefix=$PDESTDIR_OPENSSL shared &&
-make &&
-make install &&
-
-# Add 2 symlinks
-ln -sf libcrypto.so.0.9.8 $PDESTDIR_OPENSSL/lib/libcrypto.so.0 &&
-ln -sf libssl.so.0.9.8 $PDESTDIR_OPENSSL/lib/libssl.so.0 &&
-
-cd $SRCROOT &&
-rm -rf $PDIR &&
-
-
-
-exit 0
+    a2o-essential-linux-openssl::package::generic { "$name":   packageNameShort => 1 }
+}

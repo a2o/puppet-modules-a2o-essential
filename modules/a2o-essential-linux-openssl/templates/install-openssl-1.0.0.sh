@@ -22,7 +22,7 @@ cd $SRCROOT &&
 
 
 ### Set versions and directories
-export PVERSION_OPENSSL=`echo "<%= packageVersion %>" | sed -e 's/_/-/'` &&
+export PVERSION_OPENSSL=`echo "<%= softwareVersion %>" | sed -e 's/_/-/'` &&
 export PDESTDIR_OPENSSL="<%= destDir %>" &&
 
 
