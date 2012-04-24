@@ -1,7 +1,7 @@
 Bootstrap prerequisites
 
 Packages installed:
-- diff
+- diff (diffutils)
 - gcc
 - gcc-c++
 - gettext
@@ -11,3 +11,5 @@ Packages installed:
 - pkg-config (or pkgconfig)
 - zlib
 - zlib-devel
+(- autoconf)
+(- automake)

@@ -38,7 +38,7 @@ export PURI="http://cairographics.org/releases/$PFILE" &&
 rm -rf $PDIR &&
 GetUnpackCd &&
 
-./configure &&
+./configure --disable-gtk &&
 make -j 2 &&
 make install &&
 ldconfig &&
