@@ -27,15 +27,15 @@ class   a2o-essential-linux-openldap::package   inherits   a2o-essential-linux-o
     $packageName            = 'openldap'
     $packageSoftware        = 'openldap'
     # CheckURI: http://www.openldap.org/software/download/
-    $packageSoftwareVersion = '2.4.30'
-    $packageRelease         = '2'
+    $packageSoftwareVersion = '2.4.31'
+    $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
     $installScriptTpl       = "install-$packageSoftware.sh"
     $installScript          = "install-$packageTag.sh"
 
     # External software versions
-    $externalDestDir_openssl = '/usr/local/openssl-1.0.0h-1'
+    $externalDestDir_openssl = '/usr/local/openssl-1.0.0i-1'
 
     # Where the packages will be compiled
     $compileDir             = "/var/src/tools"
