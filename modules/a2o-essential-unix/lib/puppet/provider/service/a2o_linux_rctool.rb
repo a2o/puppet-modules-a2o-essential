@@ -224,7 +224,7 @@ Puppet::Type.type(:service).provide :a2o_linux_rctool do
     # Check if /bin/rctool command exists
     #
     def doesRctoolCommandExist
-	if File.exists?("/bin/rctool") and File.executable("/bin/rctool")
+	if File.exists?("/bin/rctool") and File.executable?("/bin/rctool")
 	    return true
 	else
 	    return false
