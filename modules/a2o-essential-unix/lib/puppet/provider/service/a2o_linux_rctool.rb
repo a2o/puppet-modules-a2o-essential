@@ -19,6 +19,7 @@ Puppet::Type.type(:service).provide :a2o_linux_rctool do
     # Feature list
     #
     has_feature :enableable
+    has_feature :refreshable
 
 
 
@@ -38,8 +39,15 @@ Puppet::Type.type(:service).provide :a2o_linux_rctool do
 
 	rcName = getRctoolName(@resource[:name])
 
+# Maybe this should be added to start, restart and 644 to stop? Not needed actually...
+#	unless File.executable?("/etc/rc.d/rc." + rcName)
+#	    File.chmod(0755, "/etc/rc.d/rc." + rcName)
+#	end
+
 	if @resource[:start]
-	    `#{@resource[:start]}`
+	    # This should be script, which COULD have permissions of 644 and thus
+	    # not executable - therefore we use bash prefix to execute it
+	    `bash #{@resource[:start]}`
 	elsif doesRctoolCommandExist
 	    `rctool #{rcName} start`
 	else
@@ -114,9 +122,12 @@ Puppet::Type.type(:service).provide :a2o_linux_rctool do
 	unless File.exists?("/etc/rc.d/rc." + rcName)
 	    return :unknown
 	end
-	unless File.executable?("/etc/rc.d/rc." + rcName)
-	    return :disabled
-	end
+# Must not return disabled otherwise puppet tries every time to change status
+# "disabled" to "stopped"
+#	unless File.executable?("/etc/rc.d/rc." + rcName)
+#	    return :disabled
+#	    return :stopped
+#	end
 
 	# Get status by appropriate means
 	if @resource[:status]
