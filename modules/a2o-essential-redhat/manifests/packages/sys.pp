@@ -13,7 +13,17 @@
 
 
 
-### Required packages - "legacy" class
-class   a2o-essential-redhat::packages {
-    include 'a2o-essential-redhat::packages::sys'
+### Required packages
+class   a2o-essential-redhat::packages::sys   inherits   a2o-essential-redhat::packages::base {
+    package { 'gcc':          }
+    package { 'gcc-c++':      }
+    package { 'gettext':      }
+    package { 'libtool':      }
+    package { 'make':         }
+    package { 'mc':           }
+    package { 'patch':        }
+    package { 'pkgconfig':    }
+    package { 'xz':           }
+    package { 'zlib':         }
+    package { 'zlib-devel':   }
 }

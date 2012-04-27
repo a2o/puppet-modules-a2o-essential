@@ -13,7 +13,12 @@
 
 
 
-### Required packages - "legacy" class
-class   a2o-essential-redhat::packages {
-    include 'a2o-essential-redhat::packages::sys'
+### Required packages
+class   a2o-essential-redhat::packages::virtualization   inherits   a2o-essential-redhat::packages::base {
+    package { 'qemu-kvm':          }
+    package { 'qemu-kvm-tools':    }
+    package { 'qemu-img':          }
+    package { 'python-virtinst':   }
+    package { 'libvirt':           }
+    package { 'libvirt-client':    }
 }

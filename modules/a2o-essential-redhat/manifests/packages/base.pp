@@ -13,7 +13,11 @@
 
 
 
-### Required packages - "legacy" class
-class   a2o-essential-redhat::packages {
-    include 'a2o-essential-redhat::packages::sys'
+### Package base class
+class   a2o-essential-redhat::packages::base   inherits   a2o-essential-redhat::base {
+
+    Package {
+	provider => yum,
+	ensure   => present,
+    }
 }
