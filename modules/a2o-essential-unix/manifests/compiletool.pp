@@ -38,6 +38,7 @@ class a2o-essential-unix::compiletool inherits a2o-essential-unix::base {
 	'/var/src/test',
 	'/var/src/tmp',
 	'/var/src/tools',
+	'/var/src/undefined',
 	'/var/src/upgrades'
 	]:
 	ensure   => directory,
