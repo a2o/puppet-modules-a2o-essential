@@ -14,6 +14,9 @@
 
 
 ### Generic a2o compiletool package definition
+#
+# Template for installing packages. Creates install file from template that
+# resides in module where this thingie was called from. Then executes it :)
 
 define   a2o-essential-unix::compiletool::package::generic (
     $packageNameLong     = 0,
@@ -21,8 +24,6 @@ define   a2o-essential-unix::compiletool::package::generic (
     $compileDirPath      = undef,
     $require             = []
 ) {
-
-    # Info about multiversion package support
 
 
     ###

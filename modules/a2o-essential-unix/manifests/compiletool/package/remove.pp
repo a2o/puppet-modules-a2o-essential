@@ -13,27 +13,28 @@
 
 
 
-### Remove package definition
+### Remove package
 #
-# Remove installation directory, install scripts and install logs
+# Removes installation directory, install scripts and install logs
 
-define   a2o-essential-unix::compiletool::remove_package   ($compileDir, $requireDefs=[]) {
-
-    $installFile = "$compileDir/install-${name}.sh"
+define   a2o-essential-unix::compiletool::package::remove   ($compileDir, $require=[]) {
 
     # Requirement definition
     File {
         ensure  => absent,
-        require => $requireDefs,
+        require => $require,
 	backup  => false,
     }
 
-    # Files
-    file { "$installFile": }
-    file { "/var/log/packages_compiled/$name": }
+    # Which install script to remove
+    $installScript = "$compileDir/install-${name}.sh"
+
+    # Remove install script and compile log and status files
+    file { "$installScript":                       }
+    file { "/var/log/packages_compiled/$name":     }
     file { "/var/log/packages_compiled/$name.log": }
 
-    # Directories
+    # Remove destination directories
     file { "/usr/local/$name":
 	recurse => true,
 	force   => true,
