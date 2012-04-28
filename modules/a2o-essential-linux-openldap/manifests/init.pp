@@ -19,58 +19,81 @@ class   a2o-essential-linux-openldap::base {
 }
 
 
+### Package base class
+class   a2o-essential-linux-openldap::package::base   inherits   a2o-essential-linux-openldap::base {
 
-### Software package
-class   a2o-essential-linux-openldap::package   inherits   a2o-essential-linux-openldap::base {
-
-    # Software details
-    $packageName            = 'openldap'
-    $packageSoftware        = 'openldap'
     # CheckURI: http://www.openldap.org/software/download/
-    $packageSoftwareVersion = '2.4.31'
-    $packageRelease         = '1'
-    $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
-    $packageTag             = "$packageSoftware-$packageEnsure"
-    $installScriptTpl       = "install-$packageSoftware.sh"
-    $installScript          = "install-$packageTag.sh"
+
+    # Where the packages will be compiled
+    $compileDir = '/var/src/daemons'
+
+    $require    = [
+	Package['perl'],
+    ]
+}
+
+
+
+### Software package - current
+class   a2o-essential-linux-openldap::package::current   inherits   a2o-essential-linux-openldap::base {
 
     # External software versions
     $externalDestDir_openssl = '/usr/local/openssl-1.0.0i-1'
 
-    # Where the packages will be compiled
-    $compileDir             = "/var/src/tools"
+    # Software details
+    # WARNING: If you change version here, add old version to legacy classes below
+    #          if references to this version exist in other modules
+    $softwareName    = 'openldap'
+    $softwareVersion = '2.4.31'
+    $packageRelease  = '1'
+    $packageTag      = "$softwareName-$softwareVersion-$packageRelease"
 
-    # Global destination directory
-    $destDir                = "/usr/local/$packageTag"
-    $destDirSymlink         = "/usr/local/$packageSoftware"
-    $destDirSymlink_dest    = "$packageTag"
-
-
-    # Installation
-    file { "$compileDir/$installScript":
-	content  => template("$thisPuppetModule/$installScriptTpl"),
-        owner    => root,
-        group    => root,
-        mode     => 755,
-	require  => File['/var/src/build_functions.sh'],
-    }
-    package { "$packageName":
-	provider => 'a2o_linux_compiletool',
-        ensure   => "$packageEnsure",
-	source   => "$compileDir/$installScript",
-	require  => [
-	    File["$compileDir/$installScript"],
-	    Package['perl'],
-	],
-    }
-
+    # Package
+    a2o-essential-unix::compiletool::package::generic { "$packageTag":   require => $require, }
 
     # Symlink
-    file { "$destDirSymlink":
-	ensure   => "$destDirSymlink_dest",
-	require  => Package["$packageName"],
+    file { "/usr/local/$softwareName":
+	ensure   => "$packageTag",
+	require  => Package["$softwareName"],
 	backup   => false,
     }
+}
+
+
+
+### Software packages - legacy
+class   a2o-essential-linux-openldap::package::legacy   inherits   a2o-essential-linux-openldap::base {
+
+    # External software versions
+    $externalDestDir_openssl = '/usr/local/openssl-1.0.0i-1'
+
+    # Packages
+    a2o-essential-unix::compiletool::package::multi   { 'openldap-2.4.25-1':   require => $require, }
+    a2o-essential-unix::compiletool::package::multi   { 'openldap-2.4.28-1':   require => $require, }
+}
+
+
+
+### Software packages - legacy
+class   a2o-essential-linux-openldap::package::cleanup   inherits   a2o-essential-linux-openldap::package::base {
+    $require = [
+        Package['openldap'],
+	File['/usr/local/openldap'],
+    ]
+
+    a2o-essential-unix::compiletool::package::remove { 'openldap-2.4.23-1': compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'openldap-2.4.23-2': compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'openldap-2.4.23-3': compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'openldap-2.4.23-4': compileDir => $compileDir, require => $require, }
+}
+
+
+
+### Software packages together
+class   a2o-essential-linux-openldap::package {
+    include 'a2o-essential-linux-openldap::package::current'
+    include 'a2o-essential-linux-openldap::package::legacy'
+    include 'a2o-essential-linux-openldap::package::cleanup'
 }
 
 
