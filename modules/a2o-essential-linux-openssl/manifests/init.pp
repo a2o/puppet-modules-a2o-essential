@@ -76,17 +76,17 @@ class   a2o-essential-linux-openssl::symlinks {
     ### Legacy symlink
     # Major version symlink
     file { '/usr/local/openssl-0.9.8':
-	ensure   => 'openssl-0.9.8u-1',
-	require  => Package['openssl-0.9.8u-1'],
+	ensure   => 'openssl-0.9.8w-1',
+	require  => Package['openssl-0.9.8w-1'],
 	backup   => false,
     }
 
     ### Current symlink
     # Major version symlink
     file { '/usr/local/openssl-1.0.0':
-	ensure   => 'openssl-1.0.0h-1',
+	ensure   => 'openssl-1.0.0i-1',
 	require  => [
-	    Package['openssl-1.0.0h-1'],
+#	    Package['openssl-1.0.0i-1'],
 	    Package['openssl'],
 	],
 	backup   => false,
