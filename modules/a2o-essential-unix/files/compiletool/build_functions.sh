@@ -66,16 +66,16 @@ GetNoTestArchive ()
     else
 
 	# Direct download
-	if [ "`wget --help | grep -c content-disposition | cat`" -gt "0" ]; then
-    	    wget -c --no-check-certificate --inet4-only --timeout=120 --tries=2 \
-	    --content-disposition "${PURI}"
-
-	else
+#	if [ "`wget --help | grep -c content-disposition | cat`" -gt "0" ]; then
+#    	    wget -c --no-check-certificate --inet4-only --timeout=120 --tries=2 \
+#	    --content-disposition "${PURI}"
+#
+#	else
 	    # Older wget, does not support --content-disposition switch (1.10 for example)
 	    FILENAME=`echo $PURI | awk -F/ '{print $NF}'`
     	    wget -c --no-check-certificate --inet4-only --timeout=120 --tries=2 \
 		--output-document=$FILENAME "${PURI}"
-	fi
+#	fi
 
     fi # CTOOL_PROXY_URI
 
