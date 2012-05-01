@@ -37,7 +37,6 @@ export PVERSION="$PVERSION_GIT" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
 export PURI="http://git-core.googlecode.com/files/$PFILE" &&
-#export PURI="http://source.a2o.si/source-packages/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&

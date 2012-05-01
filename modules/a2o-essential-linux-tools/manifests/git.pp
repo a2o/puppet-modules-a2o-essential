@@ -20,7 +20,7 @@ class   a2o-essential-linux-tools::git   inherits   a2o-essential-linux-tools::b
     $packageName            = 'git'
     $packageSoftware        = 'git'
     # CheckURI: http://www.git-scm.org/
-    $packageSoftwareVersion = '1.7.9.6'
+    $packageSoftwareVersion = '1.7.10'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
@@ -28,7 +28,7 @@ class   a2o-essential-linux-tools::git   inherits   a2o-essential-linux-tools::b
     $installScript          = "install-$packageTag.sh"
 
     # External software versions
-    $externalDestDir_openssl = '/usr/local/openssl-1.0.0h-1'
+    $externalDestDir_openssl = '/usr/local/openssl-1.0.0i-1'
 
     # Global destination directory
     $destDir             = "/usr/local/$packageTag"
