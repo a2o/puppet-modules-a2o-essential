@@ -14,7 +14,7 @@
 
 
 ### Compilation tools
-class a2o-essential-unix::compiletool inherits a2o-essential-unix::base {
+class   a2o-essential-unix::compiletool   inherits   a2o-essential-unix::base {
 
     # Template
     File {
