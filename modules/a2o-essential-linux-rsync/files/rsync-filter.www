@@ -1,0 +1,4 @@
+dir-merge .rsync-filter
+dir-merge .rsync-filter.site
+- cache/zend_cache---*
+- cache/admin/zend_cache---*

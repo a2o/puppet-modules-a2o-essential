@@ -1,0 +1,7 @@
+dir-merge .rsync-filter
+dir-merge .rsync-filter.site
++ /log
+- /log/***
++ /run
+- /run/***
++ /***
