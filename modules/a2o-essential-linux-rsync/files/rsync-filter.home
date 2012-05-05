@@ -16,5 +16,7 @@ dir-merge .rsync-filter.site
 - var/reports/***
 - var/session/sess_*
 - wp-content/cache/***
+- /_toDelete
+- /_toDelete/***
 + /virtfs
 - /virtfs/***

@@ -42,6 +42,8 @@ dir-merge .rsync-filter.site
 - /lib/lib/mlocate/mlocate.db
 + /lib/mysql
 - /lib/mysql/***
++ /lib/ntp/proc
+- /lib/ntp/proc/***
 + /lib/puppet
 - /lib/puppet/***
 + /lib/puppet-sys
