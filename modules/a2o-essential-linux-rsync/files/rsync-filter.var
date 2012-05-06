@@ -29,6 +29,8 @@ dir-merge .rsync-filter.site
 - /cpanel/sessions/***
 + /cpanel/user_pw_cache
 - /cpanel/user_pw_cache/***
++ /crash
+- /crash/***
 + /db
 + /db/mysql
 - /db/mysql/***
