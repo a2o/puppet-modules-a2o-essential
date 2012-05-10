@@ -128,6 +128,8 @@ UnpackHere ()
 	xz -dc $PFILE | tar -x
     elif [[ ! -z `echo $PFILE | grep '\.tar$'` ]]; then
 	tar -xf $PFILE
+    elif [[ ! -z `echo $PFILE | grep '\.zip$'` ]]; then
+	unzip $PFILE
     else
 	echo "ERROR - unknown archive $PFILE" &&
 	return $FAILURE
