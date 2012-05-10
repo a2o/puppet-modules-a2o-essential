@@ -37,10 +37,12 @@ class   a2o-essential-linux-mcollective::package   inherits   a2o-essential-linu
     # Extra details
     $pluginsVersion  = '0.5.0'
 
-    # Package
+
+    ### Package
     a2o-essential-unix::compiletool::package::generic { "$packageTag":   require => $require, }
 
-    # Symlink
+
+    ### Symlink
     file { "/usr/local/$softwareName":
         ensure   => "$packageTag",
 	require  => Package["$softwareName"],
