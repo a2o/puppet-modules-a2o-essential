@@ -104,6 +104,6 @@ class   a2o-essential-linux-openssl::symlinks {
 ### The final all-containing classes
 class   a2o-essential-linux-openssl {
     include 'a2o-essential-linux-openssl::packages'
-    include 'a2o-essential-linux-openssl::cleanup'
     include 'a2o-essential-linux-openssl::symlinks'
+    class { 'a2o-essential-linux-openssl::cleanup': stage => cleanup; }
 }

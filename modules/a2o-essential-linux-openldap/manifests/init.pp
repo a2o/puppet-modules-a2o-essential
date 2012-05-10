@@ -93,7 +93,7 @@ class   a2o-essential-linux-openldap::package::cleanup   inherits   a2o-essentia
 class   a2o-essential-linux-openldap::package {
     include 'a2o-essential-linux-openldap::package::current'
     include 'a2o-essential-linux-openldap::package::legacy'
-    include 'a2o-essential-linux-openldap::package::cleanup'
+    class { 'a2o-essential-linux-openldap::package::cleanup': stage => cleanup; }
 }
 
 
