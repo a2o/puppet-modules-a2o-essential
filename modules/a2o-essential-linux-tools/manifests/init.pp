@@ -25,6 +25,7 @@ class a2o-essential-linux-tools::base {
 
 ### All defined tools
 class a2o-essential-linux-tools::all {
+#    include 'a2o-essential-linux-tools::ant'
     include 'a2o-essential-linux-tools::bc'
     include 'a2o-essential-linux-tools::bridge-utils'
     include 'a2o-essential-linux-tools::conntrack-tools'
