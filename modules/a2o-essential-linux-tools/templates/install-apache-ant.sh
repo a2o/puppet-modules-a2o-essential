@@ -23,6 +23,8 @@ cd $SRCROOT &&
 
 ### Set versions and directories
 export PVERSION_SW="<%= softwareVersion %>" &&
+export PVERSION_DBDEPLOY="<%= softwareVersion_dbDeploy %>" &&
+export PVERSION_MYCONNJ="<%= softwareVersion_myConnJ %>" &&
 export PDESTDIR="<%= destDir %>" &&
 
 
@@ -40,6 +42,44 @@ GetUnpack &&
 
 rm -rf $PDESTDIR &&
 mv $PDIR $PDESTDIR &&
+
+
+
+### DBdeploy
+cd $SRCROOT && . ../build_functions.sh &&
+export PNAME="dbdeploy" &&
+export PVERSION="$PVERSION_DBDEPLOY" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PNAME-dist-$PVERSION-distribution.zip" &&
+export PURI="http://dbdeploy.googlecode.com/files/$PFILE" &&
+
+rm -rf $PDIR &&
+GetUnpack &&
+
+# Install
+mv $PDIR/dbdeploy-*.jar $PDESTDIR/lib &&
+
+# Cleanup
+rm -rf $PDIR &&
+
+
+
+### MySQL Connector Java
+cd $SRCROOT && . ../build_functions.sh &&
+export PNAME="mysql-connector-java" &&
+export PVERSION="$PVERSION_MYCONNJ" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="http://ftp.arnes.si/mysql/Downloads/Connector-J/$PFILE" &&
+
+rm -rf $PDIR &&
+GetUnpack &&
+
+# Install
+mv $PDIR/$PNAME-*.jar $PDESTDIR/lib &&
+
+# Cleanup
+rm -rf $PDIR &&
 
 
 

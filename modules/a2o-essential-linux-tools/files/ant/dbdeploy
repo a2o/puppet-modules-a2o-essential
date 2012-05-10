@@ -1,0 +1,1 @@
+java -cp /usr/local/ant/lib/mysql-connector-java-5.1.20-bin.jar:/usr/local/ant/lib/dbdeploy-cli-3.0M3.jar com.dbdeploy.CommandLineTarget $@

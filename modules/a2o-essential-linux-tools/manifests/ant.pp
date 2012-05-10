@@ -20,11 +20,18 @@ class   a2o-essential-linux-tools::ant::package   inherits   a2o-essential-linux
     # CheckURI: http://ant.apache.org/
     $softwareName     = 'apache-ant'
     $softwareVersion  = '1.8.3'
-    $packageRelease   = '1'
+    $packageRelease   = '3'
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
 
     $compileDir = '/var/src/tools'
     $destDir    = "/usr/local/$packageTag"
+
+
+    ### Additinal versions
+    # CheckURI: http://code.google.com/p/dbdeploy/downloads/list
+    $softwareVersion_dbDeploy = '3.0M3'
+    # CheckURI: http://dev.mysql.com/downloads/connector/j/
+    $softwareVersion_myConnJ  = '5.1.20'
 
 
     ### Package
@@ -45,8 +52,8 @@ class   a2o-essential-linux-tools::ant::package   inherits   a2o-essential-linux
     }
 
 
-    ### Binary
-    file { "/usr/local/bin/ant":
+    ### Binaries
+    file { '/usr/local/bin/ant':
 	ensure  => present,
 	owner   => root,
 	group   => root,
@@ -54,6 +61,29 @@ class   a2o-essential-linux-tools::ant::package   inherits   a2o-essential-linux
 	source  => "puppet:///modules/$thisPuppetModule/ant/ant",
 	require => File['/usr/local/ant'],
     }
+    file { '/usr/local/bin/dbdeploy':
+	ensure  => present,
+	owner   => root,
+	group   => root,
+	mode    => 755,
+	source  => "puppet:///modules/$thisPuppetModule/ant/dbdeploy",
+	require => File['/usr/local/ant'],
+    }
+}
+
+
+
+### Remove old packages
+class   a2o-essential-linux-tools::ant::cleanup {
+    $compileDir = '/var/src/tools'
+    $require    = [
+	Package['apache-ant'],
+	File['/usr/local/apache-ant'],
+	File['/usr/local/ant'],
+    ]
+
+    a2o-essential-unix::compiletool::package::remove { 'apache-ant-1.8.3-1': compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'apache-ant-1.8.3-2': compileDir => $compileDir, require => $require, }
 }
 
 
@@ -61,5 +91,5 @@ class   a2o-essential-linux-tools::ant::package   inherits   a2o-essential-linux
 ### All containing class
 class   a2o-essential-linux-tools::ant {
     include 'a2o-essential-linux-tools::ant::package'
-#    include 'a2o-essential-linux-tools::ant::cleanup'
+    include 'a2o-essential-linux-tools::ant::cleanup'
 }
