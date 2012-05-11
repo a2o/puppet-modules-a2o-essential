@@ -48,6 +48,7 @@ class a2o-essential-linux-tools::all {
     include 'a2o-essential-linux-tools::pstre'
     include 'a2o-essential-linux-tools::pv'
     include 'a2o-essential-linux-tools::quota'
+    include 'a2o-essential-linux-tools::scons'
     include 'a2o-essential-linux-tools::sdparm'
     include 'a2o-essential-linux-tools::slocate'
     include 'a2o-essential-linux-tools::socat'
