@@ -42,6 +42,8 @@ dir-merge .rsync-filter.site
 - /kvm/*/vdisk.img
 - /lib/logrotate.status
 - /lib/lib/mlocate/mlocate.db
++ /lib/mongodb
+- /lib/mongodb/***
 + /lib/mysql
 - /lib/mysql/***
 + /lib/ntp/proc
@@ -74,6 +76,8 @@ dir-merge .rsync-filter.site
 + /log/scripts/***
 + /log/setup/***
 - /log/***
++ /mongodb/data
+- /mongodb/data/***
 + /mysql/data
 - /mysql/data/***
 + /mysql/log
