@@ -189,6 +189,55 @@ GetUnpackClean ()
 
 
 
+### PHP PECL/PEAR package installation functions
+php_isPackageInstalled() {
+    PHP_PREFIX="$1"
+    PHP_PKG_TYPE="$2"
+    PHP_PKG_NAME="$3"
+    RES=`$PHP_PREFIX/bin/$PHP_PKG_TYPE list | tail -n +4 | grep "^$PHP_PKG_NAME " -c | cat`
+    if [ "$RES" == "0" ]; then
+	return 1
+    elif [ "$RES" == "1" ]; then
+	return 0
+    else
+	echo "Invalid result while checking for $PHP_PKG_NAME: $RES"
+	exit 5
+    fi
+}
+php_isPackageInstalled_pecl() {
+    PHP_PREFIX="$1"
+    PHP_PKG_NAME="$2"
+    php_isPackageInstalled "$PHP_PREFIX" "pecl" "$PHP_PKG_NAME"
+}
+php_isPackageInstalled_pear() {
+    PHP_PREFIX="$1"
+    PHP_PKG_NAME="$2"
+    php_isPackageInstalled "$PHP_PREFIX" "pear" "$PHP_PKG_NAME"
+}
+
+php_installPackage_pecl() {
+    PHP_PREFIX="$1"
+    PHP_PKG_NAME_SEARCH="$2"
+    PHP_PKG_NAME_INSTALL="$3"
+
+    # If empty, search an install names are the same
+    if [ "x$PHP_PKG_NAME_INSTALL" == "x" ]; then
+	PHP_PKG_NAME_INSTALL="$PHP_PKG_NAME_SEARCH"
+    fi
+    php_isPackageInstalled_pecl "$PHP_PREFIX" "$PHP_PKG_NAME_SEARCH"
+    RETVAL=$?
+    if [ "$RETVAL" == "1" ]; then
+	printf "\n\n\n\n\n\n\n\n\n\n" | $PHP_PREFIX/bin/pecl upgrade --force $PHP_PKG_NAME_INSTALL
+	php_isPackageInstalled_pecl "$PHP_PREFIX" "$PHP_PKG_NAME_SEARCH"
+        RETVAL=$?
+	if [ "$RETVAL" == "1" ]; then
+	    exit 6
+	fi
+    fi
+}
+
+
+
 unset PNAME &&
 unset PVERSION &&
 unset PDIR &&
