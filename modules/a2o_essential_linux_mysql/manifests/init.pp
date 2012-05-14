@@ -14,14 +14,14 @@
 
 
 ### Base class
-class   a2o-essential-linux-mysql::base {
-    $thisPuppetModule = 'a2o-essential-linux-mysql'
+class   a2o_essential_linux_mysql::base {
+    $thisPuppetModule = 'a2o_essential_linux_mysql'
 }
 
 
 
 ### Helper files
-class   a2o-essential-linux-mysql::files   inherits   a2o-essential-linux-mysql::base {
+class   a2o_essential_linux_mysql::files   inherits   a2o_essential_linux_mysql::base {
 
     # Template
     File {
@@ -39,6 +39,6 @@ class   a2o-essential-linux-mysql::files   inherits   a2o-essential-linux-mysql:
 
 
 ### Final all-containing class
-class   a2o-essential-linux-mysql {
-    include 'a2o-essential-linux-mysql::files'
+class   a2o_essential_linux_mysql {
+    include 'a2o_essential_linux_mysql::files'
 }
