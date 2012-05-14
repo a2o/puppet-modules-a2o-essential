@@ -13,14 +13,8 @@
 
 
 
-### Base class
-class   a2o_essential_linux_mysql::base {
-    $thisPuppetModule = 'a2o_essential_linux_mysql'
-}
-
-
-
-### Final all-containing class
-class   a2o_essential_linux_mysql {
-    include 'a2o_essential_linux_mysql::files'
+### All containing class
+class   a2o_essential_linux_mysql::package {
+    include 'a2o_essential_linux_mysql::package::mysql'
+    include 'a2o_essential_linux_mysql::package::cleanup'
 }

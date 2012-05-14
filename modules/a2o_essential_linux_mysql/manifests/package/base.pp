@@ -13,14 +13,8 @@
 
 
 
-### Base class
-class   a2o_essential_linux_mysql::base {
-    $thisPuppetModule = 'a2o_essential_linux_mysql'
-}
+### Software package base class
+class   a2o_essential_linux_mysql::package::base   inherits   a2o_essential_linux_mysql::base {
 
-
-
-### Final all-containing class
-class   a2o_essential_linux_mysql {
-    include 'a2o_essential_linux_mysql::files'
+    $compileDir = '/var/src/daemons'
 }

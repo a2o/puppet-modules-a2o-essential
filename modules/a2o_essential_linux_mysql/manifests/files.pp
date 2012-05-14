@@ -13,14 +13,18 @@
 
 
 
-### Base class
-class   a2o_essential_linux_mysql::base {
-    $thisPuppetModule = 'a2o_essential_linux_mysql'
-}
+### Helper files
+class   a2o_essential_linux_mysql::files   inherits   a2o_essential_linux_mysql::base {
 
+    # Template
+    File {
+        owner    => root,
+        group    => root,
+        mode     => 755,
+    }
 
-
-### Final all-containing class
-class   a2o_essential_linux_mysql {
-    include 'a2o_essential_linux_mysql::files'
+    # Database dump and restore files
+    file { '/opt/scripts/mysql':   ensure => directory, mode => 755 }
+    file { '/opt/scripts/mysql/dump.mysql.sh':     source => "puppet:///modules/$thisPuppetModule/dump.mysql.sh"   }
+    file { '/opt/scripts/mysql/import.mysql.sh':   source => "puppet:///modules/$thisPuppetModule/import.mysql.sh" }
 }
