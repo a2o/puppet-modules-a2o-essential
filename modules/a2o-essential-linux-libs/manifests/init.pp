@@ -148,6 +148,7 @@ class a2o-essential-linux-libs::all {
     include 'a2o-essential-linux-libs::rrdtool'
     include 'a2o-essential-linux-libs::sqlite'
     include 'a2o-essential-linux-libs::unixodbc'
+    include 'a2o-essential-linux-libs::yaml'
     include 'a2o-essential-linux-libs::zlib'
 }
 
