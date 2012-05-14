@@ -34,11 +34,15 @@ export PVERSION="$PVERSION_APR" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.bz2" &&
 export PURI="http://www.apache.org/dist/apr/$PFILE" &&
+
 rm -rf $PDIR &&
 GetUnpackCd &&
+
 ./configure &&
 make -j 2 &&
 make install &&
+ldconfig &&
+
 cd $SRCROOT &&
 rm -rf $PDIR &&
 
