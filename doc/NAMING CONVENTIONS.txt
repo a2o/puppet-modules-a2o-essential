@@ -1,0 +1,9 @@
+Classes are named in the following manner
+
+1. a2o-essential-DISTRIBUTION:         distribution specific system stuff
+2. a2o-essential-DISTRIBUTION-SERVICE: distribution specific service configuration and definition
+3. a2o-essential-linux:                a2o-specific system classes
+4. a2o-essential-linux-SERVICE:        a2o-specific service definitions, packages etc
+
+5. a2o-essential-linux-SERVICE::distro::DISTRIBUTION:
+- a2o-specific package definitions, with distribution specific startup files and configurations
