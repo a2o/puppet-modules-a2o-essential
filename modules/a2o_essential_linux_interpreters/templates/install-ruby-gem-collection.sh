@@ -34,6 +34,11 @@ $PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc net-ping &&
 $PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc sys-proctable &&
 #$PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc ruby-debug && # Only for mc-debugger
 
+# For Redmine 1.4.x
+$PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc bundler &&
+# This should be run in an application directory
+#$PDESTDIR_RUBY/bin/bundle install --without development test postgresql sqlite rmagick &&
+
 
 
 exit 0
