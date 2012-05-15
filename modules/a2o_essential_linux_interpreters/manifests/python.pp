@@ -14,7 +14,7 @@
 
 
 ### Software packages basics: python
-class   a2o-essential-linux-interpreters::python::base   inherits   a2o-essential-linux-interpreters::base {
+class   a2o_essential_linux_interpreters::python::base   inherits   a2o_essential_linux_interpreters::base {
 
     $packageName_python                    = "python"
     $packageSoftwareName_python            = "python"
@@ -34,7 +34,7 @@ class   a2o-essential-linux-interpreters::python::base   inherits   a2o-essentia
 
 
 ### Software package: python
-class   a2o-essential-linux-interpreters::python::package   inherits   a2o-essential-linux-interpreters::python::base {
+class   a2o_essential_linux_interpreters::python::package   inherits   a2o_essential_linux_interpreters::python::base {
 
     # Software details
     $packageName            = "$packageName_python"
@@ -80,6 +80,6 @@ class   a2o-essential-linux-interpreters::python::package   inherits   a2o-essen
 
 
 
-class a2o-essential-linux-interpreters::python {
-    include 'a2o-essential-linux-interpreters::python::package'
+class a2o_essential_linux_interpreters::python {
+    include 'a2o_essential_linux_interpreters::python::package'
 }

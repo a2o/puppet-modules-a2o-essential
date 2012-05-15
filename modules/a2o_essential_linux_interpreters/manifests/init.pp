@@ -14,8 +14,8 @@
 
 
 ### Base class
-class a2o-essential-linux-interpreters::base {
-    $thisPuppetModule = 'a2o-essential-linux-interpreters'
+class a2o_essential_linux_interpreters::base {
+    $thisPuppetModule = 'a2o_essential_linux_interpreters'
 
 
     # Where the packages will be compiled
@@ -29,6 +29,9 @@ class a2o-essential-linux-interpreters::base {
 
 
 ### All-containing class
-class a2o-essential-linux-interpreters {
-    include 'a2o-essential-linux-interpreters::python'
+class a2o_essential_linux_interpreters {
+#    include 'a2o_essential_linux_interpreters::perl'
+#    include 'a2o_essential_linux_interpreters::php'
+    include 'a2o_essential_linux_interpreters::python'
+#    include 'a2o_essential_linux_interpreters::ruby'
 }
