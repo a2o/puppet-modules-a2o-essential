@@ -20,7 +20,7 @@ class   a2o-essential-linux-tools::git   inherits   a2o-essential-linux-tools::b
     $packageName            = 'git'
     $packageSoftware        = 'git'
     # CheckURI: http://www.git-scm.org/
-    $packageSoftwareVersion = '1.7.10'
+    $packageSoftwareVersion = '1.7.10.2'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
