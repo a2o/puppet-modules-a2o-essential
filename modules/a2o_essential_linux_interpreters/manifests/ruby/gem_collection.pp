@@ -33,6 +33,7 @@ class   a2o_essential_linux_interpreters::ruby::gem_collection   inherits   a2o_
     ### Package
     $require = [
         Package['ruby'],
+        Package['yaml'],
     ]
     a2o-essential-unix::compiletool::package::generic { "$packageTag":
 	require             => $require,

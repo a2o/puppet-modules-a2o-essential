@@ -30,6 +30,7 @@ $PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc -v=0.4.2 i18n &&
 
 # For mcollective
 $PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc stomp &&
+$PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc psych &&
 $PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc net-ping &&
 $PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc sys-proctable &&
 #$PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc ruby-debug && # Only for mc-debugger
