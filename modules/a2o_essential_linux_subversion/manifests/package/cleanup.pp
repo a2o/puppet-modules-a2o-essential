@@ -23,4 +23,5 @@ class   a2o_essential_linux_subversion::package::cleanup   inherits   a2o_essent
 
     a2o-essential-unix::compiletool::package::remove { 'svn-1.7.2-1': compileDir => $compileDir, require => $require, }
     a2o-essential-unix::compiletool::package::remove { 'svn-1.7.3-1': compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'svn-1.7.4-1': compileDir => $compileDir, require => $require, }
 }
