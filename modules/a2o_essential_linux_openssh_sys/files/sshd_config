@@ -1,0 +1,9 @@
+Port                    10022
+Protocol                2
+PidFile                 /dev/shm/sshd-sys.pid
+AllowGroups             root
+PermitRootLogin         without-password
+PermitUserEnvironment   yes
+Subsystem               sftp   /usr/local/ssh-sys/libexec/sftp-server
+LogLevel                VERBOSE
+UseDNS                  no

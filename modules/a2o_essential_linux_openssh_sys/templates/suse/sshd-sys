@@ -1,0 +1,139 @@
+#! /bin/sh
+# Copyright (c) 1995-2000 SuSE GmbH Nuernberg, Germany.
+#
+# Author: Jiri Smid <feedback@suse.de>
+#
+# /etc/init.d/sshd-sys
+#
+#   and symbolic its link
+#
+# /usr/sbin/rcsshd
+#
+### BEGIN INIT INFO
+# Provides: sshd-sys
+# Required-Start: $network
+# Required-Stop: $network
+# Default-Start: 3 5
+# Default-Stop: 0 1 2 6
+# Description: Start the sshd-sys daemon
+### END INIT INFO
+
+SSHD_BIN=/usr/local/ssh-sys/sbin/sshd
+SSHD_PIDFILE=/var/run/sshd-sys.pid
+export LD_LIBRARY_PATH="<%= externalDestDir_openssl %>/lib"
+
+
+### Source the common suse init file
+. /etc/rc.status
+
+# Shell functions sourced from /etc/rc.status:
+#      rc_check         check and set local and overall rc status
+#      rc_status        check and set local and overall rc status
+#      rc_status -v     ditto but be verbose in local rc status
+#      rc_status -v -r  ditto and clear the local rc status
+#      rc_failed        set local and overall rc status to failed
+#      rc_reset         clear local rc status (overall remains)
+#      rc_exit          exit appropriate to overall rc status
+
+# First reset status of this service
+rc_reset
+
+case "$1" in
+    start)
+	## Just in case, create these dirs
+	mkdir -p /dev/shm/privsep
+	mkdir -p /var/empty
+
+	## Generate hostkeys if not present
+        if ! grep -q '^[[:space:]]*HostKey[[:space:]]' /etc/ssh-sys/sshd_config; then
+                if ! test -f /etc/ssh-sys/ssh_host_key ; then
+                    echo Generating /etc/ssh-sys/ssh_host_key.
+                    /usr/local/ssh-sys/bin/ssh-keygen -t rsa1 -b 4096 -f /etc/ssh-sys/ssh_host_key -N ''
+                fi
+                if ! test -f /etc/ssh-sys/ssh_host_dsa_key ; then
+                    echo Generating /etc/ssh-sys/ssh_host_dsa_key.
+                    /usr/local/ssh-sys/bin/ssh-keygen -t dsa -b 1024 -f /etc/ssh-sys/ssh_host_dsa_key -N ''
+                fi
+                if ! test -f /etc/ssh-sys/ssh_host_rsa_key ; then
+                    echo Generating /etc/ssh-sys/ssh_host_rsa_key.
+                    /usr/local/ssh-sys/bin/ssh-keygen -t rsa -b 4096 -f /etc/ssh-sys/ssh_host_rsa_key -N ''
+                fi
+                if ! test -f /etc/ssh-sys/ssh_host_ecdsa_key ; then
+                    echo Generating /etc/ssh-sys/ssh_host_ecdsa_key.
+                    /usr/local/ssh-sys/bin/ssh-keygen -t ecdsa -b 4096 -f /etc/ssh-sys/ssh_host_ecdsa_key -N ''
+                fi
+        fi
+	echo -n "Starting SSHD-SYS daemon"
+	## Start daemon with startproc(8). If this fails
+	## the echo return value is set appropriate.
+
+	startproc -f -p $SSHD_PIDFILE $SSHD_BIN $SSHD_OPTS -o "PidFile=$SSHD_PIDFILE"
+
+	# Remember status and be verbose
+	rc_status -v
+	;;
+    stop)
+	echo -n "Shutting down SSHD-SYS daemon"
+	## Stop daemon with killproc(8) and if this fails
+	## set echo the echo return value.
+
+	killproc -p $SSHD_PIDFILE -TERM $SSHD_BIN
+
+	# Remember status and be verbose
+	rc_status -v
+	;;
+    try-restart)
+        ## Stop the service and if this succeeds (i.e. the 
+        ## service was running before), start it again.
+        $0 status >/dev/null &&  $0 restart
+
+        # Remember status and be quiet
+        rc_status
+        ;;
+    restart)
+        ## Stop the service and regardless of whether it was
+        ## running or not, start it again.
+        $0 stop
+        $0 start
+
+        # Remember status and be quiet
+        rc_status
+        ;;
+    force-reload|reload)
+	## Signal the daemon to reload its config. Most daemons
+	## do this on signal 1 (SIGHUP).
+
+	echo -n "Reload service sshd"
+
+	killproc -p $SSHD_PIDFILE -HUP $SSHD_BIN
+
+        rc_status -v
+
+        ;;
+    status)
+	echo -n "Checking for service sshd-sys "
+        ## Check status with checkproc(8), if process is running
+        ## checkproc will return with exit status 0.
+
+        # Status has a slightly different for the status command:
+        # 0 - service running
+        # 1 - service dead, but /var/run/  pid  file exists
+        # 2 - service dead, but /var/lock/ lock file exists
+        # 3 - service not running
+
+	checkproc -p $SSHD_PIDFILE $SSHD_BIN
+
+	rc_status -v
+	;;
+    probe)
+	## Optional: Probe for the necessity of a reload,
+	## give out the argument which is required for a reload.
+
+        test /etc/ssh-sys/sshd_config -nt $SSHD_PIDFILE && echo reload
+	;;
+    *)
+	echo "Usage: $0 {start|stop|status|try-restart|restart|force-reload|reload|probe}"
+	exit 1
+	;;
+esac
+rc_exit
