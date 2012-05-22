@@ -51,7 +51,7 @@ class a2o-essential-linux-libs::gearman {
     include 'a2o-essential-linux-libs::libmemcached'
 }
 
-### Libs required for ganglia
+### Libs required for various programs
 class a2o-essential-linux-libs::ganglia-gmond {
     include 'a2o-essential-linux-libs::apr'
     include 'a2o-essential-linux-libs::apr-util'
@@ -78,15 +78,15 @@ class a2o-essential-linux-libs::ganglia {
     include 'a2o-essential-linux-libs::pixman'
     include 'a2o-essential-linux-libs::rrdtool'
 }
-
-### Libs required for nagios
 class a2o-essential-linux-libs::nagios {
     include 'a2o-essential-linux-libs::gd'
     include 'a2o-essential-linux-libs::libiconv'
     include 'a2o-essential-linux-libs::libjpeg'
     include 'a2o-essential-linux-libs::libpng'
 }
-
+class a2o-essential-linux-libs::ruby {
+    include 'a2o-essential-linux-libs::yaml'
+}
 
 
 ### Libs in testing phase - to be migrated to ::all
