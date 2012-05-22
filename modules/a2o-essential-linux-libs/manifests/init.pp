@@ -67,6 +67,7 @@ class a2o-essential-linux-libs::ganglia {
     include 'a2o-essential-linux-libs::expat'
     include 'a2o-essential-linux-libs::fontconfig'
     include 'a2o-essential-linux-libs::freetype'
+    include 'a2o-essential-linux-libs::gettext'
     include 'a2o-essential-linux-libs::glib'
     include 'a2o-essential-linux-libs::libffi'
     include 'a2o-essential-linux-libs::libiconv'
