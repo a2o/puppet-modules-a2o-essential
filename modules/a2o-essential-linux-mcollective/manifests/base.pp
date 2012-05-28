@@ -13,8 +13,9 @@
 
 
 
-### The final all-containing classes
-class   a2o-essential-linux-mcollective {
-    include 'a2o-essential-linux-mcollective::package'
-    include 'a2o-essential-linux-mcollective::files'
+### Base class
+class   a2o-essential-linux-mcollective::base {
+
+    # This mcollective module name
+    $thisPuppetModule = 'a2o-essential-linux-mcollective'
 }

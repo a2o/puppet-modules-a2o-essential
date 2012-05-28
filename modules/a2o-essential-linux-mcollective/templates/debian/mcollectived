@@ -1,0 +1,163 @@
+#!/bin/sh
+###########################################################################
+# a2o Essential Puppet Modules                                            #
+#-------------------------------------------------------------------------#
+# Copyright (c) 2012 Bostjan Skufca                                       #
+#-------------------------------------------------------------------------#
+# This source file is subject to version 2.0 of the Apache License,       #
+# that is bundled with this package in the file LICENSE, and is           #
+# available through the world-wide-web at the following url:              #
+# http://www.apache.org/licenses/LICENSE-2.0                              #
+#-------------------------------------------------------------------------#
+# Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
+###########################################################################
+#
+### BEGIN INIT INFO
+# Provides:          mcollectived
+# Required-Start:    $local_fs $network
+# Required-Stop:     $local_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Mcollective orchestration daemon
+# Description:       This file should be used to start and stop mcollectd.
+### END INIT INFO
+
+
+# Export path to libs
+export RUBYLIB="\
+/usr/local/mcollective/lib:\
+/usr/local/mcollective/plugins:\
+/usr/local/mcollective/plugins/mcollective/agent:\
+/usr/local/mcollective/plugins/mcollective/application:\
+/usr/local/ruby/lib/ruby/site_ruby/1.9.1:/usr/local/ruby/lib/ruby/gems/1.9.1/gems/stomp-1.2.2/lib"
+
+
+# Configuration of binary and parameters
+RUBY_BIN="/usr/local/ruby/bin/ruby"
+MCOLLECTIVED_PIDFILE="/var/run/mcollectived.pid"
+MCOLLECTIVED_BIN="/usr/local/mcollective/mcollectived.rb"
+MCOLLECTIVED_RUNNING_BIN="$RUBY_BIN $MCOLLECTIVED_BIN"
+MCOLLECTIVED_START_CMD="$MCOLLECTIVED_RUNNING_BIN --pidfile=$MCOLLECTIVED_PIDFILE"
+PIDFILE=$MCOLLECTIVED_PIDFILE
+
+
+
+### Check the eecutable
+test -x $MCOLLECTIVED_BIN || exit 0
+
+
+### Source the function files
+[ -f /etc/default/rcS ] && . /etc/default/rcS
+. /lib/lsb/init-functions
+
+
+mcollectived_start()
+{
+	$MCOLLECTIVED_START_CMD || return 2
+	return 0
+}
+
+mcollectived_stop()
+{
+	if [ ! -f $PIDFILE ] ; then
+		# This is a success according to LSB
+		return 0
+	fi
+	for pid in $(cat $PIDFILE) ; do
+		/bin/kill $pid || return 4
+	done
+	rm -f $PIDFILE
+	return 0
+}
+
+mcollectived_status()
+{
+	if [ ! -f $PIDFILE ] ; then
+		# program not running
+		return 3
+	fi
+
+	for pid in $(cat $PIDFILE) ; do
+		if ! ps --no-headers p "$pid" | grep mcollectived > /dev/null ; then
+			# program running, bogus pidfile
+			return 1
+		fi
+	done
+
+	return 0
+}
+
+
+
+case "$1" in
+start)
+	log_daemon_msg "Starting mcollectived" "mcollectived"
+	mcollectived_start
+	ret=$?
+	case "$ret" in
+	0)
+		log_end_msg 0
+		;;
+	1)
+		log_end_msg 1
+		echo "pid file '$PIDFILE' found, mcollective not started."
+		;;
+	2)
+		log_end_msg 1
+		;;
+	esac
+	exit $ret
+	;;
+stop)
+	log_daemon_msg "Stopping mcollectived" "mcollectived"
+	mcollectived_stop
+	ret=$?
+	case "$ret" in
+	0|1)
+		log_end_msg 0
+		;;
+	2)
+		log_end_msg 1
+		;;
+	esac
+	exit $ret
+	;;
+restart)
+	log_daemon_msg "Restarting mcollectived" "mcollectived"
+	mcollectived_stop
+	mcollectived_start
+	case "$?" in
+	0)
+		log_end_msg 0
+		;;
+	1)
+		log_end_msg 1
+		;;
+	2)
+		log_end_msg 1
+		;;
+	esac
+	;;
+status)
+	mcollectived_status
+	ret=$?
+	case "$ret" in
+	0)
+		echo "mcollectived is running."
+		;;
+	1)
+		echo "mcollectived dead, but $PIDFILE exists."
+		;;
+	*)
+		echo "mcollectived not running."
+		;;
+	esac
+	exit $ret
+	;;
+*)
+	echo "Usage: /etc/init.d/mcollectived {start|stop|restart|status}"
+	exit 2
+	;;
+esac
+
+:

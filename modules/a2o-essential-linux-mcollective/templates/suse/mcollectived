@@ -1,0 +1,107 @@
+#!/bin/sh
+###########################################################################
+# a2o Essential Puppet Modules                                            #
+#-------------------------------------------------------------------------#
+# Copyright (c) 2012 Bostjan Skufca                                       #
+#-------------------------------------------------------------------------#
+# This source file is subject to version 2.0 of the Apache License,       #
+# that is bundled with this package in the file LICENSE, and is           #
+# available through the world-wide-web at the following url:              #
+# http://www.apache.org/licenses/LICENSE-2.0                              #
+#-------------------------------------------------------------------------#
+# Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
+###########################################################################
+#
+# /etc/init.d/mcollectived
+#
+### BEGIN INIT INFO
+# Provides:          mcollectived
+# Required-Start:    $remote_fs $syslog $network
+# Required-Stop:     $remote_fs $syslog $network
+# Default-Start:     3 5
+# Default-Stop:      0 1 2 6
+# Short-Description: Mcollective orchestration daemon
+# Description:       Mcollective orchestration daemon
+### END INIT INFO
+
+
+# Init the startup script and reset status of this service
+. /etc/rc.status
+rc_reset
+
+
+# Export path to libs
+export RUBYLIB="\
+/usr/local/mcollective/lib:\
+/usr/local/mcollective/plugins:\
+/usr/local/mcollective/plugins/mcollective/agent:\
+/usr/local/mcollective/plugins/mcollective/application:\
+/usr/local/ruby/lib/ruby/site_ruby/1.9.1:/usr/local/ruby/lib/ruby/gems/1.9.1/gems/stomp-1.2.2/lib"
+
+
+# Configuration of binary and parameters
+RUBY_BIN="/usr/local/ruby/bin/ruby"
+MCOLLECTIVE_PIDFILE="/var/run/mcollectived.pid"
+MCOLLECTIVE_BIN="/usr/local/mcollective/mcollectived.rb"
+MCOLLECTIVE_RUNNING_BIN="$RUBY_BIN $MCOLLECTIVE_BIN"
+MCOLLECTIVE_START_CMD="$MCOLLECTIVE_RUNNING_BIN --pidfile=$MCOLLECTIVE_PIDFILE"
+
+
+# Test binary existence - THINK is this good? What if program in uninstalled but
+# is left running in the background, effectively forgotten?
+test -x $MCOLLECTIVE_BIN || {
+    echo "$MCOLLECTIVE_BIN not installed";
+    if [ "$1" = "stop" ] ; then
+	exit 0
+    else
+	exit 5
+    fi
+}
+
+
+# Execute command
+case "$1" in
+    start)
+	if [ -e $MCOLLECTIVE_PIDFILE ]; then
+	    if checkproc $MCOLLECTIVE_BIN ; then
+		echo "Mcollectived already started. Not starting."
+		exit 0;
+	    else
+		echo "Removing stale PID file $MCOLLECTIVE_PIDFILE";
+		rm -f $MCOLLECTIVE_PIDFILE;
+	    fi
+	fi
+	echo -n "Starting mcollectived "
+	/etc/mcollective/facts-generate.sh &
+	startproc $MCOLLECTIVE_START_CMD
+	rc_status -v
+	;;
+
+    stop)
+	echo -n "Stopping mcollectived "
+	killproc -TERM $MCOLLECTIVE_RUNNING_BIN
+	rc_status -v
+	rm -f $MCOLLECTIVE_PIDFILE
+	;;
+
+    restart)
+	$0 stop
+	$0 start
+	rc_status
+	;;
+
+    status)
+	echo -n "Checking for service mcollectived "
+	checkproc $MCOLLECTIVE_RUNNING_BIN
+	rc_status -v
+	;;
+
+    *)
+	echo "Usage: $0 {start|stop|try-restart|restart|status}"
+	exit 1
+	;;
+esac
+
+
+# Signal exit of a script
+rc_exit

@@ -13,8 +13,14 @@
 
 
 
-### The final all-containing classes
-class   a2o-essential-linux-mcollective {
-    include 'a2o-essential-linux-mcollective::package'
-    include 'a2o-essential-linux-mcollective::files'
+### Some configuration files
+class   a2o-essential-linux-mcollective::files   inherits   a2o-essential-linux-mcollective::base {
+
+    File {
+	owner => root,
+	group => root,
+    }
+
+    file { '/etc/mcollective':                     mode => 700, ensure => directory }
+    file { '/etc/mcollective/facts-generate.sh':   mode => 700, source => "puppet:///modules/$thisPuppetModule/facts-generate.sh" }
 }

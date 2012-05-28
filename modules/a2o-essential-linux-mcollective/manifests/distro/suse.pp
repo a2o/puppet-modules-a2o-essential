@@ -13,8 +13,39 @@
 
 
 
+### Base class
+class   a2o-essential-linux-mcollective::distro::suse::base   inherits a2o-essential-linux-mcollective::base {
+}
+
+
+
+### Service: mcollectived
+class   a2o-essential-linux-mcollective::distro::suse::service   inherits   a2o-essential-linux-mcollective::distro::suse::base {
+
+
+    ### Requires and subscribes
+    $require   = []
+    $subscribe = [
+	Package['ruby'],
+        File['/usr/local/ruby'],
+	Package['mcollective'],
+        File['/usr/local/mcollective'],
+        File['/etc/mcollective/server.cfg'],
+        File['/etc/mcollective/facts-generate.sh'],
+    ]
+
+    ### Instantiate from template
+    a2o-essential-suse::service::generic_withstartupfile { 'mcollectived':
+	require   => $require,
+	subscribe => $subscribe,
+    }
+}
+
+
+
 ### The final all-containing classes
-class   a2o-essential-linux-mcollective {
+class a2o-essential-linux-mcollective::distro::suse {
     include 'a2o-essential-linux-mcollective::package'
     include 'a2o-essential-linux-mcollective::files'
+    include 'a2o-essential-linux-mcollective::distro::suse::service'
 }
