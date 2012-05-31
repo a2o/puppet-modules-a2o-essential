@@ -34,9 +34,4 @@ ln -sf libcrypto.so.1.0.0 $PDESTDIR_OPENSSL/lib/libcrypto.so.0 &&
 ln -sf libssl.so.1.0.0 $PDESTDIR_OPENSSL/lib/libssl.so.0 &&
 
 cd $SRCROOT &&
-rm -rf $PDIR &&
-
-
-
-### All done
-exit 0
+rm -rf $PDIR

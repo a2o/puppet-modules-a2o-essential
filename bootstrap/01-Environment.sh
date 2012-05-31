@@ -17,9 +17,4 @@ chmod 755 build_functions.sh &&
 
 # Symlink
 rm -f _functions.sh &&
-ln -s build_functions.sh _functions.sh &&
-
-
-
-### All done
-exit 0
+ln -s build_functions.sh _functions.sh

@@ -54,9 +54,4 @@ make &&
 make install &&
 
 cd $SRCROOT &&
-rm -rf shadow-1.4.1 &&
-
-
-
-### All done
-exit 0
+rm -rf shadow-1.4.1

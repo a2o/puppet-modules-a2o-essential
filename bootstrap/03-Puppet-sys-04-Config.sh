@@ -3,7 +3,6 @@
 
 
 ### Create default /etc/puppet-sys/puppet.conf
-mkdir -p /etc/puppet-sys &&
 cat <<EOF > /etc/puppet-sys/puppet.conf
 [agent]
 server            = PUPPETMASTER_HOST_SYS

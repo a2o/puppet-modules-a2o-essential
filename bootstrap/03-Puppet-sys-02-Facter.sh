@@ -30,9 +30,4 @@ GetUnpackCd &&
 $PDESTDIR/bin/ruby install.rb &&
 
 cd $SRCROOT &&
-rm -rf $PDIR &&
-
-
-
-### All done
-exit 0
+rm -rf $PDIR

@@ -48,5 +48,5 @@ mv -f /tmp/run_mode.rb $PDESTDIR/lib/ruby/site_ruby/1.8/puppet/util/run_mode.rb 
 
 
 
-### All done
-exit 0
+### Create configuration directory
+mkdir -p /etc/puppet-sys
