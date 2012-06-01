@@ -1,0 +1,58 @@
+###########################################################################
+# a2o Essential Puppet Modules                                            #
+#-------------------------------------------------------------------------#
+# Copyright (c) 2012 Bostjan Skufca                                       #
+#-------------------------------------------------------------------------#
+# This source file is subject to version 2.0 of the Apache License,       #
+# that is bundled with this package in the file LICENSE, and is           #
+# available through the world-wide-web at the following url:              #
+# http://www.apache.org/licenses/LICENSE-2.0                              #
+#-------------------------------------------------------------------------#
+# Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
+###########################################################################
+
+
+### WARNING
+### WARNING: Don't modify this file!
+### WARNING
+###
+### If changes are required, copy this file to either:
+###
+### - dump.config.site
+### - dump.config.local
+###
+### and change the values there.
+
+
+### Program paths, options, credentials file to use, etc.
+# Backup user requires privileges: SELECT, RELOAD, SHOW_DB, LOCK_TABLES, SHOW_VIEW
+MYSQL="mysql"
+MYSQLDUMP="mysqldump"
+MYSQLDUMP_OPTS="--force --add-locks --disable-keys --extended-insert --quote-names --routines --single-transaction --triggers"
+MYCNF="/root/.my.cnf.backup"
+MYSQL_DATADIR="/var/lib/mysql"   # For backing up replication coordinates
+
+
+# First INCLUDE_DBS is evaluated, then included DBS are run through EXCLUDE_DBS
+# By default, include all databases and only exclude information_schema and test*
+INCLUDE_DBS="^.\+\$"
+EXCLUDE_DBS="^\(information_schema\|test.*\)\$"
+
+
+### Output format and Compression
+# Compression is enabled by default. Also, specify command that reads from STDIN
+COMPRESS=1
+COMPRESS_CMD="gzip -c"
+COMPRESS_EXT=gz
+DESTINATION_UMASK=0066
+
+### Currently unsupported
+#COMPRESS_AFTER_DUMP=1
+#SEPARATE_TABLES=0
+#SEPARATE_STRUCTURE_AND_DATA=0
+
+
+### Replication setup
+# Shall we pause slave or not (1 or 0)
+# Requires what privilege?
+PAUSE_SLAVE=0

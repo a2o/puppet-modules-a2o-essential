@@ -14,18 +14,19 @@
 
 
 
-# File paths, change this if it can't be autodetected via which command
-MYSQL="mysql"
-MYSQLDUMP="mysqldump"
-SKIP_DBS="^\(information_schema\|test\)\$"
-MYCNF="/root/.my.cnf.backup"
+# Include configuration
+. `dirname $0`/dump.config.defaults
+if [ -e `dirname $0`/dump.config.site ]; then
+    . `dirname $0`/dump.config.site
+fi
+if [ -e `dirname $0`/dump.config.local ]; then
+    . `dirname $0`/dump.config.local
+fi
 
 
 
-# Additional parameter - destination directory
+# Required parameter - destination directory
 DESTDIR="$1"
-
-
 
 # Check if directory exists
 if [ "$DESTDIR" == "" ]; then
@@ -37,6 +38,9 @@ elif [ ! -d $DESTDIR ]; then
     echo "ERROR: Destination is not a directory: $DESTDIR"
     exit 1
 fi
+
+# Strip trailing slash
+DESTDIR=`echo "$DESTDIR" | sed -e 's/\/$//'`
 
 
 
@@ -96,8 +100,10 @@ _echo "done."
 
 # Remove old backup
 _echo -n "Removing old backup... "
-cd $DESTDIR && rm *.sql.bz2
+rm -f $DESTDIR/*.sql
+rm -f $DESTDIR/*.sql.$COMPRESS_EXT
 _echo "done."
+_echo
 
 
 
@@ -107,29 +113,78 @@ ERROR_OCCURED="no"
 
 
 # Get database list
-DBS=`echo 'SHOW DATABASES' | $MYSQL --defaults-file=$MYCNF -Bs`;
+DBS_ALL=`echo 'SHOW DATABASES' | $MYSQL --defaults-file=$MYCNF -Bs`;
 if [ "$?" != "0" ]; then
     ERROR_OCCURED="yes"
 fi
 
+# Parse which DBS are included
+DBS_INCLUDED=""
+for DB in $DBS_ALL; do
+    RES=`echo "$DB" | grep "$INCLUDE_DBS" | grep -c .`
+    if [ "$RES" == "0" ]; then
+	_echo "Not including database: $DB"
+	continue
+    fi
+    DBS_INCLUDED="$DBS_INCLUDED $DB"
+done
+
+# Parse which DBS are EXCLUDED
+DBS=""
+for DB in $DBS_INCLUDED; do
+    RES=`echo "$DB" | grep "$EXCLUDE_DBS" | grep -c .`
+    if [ "$RES" == "1" ]; then
+	_echo "Excluding database:     $DB"
+	continue
+    fi
+    DBS="$DBS $DB"
+done
+_echo
 
 
-# Loop trough DBS
+
+### Pause replication slave if requested
+SLAVE_PAUSED=0
+if [ "$PAUSE_SLAVE" == "1" ]; then
+
+    # Check if replication is running at all
+    RES=`echo "SHOW SLAVE STATUS\G" | $MYSQL | grep -c .`
+    if [ "$RES" == "0" ]; then
+	echo "WARNING: Replication is not configured at all!"
+	ERROR_OCCURED="yes"
+    else
+        RES=`echo "SHOW SLAVE STATUS\G" | $MYSQL | grep Running | grep -v ': Yes$' | grep -c .`
+	if [ "$RES" != "0" ]; then
+	    echo "WARNING: Replication is not running properly!"
+	    ERROR_OCCURED="yes"
+	else
+	    _echo "REPLICATION: Pausing..."
+    	    RES=`echo "STOP SLAVE" | $MYSQL`
+    	    SLAVE_PAUSED=1
+	fi
+    fi
+fi
+
+
+
+# Loop trough DBS and dump
 for DB in $DBS; do
 
-    # Do we have to skip it
-    RES=`echo "$DB" | grep "$SKIP_DBS" | grep -c .`
-    if [ "$RES" == "1" ]; then
-	_echo "  Skipping database $DB."
-	continue
+    # What destination will it end in?
+    DESTFILE=$DESTDIR/$DB.sql
+    if [ "$COMPRESS" == "1" ]; then
+	DESTFILE_CMD="$COMPRESS_CMD"
+	DESTFILE="$DESTFILE.$COMPRESS_EXT"
+    else
+	DESTFILE_CMD="cat"
+	DESTFILE="$DESTFILE"
     fi
 
     # Dump it
-    _echo -n "  Dumping database $DB... "
-    DESTFILE=$DESTDIR/$DB.sql.bz2
-    umask 0066
+    _echo -n "DUMP: $DB... "
+    umask $DESTINATION_UMASK
     touch $DESTFILE
-    $MYSQLDUMP --defaults-file=$MYCNF --force --add-locks --disable-keys --extended-insert --quote-names --routines --single-transaction --triggers $DB | grep -v '^-- Dump completed on ' | bzip2 -c > $DESTFILE
+    $MYSQLDUMP --defaults-file=$MYCNF $MYSQLDUMP_OPTS $DB | LANG=C grep -v '^-- Dump completed on ' | $DESTFILE_CMD > $DESTFILE
 
     # Check for error
     if [ "$?" != "0" ]; then
@@ -139,6 +194,20 @@ for DB in $DBS; do
 	_echo "done."
     fi
 done
+
+
+
+### Resuming replication
+if [ "$SLAVE_PAUSED" == "1" ]; then
+
+    _echo "REPLICATION: Saving replication coordinate (index) files... "
+    rm -f $DATADIR/*.index && cp $MYSQL_DATADIR/*.index $DESTDIR/
+    rm -f $DATADIR/*.info  && cp $MYSQL_DATADIR/*.info  $DESTDIR/
+
+    _echo "REPLICATION: Resuming... "
+    RES=`echo "START SLAVE" | $MYSQL`
+fi
+echo
 
 
 

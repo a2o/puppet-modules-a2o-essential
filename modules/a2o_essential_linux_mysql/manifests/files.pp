@@ -25,6 +25,7 @@ class   a2o_essential_linux_mysql::files   inherits   a2o_essential_linux_mysql:
 
     # Database dump and restore files
     file { '/opt/scripts/mysql':   ensure => directory, mode => 755 }
-    file { '/opt/scripts/mysql/dump.mysql.sh':     source => "puppet:///modules/$thisPuppetModule/dump.mysql.sh"   }
-    file { '/opt/scripts/mysql/import.mysql.sh':   source => "puppet:///modules/$thisPuppetModule/import.mysql.sh" }
+    file { '/opt/scripts/mysql/dump.config.defaults':   source => "puppet:///modules/$thisPuppetModule/dump.config.defaults" }
+    file { '/opt/scripts/mysql/dump.mysql.sh':          source => "puppet:///modules/$thisPuppetModule/dump.mysql.sh"        }
+    file { '/opt/scripts/mysql/import.mysql.sh':        source => "puppet:///modules/$thisPuppetModule/import.mysql.sh"      }
 }
