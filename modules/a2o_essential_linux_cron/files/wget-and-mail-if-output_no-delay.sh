@@ -1,0 +1,37 @@
+#!/bin/bash
+
+
+
+### Check parameters
+if [ "$#" != "2" ]; then
+    echo "ERROR: Invalid number of arguments, 2 required."
+    echo "USAGE: $0 \"command to run\" \"mails@to notify@on error@domain\""
+    exit 1
+fi
+URI="$1"
+EMAIL_ADDRESSES="$2"
+#TODO third argument
+WGET_OPTS="$3"
+
+
+
+### Run the command
+WGET_OUTPUT=`/usr/local/bin/wget -t1 -T10800 -q -O - "$URI" 2>&1`
+WGET_STATUS=$?
+WGET_OUTPUT_TRIMMED=`echo "$WGET_OUTPUT" | sed -e 's/\s//g'`
+
+
+
+### Notify on error
+if [ "$WGET_STATUS" != "0" ]; then
+    echo "$WGET_OUTPUT" | mail -s "$URI (status=$WGET_STATUS)" $EMAIL_ADDRESSES
+    exit 1
+fi
+
+
+
+### Notify on non-whitespace-only output
+if [ "$WGET_OUTPUT_TRIMMED" != "" ]; then
+    echo "$WGET_OUTPUT" | mail -s "$URI" $EMAIL_ADDRESSES
+    exit 2
+fi
