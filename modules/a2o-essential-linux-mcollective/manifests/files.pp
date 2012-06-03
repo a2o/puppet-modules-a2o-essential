@@ -23,4 +23,20 @@ class   a2o-essential-linux-mcollective::files   inherits   a2o-essential-linux-
 
     file { '/etc/mcollective':                     mode => 700, ensure => directory }
     file { '/etc/mcollective/facts-generate.sh':   mode => 700, source => "puppet:///modules/$thisPuppetModule/facts-generate.sh" }
+    file { "/etc/mcollective/facts-global.yaml":   mode => 600, }
+    file { "/etc/mcollective/facts-local.yaml":    mode => 600, }
+    file { "/etc/mcollective/facts.yaml":          mode => 600, }
+
+
+    # Update facts file upon fact changes
+    exec { 'exec /etc/mcollective/facts-generate.sh':
+	command     => '/etc/mcollective/facts-generate.sh',
+	subscribe   => [
+	    File['/etc/mcollective/facts-generate.sh'],
+	    File['/etc/mcollective/facts-global.yaml'],
+	    File['/etc/mcollective/facts.yaml'],
+	],
+	refreshonly => true,
+	require     => Package['mcollective'],
+    }
 }
