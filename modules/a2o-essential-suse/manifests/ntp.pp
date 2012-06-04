@@ -41,9 +41,12 @@ class   a2o-essential-suse::ntp   inherits   a2o-essential-suse::base {
     ### Sync hardware clock to system time from cron
     cron { '/sbin/hwclock':
 	user     => root,
-	command  => '/sbin/hwclock',
+	command  => '/opt/scripts/cron/run-and-mail-if-error.sh   "/sbin/hwclock --systohc"   "root"',
 	hour     => 4,
 	minute   => 1,
-	require  => Service['ntp'],
+	require  => [
+	    Service['ntp'],
+	    File['/opt/scripts/cron/run-and-mail-if-error.sh'],
+	],
     }
 }
