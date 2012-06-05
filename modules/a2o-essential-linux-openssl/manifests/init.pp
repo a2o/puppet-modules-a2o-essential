@@ -36,8 +36,6 @@ class   a2o-essential-linux-openssl::packages {
     #
     # WARNING: If you add/remove packages, update symlinks below
 
-    a2o-essential-linux-openssl::package::generic { 'openssl-0.9.8t-1': }
-    a2o-essential-linux-openssl::package::generic { 'openssl-0.9.8u-1': }
     a2o-essential-linux-openssl::package::generic { 'openssl-0.9.8w-1': }
     a2o-essential-linux-openssl::package::generic { 'openssl-1.0.0h-1': }
     a2o-essential-linux-openssl::package::latest  { 'openssl-1.0.0i-1': }
@@ -52,6 +50,7 @@ class   a2o-essential-linux-openssl::cleanup {
 	Package['openssl'],
 	File['/usr/local/openssl'],
 	File['/usr/local/openssl-0.9.8'],
+	File['/usr/local/openssl-1.0.0'],
     ]
 
     a2o-essential-unix::compiletool::package::remove { 'openssl-0.9.8m-1': compileDir => $compileDir, require => $require, }
@@ -61,7 +60,13 @@ class   a2o-essential-linux-openssl::cleanup {
     a2o-essential-unix::compiletool::package::remove { 'openssl-0.9.8q-1': compileDir => $compileDir, require => $require, }
     a2o-essential-unix::compiletool::package::remove { 'openssl-0.9.8r-1': compileDir => $compileDir, require => $require, }
     a2o-essential-unix::compiletool::package::remove { 'openssl-0.9.8s-1': compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'openssl-0.9.8t-1': compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'openssl-0.9.8u-1': compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'openssl-0.9.8v-1': compileDir => $compileDir, require => $require, }
     a2o-essential-unix::compiletool::package::remove { 'openssl-1.0.0d-1': compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'openssl-1.0.0e-1': compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'openssl-1.0.0f-1': compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'openssl-1.0.0g-1': compileDir => $compileDir, require => $require, }
 }
 
 

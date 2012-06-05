@@ -14,7 +14,7 @@
 
 
 ### Software package: imap
-class   a2o-essential-linux-libs::imap   inherits   a2o-essential-linux-libs::base {
+class   a2o-essential-linux-libs::imap::package   inherits   a2o-essential-linux-libs::base {
 
     # Software details
     $packageName            = 'imap'
@@ -52,4 +52,27 @@ class   a2o-essential-linux-libs::imap   inherits   a2o-essential-linux-libs::ba
 	    Package['openssl'],
 	],
     }
+}
+
+
+
+### Cleanup
+class   a2o-essential-linux-libs::imap::cleanup   inherits   a2o-essential-linux-libs::base {
+
+    File {
+        ensure  => absent,
+        backup  => false,
+	recurse => true,
+	force   => true,
+    }
+    file {'/usr/local/imap-2007e': }
+    file {'/usr/local/imap-2007f': }
+}
+
+
+
+### Package and cleanup
+class   a2o-essential-linux-libs::imap   inherits   a2o-essential-linux-libs::base {
+    include 'a2o-essential-linux-libs::imap::package'
+    include 'a2o-essential-linux-libs::imap::cleanup'
 }

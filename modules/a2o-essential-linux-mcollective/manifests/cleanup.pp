@@ -13,9 +13,15 @@
 
 
 
-### The final all-containing classes
-class   a2o-essential-linux-mcollective {
-    include 'a2o-essential-linux-mcollective::package'
-    include 'a2o-essential-linux-mcollective::cleanup'
-    include 'a2o-essential-linux-mcollective::files'
+### Cleanup for mcollective
+class   a2o-essential-linux-mcollective::cleanup   inherits   a2o-essential-linux-mcollective::base {
+
+    $require = [
+        Package['mcollective'],
+	File['/usr/local/mcollective'],
+    ]
+    $compileDir = '/var/src/undefined'
+
+    a2o-essential-unix::compiletool::package::remove { 'mcollective-1.2.1-1': compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'mcollective-1.2.1-2': compileDir => $compileDir, require => $require, }
 }

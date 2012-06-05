@@ -14,7 +14,7 @@
 
 
 ### Software package: git
-class   a2o-essential-linux-tools::git   inherits   a2o-essential-linux-tools::base {
+class   a2o-essential-linux-tools::git::package   inherits   a2o-essential-linux-tools::base {
 
     # Software details
     $packageName            = 'git'
@@ -63,6 +63,30 @@ class   a2o-essential-linux-tools::git   inherits   a2o-essential-linux-tools::b
 	require  => Package["$packageName"],
 	backup   => false,
     }
+}
+
+
+
+### Cleanup - remove old versions
+class   a2o-essential-linux-tools::git::cleanup   inherits   a2o-essential-linux-tools::base {
+    $require = [
+	Package['git'],
+	File['/usr/local/git'],
+    ]
+
+    a2o-essential-unix::compiletool::package::remove { 'git-1.7.7.1-1':  compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'git-1.7.9.1-1':  compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'git-1.7.9.6-1':  compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'git-1.7.10-1':   compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'git-1.7.10.2-1': compileDir => $compileDir, require => $require, }
+}
+
+
+
+### Software package: git
+class   a2o-essential-linux-tools::git   inherits   a2o-essential-linux-tools::base {
+    include 'a2o-essential-linux-tools::git::package'
+    include 'a2o-essential-linux-tools::git::cleanup'
 }
 
 

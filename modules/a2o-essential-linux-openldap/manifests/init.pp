@@ -63,13 +63,13 @@ class   a2o-essential-linux-openldap::package::current   inherits   a2o-essentia
 
 ### Software packages - legacy
 class   a2o-essential-linux-openldap::package::legacy   inherits   a2o-essential-linux-openldap::base {
-
-    # External software versions
-    $externalDestDir_openssl = '/usr/local/openssl-1.0.0i-1'
-
-    # Packages
-    a2o-essential-unix::compiletool::package::multi   { 'openldap-2.4.25-1':   require => $require, }
-    a2o-essential-unix::compiletool::package::multi   { 'openldap-2.4.28-1':   require => $require, }
+#
+#    # External software versions
+#    $externalDestDir_openssl = '/usr/local/openssl-1.0.0i-1'
+#
+#    # Packages
+#    a2o-essential-unix::compiletool::package::multi   { 'openldap-2.4.25-1':   require => $require, }
+#    a2o-essential-unix::compiletool::package::multi   { 'openldap-2.4.28-1':   require => $require, }
 }
 
 
@@ -85,6 +85,10 @@ class   a2o-essential-linux-openldap::package::cleanup   inherits   a2o-essentia
     a2o-essential-unix::compiletool::package::remove { 'openldap-2.4.23-2': compileDir => $compileDir, require => $require, }
     a2o-essential-unix::compiletool::package::remove { 'openldap-2.4.23-3': compileDir => $compileDir, require => $require, }
     a2o-essential-unix::compiletool::package::remove { 'openldap-2.4.23-4': compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'openldap-2.4.24-1': compileDir => $compileDir, require => $require, }
+#    a2o-essential-unix::compiletool::package::remove { 'openldap-2.4.25-1': compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'openldap-2.4.26-1': compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'openldap-2.4.28-1': compileDir => $compileDir, require => $require, }
 }
 
 

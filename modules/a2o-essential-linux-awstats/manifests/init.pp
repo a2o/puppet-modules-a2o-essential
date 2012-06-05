@@ -16,6 +16,9 @@
 ### Base class
 class   a2o-essential-linux-awstats::base {
     $thisPuppetModule = 'a2o-essential-linux-awstats'
+
+    # Where the packages will be compiled
+    $compileDir       = "/var/src/tools"
 }
 
 
@@ -32,9 +35,6 @@ class   a2o-essential-linux-awstats::package   inherits   a2o-essential-linux-aw
     $packageTag             = "$packageSoftware-$packageEnsure"
     $installScriptTpl       = "install-$packageSoftware.sh"
     $installScript          = "install-$packageTag.sh"
-
-    # Where the packages will be compiled
-    $compileDir             = "/var/src/tools"
 
     # Global destination directory
     $destDir                = "/usr/local/$packageTag"
@@ -71,6 +71,20 @@ class   a2o-essential-linux-awstats::package   inherits   a2o-essential-linux-aw
 
 
 
+### Software package
+class   a2o-essential-linux-awstats::cleanup   inherits   a2o-essential-linux-awstats::base {
+    $require = [
+        Package['awstats'],
+	File['/usr/local/awstats'],
+    ]
+
+    a2o-essential-unix::compiletool::package::remove { 'awstats-6.90-1': compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'awstats-6.95-1': compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'awstats-6.95-2': compileDir => $compileDir, require => $require, }
+}
+
+
+
 ### Configuration files and directories
 class   a2o-essential-linux-awstats::files   inherits   a2o-essential-linux-awstats::base {
 
@@ -87,5 +101,6 @@ class   a2o-essential-linux-awstats::files   inherits   a2o-essential-linux-awst
 ### The final all-containing classes
 class a2o-essential-linux-awstats {
     include 'a2o-essential-linux-awstats::package'
+    include 'a2o-essential-linux-awstats::cleanup'
     include 'a2o-essential-linux-awstats::files'
 }

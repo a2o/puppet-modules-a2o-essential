@@ -23,4 +23,10 @@ class   a2o_essential_linux_openssh_sys::package::cleanup   inherits   a2o_essen
     ]
 
     a2o-essential-unix::compiletool::package::remove { 'openssh-sys-5.5p1-1': compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'openssh-sys-5.6p1-1': compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'openssh-sys-5.6p1-2': compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'openssh-sys-5.7p1-1': compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'openssh-sys-5.8p1-1': compileDir => $compileDir, require => $require, }
+    a2o-essential-unix::compiletool::package::remove { 'openssh-sys-5.8p1-2': compileDir => $compileDir, require => $require, }
+#    a2o-essential-unix::compiletool::package::remove { 'openssh-sys-5.9p1-1': compileDir => $compileDir, require => $require, }
 }
