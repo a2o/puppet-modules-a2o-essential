@@ -32,7 +32,7 @@ class   a2o-essential-linux-puppet-sys::package::base   inherits   a2o-essential
     $packageSoftwareName_puppet    = "puppet"
 
     # CheckURI: http://puppetlabs.com/puppet/puppet-enterprise/
-    $packageSoftwareVersion_puppet = '2.7.14'
+    $packageSoftwareVersion_puppet = '2.7.16'
     $packageRelease_puppet         = '1'
     $packageEnsure_puppet          = "${packageSoftwareVersion_puppet}-${packageRelease_puppet}"
     $packageTag_puppet             = "${packageName_puppet}-${packageEnsure_puppet}"
@@ -45,9 +45,6 @@ class   a2o-essential-linux-puppet-sys::package::base   inherits   a2o-essential
     $packageRelease_ruby           = '1'
     $packageEnsure_ruby            = "${packageSoftwareVersion_ruby}-${packageRelease_ruby}"
     $packageTag_ruby               = "${packageName_ruby}-${packageEnsure_ruby}"
-
-    # CheckURI: http://rubygems.org/
-    $packageSoftwareVersion_gems   = '1.8.17'
 
     $packageName_facter            = "${packageTag_puppet}-facter"
     $packageSoftwareName_facter    = "facter"

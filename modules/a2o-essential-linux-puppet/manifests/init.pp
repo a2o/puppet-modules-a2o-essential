@@ -20,7 +20,7 @@ class   a2o-essential-linux-puppet::base {
     $thisPuppetModule = 'a2o-essential-linux-puppet'
 
     # External software versions
-    $externalDestDir_openssl = '/usr/local/openssl-1.0.0h-1'
+    $externalDestDir_openssl = '/usr/local/openssl-1.0.0i-1'
 }
 
 
@@ -31,9 +31,8 @@ class   a2o-essential-linux-puppet::package::base   inherits   a2o-essential-lin
     $packageName_puppet            = "puppet"
     $packageSoftwareName_puppet    = "puppet"
 
-    # Don't upgrade to 2.7.x ($variable-text issue with dash)
     # CheckURI: http://puppetlabs.com/puppet/puppet-enterprise/
-    $packageSoftwareVersion_puppet = '2.6.16'
+    $packageSoftwareVersion_puppet = '2.7.16'
     $packageRelease_puppet         = '1'
     $packageEnsure_puppet          = "${packageSoftwareVersion_puppet}-${packageRelease_puppet}"
     $packageTag_puppet             = "${packageName_puppet}-${packageEnsure_puppet}"
@@ -46,9 +45,6 @@ class   a2o-essential-linux-puppet::package::base   inherits   a2o-essential-lin
     $packageRelease_ruby           = '1'
     $packageEnsure_ruby            = "${packageSoftwareVersion_ruby}-${packageRelease_ruby}"
     $packageTag_ruby               = "${packageName_ruby}-${packageEnsure_ruby}"
-
-    # CheckURI: http://rubygems.org/
-    $packageSoftwareVersion_gems   = '1.8.21'
 
     $packageName_facter            = "${packageTag_puppet}-facter"
     $packageSoftwareName_facter    = "facter"

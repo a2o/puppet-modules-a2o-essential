@@ -24,7 +24,6 @@ cd $SRCROOT &&
 ### Set versions and directories
 export PVERSION_RUBY=`echo "<%= packageSoftwareVersion %>" | sed -e 's/_/-/'` &&
 export PVERSION_RUBY_MAJOR=`echo "$PVERSION_RUBY" | cut -d. -f1,2` &&
-export PVERSION_GEMS="<%=  packageSoftwareVersion_gems  %>" &&
 export PDESTDIR="<%= destDir %>" &&
 export PDESTDIR_OPENSSL="<%= externalDestDir_openssl %>" &&
 
