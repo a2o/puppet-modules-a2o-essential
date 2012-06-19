@@ -1,15 +1,25 @@
-Bootstrap prerequisites
+################################################################################
+# Bootstrap prerequisites
+################################################################################
 
-Packages installed:
-- diff (diffutils)
+
+### Packages that must be installed:
+- autoconf
+- automake
+- diff       (or diffutils)
 - gcc
 - gcc-c++
-- gettext
+- gettext    (or gettext-runtime)
+- groff
 - libtool
 - make
 - patch
 - pkg-config (or pkgconfig)
-- zlib
-- zlib-devel
-(- autoconf)
-(- automake)
+- zlib       (or zlib1g)
+- zlib-devel (or zlib1g-dev)
+
+
+### How to install on specific systems
+On SuSE   based systems, please use:   zypper  install PACKAGENAME
+On Debian based systems, please use:   apt-get install PACKAGENAME
+On RedHat based systems, please use:   yum     install PACKAGENAME
