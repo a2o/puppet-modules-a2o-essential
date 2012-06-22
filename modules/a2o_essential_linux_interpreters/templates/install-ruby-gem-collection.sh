@@ -17,10 +17,12 @@ export PDESTDIR_RUBY="<%=  destDir_ruby %>" &&
 ### Various gems
 # Rails
 $PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc rails --version 2.3.4 &&
+$PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc rails --version 3.2.6 &&
 $PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc rack  --version 1.1.3 &&
 
-# Thin web server
+# Web servers
 $PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc thin &&
+$PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc unicorn &&
 
 # OpenId
 $PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc ruby-openid &&
@@ -39,6 +41,9 @@ $PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc sys-proctable &&
 $PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc bundler &&
 # This should be run in an application directory
 #$PDESTDIR_RUBY/bin/bundle install --without development test postgresql sqlite rmagick &&
+
+# Capistrano
+$PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc capistrano &&
 
 
 
