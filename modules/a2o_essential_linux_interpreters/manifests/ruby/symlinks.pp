@@ -24,7 +24,12 @@ class   a2o_essential_linux_interpreters::ruby::symlinks   inherits   a2o_essent
     # Program symlinks
     file { '/usr/bin/ruby':                    ensure => '/usr/local/bin/ruby',                 }
     file { '/usr/local/bin/ruby':              ensure => '/usr/local/ruby/bin/ruby',            }
+    file { '/usr/local/bin/irb':               ensure => '/usr/local/ruby/bin/irb',             }
     file { '/usr/local/bin/rake':              ensure => '/usr/local/ruby/bin/rake',            }
+    file { '/usr/local/bin/cap':               ensure => '/usr/local/ruby/bin/cap',             }
+    file { '/usr/local/bin/capify':            ensure => '/usr/local/ruby/bin/capify',          }
+    file { '/usr/local/bin/unicorn':           ensure => '/usr/local/ruby/bin/unicorn',         }
+    file { '/usr/local/bin/unicorn_rails':     ensure => '/usr/local/ruby/bin/unicorn_rails',   }
 
     # TODO - remove these
 #    file { '/usr/local/bin/mongrel_cluster':       ensure => absent, }
