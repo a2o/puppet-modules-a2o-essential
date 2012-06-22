@@ -1,0 +1,70 @@
+#!/bin/sh
+. /etc/rc.d/rc._functions
+
+
+
+PROC_NAME="/usr/local/postgresql/bin/postgres"
+PID_FILE="/var/postgresql/run/postgres.pid"
+APP_CMD_START="su - postgresql -c '/usr/local/postgresql/bin/postgres --config-file=/etc/postgresql/postgresql.conf' > /var/postgresql/log/stderr.log 2>&1 &"
+#APP_CMD_STOP="/usr/local/postgres/share/postgres/postgres.server stop"
+APP_STOP_STALE_PID_FILE_NOWARNING=1
+
+
+
+postgres_start() {
+    # Raise SHMMAX limit here - TODO make it parse config and set it according to that
+    echo '268435456' > /proc/sys/kernel/shmmax
+    if app_start; then
+	ln -sf $PID_FILE /var/run/postgres.pid
+#	ln -sf /var/postgresql/run/postgres.sock /var/run/postgres.sock
+#        ln -sf /var/postgresql/run/postgres.sock /tmp/postgres.sock
+  fi
+}
+
+postgres_stop() {
+    if app_stop; then
+	rm -f /var/run/postgres.pid
+#        rm -f /var/run/postgres.sock
+#        rm -f /tmp/postgres.sock
+    fi
+}
+
+postgres_restart() {
+    postgres_stop
+    postgres_start
+}
+
+postgres_status() {
+    is_app_running__info
+}
+
+postgres_kill() {
+    if app_kill; then
+	rm -f $PID_FILE
+	rm -f /var/run/postgres.pid
+#        rm -f /var/run/postgres.sock
+#        rm -f /tmp/postgres.sock
+  fi
+}
+
+
+
+case "$1" in
+    'start')
+	postgres_start
+	;;
+    'stop')
+	postgres_stop
+	;;
+    'restart')
+	postgres_restart
+	;;
+    'status')
+	postgres_status
+	;;
+    'kill')
+	postgres_kill
+	;;
+    *)
+	echo "usage $0 start|stop|restart|status|kill"
+esac
