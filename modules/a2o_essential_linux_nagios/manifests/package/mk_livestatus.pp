@@ -13,28 +13,30 @@
 
 
 
-### Software package: mk-livestatus
+### Software package: mk_livestatus
 class   a2o_essential_linux_nagios::package::mk_livestatus   inherits   a2o_essential_linux_nagios::package::base {
 
-    # Package / Software details
-    # CheckURI: http://mathias-kettner.de/check_mk_download.html
-    $softwareName     = "$packageTag_nagios-mk-livestatus"
-    $softwareVersion  = '1.1.12p6'
-    $packageRelease   = '1'
-    $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
-    $destDir          = "$destDir_nagios/$packageTag"
+    # CheckURI: see base.pp file for upgrading
+    $softwareName        = "$softwareName_mk_livestatus"
+    $packageTag          = "$packageTag_mk_livestatus"
+    $destDir             = "$destDir_mk_livestatus"
+    $destDirSymlink      = "$destDirSymlink_mk_livestatus"
+    $destDirSymlink_dest = "$destDirSymlink_mk_livestatus_dest"
 
 
     ### Package
     $require = [
         Package['nagios'],
     ]
-    a2o-essential-unix::compiletool::package::generic { "$packageTag": require => $require, }
+    a2o-essential-unix::compiletool::package::generic { "$packageTag":
+	require => $require,
+	installScriptTplUri => "$thisPuppetModule/install-mk-livestatus.sh",
+    }
 
 
     ### Symlink
-    file { "$destDir_nagios/$softwareName":
-	ensure  => "$packageTag",
+    file { "$destDirSymlink":
+	ensure  => "$destDirSymlink_dest",
 	require => [
 	    Package["$softwareName"],
 	],

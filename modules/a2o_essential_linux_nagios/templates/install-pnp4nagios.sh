@@ -22,36 +22,42 @@ cd $SRCROOT &&
 
 
 ### Set versions and directories
-export PVERSION_NAGIOS="<%= softwareVersion %>" &&
-export PDESTDIR_NAGIOS="<%= destDir %>" &&
-export PDESTDIR_PERL="<%= externalDestDir_perl %>" &&
+export PVERSION_PNP4NAGIOS="<%= packageSoftwareVersion %>" &&
+export PDESTDIR_PNP4NAGIOS="<%= destDir %>" &&
+export PDESTDIR_PERLLIB="<%= externalDestDir_perllib %>" &&
+export PDESTDIR_NAGIOS="<%= destDir_nagios %>" &&
 
 
 
 ### Download and install
-# CheckURI: http://www.nagios.org/download/core/thanks/
+# CheckURI: http://sourceforge.net/projects/pnp4nagios/
 cd $SRCROOT && . ../_functions.sh &&
-export PNAME="nagios" &&
-export PVERSION="$PVERSION_NAGIOS" &&
-export PDIR="$PNAME" &&
-export PFILE="$PDIR-$PVERSION.tar.gz" &&
-export PURI="http://garr.dl.sourceforge.net/sourceforge/nagios/$PFILE" &&
+export PNAME="pnp4nagios" &&
+export PVERSION="$PVERSION_PNP4NAGIOS" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="http://surfnet.dl.sourceforge.net/sourceforge/pnp4nagios/PNP-0.6/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&
 
-wget http://source.a2o.si/patches/nagios-3.4.1-html-fix.diff &&
-cat nagios-3.4.1-html-fix.diff | patch -p0 &&
-
-./configure --prefix=$PDESTDIR_NAGIOS --sysconfdir=/etc/nagios --localstatedir=/var/nagios \
-  --enable-embedded-perl \
-  --with-checkresult-dir=/var/nagios/checkresults \
-  --with-lockfile=/var/nagios/run/nagios.lock \
-  --with-perlcache &&
+./configure --prefix=$PDESTDIR_PNP4NAGIOS --sysconfdir=/etc/nagios/pnp4nagios \
+  --with-perfdata-logfile=$PDESTDIR_PNP4NAGIOS/bin \
+  --with-perfdata-dir=/var/nagios/rrd \
+  --with-perfdata-spool-dir=/var/nagios/spool \
+  --with-perl_lib_path=$PDESTDIR_PERLLIB &&
 
 make all &&
 make install &&
-make install-commandmode &&
+make install-processperfdata &&
+make install-html &&
+
+# Install SSI for nagios integration
+mkdir -p $PDESTDIR_NAGIOS/share/ssi &&
+cp contrib/ssi/status-header.ssi $PDESTDIR_NAGIOS/share/ssi/ &&
+
+# (Re)move install.php file
+mv $PDESTDIR_PNP4NAGIOS/share/install.php $PDESTDIR_PNP4NAGIOS/share/install.php.disabled &&
 
 cd $SRCROOT &&
 rm -rf $PDIR

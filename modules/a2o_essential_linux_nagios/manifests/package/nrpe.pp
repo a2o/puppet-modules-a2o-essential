@@ -16,17 +16,12 @@
 ### Software package: nrpe
 class   a2o_essential_linux_nagios::package::nrpe   inherits   a2o_essential_linux_nagios::package::base {
 
-    # Package / Software details
-    # CheckURI: http://exchange.nagios.org/directory/Addons/Monitoring-Agents/NRPE--2D-Nagios-Remote-Plugin-Executor/details
-    $softwareName     = 'nrpe'
-    $softwareVersion  = '2.13'
-    $packageRelease   = '2'
-    $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
-    $destDir          = "/usr/local/$packageTag"
-
-
-    ### Additinal versions
-    $externalDestDir_openssl = '/usr/local/openssl-1.0.0i-1'
+    # CheckURI: see base.pp file for upgrading
+    $softwareName        = "$softwareName_nrpe"
+    $packageTag          = "$packageTag_nrpe"
+    $destDir             = "$destDir_nrpe"
+    $destDirSymlink      = "$destDirSymlink_nrpe"
+    $destDirSymlink_dest = "$destDirSymlink_nrpe_dest"
 
 
     ### Package
@@ -38,8 +33,8 @@ class   a2o_essential_linux_nagios::package::nrpe   inherits   a2o_essential_lin
 
 
     ### Symlink
-    file { "/usr/local/$softwareName":
-	ensure  => "$packageTag",
+    file { "$destDirSymlink":
+	ensure  => "$destDirSymlink_dest",
 	require => [
 	    Package["$softwareName"],
 	],

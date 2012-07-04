@@ -13,22 +13,22 @@
 
 
 
-### Service: nrpe
-class   a2o_essential_linux_nagios::distro::a2o::nrpe::service   inherits   a2o_essential_linux_nagios::base {
+### Service: nagios
+class   a2o_essential_linux_nagios::distro::a2o::nagios::service   inherits   a2o_essential_linux_nagios::base {
 
     $requireDefs = [
-        File['/etc/nrpe'],
+        File['/etc/nagios'],
     ]
     $subscribeDefs = [
-	Package['nrpe'],
+	Package['nagios'],
 	Package['nagios-plugins'],
-        File['/usr/local/nrpe'],
+	Package[$a2o_essential_linux_nagios::package::base::softwareName_mk_livestatus],
+	Package[$a2o_essential_linux_nagios::package::base::softwareName_pnp4nagios],
+        File['/usr/local/nagios'],
         File['/usr/local/nagios-plugins'],
-        File['/etc/nrpe/nrpe.cfg'],
-        File['/etc/nrpe/commands.cfg'],
     ]
 
-    a2o-essential-unix::rctool::service::generic { 'nrpe':
+    a2o-essential-unix::rctool::service::generic { 'nagios':
         require   => $requireDefs,
         subscribe => $subscribeDefs,
     }
@@ -37,10 +37,13 @@ class   a2o_essential_linux_nagios::distro::a2o::nrpe::service   inherits   a2o_
 
 
 ### Final all-containing class
-class   a2o_essential_linux_nagios::distro::a2o::nrpe {
-    include 'a2o_essential_linux_nagios::package::nrpe'
+class   a2o_essential_linux_nagios::distro::a2o::nagios {
+    include 'a2o_essential_linux_nagios::users_groups'
+    include 'a2o_essential_linux_nagios::package::nagios'
     include 'a2o_essential_linux_nagios::package::nagios_plugins'
+    include 'a2o_essential_linux_nagios::package::pnp4nagios'
+    include 'a2o_essential_linux_nagios::package::mk_livestatus'
     include 'a2o_essential_linux_nagios::files::common'
-    include 'a2o_essential_linux_nagios::files::nrpe'
-    include 'a2o_essential_linux_nagios::distro::a2o::nrpe::service'
+    include 'a2o_essential_linux_nagios::files::nagios'
+    include 'a2o_essential_linux_nagios::distro::a2o::nagios::service'
 }

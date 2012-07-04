@@ -13,34 +13,27 @@
 
 
 
-### Software package: pnp4nagios
-class   a2o_essential_linux_nagios::package::pnp4nagios   inherits   a2o_essential_linux_nagios::package::base {
+### Nagios directories and files
+class   a2o_essential_linux_nagios::files::nagios   inherits   a2o_essential_linux_nagios::base {
 
-    # CheckURI: see base.pp file for upgrading
-    $softwareName        = "$softwareName_pnp4nagios"
-    $packageTag          = "$packageTag_pnp4nagios"
-    $destDir             = "$destDir_pnp4nagios"
-    $destDirSymlink      = "$destDirSymlink_pnp4nagios"
-    $destDirSymlink_dest = "$destDirSymlink_pnp4nagios_dest"
-
-
-    ### Package
-    $require = [
-        Package['nagios'],
-        Package['rrdtool'],
-    ]
-    a2o-essential-unix::compiletool::package::generic { "$packageTag":
-	require => $require,
-	installScriptTplUri => "$thisPuppetModule/install-pnp4nagios.sh",
+    File {
+	ensure => directory,
+	owner  => nagios,
+	group  => nagios,
+        mode   => 755,
     }
 
+    # Nagios runtime dirs
+    file { '/var/nagios':       }
+    file { '/var/nagios/cache': }
+    file { '/var/nagios/log':   }
+    file { '/var/nagios/rrd':   }
+    file { '/var/nagios/run':   }
+    file { '/var/nagios/rw':    mode => 2775 }
+    file { '/var/nagios/spool': mode =>  775 }
+    file { '/var/nagios/stats': }
+    file { '/var/nagios/tmp':   }
 
-    ### Symlink
-    file { "$destDirSymlink":
-	ensure  => "$destDirSymlink_dest",
-	require => [
-	    Package["$softwareName"],
-	],
-	backup   => false,
-    }
+    # Log dir symlink
+    file { '/var/log/nagios':   ensure => '/var/nagios/log', }
 }

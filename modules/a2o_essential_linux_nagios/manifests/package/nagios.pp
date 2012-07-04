@@ -16,18 +16,12 @@
 ### Software package: nagios
 class   a2o_essential_linux_nagios::package::nagios   inherits   a2o_essential_linux_nagios::package::base {
 
-    # Package / Software details
     # CheckURI: see base.pp file for upgrading
-    $softwareName     = "$softwareName_nagios"
-    $softwareVersion  = "$softwareVersion_nagios"
-    $packageRelease   = "$packageRelease_nagios"
-    $packageTag       = "$packageTag_nagios"
-    $destDir          = "$destDir_nagios"
-
-
-    ### Additinal versions
-    $externalDestDir_perl    = '/usr/local/perl-5.14.2-1'
-    $externalDestDir_openssl = '/usr/local/openssl-1.0.0i-1'
+    $softwareName        = "$softwareName_nagios"
+    $packageTag          = "$packageTag_nagios"
+    $destDir             = "$destDir_nagios"
+    $destDirSymlink      = "$destDirSymlink_nagios"
+    $destDirSymlink_dest = "$destDirSymlink_nagios_dest"
 
 
     ### Package
@@ -41,10 +35,13 @@ class   a2o_essential_linux_nagios::package::nagios   inherits   a2o_essential_l
 
 
     ### Symlink
-    file { "/usr/local/$softwareName":
-	ensure  => "$packageTag",
+    file { "$destDirSymlink":
+	ensure  => "$destDirSymlink_dest",
 	require => [
 	    Package["$softwareName"],
+	    Package["$softwareName_plugins"],
+	    Package["$softwareName_pnp4nagios"],
+	    Package["$softwareName_mk_livestatus"],
 	],
 	backup   => false,
     }

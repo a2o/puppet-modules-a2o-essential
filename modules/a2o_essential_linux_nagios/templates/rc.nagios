@@ -1,3 +1,4 @@
+#!/bin/sh
 ###########################################################################
 # a2o Essential Puppet Modules                                            #
 #-------------------------------------------------------------------------#
@@ -10,37 +11,73 @@
 #-------------------------------------------------------------------------#
 # Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
 ###########################################################################
+. /etc/rc.d/rc._functions
 
 
 
-### Software package: pnp4nagios
-class   a2o_essential_linux_nagios::package::pnp4nagios   inherits   a2o_essential_linux_nagios::package::base {
-
-    # CheckURI: see base.pp file for upgrading
-    $softwareName        = "$softwareName_pnp4nagios"
-    $packageTag          = "$packageTag_pnp4nagios"
-    $destDir             = "$destDir_pnp4nagios"
-    $destDirSymlink      = "$destDirSymlink_pnp4nagios"
-    $destDirSymlink_dest = "$destDirSymlink_pnp4nagios_dest"
+export LD_LIBRARY_PATH='/usr/local/mysql/lib/mysql'
 
 
-    ### Package
-    $require = [
-        Package['nagios'],
-        Package['rrdtool'],
-    ]
-    a2o-essential-unix::compiletool::package::generic { "$packageTag":
-	require => $require,
-	installScriptTplUri => "$thisPuppetModule/install-pnp4nagios.sh",
-    }
+
+PROC_NAME="/usr/local/nagios/bin/nagios"
+PID_FILE="/var/nagios/run/nagios.lock"
+APP_CMD_START="$PROC_NAME -d /etc/nagios/nagios.cfg"
 
 
-    ### Symlink
-    file { "$destDirSymlink":
-	ensure  => "$destDirSymlink_dest",
-	require => [
-	    Package["$softwareName"],
-	],
-	backup   => false,
-    }
+
+nagios_start() {
+    if app_start; then
+	ln -sf $PID_FILE /var/run/nagios.pid
+    fi
 }
+
+nagios_stop() {
+    if app_stop; then
+	rm -f /var/run/nagios.pid
+    fi
+}
+
+nagios_restart() {
+    nagios_stop
+    nagios_start
+}
+
+nagios_status() {
+    is_app_running__info
+}
+
+nagios_kill() {
+    if app_kill; then
+	rm -f $PID_FILE
+	rm -f /var/run/nagios.pid
+    fi
+}
+
+nagios_verify() {
+    $PROC_NAME -v /etc/nagios/nagios.cfg
+}
+
+
+
+case "$1" in
+    'start')
+	nagios_start
+	;;
+    'stop')
+	nagios_stop
+	;;
+    'restart')
+	nagios_restart
+	;;
+    'status')
+	nagios_status
+	;;
+    'kill')
+	nagios_kill
+	;;
+    'verify')
+	nagios_verify
+	;;
+    *)
+	echo "usage $0 start|stop|restart|status|kill|verify"
+esac

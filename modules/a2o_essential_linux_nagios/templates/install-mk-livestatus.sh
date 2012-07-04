@@ -1,3 +1,4 @@
+#!/bin/bash
 ###########################################################################
 # a2o Essential Puppet Modules                                            #
 #-------------------------------------------------------------------------#
@@ -13,34 +14,35 @@
 
 
 
-### Software package: pnp4nagios
-class   a2o_essential_linux_nagios::package::pnp4nagios   inherits   a2o_essential_linux_nagios::package::base {
-
-    # CheckURI: see base.pp file for upgrading
-    $softwareName        = "$softwareName_pnp4nagios"
-    $packageTag          = "$packageTag_pnp4nagios"
-    $destDir             = "$destDir_pnp4nagios"
-    $destDirSymlink      = "$destDirSymlink_pnp4nagios"
-    $destDirSymlink_dest = "$destDirSymlink_pnp4nagios_dest"
+# Compile directory
+export SRCROOT="<%= compileDir %>" &&
+mkdir -p $SRCROOT &&
+cd $SRCROOT &&
 
 
-    ### Package
-    $require = [
-        Package['nagios'],
-        Package['rrdtool'],
-    ]
-    a2o-essential-unix::compiletool::package::generic { "$packageTag":
-	require => $require,
-	installScriptTplUri => "$thisPuppetModule/install-pnp4nagios.sh",
-    }
+
+### Set versions and directories
+export PVERSION_MK_LIVESTATUS="<%= softwareVersion %>" &&
+export PDESTDIR_MK_LIVESTATUS="<%= destDir %>" &&
+export PDESTDIR_NAGIOS="<%= destDir_nagios %>" &&
 
 
-    ### Symlink
-    file { "$destDirSymlink":
-	ensure  => "$destDirSymlink_dest",
-	require => [
-	    Package["$softwareName"],
-	],
-	backup   => false,
-    }
-}
+
+### Download and install
+# CheckURI: http://mathias-kettner.de/check_mk_download.html
+cd $SRCROOT && . ../_functions.sh &&
+export PNAME="mk-livestatus" &&
+export PVERSION="$PVERSION_MK_LIVESTATUS" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="http://mathias-kettner.de/download/$PFILE" &&
+
+rm -rf $PDIR &&
+GetUnpackCd &&
+
+./configure --prefix=$PDESTDIR_MK_LIVESTATUS &&
+make &&
+make install &&
+
+cd $SRCROOT &&
+rm -rf $PDIR
