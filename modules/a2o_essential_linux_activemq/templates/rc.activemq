@@ -1,0 +1,66 @@
+#!/bin/sh
+. /etc/rc.d/rc._functions
+
+
+
+PROC_NAME="activemq"
+PROC_REGEX="/usr/local/activemq/bin/run.jar"
+PID_FILE="/var/activemq/activemq-`hostname -s`.pid"
+APP_CMD_START="/usr/local/activemq/bin/activemq start"
+APP_CMD_STOP="/usr/local/activemq/bin/activemq-admin stop"
+APP_STOP_STALE_PID_FILE_NOWARNING=1
+
+
+
+activemq_start() {
+    if app_start; then
+	ln -s $PID_FILE /var/run/activemq.pid
+    fi
+}
+
+activemq_stop() {
+    if app_stop; then
+	rm -f /var/run/activemq.pid
+    fi
+}
+
+activemq_restart() {
+    app_stop
+    app_start
+}
+
+activemq_status() {
+    is_app_running__info
+}
+
+activemq_kill() {
+    if app_kill; then
+	rm -f $PID_FILE
+	rm -f /var/run/activemq.pid
+    fi
+}
+
+
+
+case "$1" in
+    'start')
+	activemq_start
+	;;
+    'run')
+	activemq_run
+	;;
+    'stop')
+	activemq_stop
+	;;
+    'restart')
+	activemq_restart
+	;;
+    'status')
+	activemq_status
+	;;
+    'kill')
+	activemq_kill
+	;;
+    *)
+	echo "usage $0 start|stop|restart|status|kill"
+esac
