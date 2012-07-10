@@ -38,10 +38,17 @@ export PURI="ftp://xmlsoft.org/libxml2/$PFILE" &&
 rm -rf $PDIR &&
 GetUnpackCd &&
 
-./configure &&
+./configure --without-python &&
 make -j 2 &&
 make install &&
-ldconfig &&
+ldconfig
+
+# WORKAROUND: Make install does not return non-zero exit status on failure
+if [[ ! -f /usr/local/lib/libxml2.so.$PVERSION && ! -f /usr/local/lib64/libxml2.so.$PVERSION ]]; then
+    echo "ERROR: Installation was not successful."
+    echo "ERROR: File does not exist: /usr/local/lib\*/libxml2.so.$PVERSION"
+    exit 1
+fi
 
 cd $SRCROOT &&
 rm -rf $PDIR &&
