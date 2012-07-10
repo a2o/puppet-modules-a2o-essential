@@ -51,6 +51,10 @@ $PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc sys-proctable &&
 
 # For Redmine 1.4.x
 $PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc bundler &&
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig &&
+$PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc rmagick &&
+unset PKG_CONFIG_PATH &&
+# TODO install ruby modules
 # This should be run in an application directory
 #$PDESTDIR_RUBY/bin/bundle install --without development test postgresql sqlite rmagick &&
 
