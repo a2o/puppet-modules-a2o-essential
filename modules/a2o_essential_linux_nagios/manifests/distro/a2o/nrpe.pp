@@ -38,6 +38,7 @@ class   a2o_essential_linux_nagios::distro::a2o::nrpe::service   inherits   a2o_
 
 ### Final all-containing class
 class   a2o_essential_linux_nagios::distro::a2o::nrpe {
+    include 'a2o_essential_linux_nagios::users_groups'
     include 'a2o_essential_linux_nagios::package::nrpe'
     include 'a2o_essential_linux_nagios::package::nagios_plugins'
     include 'a2o_essential_linux_nagios::files::common'

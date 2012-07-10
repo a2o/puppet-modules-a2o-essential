@@ -28,6 +28,7 @@ class   a2o_essential_linux_nagios::package::nrpe   inherits   a2o_essential_lin
     $require = [
         Package['openssl'],
         Package['nagios-plugins'],
+        User['nagios'],
     ]
     a2o-essential-unix::compiletool::package::generic { "$packageTag": require => $require, }
 
