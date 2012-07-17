@@ -70,5 +70,16 @@ export LDFLAGS="-L$PDESTDIR_OPENLDAP/lib" &&
 make &&
 make install &&
 
+
 cd $SRCROOT &&
-rm -rf $PDIR
+rm -rf $PDIR &&
+
+
+# Add custom stuff
+cd $PDESTDIR_PLUGINS/libexec &&
+wget http://source.a2o.si/custom-files/nagios/plugins/check_ssl_cert &&
+chmod 755 check_ssl_cert &&
+
+
+
+true
