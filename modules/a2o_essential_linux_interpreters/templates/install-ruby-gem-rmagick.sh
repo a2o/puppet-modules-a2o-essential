@@ -1,3 +1,4 @@
+#!/bin/bash
 ###########################################################################
 # a2o Essential Puppet Modules                                            #
 #-------------------------------------------------------------------------#
@@ -13,14 +14,23 @@
 
 
 
-class a2o_essential_linux_interpreters::ruby::all {
+# Compile directory
+export SRCROOT="<%= compileDir %>" &&
+mkdir -p $SRCROOT &&
+cd $SRCROOT &&
 
-    Package['libs'] -> Package['ruby']
 
-    include 'a2o_essential_linux_interpreters::ruby::package'
-    include 'a2o_essential_linux_interpreters::ruby::gem_collection'
-    include 'a2o_essential_linux_interpreters::ruby::gem_mysql'
-    include 'a2o_essential_linux_interpreters::ruby::gem_postgresql'
-    include 'a2o_essential_linux_interpreters::ruby::gem_rmagick'
-    include 'a2o_essential_linux_interpreters::ruby::symlinks'
-}
+
+### Set versions, releases and directories
+export PDESTDIR_RUBY="<%=  destDir_ruby %>" &&
+
+
+
+# Rmagick - mainly for Redmine 1.4.x
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig &&
+$PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc rmagick &&
+unset PKG_CONFIG_PATH &&
+
+
+
+true

@@ -28,7 +28,8 @@ export PDESTDIR_RUBY="<%=  destDir_ruby %>" &&
 
 ### Various gems
 # Rails
-$PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc rails --version 2.3.4 &&
+# This version is not required anymore, right?
+#$PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc rails --version 2.3.4 &&
 $PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc rails --version 3.2.6 &&
 $PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc rack  --version 1.1.3 &&
 
@@ -51,11 +52,8 @@ $PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc sys-proctable &&
 
 # For Redmine 1.4.x
 $PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc bundler &&
-export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig &&
-$PDESTDIR_RUBY/bin/gem install --no-ri --no-rdoc rmagick &&
-unset PKG_CONFIG_PATH &&
 # TODO install ruby modules
-# This should be run in an application directory
+# This should be run in an (Redmine) application directory
 #$PDESTDIR_RUBY/bin/bundle install --without development test postgresql sqlite rmagick &&
 
 # Capistrano
