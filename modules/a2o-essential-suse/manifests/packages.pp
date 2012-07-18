@@ -21,6 +21,8 @@ class   a2o-essential-suse::packages   inherits   a2o-essential-suse::base {
 	ensure   => present,
     }
 
+    package { 'automake':      }
+    package { 'autoconf':      }
     package { 'gcc':           }
     package { 'gcc-c++':       }
     package { 'libtool':       }
