@@ -484,7 +484,8 @@ _get_pid_from_pid_file() {
     # Check pid
     LINE_COUNT=`cat $PID_FILE | grep -v '^$' | grep -c .`
     if [ "$LINE_COUNT" -ne "1" ]; then
-	echo "ERROR: Invalid line count ($LINE_COUNT) in pid file: $PID_FILE"
+	echo "WARNING: Invalid line count ($LINE_COUNT) in pid file: $PID_FILE (removing...)"
+	rm -f $PID_FILE
 	exit 252
     fi
 
