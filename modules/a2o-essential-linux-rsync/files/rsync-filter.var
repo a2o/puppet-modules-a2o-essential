@@ -89,6 +89,9 @@ dir-merge .rsync-filter.site
 + /log/removed_scripts/***
 + /log/scripts/***
 + /log/setup/***
++ /log/sysinfo/***
++ /log/utmp
++ /log/wtmp
 - /log/***
 + /mongodb/data
 - /mongodb/data/***
