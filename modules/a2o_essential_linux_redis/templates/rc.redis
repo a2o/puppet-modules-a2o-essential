@@ -1,0 +1,68 @@
+#!/bin/sh
+###########################################################################
+# a2o Essential Puppet Modules                                            #
+#-------------------------------------------------------------------------#
+# Copyright (c) 2012 Bostjan Skufca                                       #
+#-------------------------------------------------------------------------#
+# This source file is subject to version 2.0 of the Apache License,       #
+# that is bundled with this package in the file LICENSE, and is           #
+# available through the world-wide-web at the following url:              #
+# http://www.apache.org/licenses/LICENSE-2.0                              #
+#-------------------------------------------------------------------------#
+# Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
+###########################################################################
+. /etc/rc.d/rc._functions
+
+
+
+PROC_NAME="/usr/local/redis/bin/redis-server"
+PID_FILE="/var/run/redis.pid"
+APP_CMD_START="$PROC_NAME /etc/redis/redis.conf"
+
+
+
+redis_start() {
+    echo 1 > /proc/sys/vm/overcommit_memory
+    app_start
+}
+
+redis_stop() {
+    app_stop
+}
+
+redis_restart() {
+    redis_stop
+    redis_start
+}
+
+redis_status() {
+    is_app_running__info
+}
+
+redis_kill() {
+    if app_kill; then
+	rm -f $PID_FILE
+    fi
+}
+
+
+
+case "$1" in
+    'start')
+	redis_start
+	;;
+    'stop')
+	redis_stop
+	;;
+    'restart')
+	redis_restart
+	;;
+    'status')
+	redis_status
+	;;
+    'kill')
+	redis_kill
+	;;
+    *)
+	echo "usage $0 start|stop|restart|status|kill"
+esac
