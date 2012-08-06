@@ -28,7 +28,9 @@ class   a2o_essential_linux_redis::files_service   inherits   a2o_essential_linu
 
     # Directories
     file { '/etc/redis':                    mode => 755, ensure => directory }
-    file { '/var/redis':                    mode => 755, ensure => directory }
+    file { '/var/redis':                    mode => 755, ensure => directory, owner => redis, group => redis }
+    file { '/var/redis/data':               mode => 755, ensure => directory, owner => redis, group => redis }
+    file { '/var/redis/run':                mode => 755, ensure => directory, owner => redis, group => redis }
 
     # Config files
     file { '/etc/redis/redis.conf':         mode => 644, source => "puppet:///modules/$thisPuppetModule/redis.conf" }

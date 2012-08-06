@@ -19,6 +19,7 @@ class   a2o_essential_linux_redis::distro::a2o::service   inherits   a2o_essenti
     $requireDefs = [
         File['/etc/redis/redis.conf-local'],
         File['/var/redis'],
+        File['/var/redis/run'],
     ]
     $subscribeDefs = [
 	Package['redis'],
@@ -38,6 +39,7 @@ class   a2o_essential_linux_redis::distro::a2o::service   inherits   a2o_essenti
 class   a2o_essential_linux_redis::distro::a2o {
     include 'a2o_essential_linux_redis::package'
     include 'a2o_essential_linux_redis::files'
+    include 'a2o_essential_linux_redis::users_groups'
     include 'a2o_essential_linux_redis::files_service'
     include 'a2o_essential_linux_redis::distro::a2o::service'
 }

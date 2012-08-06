@@ -1,4 +1,3 @@
-#!/bin/sh
 ###########################################################################
 # a2o Essential Puppet Modules                                            #
 #-------------------------------------------------------------------------#
@@ -11,64 +10,24 @@
 #-------------------------------------------------------------------------#
 # Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
 ###########################################################################
-. /etc/rc.d/rc._functions
 
 
 
-PROC_NAME="/usr/local/redis/bin/redis-server"
-PID_FILE="/var/redis/run/redis.pid"
-APP_CMD_START="su - redis -c \"$PROC_NAME /etc/redis/redis.conf\""
+### Required users and groups
+class   a2o_essential_linux_redis::users_groups {
 
+    group { 'redis':
+	ensure     => present,
+	gid        => 6379,
+    }
 
-
-redis_start() {
-    echo 1 > /proc/sys/vm/overcommit_memory
-
-    if app_start; then
-	ln -sf $PID_FILE /var/run/redis.pid
-    fi
+    User  {
+        provider   => useradd,
+        allowdupe  => false,
+	ensure     => present,
+        password   => '*',
+        shell      => '/bin/bash',
+        managehome => true,
+    }
+    user  { 'redis':   require => Group['redis'], uid => 6379, gid => 6379, home => '/var/redis' }
 }
-
-redis_stop() {
-    if app_stop; then
-        rm -f /var/run/redis.pid
-    fi
-}
-
-redis_restart() {
-    redis_stop
-    redis_start
-}
-
-redis_status() {
-    is_app_running__info
-}
-
-redis_kill() {
-    if app_kill; then
-	rm -f $PID_FILE
-        rm -f /var/run/redis.pid
-    fi
-}
-
-
-
-case "$1" in
-    'start')
-	redis_start
-	;;
-    'stop')
-	redis_stop
-	;;
-    'restart')
-	redis_restart
-	;;
-    'status')
-	redis_status
-	;;
-    'kill')
-	redis_kill
-	;;
-    *)
-	echo "usage $0 start|stop|restart|status|kill"
-esac
