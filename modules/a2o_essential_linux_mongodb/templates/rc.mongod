@@ -1,0 +1,82 @@
+#!/bin/sh
+###########################################################################
+# a2o Essential Puppet Modules                                            #
+#-------------------------------------------------------------------------#
+# Copyright (c) 2012 Bostjan Skufca                                       #
+#-------------------------------------------------------------------------#
+# This source file is subject to version 2.0 of the Apache License,       #
+# that is bundled with this package in the file LICENSE, and is           #
+# available through the world-wide-web at the following url:              #
+# http://www.apache.org/licenses/LICENSE-2.0                              #
+#-------------------------------------------------------------------------#
+# Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
+###########################################################################
+. /etc/rc.d/rc._functions
+
+
+
+PROC_NAME="/usr/local/mongodb/bin/mongod"
+PID_FILE="/var/mongodb/run/mongod.pid"
+APP_CMD_START="su - mongodb -c \"$PROC_NAME --fork -f /etc/mongodb/mongod.conf\""
+APP_STOP_STALE_PID_FILE_NOWARNING=1
+
+
+
+mongod_start() {
+    ulimit -n 4096
+
+    if app_start; then
+        ln -sf $PID_FILE /var/run/mongod.pid
+    fi
+}
+
+mongod_stop() {
+    if app_stop; then
+        rm -f /var/run/mongod.pid
+    fi
+}
+
+mongod_restart() {
+    mongod_stop
+    mongod_start
+}
+
+mongod_status() {
+    is_app_running__info
+}
+
+mongod_kill() {
+    if app_kill; then
+	rm -f $PID_FILE
+        rm -f /var/run/mongod.pid
+    fi
+}
+
+mongod_logrotate() {
+    kill -HUP `cat $PID_FILE`
+}
+
+
+
+case "$1" in
+    'start')
+        mongod_start
+        ;;
+    'stop')
+        mongod_stop
+        ;;
+    'restart')
+        mongod_restart
+        ;;
+    'status')
+        mongod_status
+        ;;
+    'kill')
+        mongod_kill
+        ;;
+    'logrotate')
+        mongod_logrotate
+        ;;
+    *)
+        echo "usage $0 start|stop|restart|status|kill|logrotate"
+esac
