@@ -13,7 +13,31 @@
 
 
 
-class a2o_essential_linux_interpreters::python {
-    include 'a2o_essential_linux_interpreters::python::package'
-    include 'a2o_essential_linux_interpreters::python::module_collection'
+### Software package: python
+class   a2o_essential_linux_interpreters::python::package   inherits   a2o_essential_linux_interpreters::python::base {
+
+    # Package / Software details
+    # CheckURI: http://www.python.org/download/
+    $softwareName     = 'python'
+    $softwareVersion  = '2.6.7'
+    $packageRelease   = '1'
+    $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
+    $destDir          = "/usr/local/$packageTag"
+
+
+    ### Package
+    $require = [
+        Package['openssl'],
+    ]
+    a2o-essential-unix::compiletool::package::generic { "$packageTag": require => $require, }
+
+
+    ### Symlink
+    file { "/usr/local/$softwareName":
+	ensure  => "$packageTag",
+	require => [
+	    Package["$softwareName"],
+	],
+	backup   => false,
+    }
 }

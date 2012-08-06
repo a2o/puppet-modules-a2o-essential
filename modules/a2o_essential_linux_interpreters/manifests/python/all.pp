@@ -13,7 +13,11 @@
 
 
 
-class a2o_essential_linux_interpreters::python {
+class a2o_essential_linux_interpreters::python::all {
+
+    Package['libs'] -> Package['python']
+
     include 'a2o_essential_linux_interpreters::python::package'
     include 'a2o_essential_linux_interpreters::python::module_collection'
+    include 'a2o_essential_linux_interpreters::python::symlinks'
 }

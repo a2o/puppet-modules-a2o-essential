@@ -1,3 +1,4 @@
+#!/bin/bash
 ###########################################################################
 # a2o Essential Puppet Modules                                            #
 #-------------------------------------------------------------------------#
@@ -13,7 +14,37 @@
 
 
 
-class a2o_essential_linux_interpreters::python {
-    include 'a2o_essential_linux_interpreters::python::package'
-    include 'a2o_essential_linux_interpreters::python::module_collection'
-}
+# Compile directory
+export SRCROOT="<%= compileDir %>" &&
+mkdir -p $SRCROOT &&
+cd $SRCROOT &&
+
+
+
+### Set versions, releases and directories
+export PDESTDIR_PYTHON="<%= destDir_python %>" &&
+export PVERSION_DJANGO="<%= softwareVersion_django %>" &&
+
+
+
+### Django
+# CheckURI: https://www.djangoproject.com/download/
+cd $SRCROOT && . /var/src/build_functions.sh &&
+export PNAME="Django" &&
+export PVERSION="$PVERSION_DJANGO" &&
+export PVERSION_MAJOR=`echo "$PVERSION" | cut -d'.' -f1,2 `&&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="http://www.djangoproject.com/m/releases/$PVERSION_MAJOR/$PFILE" &&
+
+rm -rf $PDIR &&
+GetUnpackCd &&
+
+$PDESTDIR_PYTHON/bin/python setup.py install &&
+
+cd $SRCROOT &&
+rm -rf $PDIR &&
+
+
+
+true
