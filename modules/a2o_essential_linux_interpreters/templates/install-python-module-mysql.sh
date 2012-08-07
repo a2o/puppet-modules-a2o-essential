@@ -1,3 +1,4 @@
+#!/bin/bash
 ###########################################################################
 # a2o Essential Puppet Modules                                            #
 #-------------------------------------------------------------------------#
@@ -13,12 +14,41 @@
 
 
 
-class a2o_essential_linux_interpreters::python::all {
+# Compile directory
+export SRCROOT="<%= compileDir %>" &&
+mkdir -p $SRCROOT &&
+cd $SRCROOT &&
 
-    Package['libs'] -> Package['python']
 
-    include 'a2o_essential_linux_interpreters::python::package'
-    include 'a2o_essential_linux_interpreters::python::module_collection'
-    include 'a2o_essential_linux_interpreters::python::module_mysql'
-    include 'a2o_essential_linux_interpreters::python::symlinks'
-}
+
+### Set versions, releases and directories
+export PDESTDIR_PYTHON="<%= destDir_python %>" &&
+export PDESTDIR_MYSQL="<%=  externalDestDir_mysql  %>" &&
+export PVERSION_MODULE="<%= softwareVersion %>" &&
+
+
+
+### Python MySQL module
+# CheckURI: http://pypi.python.org/pypi/MySQL-python
+cd $SRCROOT && . /var/src/build_functions.sh &&
+export PNAME="MySQL-python" &&
+export PVERSION="$PVERSION_MODULE" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="http://pypi.python.org/packages/source/M/MySQL-python/$PFILE" &&
+
+rm -rf $PDIR &&
+GetUnpackCd &&
+
+# Configure it
+echo "" >> site.cfg &&
+echo "mysql_config=$PDESTDIR_MYSQL/bin/mysql_config" >> site.cfg &&
+
+$PDESTDIR_PYTHON/bin/python setup.py install &&
+
+cd $SRCROOT &&
+rm -rf $PDIR &&
+
+
+
+true
