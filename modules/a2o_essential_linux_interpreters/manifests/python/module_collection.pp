@@ -29,8 +29,11 @@ class   a2o_essential_linux_interpreters::python::module_collection   inherits  
 
 
     ### Actual module versions
+    # CheckUri: http://pypi.python.org/pypi/setuptools#files
+    $softwareVersion_setuptools = '0.6c11'
     # CheckURI: https://www.djangoproject.com/download/
-    $softwareVersion_django = '1.4.1'
+    #$softwareVersion_django = '1.4.1' # this one does not work with Pootle
+    $softwareVersion_django = '1.3.3'
 
 
     ### Package

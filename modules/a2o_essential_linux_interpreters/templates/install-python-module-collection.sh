@@ -23,7 +23,27 @@ cd $SRCROOT &&
 
 ### Set versions, releases and directories
 export PDESTDIR_PYTHON="<%= destDir_python %>" &&
+export PVERSION_SETUPT="<%= softwareVersion_setuptools %>" &&
 export PVERSION_DJANGO="<%= softwareVersion_django %>" &&
+
+
+
+### SetupTools
+# CheckURI: http://pypi.python.org/pypi/setuptools#files
+cd $SRCROOT && . /var/src/build_functions.sh &&
+export PNAME="setuptools" &&
+export PVERSION="$PVERSION_SETUPT" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="http://pypi.python.org/packages/source/s/setuptools/$PFILE" &&
+
+rm -rf $PDIR &&
+GetUnpackCd &&
+
+$PDESTDIR_PYTHON/bin/python setup.py install &&
+
+cd $SRCROOT &&
+rm -rf $PDIR &&
 
 
 
@@ -44,6 +64,14 @@ $PDESTDIR_PYTHON/bin/python setup.py install &&
 
 cd $SRCROOT &&
 rm -rf $PDIR &&
+
+
+
+### Install other modules
+# Pootle
+$PDESTDIR_PYTHON/bin/easy_install translate-toolkit &&
+$PDESTDIR_PYTHON/bin/easy_install lxml              &&
+$PDESTDIR_PYTHON/bin/easy_install south             &&
 
 
 
