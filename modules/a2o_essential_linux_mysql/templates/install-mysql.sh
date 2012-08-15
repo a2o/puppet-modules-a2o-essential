@@ -36,8 +36,7 @@ export PNAME="mysql" &&
 export PVERSION="$PVERSION_MYSQL" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
-#export PURI="http://ftp.arnes.si/mysql/Downloads/MySQL-$PVERSION_MYSQL_MAJOR/$PFILE" &&
-export PURI="ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQL-$PVERSION_MYSQL_MAJOR/$PFILE" &&
+export PURI="http://cdn.mysql.com/Downloads/MySQL-$PVERSION_MYSQL_MAJOR/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&
