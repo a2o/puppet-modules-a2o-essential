@@ -19,7 +19,7 @@ class   a2o_essential_linux_subversion::package::subversion   inherits   a2o_ess
     # Package / Software details
     # CheckURI: http://subversion.apache.org/download/
     $softwareName     = 'svn'
-    $softwareVersion  = '1.7.5'
+    $softwareVersion  = '1.7.5'   # WARNING 1.7.6 has bugs, does not build because it activates mod_dontdothat for no reason, which fails
     $packageRelease   = '1'
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
     $destDir          = "/usr/local/$packageTag"
