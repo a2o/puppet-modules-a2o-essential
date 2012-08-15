@@ -1,0 +1,15 @@
+#!/bin/bash
+
+CHECK_IP="$1"
+EXPECTED_HOSTNAME="$2"
+
+RES=`dig -x $CHECK_IP +noall +answer | grep "$EXPECTED_HOSTNAME" | grep -c .`
+if [ "$RES" == "0" ]; then
+    echo "HOST rDNS CRITICAL: Reverse DNS entry for IP $CHECK_IP is not $EXPECTED_HOSTNAME"
+    exit 2
+elif [ "$RES" == "1" ]; then
+    echo "HOST rDNS OK: $CHECK_IP ---> $EXPECTED_HOSTNAME"
+    exit 0
+else
+    echo "HOST rDNS UNKNOWN: Multiple results for $CHECK_IP"
+fi

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+CHECK_HOSTNAME="$1"
+EXPECTED_IP="$2"
+
+RES=`dig $CHECK_HOSTNAME +noall +answer | grep $EXPECTED_IP | grep -c .`
+if [ "$RES" == "0" ]; then
+    echo "HOST DNS CRITICAL: DNS entry ($EXPECTED_IP) for host $CHECK_HOSTNAME not found"
+    exit 2
+elif [ "$RES" == "1" ]; then
+    echo "HOST DNS OK: $CHECK_HOSTNAME ---> $EXPECTED_IP"
+    exit 0
+else
+    echo "HOST DNS UNKNOWN: $CHECK_HOSTNAME ---> Multiple results"
+    exit 3
+fi
