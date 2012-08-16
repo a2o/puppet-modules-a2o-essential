@@ -41,6 +41,10 @@ export PURI="http://www.eu.apache.org/dist/subversion/$PFILE" &&
 rm -rf $PDIR &&
 GetUnpackCd &&
 
+# FIXME remove later: v1.7.6 builds mod_dontdothat for no reason
+wget http://svn.haxx.se/users/archive-2012-08/att-0180/subversion-1.7.6_mod_dontdothat_svnserve_only.patch &&
+patch -p1 < subversion-1.7.6_mod_dontdothat_svnserve_only.patch &&
+
 ./configure --prefix=$PDESTDIR_SVN \
   --with-apr=/usr/local/apr --with-apr-util=/usr/local/apr \
   --with-sqlite=/usr/local \
