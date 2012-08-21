@@ -89,12 +89,19 @@ class   a2o_essential_linux_awstats::cleanup   inherits   a2o_essential_linux_aw
 ### Configuration files and directories
 class   a2o_essential_linux_awstats::files   inherits   a2o_essential_linux_awstats::base {
 
-    file { "/etc/awstats":
-	ensure   => directory,
+    File {
         owner    => root,
         group    => root,
-        mode     => 755,
     }
+
+    # Directories
+    file { '/etc/awstats':        ensure => directory, mode => 755 }
+    file { '/var/awstats':        ensure => directory, mode => 755 }
+    file { '/var/awstats/data':   ensure => directory, mode => 755 }
+
+    # Files
+    file { '/etc/awstats/awstats.defaults':   mode => 644, source => "puppet:///modules/$thisPuppetModule/awstats.defaults" }
+    file { '/usr/local/bin/awstats.pl':       mode => 755, source => "puppet:///modules/$thisPuppetModule/awstats.pl" }
 }
 
 
