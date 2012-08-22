@@ -32,7 +32,7 @@ class   a2o-essential-linux-puppet::package::base   inherits   a2o-essential-lin
     $packageSoftwareName_puppet    = "puppet"
 
     # CheckURI: http://puppetlabs.com/puppet/puppet-enterprise/
-    $packageSoftwareVersion_puppet = '2.7.18'
+    $packageSoftwareVersion_puppet = '2.7.19'
     $packageRelease_puppet         = '1'
     $packageEnsure_puppet          = "${packageSoftwareVersion_puppet}-${packageRelease_puppet}"
     $packageTag_puppet             = "${packageName_puppet}-${packageEnsure_puppet}"
@@ -41,7 +41,7 @@ class   a2o-essential-linux-puppet::package::base   inherits   a2o-essential-lin
     $packageSoftwareName_ruby      = "ruby"
     # CheckURI for compatibility with puppet
     # CheckURI: http://docs.puppetlabs.com/guides/platforms.html
-    $packageSoftwareVersion_ruby   = '1.8.7_p358'
+    $packageSoftwareVersion_ruby   = '1.8.7_p370'
     $packageRelease_ruby           = '1'
     $packageEnsure_ruby            = "${packageSoftwareVersion_ruby}-${packageRelease_ruby}"
     $packageTag_ruby               = "${packageName_ruby}-${packageEnsure_ruby}"
