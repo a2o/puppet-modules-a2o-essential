@@ -92,6 +92,7 @@ class   a2o_essential_linux_awstats::files   inherits   a2o_essential_linux_awst
     File {
         owner    => root,
         group    => root,
+	require  => File['/usr/local/awstats'],
     }
 
     # Directories
@@ -102,6 +103,9 @@ class   a2o_essential_linux_awstats::files   inherits   a2o_essential_linux_awst
     # Files
     file { '/etc/awstats/awstats.defaults':   mode => 644, source => "puppet:///modules/$thisPuppetModule/awstats.defaults" }
     file { '/usr/local/bin/awstats.pl':       mode => 755, source => "puppet:///modules/$thisPuppetModule/awstats.pl" }
+
+    # Symlinks
+    file { '/usr/local/bin/logresolvemerge.pl':   ensure => '/usr/local/awstats/tools/logresolvemerge.pl' }
 }
 
 
