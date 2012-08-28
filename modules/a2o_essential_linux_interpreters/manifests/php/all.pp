@@ -19,6 +19,7 @@ class a2o_essential_linux_interpreters::php::all {
 
     include 'a2o_essential_linux_interpreters::php::package'
     include 'a2o_essential_linux_interpreters::php::modules'
+    include 'a2o_essential_linux_interpreters::php::modules02'
     include 'a2o_essential_linux_interpreters::php::symlinks'
     include 'a2o_essential_linux_interpreters::php::files'
 }
