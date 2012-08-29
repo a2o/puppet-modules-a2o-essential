@@ -53,6 +53,7 @@ class   a2o-essential-linux-tools::git::package   inherits   a2o-essential-linux
 	require  => [
 	    File["$compileDir/$installScript"],
 	    Package['python'],
+	    Package['libiconv'],
 	],
     }
 

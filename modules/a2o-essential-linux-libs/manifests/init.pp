@@ -23,6 +23,11 @@ class a2o-essential-linux-libs::base {
 
 
 
+### Libs required for git
+class a2o-essential-linux-libs::git {
+    include 'a2o-essential-linux-libs::libiconv'
+}
+
 ### Libs required for Apache HTTPD
 class a2o-essential-linux-libs::httpd {
     include 'a2o-essential-linux-libs::apr'
