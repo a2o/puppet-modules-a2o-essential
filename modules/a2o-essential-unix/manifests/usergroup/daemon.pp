@@ -22,7 +22,8 @@ define   a2o-essential-unix::usergroup::daemon (
     $uid,
     $group = '',
     $gid   = '',
-    $home  = ''
+    $home  = '',
+    $shell = '/bin/bash',
 ) {
 
 
@@ -30,9 +31,11 @@ define   a2o-essential-unix::usergroup::daemon (
     ### Defaults
     ###
     $realUser = $name
+    $realUid  = $uid
     if $group != undef { $realGroup = "$group" } else { $realGroup = "$user"      }
     if $gid   != undef { $realGid   = "$gid"   } else { $realGid   = "$uid"       }
     if $home  != undef { $realHome  = "$home"  } else { $realHome  = "/var/$user" }
+    if $shell != undef { $realShell = "$shell" } else { $realShell = "/bin/bash"  } # FIXME change to FALSE
 
 
     ###
@@ -55,7 +58,7 @@ define   a2o-essential-unix::usergroup::daemon (
         allowdupe  => false,
         ensure     => present,
         password   => '*',
-        shell      => '/bin/bash',
+        shell      => "$realShell",
         managehome => true,
         home       => "$realHome",
     }
