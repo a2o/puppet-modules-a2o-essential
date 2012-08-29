@@ -19,8 +19,8 @@ class   a2o-essential-linux-tools::ant::package   inherits   a2o-essential-linux
     # Package / Software details
     # CheckURI: http://ant.apache.org/
     $softwareName     = 'apache-ant'
-    $softwareVersion  = '1.8.3'
-    $packageRelease   = '3'
+    $softwareVersion  = '1.8.4'
+    $packageRelease   = '1'
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
 
     $compileDir = '/var/src/tools'
@@ -31,7 +31,7 @@ class   a2o-essential-linux-tools::ant::package   inherits   a2o-essential-linux
     # CheckURI: http://code.google.com/p/dbdeploy/downloads/list
     $softwareVersion_dbDeploy = '3.0M3'
     # CheckURI: http://dev.mysql.com/downloads/connector/j/
-    $softwareVersion_myConnJ  = '5.1.20'
+    $softwareVersion_myConnJ  = '5.1.21'
 
 
     ### Package
@@ -84,6 +84,7 @@ class   a2o-essential-linux-tools::ant::cleanup {
 
     a2o-essential-unix::compiletool::package::remove { 'apache-ant-1.8.3-1': compileDir => $compileDir, require => $require, }
     a2o-essential-unix::compiletool::package::remove { 'apache-ant-1.8.3-2': compileDir => $compileDir, require => $require, }
+#    a2o-essential-unix::compiletool::package::remove { 'apache-ant-1.8.3-3': compileDir => $compileDir, require => $require, }
 }
 
 
