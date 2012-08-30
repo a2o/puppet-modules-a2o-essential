@@ -13,10 +13,18 @@
 
 
 
-### Helper files
-class   a2o_essential_linux_mysql::files   inherits   a2o_essential_linux_mysql::base {
+### Required users and groups
+class   a2o_essential_linux_mysql::users_groups {
 
-    include 'a2o_essential_linux_mysql::files::daemon'
-    include 'a2o_essential_linux_mysql::files::helpers'
-    include 'a2o_essential_linux_mysql::files::symlinks'
+    $user = 'mysql'
+    $uid  = '3306'
+    $gid  = '3306'
+    $home = '/var/mysql'
+
+    # Create group, user, homedir
+    a2o-essential-unix::usergroup::daemon { "$user":
+	uid   => "$uid",
+	gid   => "$gid",
+	home  => "$home",
+    }
 }
