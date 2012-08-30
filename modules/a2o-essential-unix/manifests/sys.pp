@@ -22,6 +22,7 @@ class   a2o-essential-unix::sys::time   inherits   a2o-essential-unix::base {
 	command  => '/opt/scripts/cron/run-and-mail-if-error.sh   "ntpdate pool.ntp.org"   "root"',
 	minute   => 59,
 	require  => [
+	    Package['ntp'],
     	    File['/opt/scripts/cron/run-and-mail-if-error.sh'],
 	],
     }
