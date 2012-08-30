@@ -21,6 +21,7 @@ class   a2o-essential-debian::packages   inherits   a2o-essential-debian::base {
 	ensure   => present,
     }
 
+    # Build tools
 #    package { 'diff':          }
 #    package { 'gcc':           }
 #    package { 'g++':           }
@@ -35,4 +36,7 @@ class   a2o-essential-debian::packages   inherits   a2o-essential-debian::base {
 
     package { 'zlib1g':        }
     package { 'zlib1g-dev':    }
+
+    # Various basic packages
+    package { 'ntp':           }
 }
