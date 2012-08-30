@@ -14,7 +14,7 @@
 
 
 ### Filesystem Hierarchy Standard directories - debian distribution specific
-class a2o-essential-debian::fhs inherits a2o-essential-debian::base {
+class   a2o-essential-debian::fhs   inherits   a2o-essential-unix::fhs {
 
     File {
 	ensure   => directory,

@@ -32,4 +32,7 @@ class   a2o-essential-debian::packages   inherits   a2o-essential-debian::base {
 ##    package { 'xz':            } # Does not exist in 5.0.3
 #    package { 'zlib':          }
 #    package { 'zlib-devel':    }
+
+    package { 'zlib1g':        }
+    package { 'zlib1g-dev':    }
 }
