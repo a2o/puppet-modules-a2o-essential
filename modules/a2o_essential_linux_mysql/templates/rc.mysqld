@@ -1,0 +1,62 @@
+#!/bin/sh
+. /etc/rc.d/rc._functions
+
+export LD_LIBRARY_PATH="<% externalDestDir_openssl %>/lib"
+
+PROC_NAME="/usr/local/mysql/libexec/mysqld"
+PID_FILE="/var/mysql/run/mysqld.pid"
+APP_CMD_START="/usr/local/mysql/share/mysql/mysql.server start --defaults-file=/etc/mysql/my.cnf"
+APP_CMD_STOP="/usr/local/mysql/share/mysql/mysql.server stop"
+
+mysqld_start() {
+  if app_start; then
+    ln -sf $PID_FILE /var/run/mysqld.pid
+    ln -sf /var/mysql/run/mysql.sock /var/run/mysql.sock
+    ln -sf /var/mysql/run/mysql.sock /tmp/mysql.sock
+  fi
+}
+
+mysqld_stop() {
+  if app_stop; then
+    rm -f /var/run/mysqld.pid
+    rm -f /var/run/mysql.sock
+    rm -f /tmp/mysql.sock
+  fi
+}
+
+mysqld_restart() {
+  mysqld_stop
+  mysqld_start
+}
+
+mysqld_status() {
+  is_app_running__info
+}
+
+mysqld_kill() {
+  if app_kill; then
+    rm -f /var/run/mysqld.pid
+    rm -f /var/run/mysql.sock
+    rm -f /tmp/mysql.sock
+  fi
+}
+
+case "$1" in
+'start')
+  mysqld_start
+  ;;
+'stop')
+  mysqld_stop
+  ;;
+'restart')
+  mysqld_restart
+  ;;
+'status')
+  mysqld_status
+  ;;
+'kill')
+  mysqld_kill
+  ;;
+*)
+  echo "usage $0 start|stop|restart|status|kill"
+esac
