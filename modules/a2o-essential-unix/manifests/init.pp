@@ -42,6 +42,13 @@ class   a2o-essential-unix::server {
     include 'a2o-essential-unix::fhs'
     include 'a2o-essential-unix::compiletool'
     include 'a2o-essential-unix::rctool'
+    include 'a2o-essential-unix::sys'
+    include 'a2o-essential-unix::tools-misc'
+}
+class   a2o-essential-unix::server::no-fhs {
+    include 'a2o-essential-unix::compiletool'
+    include 'a2o-essential-unix::rctool'
+    include 'a2o-essential-unix::sys'
     include 'a2o-essential-unix::tools-misc'
 }
 
@@ -52,4 +59,5 @@ class   a2o-essential-unix::server-minimal {
     include 'a2o-essential-unix::fhs'
     include 'a2o-essential-unix::compiletool'
     include 'a2o-essential-unix::rctool'
+    include 'a2o-essential-unix::sys'
 }
