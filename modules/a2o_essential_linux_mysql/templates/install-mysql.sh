@@ -41,6 +41,11 @@ export PURI="http://cdn.mysql.com/Downloads/MySQL-$PVERSION_MYSQL_MAJOR/$PFILE" 
 rm -rf $PDIR &&
 GetUnpackCd &&
 
+# Does not compile on Ubuntu without these, bug 38324
+export CCFLAGS="-I$PDESTDIR_OPENSSL/include" &&
+export CPPFLAGS="-I$PDESTDIR_OPENSSL/include"  &&
+export CXXFLAGS="-I$PDESTDIR_OPENSSL/include" &&
+
 ./configure --prefix=$PDESTDIR --with-sysconfdir=/etc/mysql \
   --with-charset=utf8 --with-collation=utf8_general_ci \
   --with-unix-socket-path=/var/mysql/run/mysql.sock \
