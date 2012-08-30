@@ -177,7 +177,10 @@ class a2o-essential-linux-ganglia::files::gmond   inherits   a2o-essential-linux
         group    => root,
         mode     => 644,
 	require  => [
+	    Package['ganglia-gmond'],
 	    File['/etc/ganglia'],
+	],
+	before   => [
 	    File['/usr/local/ganglia-gmond'],
 	],
     }
