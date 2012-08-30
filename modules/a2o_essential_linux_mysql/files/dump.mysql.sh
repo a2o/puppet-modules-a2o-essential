@@ -184,15 +184,29 @@ for DB in $DBS; do
     _echo -n "DUMP: $DB... "
     umask $DESTINATION_UMASK
     touch $DESTFILE
-    $MYSQLDUMP --defaults-file=$MYCNF $MYSQLDUMP_OPTS $DB | LANG=C grep -v '^-- Dump completed on ' | $DESTFILE_CMD > $DESTFILE
+
+    if [ "$MYSQLDUMP_ADD_INNODB_IMPORT_OPTIMIZATIONS" == "1" ]; then
+	echo "SET FOREIGN_KEY_CHECKS = 0;" >> $DESTFILE
+	echo "SET UNIQUE_CHECKS = 0;" >> $DESTFILE
+	echo "SET AUTOCOMMIT = 0;" >> $DESTFILE
+    fi
+
+    $MYSQLDUMP --defaults-file=$MYCNF $MYSQLDUMP_OPTS $DB | LANG=C grep -v '^-- Dump completed on ' | $DESTFILE_CMD >> $DESTFILE
 
     # Check for error
     if [ "$?" != "0" ]; then
 	ERROR_OCCURED="yes"
 	echo "ERROR"
-    else
-	_echo "done."
+	continue;
     fi
+
+    if [ "$MYSQLDUMP_ADD_INNODB_IMPORT_OPTIMIZATIONS" == "1" ]; then
+	echo "SET UNIQUE_CHECKS = 1;" >> $DESTFILE
+	echo "SET FOREIGN_KEY_CHECKS = 1;" >> $DESTFILE
+	echo "COMMIT;" >> $DESTFILE
+    fi
+
+    _echo "done."
 done
 
 
