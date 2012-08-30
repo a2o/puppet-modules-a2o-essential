@@ -75,7 +75,7 @@ class a2o-essential-unix::fhs inherits a2o-essential-unix::base {
     file { '/var/log/old':         }
     # TODO rename /var/log/old to /var/log/archive(s)
     #file { '/var/log/archive':    }
-    file { '/var/run':             }
+    file { '/var/run':             links => follow }
     file { '/var/spool':           }
     file { '/var/tmp':             mode => 1777, }
     file { '/var/www':             mode => undef,  group => undef, }
