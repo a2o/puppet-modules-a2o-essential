@@ -38,5 +38,9 @@ class   a2o-essential-debian::packages   inherits   a2o-essential-debian::base {
     package { 'zlib1g-dev':    }
 
     # Various basic packages
+    package { 'arping':        }
+    package { 'ethtool':       }
+    package { 'hdparm':        }
+    package { 'iperf':         }
     package { 'ntp':           }
 }
