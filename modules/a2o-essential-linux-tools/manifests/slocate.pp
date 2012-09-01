@@ -24,5 +24,5 @@ class   a2o-essential-linux-tools::slocate   inherits   a2o-essential-linux-tool
 
     file { '/usr/local/bin/slocate':        }
     file { '/var/lib/slocate/slocate.db':   }
-    file { '/var/lib/slocate':              require => File['/var/lib/slocate/slocate.db'] }
+    file { '/var/lib/slocate':              require => File['/var/lib/slocate/slocate.db'], force => true }
 }
