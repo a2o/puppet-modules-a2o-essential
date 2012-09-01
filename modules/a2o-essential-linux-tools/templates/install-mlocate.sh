@@ -26,20 +26,24 @@ export PVERSION_SW="<%= packageSoftwareVersion %>" &&
 
 
 
-### Slocate
-# CheckURI: http://slocate.trakker.ca/
+### Mlocate
+# CheckURI: https://fedorahosted.org/mlocate/
 cd $SRCROOT && . ../_functions.sh &&
-export PNAME="slocate" &&
+export PNAME="mlocate" &&
 export PVERSION="$PVERSION_SW" &&
 export PDIR="$PNAME-$PVERSION" &&
-export PFILE="$PDIR.tar.gz" &&
-export PURI="http://slocate.trakker.ca/files/$PFILE" &&
+export PFILE="$PDIR.tar.xz" &&
+export PURI="https://fedorahosted.org/releases/m/l/mlocate/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&
 
+./configure --sysconfdir=/etc --localstatedir=/var/lib
 make &&
 make install &&
+
+# FIXME remove at some point
+rm -f /usr/local/bin/slocate &&
 
 cd $SRCROOT &&
 rm -rf $PDIR &&

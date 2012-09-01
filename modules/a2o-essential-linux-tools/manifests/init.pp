@@ -40,6 +40,7 @@ class a2o-essential-linux-tools::all {
     include 'a2o-essential-linux-tools::iptables'
 # Disabled because compilation fails on 64-bit platforms
 #    include 'a2o-essential-linux-tools::latencytop'
+    include 'a2o-essential-linux-tools::mlocate'
     include 'a2o-essential-linux-tools::netcat'
     include 'a2o-essential-linux-tools::nmap'
     include 'a2o-essential-linux-tools::pciutils'
