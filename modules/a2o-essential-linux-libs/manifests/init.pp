@@ -150,7 +150,7 @@ class a2o-essential-linux-libs::all {
     include 'a2o-essential-linux-libs::sqlite'
     include 'a2o-essential-linux-libs::unixodbc'
     include 'a2o-essential-linux-libs::yaml'
-    include 'a2o-essential-linux-libs::zlib'
+    include 'a2o_essential_linux_libs::zlib'
 }
 
 

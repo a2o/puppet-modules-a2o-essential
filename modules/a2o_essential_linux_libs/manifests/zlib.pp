@@ -14,7 +14,7 @@
 
 
 ### Software package: zlib
-class   a2o-essential-linux-libs::zlib   inherits   a2o-essential-linux-libs::base {
+class   a2o_essential_linux_libs::zlib   inherits   a2o_essential_linux_libs::base {
 
     # Software details
     $packageName            = 'zlib'
