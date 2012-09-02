@@ -13,8 +13,10 @@
 
 
 
-### Final all-containing class
-class   a2o_essential_linux_openssh_sys {
-    include 'a2o_essential_linux_openssh_sys::files'
-    include 'a2o_essential_linux_openssh_sys::package'
+### Base class
+class   a2o_essential_linux_openssh_sys::base {
+    $thisPuppetModule = 'a2o_essential_linux_openssh_sys'
+
+    ### Additinal versions
+    $externalDestDir_openssl = '/usr/local/openssl-1.0.0i-1'
 }
