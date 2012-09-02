@@ -1,0 +1,101 @@
+#!/bin/sh
+###########################################################################
+# a2o Essential Puppet Modules                                            #
+#-------------------------------------------------------------------------#
+# Copyright (c) 2012 Bostjan Skufca                                       #
+#-------------------------------------------------------------------------#
+# This source file is subject to version 2.0 of the Apache License,       #
+# that is bundled with this package in the file LICENSE, and is           #
+# available through the world-wide-web at the following url:              #
+# http://www.apache.org/licenses/LICENSE-2.0                              #
+#-------------------------------------------------------------------------#
+# Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
+###########################################################################
+. /etc/rc.d/rc._functions
+
+
+
+export LD_LIBRARY_PATH="<%= externalDestDir_openssl %>/lib"
+
+
+
+PROC_NAME="/usr/local/ssh/sbin/sshd"
+PID_FILE="/var/run/sshd.pid"
+APP_CMD_START="$PROC_NAME"
+
+
+
+sshd_start() {
+    # Create host keys if needed.
+    if [ ! -r /etc/ssh/ssh_host_key ]; then
+	/usr/local/ssh/bin/ssh-keygen -t rsa1 -f /etc/ssh/ssh_host_key -N '' 
+    fi
+    if [ ! -f /etc/ssh/ssh_host_dsa_key ]; then
+	/usr/local/ssh/bin/ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key -N ''
+    fi
+    if [ ! -f /etc/ssh/ssh_host_ecdsa_key ]; then
+	/usr/local/ssh/bin/ssh-keygen -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -N ''
+    fi
+    if [ ! -f /etc/ssh/ssh_host_rsa_key ]; then
+	/usr/local/ssh/bin/ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N ''
+    fi
+
+    app_start
+}
+
+
+
+sshd_stop() {
+    echo "WARNING: killing listener process only.  To kill every sshd process, you must"
+    echo "         manually kill all sshd instances.  'rc.sshd restart' kills only the"
+    echo "         parent sshd to allow an admin logged in through sshd to use 'rc.sshd"
+    echo "         restart' without being cut off.  If sshd has been upgraded, new"
+    echo "         connections will now use the new version, which should be a safe"
+    echo "         enough approach."
+    app_stop
+}
+
+
+
+sshd_restart() {
+    sshd_stop
+    sshd_start
+}
+
+sshd_status() {
+    is_app_running__info
+}
+
+sshd_kill() {
+    if app_kill; then
+	rm -f $PID_FILE
+    fi
+}
+
+sshd_reload() {
+    kill -HUP `cat $PID_FILE`
+}
+
+
+case "$1" in
+    'start')
+	sshd_start
+	;;
+    'stop')
+	sshd_stop
+	;;
+    'restart')
+	sshd_restart
+	;;
+    'status')
+	sshd_status
+	;;
+    'kill')
+	sshd_kill
+	;;
+    'reload')
+	sshd_reload
+	;;
+    *)
+	echo "usage $0 start|stop|restart|status|kill|reload"
+esac
