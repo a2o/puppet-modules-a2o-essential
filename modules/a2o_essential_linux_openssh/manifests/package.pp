@@ -15,6 +15,7 @@
 
 ### All containing class
 class   a2o_essential_linux_openssh::package {
+    include 'a2o_essential_linux_openssh::package::zlib'
     include 'a2o_essential_linux_openssh::package::openssh'
     include 'a2o_essential_linux_openssh::package::cleanup'
 }

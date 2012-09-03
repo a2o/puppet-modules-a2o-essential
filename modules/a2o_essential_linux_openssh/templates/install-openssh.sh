@@ -46,13 +46,14 @@ ldconfig &&
 
 # Enable chrooting into non-root-owned directory
 wget http://source.a2o.si/patches/openssh-5.9p1_no-chroot-check.diff &&
-cat openssh-5.9p1_no-chroot-check.diff | patch -p1 &&
+patch -p1 < openssh-5.9p1_no-chroot-check.diff &&
 
 # FIXME reinclude --with-ldflags=-static \
 
 ./configure --prefix=$PDESTDIR \
   --sysconfdir=/etc/ssh \
   --with-ssl-dir=$PDESTDIR_OPENSSL \
+  --with-zlib=$PDESTDIR \
   --with-privsep-path=/var/empty \
   --with-default-path=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/ssh/bin &&
 make &&
