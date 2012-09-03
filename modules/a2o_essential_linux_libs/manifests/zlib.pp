@@ -16,33 +16,5 @@
 ### Software package: zlib
 class   a2o_essential_linux_libs::zlib   inherits   a2o_essential_linux_libs::base {
 
-    # Software details
-    $packageName            = 'zlib'
-    $packageSoftware        = 'zlib'
-    $packageSoftwareVersion = '1.2.6'
-    $packageRelease         = '1'
-    $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
-    $packageTag             = "$packageSoftware-$packageEnsure"
-    $installScriptTpl       = "install-$packageSoftware.sh"
-    $installScript          = "install-$packageTag.sh"
-
-
-    # Installation
-    file { "$compileDir/$installScript":
-	content  => template("$thisPuppetModule/$installScriptTpl"),
-        owner    => root,
-        group    => root,
-        mode     => 755,
-	require  => [
-	    File['/var/src/build_functions.sh'],
-	],
-    }
-    package { "$packageName":
-	provider => 'a2o_linux_compiletool',
-        ensure   => "$packageEnsure",
-	source   => "$compileDir/$installScript",
-	require  => [
-	    File["$compileDir/$installScript"],
-	],
-    }
+    a2o_essential_linux_libs::zlib::instance { 'zlib': }
 }
