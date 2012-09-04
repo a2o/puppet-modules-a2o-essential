@@ -24,6 +24,7 @@ class   a2o_essential_linux_mysql::distro::ubuntu::service   inherits   a2o_esse
         File['/var/mysql/data'],
         File['/var/mysql/log'],
         File['/var/mysql/run'],
+        File['/var/mysql/tmp'],
     ]
     $subscribe = [
 	Package['mysql'],
