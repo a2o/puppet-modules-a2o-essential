@@ -40,6 +40,5 @@ class   a2o-essential-suse::packages   inherits   a2o-essential-suse::base {
     Package['gettext-runtime'] -> Package['gettext']
 
     # Various basic packages
-    package { 'ntp':           }
     package { 'lynx':          }
 }

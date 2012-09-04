@@ -24,4 +24,5 @@ class a2o-essential-suse::base {
 class a2o-essential-suse::server {
     include 'a2o-essential-unix::server'
     include 'a2o-essential-suse::fhs'
+    include 'a2o-essential-suse::ntp'
 }
