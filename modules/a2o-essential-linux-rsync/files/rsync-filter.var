@@ -150,6 +150,7 @@ dir-merge .rsync-filter.site
 - /run/*/socket
 + /run/samba
 - /run/samba/***
++ /run/utmp
 + /spool/cron
 - /spool/cron/cron.*
 + /spool/cron/crontabs
