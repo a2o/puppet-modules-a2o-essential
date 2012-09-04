@@ -43,4 +43,5 @@ class   a2o-essential-debian::packages   inherits   a2o-essential-debian::base {
     package { 'hdparm':        }
     package { 'iperf':         }
     package { 'ntp':           }
+    package { 'lynx':          }
 }

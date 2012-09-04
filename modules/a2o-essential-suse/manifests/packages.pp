@@ -41,4 +41,5 @@ class   a2o-essential-suse::packages   inherits   a2o-essential-suse::base {
 
     # Various basic packages
     package { 'ntp':           }
+    package { 'lynx':          }
 }
