@@ -46,7 +46,8 @@ define   a2o-essential-unix::rctool::service::generic   ($ensure='running', $req
 #	},
 
 	require     => [
-    	    File['/etc/rc.d/rc._functions'],
+    	    File['/etc/rc.tool/common'],
+    	    File['/etc/rc.d/rc._functions'], ### FIXME remove, compatibility
             $require,
 	],
     }
