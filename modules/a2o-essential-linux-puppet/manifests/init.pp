@@ -196,6 +196,7 @@ class   a2o-essential-linux-puppet::package::puppet   inherits   a2o-essential-l
     # Program symlinks
     file { '/usr/local/bin/puppet':     ensure => "$destDirSymlink/bin/puppet",   require => File["$destDirSymlink"], }
     file { '/usr/local/sbin/puppetd':   ensure => "$destDirSymlink/sbin/puppetd", require => File["$destDirSymlink"], }
+    file { '/usr/local/bin/facter':     ensure => "$destDirSymlink/bin/facter",   require => File["$destDirSymlink"], }
 }
 
 
