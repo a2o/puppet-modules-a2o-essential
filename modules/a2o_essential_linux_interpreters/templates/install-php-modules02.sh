@@ -18,6 +18,7 @@
 export SRCROOT="<%= compileDir %>" &&
 mkdir -p $SRCROOT &&
 cd $SRCROOT &&
+. /var/src/build_functions.sh &&
 
 
 
@@ -61,8 +62,8 @@ php_installPackage_pecl $PDESTDIR_PHP memcache  &&
 php_installPackage_pecl $PDESTDIR_PHP memcached &&
 php_installPackage_pecl $PDESTDIR_PHP mongo     &&
 php_installPackage_pecl $PDESTDIR_PHP uuid      &&
-php_installPackage_pecl $PDESTDIR_PHP xdebug    xdebug-$PVERSION_XDEBUG  &&
-php_installPackage_pecl $PDESTDIR_PHP yaf       yaf-$PVERSION_YAF        &&
+php_installPackage_pecl $PDESTDIR_PHP xdebug    &&
+php_installPackage_pecl $PDESTDIR_PHP yaf       &&
 
 
 
