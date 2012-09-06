@@ -24,30 +24,7 @@ cd $SRCROOT &&
 ### Set versions, releases and directories
 export PDESTDIR_PHP="<%= destDir_php %>" &&
 export PVERSION_APC="<%= softwareVersion_apc %>" &&
-
-
-
-### APC
-# CheckURI: http://pecl.php.net/package/APC
-cd $SRCROOT && . ../_functions.sh &&
-export PNAME="APC" &&
-export PVERSION="$PVERSION_APC" &&
-export PDIR="$PNAME-$PVERSION" &&
-export PFILE="$PDIR.tgz" &&
-export PURI="http://pecl.php.net/get/$PFILE" &&
-
-rm -rf $PDIR &&
-GetUnpackCd &&
-
-$PDESTDIR_PHP/bin/phpize &&
-./configure --with-php-config=$PDESTDIR_PHP/bin/php-config &&
-make -j 2 &&
-make install &&
-
-cd $SRCROOT &&
-rm -rf $PDIR
-
-
+true
 
 if [ "$?" != "0" ]; then
     exit 1
@@ -72,9 +49,22 @@ $PDESTDIR_PHP/bin/pear channel-update   pear.symfony-project.com
 
 
 
-### Install modules
-printf "\n" | $PDESTDIR_PHP/bin/pear install --force pecl/uuid &&
-$PDESTDIR_PHP/bin/pear install --force pecl/gearman &&
+### Pecl extensions
+php_installPackage_pecl $PDESTDIR_PHP APC       APC-$PVERSION_APC        &&
+php_installPackage_pecl $PDESTDIR_PHP gearman   gearman                  &&
+
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig &&
+php_installPackage_pecl $PDESTDIR_PHP imagick   imagick-beta             &&
+unset PKG_CONFIG_PATH &&
+
+php_installPackage_pecl $PDESTDIR_PHP memcache  &&
+php_installPackage_pecl $PDESTDIR_PHP memcached &&
+php_installPackage_pecl $PDESTDIR_PHP mongo     &&
+php_installPackage_pecl $PDESTDIR_PHP uuid      &&
+php_installPackage_pecl $PDESTDIR_PHP xdebug    xdebug-$PVERSION_XDEBUG  &&
+php_installPackage_pecl $PDESTDIR_PHP yaf       yaf-$PVERSION_YAF        &&
+
+
 
 ### PHP code testing
 $PDESTDIR_PHP/bin/pear install --force phpunit/PHPUnit &&

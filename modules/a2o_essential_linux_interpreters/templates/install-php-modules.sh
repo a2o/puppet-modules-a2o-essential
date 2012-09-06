@@ -52,7 +52,7 @@ rm -rf $PDIR &&
 # CheckURI: http://pear.php.net/
 
 # Update modules
-$PDESTDIR_PHP/bin/pear upgrade --force &&
+#$PDESTDIR_PHP/bin/pear upgrade --force &&
 
 
 
