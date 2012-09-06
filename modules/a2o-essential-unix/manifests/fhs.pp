@@ -20,6 +20,10 @@ class a2o-essential-unix::fhs inherits a2o-essential-unix::base {
 	redhat  => 555,
 	default => 755,
     }
+    $mode_osdep_sys = $operatingsystem ? {
+	slackware => 555,
+	default   => 755,
+    }
 
     File {
 	ensure   => directory,
@@ -43,7 +47,7 @@ class a2o-essential-unix::fhs inherits a2o-essential-unix::base {
 #    file { '/root':                mode => 710, }   # SuSE 700
     file { '/sbin':                mode => $mode_osdep, }
     file { '/srv':                 }
-    file { '/sys':                 }
+    file { '/sys':                 mode => $mode_osdep_sys }
     file { '/tmp':                 mode => 1777, }
 
     file { '/usr':                 }
