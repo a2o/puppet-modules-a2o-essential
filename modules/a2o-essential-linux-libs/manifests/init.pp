@@ -96,7 +96,6 @@ class a2o-essential-linux-libs::ruby {
 
 ### Libs in testing phase - to be migrated to ::all
 class a2o-essential-linux-libs::testing {
-    include 'a2o-essential-linux-libs::net-snmp'
     include 'a2o-essential-linux-libs::openipmi'
 }
 
@@ -147,6 +146,7 @@ class a2o-essential-linux-libs::all {
     include 'a2o-essential-linux-libs::libxml2'
     include 'a2o-essential-linux-libs::libxslt'
     include 'a2o-essential-linux-libs::neon'
+    include 'a2o-essential-linux-libs::net-snmp'
     include 'a2o-essential-linux-libs::pango'
     include 'a2o-essential-linux-libs::pcre'
     include 'a2o-essential-linux-libs::pixman'
@@ -155,7 +155,7 @@ class a2o-essential-linux-libs::all {
     include 'a2o-essential-linux-libs::sqlite'
     include 'a2o-essential-linux-libs::unixodbc'
     include 'a2o-essential-linux-libs::yaml'
-    include 'a2o-essential-linux-libs::zlib'
+    include 'a2o_essential_linux_libs::zlib'
 }
 
 

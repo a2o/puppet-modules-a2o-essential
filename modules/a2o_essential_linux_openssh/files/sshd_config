@@ -1,0 +1,24 @@
+#
+# WARNING: This file is generated and controlled by configuration management.
+# WARNING: All changes will be overwritten.
+#
+
+### Daemon
+PidFile                   /var/run/sshd.pid
+LogLevel                  VERBOSE
+UseDNS                    no
+
+### Connectivity
+Port                    22
+Protocol                 2
+PermitRootLogin           without-password
+PermitUserEnvironment     yes
+Subsystem                 sftp   internal-sftp
+
+### SFTP options
+# At least one non-negative pattern item must be present for Match Group to work
+Match Group "!root,!wheel,!admin,users"
+    ChrootDirectory       %h
+
+Match Group ftp,sftp
+    ChrootDirectory       %h

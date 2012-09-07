@@ -16,34 +16,13 @@
 ### Software package: slocate
 class   a2o-essential-linux-tools::slocate   inherits   a2o-essential-linux-tools::base {
 
-    # Software details
-    $packageName            = 'slocate'
-    $packageSoftware        = 'slocate'
-    # CheckURI:
-    $packageSoftwareVersion = '3.1'
-    $packageRelease         = '1'
-    $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
-    $packageTag             = "$packageSoftware-$packageEnsure"
-    $installScriptTpl       = "install-$packageSoftware.sh"
-    $installScript          = "install-$packageTag.sh"
-
-
-    # Installation
-    file { "$compileDir/$installScript":
-	content  => template("$thisPuppetModule/$installScriptTpl"),
-        owner    => root,
-        group    => root,
-        mode     => 755,
-	require  => [
-	    File['/var/src/build_functions.sh'],
-	],
+    # Removal: Superseeded by mlocate, remove old stuff now
+    # This removal was added 2012-09-01
+    File {
+	ensure => absent,
     }
-    package { "$packageName":
-	provider => 'a2o_linux_compiletool',
-        ensure   => "$packageEnsure",
-	source   => "$compileDir/$installScript",
-	require  => [
-	    File["$compileDir/$installScript"],
-	],
-    }
+
+    file { '/usr/local/bin/slocate':        }
+    file { '/var/lib/slocate/slocate.db':   }
+    file { '/var/lib/slocate':              require => File['/var/lib/slocate/slocate.db'], force => true }
 }

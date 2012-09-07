@@ -19,6 +19,10 @@ if [[ ! -z `echo $PFILE | grep '\.\(tar\.gz\|tgz\)$'` ]]; then
     tar -xzf $PFILE
 elif [[ ! -z `echo $PFILE | grep '\.tar\.bz2$'` ]]; then
     tar -xjf $PFILE
+elif [[ ! -z `echo $PFILE | grep '\.tar\.xz$'` ]]; then
+    tar -xJf $PFILE
+    # Another option, if your tar does not support -J yet
+    #xz -dc $PFILE | tar -x
 elif [[ ! -z `echo $PFILE | grep '\.bz2$'` ]]; then
     bunzip2 $PFILE
 elif [[ ! -z `echo $PFILE | grep '\.tar$'` ]]; then

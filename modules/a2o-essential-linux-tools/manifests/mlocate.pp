@@ -13,13 +13,14 @@
 
 
 
-### Software package: zlib
-class   a2o-essential-linux-libs::zlib   inherits   a2o-essential-linux-libs::base {
+### Software package: mlocate
+class   a2o-essential-linux-tools::mlocate   inherits   a2o-essential-linux-tools::base {
 
     # Software details
-    $packageName            = 'zlib'
-    $packageSoftware        = 'zlib'
-    $packageSoftwareVersion = '1.2.6'
+    $packageName            = 'mlocate'
+    $packageSoftware        = 'mlocate'
+    # CheckURI: https://fedorahosted.org/mlocate/
+    $packageSoftwareVersion = '0.25'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
@@ -43,6 +44,7 @@ class   a2o-essential-linux-libs::zlib   inherits   a2o-essential-linux-libs::ba
 	source   => "$compileDir/$installScript",
 	require  => [
 	    File["$compileDir/$installScript"],
+	    Group['mlocate'],
 	],
     }
 }

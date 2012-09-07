@@ -201,6 +201,7 @@ class   a2o-essential-linux-puppet-sys::package::puppet   inherits   a2o-essenti
 	backup   => false,
     }
     file { '/usr/local/sbin/puppetd-sys':   ensure => "$destDirSymlink/sbin/puppetd", require => File["$destDirSymlink"], }
+    file { '/usr/local/bin/facter-sys':     ensure => "$destDirSymlink/bin/facter",   require => File["$destDirSymlink"], }
 }
 
 

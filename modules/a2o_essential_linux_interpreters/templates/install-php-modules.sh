@@ -27,15 +27,24 @@ export PVERSION_ZF="<%=  softwareVersion_zf  %>" &&
 
 
 
-### Install Zend framework
+### Zend Framework
 # CheckURI: http://framework.zend.com/
-cd $PDESTDIR_PHP/lib/php &&
-wget -c http://framework.zend.com/releases/ZendFramework-$PVERSION_ZF/ZendFramework-$PVERSION_ZF-minimal.tar.gz &&
-rm -rf ZendFramework-$PVERSION_ZF-minimal &&
-tar -xzf ZendFramework-$PVERSION_ZF-minimal.tar.gz &&
-chown root.root -R ZendFramework-$PVERSION_ZF-minimal &&
-rm -rf ./Zend &&
-mv ZendFramework-$PVERSION_ZF-minimal/library/Zend . &&
+cd $SRCROOT && . ../build_functions.sh &&
+export PNAME="ZendFramework" &&
+export PVERSION="$PVERSION_ZF" &&
+export PDIR="$PNAME-$PVERSION-minimal" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="http://framework.zend.com/releases/ZendFramework-$PVERSION_ZF/$PFILE" &&
+
+rm -rf $PDIR &&
+GetUnpack &&
+
+chown root.root $PDIR &&
+rm -rf $PDESTDIR_PHP/lib/php/Zend &&
+mv $PDIR/library/Zend $PDESTDIR_PHP/lib/php &&
+
+cd $SRCROOT &&
+rm -rf $PDIR &&
 
 
 
@@ -43,7 +52,7 @@ mv ZendFramework-$PVERSION_ZF-minimal/library/Zend . &&
 # CheckURI: http://pear.php.net/
 
 # Update modules
-$PDESTDIR_PHP/bin/pear upgrade --force &&
+#$PDESTDIR_PHP/bin/pear upgrade --force &&
 
 
 

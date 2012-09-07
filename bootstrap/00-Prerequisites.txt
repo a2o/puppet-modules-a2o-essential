@@ -3,12 +3,16 @@
 ################################################################################
 
 
+
+###
 ### Packages that must be installed:
+###
+
 - autoconf
 - automake
 - diff       (or diffutils)
 - gcc
-- gcc-c++
+- gcc-c++    (or g++)
 - gettext    (or gettext-runtime)
 - groff
 - libtool
@@ -19,7 +23,20 @@
 - zlib-devel (or zlib1g-dev)
 
 
-### How to install on specific systems
+
+###
+### How to install on specific systems:
+###
+
 On SuSE   based systems, please use:   zypper  install PACKAGENAME
 On Debian based systems, please use:   apt-get install PACKAGENAME
 On RedHat based systems, please use:   yum     install PACKAGENAME
+
+
+###
+### Quick commands to install all prerequisites at once:
+###
+
+Debian based (tested on Ubuntu Server 12.04.1):
+
+    apt-get install autoconf automake diffutils gcc g++ gettext groff libtool make patch pkg-config zlib1g zlib1g-dev

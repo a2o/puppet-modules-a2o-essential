@@ -10,7 +10,7 @@ cd $SRCROOT &&
 
 
 ### Set versions and directories
-export PVERSION_OPENSSL="1.0.0h" &&
+export PVERSION_OPENSSL="1.0.0i" &&
 export PDESTDIR_OPENSSL="/usr/local/openssl-$PVERSION_OPENSSL-init" &&
 
 

@@ -28,8 +28,6 @@ class   a2o_essential_linux_nodejs::files   inherits   a2o_essential_linux_nodej
 
     # Symlinks
     file { '/usr/local/bin/node':   ensure => '/usr/local/nodejs/bin/node', }
+    file { '/usr/local/bin/npm':    ensure => '/usr/local/nodejs/bin/npm',  }
     file { '/usr/bin/node':         ensure => '/usr/local/bin/node',        }
-
-    # FIXME this was a mistake, remove after 2012-08-8
-    file { '/usr/local/bin/nodejs':   ensure => absent }
 }

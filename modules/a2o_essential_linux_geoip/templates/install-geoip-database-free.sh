@@ -22,28 +22,36 @@ cd $SRCROOT &&
 
 
 ### Set versions and directories
-export PVERSION_SW="<%= packageSoftwareVersion %>" &&
+export PVERSION_SW="<%= softwareVersion %>" &&
+export PDESTDIR="<%= destDir %>" &&
 
 
 
-### Slocate
-# CheckURI: http://slocate.trakker.ca/
-cd $SRCROOT && . ../_functions.sh &&
-export PNAME="slocate" &&
-export PVERSION="$PVERSION_SW" &&
-export PDIR="$PNAME-$PVERSION" &&
-export PFILE="$PDIR.tar.gz" &&
-export PURI="http://slocate.trakker.ca/files/$PFILE" &&
+### Install MaxMind GeoIP free databases
+mkdir -p $PDESTDIR/install-tmp &&
+cd $PDESTDIR/install-tmp &&
+rm -f *.dat &&
+rm -f *.gz  &&
 
-rm -rf $PDIR &&
-GetUnpackCd &&
+#wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz &&
+#wget http://geolite.maxmind.com/download/geoip/database/GeoIPv6.dat.gz &&
+#wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz &&
+#wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCityv6-beta/GeoLiteCityv6.dat.gz &&
+wget http://source.a2o.si/files/geoip/$PVERSION_SW/GeoIP.dat.gz &&
+wget http://source.a2o.si/files/geoip/$PVERSION_SW/GeoIPv6.dat.gz &&
+wget http://source.a2o.si/files/geoip/$PVERSION_SW/GeoLiteCity.dat.gz &&
+wget http://source.a2o.si/files/geoip/$PVERSION_SW/GeoLiteCityv6.dat.gz &&
 
-make &&
-make install &&
+gunzip           Geo*.dat.gz &&
+chown  root.root Geo*.dat    &&
+chmod  644       Geo*.dat    &&
 
-cd $SRCROOT &&
-rm -rf $PDIR &&
+mv -f Geo*.dat $PDESTDIR &&
+
+# Cleanup
+cd $PDESTDIR &&
+rmdir install-tmp &&
 
 
 
-exit 0
+true
