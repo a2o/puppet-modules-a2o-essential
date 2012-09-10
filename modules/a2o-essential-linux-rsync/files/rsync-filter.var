@@ -95,6 +95,8 @@ dir-merge .rsync-filter.site
 - /log/***
 + /mongodb/data
 - /mongodb/data/***
++ /mysql/binlog
+- /mysql/binlog/***
 + /mysql/data
 - /mysql/data/***
 + /mysql/log
