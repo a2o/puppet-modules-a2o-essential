@@ -1,0 +1,73 @@
+#!/bin/sh
+###########################################################################
+# a2o Essential Puppet Modules                                            #
+#-------------------------------------------------------------------------#
+# Copyright (c) 2012 Bostjan Skufca                                       #
+#-------------------------------------------------------------------------#
+# This source file is subject to version 2.0 of the Apache License,       #
+# that is bundled with this package in the file LICENSE, and is           #
+# available through the world-wide-web at the following url:              #
+# http://www.apache.org/licenses/LICENSE-2.0                              #
+#-------------------------------------------------------------------------#
+# Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
+###########################################################################
+. /etc/rc.d/rc._functions
+
+
+
+export LD_LIBRARY_PATH="<%= externalDestDir_openssl %>/lib"
+
+
+
+PROC_NAME="/usr/local/bin/ntpd"
+PID_FILE="/var/run/ntpd.pid"
+APP_CMD_START="$PROC_NAME -g"
+
+
+
+ntpd_start() {
+    app_start
+}
+
+ntpd_stop() {
+    if app_stop; then
+	rm -f $PID_FILE
+    fi
+}
+
+ntpd_restart() {
+    ntpd_stop
+    ntpd_start
+}
+
+ntpd_status() {
+    is_app_running__info
+}
+
+ntpd_kill() {
+    if app_kill; then
+	rm -f $PID_FILE
+    fi
+}
+
+
+
+case "$1" in
+    'start')
+	ntpd_start
+	;;
+    'stop')
+	ntpd_stop
+	;;
+    'restart')
+	ntpd_restart
+	;;
+    'status')
+	ntpd_status
+	;;
+    'kill')
+	ntpd_kill
+	;;
+    *)
+	echo "usage $0 start|stop|restart|status|kill"
+esac
