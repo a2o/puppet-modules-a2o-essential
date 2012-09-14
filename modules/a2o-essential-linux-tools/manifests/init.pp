@@ -33,6 +33,7 @@ class a2o-essential-linux-tools::all {
     include 'a2o-essential-linux-tools::git'
     include 'a2o-essential-linux-tools::git::symlinks'
     include 'a2o-essential-linux-tools::hdparm'
+    include 'a2o-essential-linux-tools::ifenslave'
     include 'a2o-essential-linux-tools::imagemagick'
     include 'a2o-essential-linux-tools::inotify-tools'
     include 'a2o-essential-linux-tools::iotop'
