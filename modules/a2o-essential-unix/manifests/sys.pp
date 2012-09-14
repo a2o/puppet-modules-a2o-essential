@@ -16,6 +16,33 @@
 ### Various system things
 class   a2o-essential-unix::sys::time   inherits   a2o-essential-unix::base {
 
+    ### Sync hardware clock to system time once per day
+    File {
+        owner    => root,
+        group    => root,
+        mode     => 755,
+    }
+    file { '/opt/scripts/clock':              ensure => directory }
+    file { '/opt/scripts/clock/hwclock.sh':   source => "puppet:///modules/$thisPuppetModule/scripts/clock/hwclock.sh" }
+
+    cron { '/opt/scripts/clock/hwclock.sh':
+        user     => root,
+	command  => '/opt/scripts/cron/run-and-mail-if-error.sh   "/opt/scripts/clock/hwclock.sh"   "root"',
+        hour     => 4,
+	minute   => 1,
+	require  => [
+    	    File['/opt/scripts/cron/run-and-mail-if-error.sh'],
+	    Cron['/opt/scripts/ntp/conditional-ntpdate.sh']
+	],
+    }
+}
+
+
+
+### Obsolete stuff, remove at some point
+class   a2o-essential-unix::sys::time_obsolete   inherits   a2o-essential-unix::base {
+
+    # FIXME remove in future, disabled on 2012-09-13
     ### Sync time with pool.ntp.org
     cron { 'ntpdate pool.ntp.org':
         user     => root,
@@ -25,8 +52,9 @@ class   a2o-essential-unix::sys::time   inherits   a2o-essential-unix::base {
 	    Package['ntp'],
     	    File['/opt/scripts/cron/run-and-mail-if-error.sh'],
 	],
+	ensure => absent,
     }
-
+    # FIXME remove in future, disabled on 2012-09-13
     ### Sync hardware clock to system time from cron
     cron { '/sbin/hwclock':
         user     => root,
@@ -36,12 +64,16 @@ class   a2o-essential-unix::sys::time   inherits   a2o-essential-unix::base {
 	require  => [
     	    File['/opt/scripts/cron/run-and-mail-if-error.sh'],
 	],
+	ensure => absent,
     }
 }
 
 
 
-### Include all
+### Obligatory stuff for all servers
 class   a2o-essential-unix::sys {
+    ### Time sync and machine clock sync
+    include 'a2o_essential_linux_ntp::cron'
     include 'a2o-essential-unix::sys::time'
+    include 'a2o-essential-unix::sys::time_obsolete'
 }
