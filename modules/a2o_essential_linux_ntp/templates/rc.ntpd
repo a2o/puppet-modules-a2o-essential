@@ -22,6 +22,7 @@ export LD_LIBRARY_PATH="<%= externalDestDir_openssl %>/lib"
 PROC_NAME="/usr/local/bin/ntpd"
 PID_FILE="/var/run/ntpd.pid"
 APP_CMD_START="$PROC_NAME -g"
+APP_STOP_STALE_PID_FILE_NOWARNING=1
 
 
 
