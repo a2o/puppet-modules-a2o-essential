@@ -14,6 +14,19 @@
 
 
 
+### Get parameters from command line
+MAX_DIFF_SECONDS=10
+if [ "x$1" != "x" ]; then
+    if [[ "$1" =~ ^[0-9]+$ ]]; then
+	MAX_DIFF_SECONDS=$1
+    else
+        echo "ERROR: Invalid argument MAX_DIFF_SECONDS: $1"
+        exit 1
+    fi
+fi
+
+
+
 ### Get program locations
 HWCLOCK=/sbin/hwclock
 if [ -x /usr/local/bin/ntpdate ]; then
@@ -57,12 +70,12 @@ fi
 
 
 
-### If less than 10 seconds of difference, ignore it and rely on ntpd to even it out
-if [ "$DIFF_SECONDS" -lt 10 ]; then
-    echo "Difference is less than 10 seconds, let's leave ntpd to work this out. Exiting..."
+### If less than MAX_DIFF_SECONDS seconds of difference, ignore it and rely on ntpd to even it out
+if [ "$DIFF_SECONDS" -lt $MAX_DIFF_SECONDS ]; then
+    echo "Difference is less than $MAX_DIFF_SECONDS seconds, let's leave ntpd to work this out. Exiting..."
     exit 0
 else
-    echo "WARNING: Clock difference between this system and pool.ntp.org is more than 10 seconds."
+    echo "WARNING: Clock difference between this system and pool.ntp.org is more than $MAX_DIFF_SECONDS seconds."
     echo "NOTICE:  Forcibly adjusting by stopping ntpd and executing ntpdate... "
 fi
 
