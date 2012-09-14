@@ -48,9 +48,9 @@ sleep $SLEEP_SECONDS
 
 
 ### Get whole number of seconds of time desync between this system and NTP server
-NTPDATE_Q_RES=`$NTPDATE -q pool.ntp.org | tail -n1 | grep 'adjust time server'`
+NTPDATE_Q_RES=`$NTPDATE -q pool.ntp.org | tail -n1 | grep '\(adjust\|step\) time server'`
 if [ "$?" != 0 ]; then
-    echo "ERROR: ntpdate output did not contain line with 'adjust time server'"
+    echo "ERROR: ntpdate output did not contain line with 'adjust/step time server'"
     exit 1
 fi
 
