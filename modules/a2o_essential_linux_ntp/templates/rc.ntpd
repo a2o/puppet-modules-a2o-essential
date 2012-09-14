@@ -27,6 +27,7 @@ APP_CMD_START="$PROC_NAME -g"
 
 ntpd_start() {
     app_start
+    /opt/scripts/cron/run-and-mail-if-error.sh   "/opt/scripts/ntp/conditional-ntpdate.sh"   "root" &
 }
 
 ntpd_stop() {

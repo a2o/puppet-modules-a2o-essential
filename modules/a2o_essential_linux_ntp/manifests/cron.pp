@@ -13,33 +13,25 @@
 
 
 
-### Service: ntpd
-class   a2o_essential_linux_ntp::distro::a2o::service   inherits   a2o_essential_linux_ntp::package::base {
+### Cron for time check and conditional ntpdate run
+class   a2o_essential_linux_ntp::cron   inherits   a2o_essential_linux_ntp::base {
 
-    ### Requires and subscribes
-    $require   = [
-        File['/var/ntp'],
-	File['/opt/scripts/cron/run-and-mail-if-error.sh'],
-	File['/opt/scripts/ntp/conditional-ntpdate.sh'],
-    ]
-    $subscribe = [
-	Package['ntp'],
-        File['/etc/ntp.conf'],
-    ]
-
-    ### Instantiate from template
-    a2o-essential-unix::rctool::service::generic { 'ntpd':
-	require   => $require,
-	subscribe => $subscribe,
+    File {
+        owner    => root,
+        group    => root,
+	mode     => 755,
     }
-}
+    file { '/opt/scripts/ntp':                          ensure => directory }
+    file { '/opt/scripts/ntp/conditional-ntpdate.sh':   source => "puppet:///modules/$thisPuppetModule/conditional-ntpdate.sh" }
 
-
-
-### The final all-containing classes
-class a2o_essential_linux_ntp::distro::a2o {
-    include 'a2o_essential_linux_ntp::package::ntp'
-    include 'a2o_essential_linux_ntp::files::daemon'
-    include 'a2o_essential_linux_ntp::distro::a2o::service'
-    include 'a2o_essential_linux_ntp::cron'
+    cron { '/opt/scripts/ntp/conditional-ntpdate.sh':
+	user     => root,
+        minute   => 57,
+	hour     => 0,
+        command  => '/opt/scripts/cron/run-and-mail-if-error.sh   "/opt/scripts/ntp/conditional-ntpdate.sh"   "root"',
+	require  => [
+	    Package['ntp'],
+	    File['/opt/scripts/cron/run-and-mail-if-error.sh'],
+	],
+    }
 }
