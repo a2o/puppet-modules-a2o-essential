@@ -16,6 +16,7 @@
 ### Cron for time check and conditional ntpdate run
 class   a2o_essential_linux_ntp::cron   inherits   a2o_essential_linux_ntp::base {
 
+
     File {
         owner    => root,
         group    => root,
@@ -24,13 +25,26 @@ class   a2o_essential_linux_ntp::cron   inherits   a2o_essential_linux_ntp::base
     file { '/opt/scripts/ntp':                          ensure => directory }
     file { '/opt/scripts/ntp/conditional-ntpdate.sh':   source => "puppet:///modules/$thisPuppetModule/conditional-ntpdate.sh" }
 
+
+    $serviceName = $operatingsystem ? {
+	centos    => 'ntpd',
+	debian    => 'ntp',
+	redhat    => 'ntpd',
+	slackware => 'a2o-linux-ntpd',
+	sles      => 'ntp',
+	suse      => 'ntp',
+	ubuntu    => 'ntp',
+	default   => 'ntpd',
+    }
+
+
     cron { '/opt/scripts/ntp/conditional-ntpdate.sh':
 	user     => root,
         minute   => 57,
 	hour     => 0,
         command  => '/opt/scripts/cron/run-and-mail-if-error.sh   "/opt/scripts/ntp/conditional-ntpdate.sh"   "root"',
 	require  => [
-	    Package['ntp'],
+	    Service["$serviceName"],
 	    File['/opt/scripts/cron/run-and-mail-if-error.sh'],
 	],
     }
