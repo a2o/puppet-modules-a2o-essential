@@ -1,0 +1,86 @@
+#!/bin/sh
+###########################################################################
+# a2o Essential Puppet Modules                                            #
+#-------------------------------------------------------------------------#
+# Copyright (c) 2012 Bostjan Skufca                                       #
+#-------------------------------------------------------------------------#
+# This source file is subject to version 2.0 of the Apache License,       #
+# that is bundled with this package in the file LICENSE, and is           #
+# available through the world-wide-web at the following url:              #
+# http://www.apache.org/licenses/LICENSE-2.0                              #
+#-------------------------------------------------------------------------#
+# Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
+###########################################################################
+. /etc/rc.d/rc._functions
+
+
+
+export LD_LIBRARY_PATH="<%= externalDestDir_openssl %>/lib"
+
+
+
+PROC_NAME="/usr/local/collectd/sbin/collectd"
+PID_FILE="/var/run/collectd.pid"
+APP_CMD_START="$PROC_NAME"
+
+
+
+collectd_start() {
+    app_start
+}
+
+collectd_stop() {
+    app_stop
+    rm -f /var/run/collectd-unixsock
+}
+
+collectd_restart() {
+    collectd_stop
+    collectd_start
+}
+
+collectd_flush() {
+    if is_app_running $PROC_NAME $PID_FILE; then
+	echo -n "Sending SIGUSR1 (10) to $PROC_NAME to flush it's internal caches... "
+	kill -10 `cat $PID_FILE`
+	echo "done."
+    else
+	is_app_running__info
+    fi
+}
+
+collectd_status() {
+    is_app_running__info
+}
+
+collectd_kill() {
+    if app_kill; then
+	rm -f $PID_FILE
+	rm -f /var/run/collectd-unixsock
+    fi
+}
+
+
+
+case "$1" in
+    'start')
+	collectd_start
+	;;
+    'stop')
+	collectd_stop
+	;;
+    'restart')
+	collectd_restart
+	;;
+    'flush')
+	collectd_flush
+	;;
+    'status')
+	collectd_status
+	;;
+    'kill')
+	collectd_kill
+	;;
+    *)
+	echo "usage $0 start|stop|restart|flush|status|kill"
+esac
