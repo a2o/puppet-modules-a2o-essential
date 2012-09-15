@@ -46,4 +46,9 @@ class   a2o_essential_ubuntu::packages   inherits   a2o-essential-debian::packag
     ### Editors
     package { 'mc':            }
     package { 'nano':          }
+
+    ### Tools - FIXME migrate to a2o_essential_ubuntu_tools?
+    package { 'librrd-dev':    }
+    package { 'rrdtool':       }
+    Package['librrd-dev'] -> Package['rrdtool']
 }
