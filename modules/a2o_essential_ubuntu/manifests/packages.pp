@@ -37,6 +37,9 @@ class   a2o_essential_ubuntu::packages   inherits   a2o-essential-debian::packag
     package { 'libncurses5':     }
     package { 'libncurses5-dev': }
 
+    ### Startup tools
+    package { 'chkconfig': }
+
     ### Compression utils
 #    package { 'xz':            } # Does not exist in 12.04?
 
