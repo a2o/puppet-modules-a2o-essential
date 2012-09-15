@@ -35,9 +35,9 @@ class   a2o-essential-suse::packages   inherits   a2o-essential-suse::base {
     package { 'zlib':          }
     package { 'zlib-devel':    }
 
-    package { 'gettext-runtime': }
-    a2o-essential-unix::compiletool::fake-package { 'gettext': }
-    Package['gettext-runtime'] -> Package['gettext']
+#    package { 'gettext-runtime': }
+#    a2o-essential-unix::compiletool::fake-package { 'gettext': }
+#    Package['gettext-runtime'] -> Package['gettext']
 
     # Various basic packages
     package { 'lynx':          }
