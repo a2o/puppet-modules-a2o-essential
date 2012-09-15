@@ -132,7 +132,10 @@ app_stop() {
 	    echo " done."
 	    return 0
 	fi
-	usleep 500000
+
+	# Usleep is not present on all platforms, but sleep seems to support float argument
+	#usleep 500000
+	sleep 0.5
 	echo -n "."
     done
 
