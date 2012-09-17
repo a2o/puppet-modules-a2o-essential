@@ -27,4 +27,4 @@
 
 
 ### Just run the rctool wrapper
-/etc/rc.tool/wrapper.suse gmond $@
+/etc/rc.tool/wrapper.debian gmond $@

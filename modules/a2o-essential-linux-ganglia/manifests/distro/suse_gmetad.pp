@@ -13,23 +13,22 @@
 
 
 
-### Service: gmond FIXME change to upstart
-class   a2o-essential-linux-ganglia::distro::ubuntu_gmond::service   inherits   a2o-essential-linux-ganglia::distro::suse-gmond::base {
+### Service: gmetad
+class   a2o-essential-linux-ganglia::distro::suse_gmetad::service   inherits   a2o-essential-linux-ganglia::base {
 
     $require   = [
+        File['/etc/ganglia/gmetad.conf'],
+        File['/var/ganglia/rrds'],
     ]
 
     $subscribe = [
-	Package['ganglia-gmond'],
-	File['/etc/ganglia/gmond.conf'],
-	File['/etc/ganglia/conf.d/modpython.conf'],
-	File['/etc/ganglia/conf.d/a2o'],
-	File['/etc/ganglia/python_modules'],
-	User['ganglia'],
-	Group['ganglia'],
+        Package['ganglia'],
+        Service['a2o-essential-linux-rrdcached'],
+        File['/usr/local/ganglia'],
+        File['/etc/ganglia/gmetad.conf'],
     ]
 
-    a2o-essential-debian::service::rctool_wrapper { 'gmond':
+    a2o-essential-suse::service::rctool_wrapper { 'gmetad':
         require   => $require,
         subscribe => $subscribe,
     }
@@ -38,10 +37,10 @@ class   a2o-essential-linux-ganglia::distro::ubuntu_gmond::service   inherits   
 
 
 ### The final all-containing classes
-class a2o-essential-linux-ganglia::distro::ubuntu_gmond {
+class a2o-essential-linux-ganglia::distro::suse_gmetad {
     include 'a2o-essential-linux-ganglia::users'
-    include 'a2o-essential-linux-ganglia::package::gmond'
+    include 'a2o-essential-linux-ganglia::package'
     include 'a2o-essential-linux-ganglia::files'
-    include 'a2o-essential-linux-ganglia::files::gmond'
-    include 'a2o-essential-linux-ganglia::distro::ubuntu_gmond::service'
+    include 'a2o-essential-linux-ganglia::files::gmetad'
+    include 'a2o-essential-linux-ganglia::distro::suse_gmetad::service'
 }

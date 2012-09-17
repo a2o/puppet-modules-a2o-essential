@@ -12,19 +12,19 @@
 # Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
 ###########################################################################
 #
-# /etc/init.d/gmond
+# /etc/init.d/gmetad
 #
 ### BEGIN INIT INFO
-# Provides:		gmond
+# Provides:		gmetad
 # Required-Start:	$local_fs $syslog
 # Required-Stop:	$local_fs $syslog
 # Default-Start:	2 3 4 5
 # Default-Stop:		0 1 6
-# Short-Description:	Ganglia Metrics Daemon
-# Long-Description:	Ganglia Metrics Daemon
+# Short-Description:	Ganglia Aggregation Daemon
+# Long-Description:	Ganglia Aggregation Daemon
 ### END INIT INFO
 
 
 
 ### Just run the rctool wrapper
-/etc/rc.tool/wrapper.suse gmond $@
+/etc/rc.tool/wrapper.suse gmetad $@

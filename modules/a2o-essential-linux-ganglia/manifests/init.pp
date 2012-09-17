@@ -299,7 +299,7 @@ class a2o-essential-linux-ganglia::service::gmetad   inherits   a2o-essential-li
 
     # Startup file
     file { "/etc/rc.d/rc.$serviceName":
-        source   => "puppet:///modules/$thisPuppetModule/rc.$serviceName",
+        content  => template("$thisPuppetModule/rc.$serviceName"),
         owner    => root,
         group    => root,
         mode     => $serviceState ? {
