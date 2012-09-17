@@ -28,6 +28,8 @@ class   a2o_essential_linux_collectd::package::collectd   inherits   a2o_essenti
     $require = [
         Package['openssl'],
         Package['mysql'],
+        Package['rrdtool'],
+#        Package['liboping'],
     ]
     a2o-essential-unix::compiletool::package::generic { "$packageTag": require => $require }
 
