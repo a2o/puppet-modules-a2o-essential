@@ -15,6 +15,10 @@
 
 
 
+export LD_LIBRARY_PATH="/usr/local/openssl/lib:/usr/local/mysql/lib"
+
+
+
 PROC_NAME="/usr/local/nrpe/bin/nrpe"
 PID_FILE="/var/run/nrpe.pid"
 APP_CMD_START="$PROC_NAME -c /etc/nrpe/nrpe.cfg -d"
