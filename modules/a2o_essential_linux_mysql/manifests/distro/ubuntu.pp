@@ -13,7 +13,7 @@
 
 
 
-### Service: mysql FIXME change to upstart
+### Service: mysql
 class   a2o_essential_linux_mysql::distro::ubuntu::service   inherits   a2o_essential_linux_mysql::base {
 
     # Get external references
@@ -34,7 +34,7 @@ class   a2o_essential_linux_mysql::distro::ubuntu::service   inherits   a2o_esse
         File['/etc/mysql/my.cnf'],
     ]
 
-    a2o-essential-unix::rctool::service::generic { 'mysqld':
+    a2o-essential-debian::service::rctool_wrapper { 'mysqld':
         require   => $require,
         subscribe => $subscribe,
     }
