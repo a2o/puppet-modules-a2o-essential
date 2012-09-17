@@ -31,8 +31,8 @@ class a2o-essential-unix::rctool inherits a2o-essential-unix::base {
     file { '/etc/rc.d/rc._functions':       ensure => '../rc.tool/common', require => File['/etc/rc.tool/common'] }
 
     # Wrappers
-#    file { '/etc/rc.tool/wrapper.debian':   source => "puppet:///modules/$thisPuppetModule/rctool/wrapper.debian" }
-#    file { '/etc/rc.tool/wrapper.redhat':   source => "puppet:///modules/$thisPuppetModule/rctool/wrapper.redhat" }
-#    file { '/etc/rc.tool/wrapper.suse':     source => "puppet:///modules/$thisPuppetModule/rctool/wrapper.suse" }
-#    file { '/etc/rc.tool/wrapper.ubuntu':   source => "puppet:///modules/$thisPuppetModule/rctool/wrapper.ubuntu" }
+    file { '/etc/rc.tool/wrapper.debian':   source => "puppet:///modules/$thisPuppetModule/rctool/wrapper.debian" }
+    file { '/etc/rc.tool/wrapper.redhat':   source => "puppet:///modules/$thisPuppetModule/rctool/wrapper.redhat" }
+    file { '/etc/rc.tool/wrapper.suse':     ensure => link, target => 'wrapper.redhat' }
+    file { '/etc/rc.tool/wrapper.ubuntu':   ensure => link, target => 'wrapper.debian' }
 }

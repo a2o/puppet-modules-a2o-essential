@@ -1,0 +1,57 @@
+#!/bin/bash
+
+
+
+### Parameters
+SERVICE=$1
+COMMAND=$2
+
+
+
+### Run the real script
+shift 2
+/etc/rc.d/rc.$SERVICE $COMMAND $@
+RETVAL=$?
+
+
+
+### Evaluate and adapt return value
+case "$COMMAND" in
+
+    start|restart)
+        if   [ "$RETVAL" == "0" ]; then
+            exit 0
+        elif [ "$RETVAL" == "1" ]; then
+            exit 7
+        else
+            exit 1
+        fi
+        ;;
+
+    stop)
+        if   [ "$RETVAL" == "0" ]; then
+            exit 0
+        else
+            exit 1
+        fi
+        ;;
+
+    status)
+        if   [ "$RETVAL" == "0" ]; then
+            exit 0
+        elif [ "$RETVAL" == "1" ]; then
+            exit 3
+        else
+            exit 4
+        fi
+        ;;
+
+    *)
+        if   [ "$RETVAL" == "0" ]; then
+            exit 0
+        else
+            exit 1
+        fi
+        ;;
+
+esac
