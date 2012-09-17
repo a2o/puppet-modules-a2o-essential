@@ -40,6 +40,9 @@ export PURI="http://garr.dl.sourceforge.net/sourceforge/nagios/$PFILE" &&
 rm -rf $PDIR &&
 GetUnpackCd &&
 
+# SuSE creates invalid -I argument (adds trailing openssl/), let's mitigate that
+export CFLAGS="-I$PDESTDIR_OPENSSL/include" &&
+
 ./configure --prefix=$PDESTDIR_NRPE --sysconfdir=/etc/nagios --localstatedir=/var/nagios \
   --enable-ssl \
   --with-ssl-inc=$PDESTDIR_OPENSSL/include \
