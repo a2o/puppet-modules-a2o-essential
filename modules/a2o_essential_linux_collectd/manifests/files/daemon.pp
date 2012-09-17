@@ -42,7 +42,7 @@ class   a2o_essential_linux_collectd::files::daemon_config   inherits   a2o_esse
 
     # Files
     file { '/etc/collectd.conf':                 content => template("$thisPuppetModule/collectd.conf") }
-    file { '/etc/collectd.d/PLACEHOLDER.conf':   content => "# Dont remove this file, or collectd will squeal!" }
+    file { '/etc/collectd.d/PLACEHOLDER.conf':   content => "# Dont remove this file, or collectd will squeal!\n" }
 }
 
 
