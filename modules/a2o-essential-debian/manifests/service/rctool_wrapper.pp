@@ -37,6 +37,7 @@ define   a2o-essential-debian::service::rctool_wrapper   ($ensure='running', $re
         content  => template("$thisPuppetModule/rc.$serviceName"),
         owner    => root,
         group    => root,
+        mode     => 755,
 	require     => [
 	    File['/etc/rc.tool/common'],
 	    File['/etc/rc.d/rc._functions'], ### FIXME remove, compatibility
@@ -82,6 +83,7 @@ define   a2o-essential-debian::service::rctool_wrapper   ($ensure='running', $re
 	],
         subscribe   => [
 	    File["/etc/init.d/$serviceName"],
+	    File["/etc/rc.d/rc.$serviceName"],
 	    $subscribe,
 	]
     }
