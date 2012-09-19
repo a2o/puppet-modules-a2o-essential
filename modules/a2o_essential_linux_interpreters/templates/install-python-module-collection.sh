@@ -28,6 +28,11 @@ export PVERSION_DJANGO="<%= softwareVersion_django %>" &&
 
 
 
+### Set python path - SuSE
+export PATH="$PDESTDIR_PYTHON/bin:$PATH" &&
+
+
+
 ### SetupTools
 # CheckURI: http://pypi.python.org/pypi/setuptools#files
 cd $SRCROOT && . /var/src/build_functions.sh &&
