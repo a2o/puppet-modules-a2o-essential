@@ -189,12 +189,63 @@ GetUnpackClean ()
 
 
 
-### PHP PECL/PEAR package installation functions
-php_isPackageInstalled() {
+################################################################################
+###
+### PHP PECL/PEAR channel/package discover/update/install/upgrade functions
+###
+################################################################################
+
+###
+### Channel discovery
+###
+php_discoverChannel_pear() {
+    PHP_PREFIX="$1"
+    PHP_CHN_NAME="$2"
+
+    # Check & evaluate
+    RES=`$PHP_PREFIX/bin/pear list-channels 2>/dev/null | tail -n +4 | grep "^$PHP_CHN_NAME " -c | cat`
+    if [ "$?" != "0" ]; then
+	echo "ERROR: Failed checking if channel is already discovered: $PHP_CHN_NAME"
+	return 10
+    fi
+
+    # Discover if required
+    if [ "$RES" == "0" ]; then
+	$PHP_PREFIX/bin/pear channel-discover $PHP_CHN_NAME
+	if [ "$?" != "0" ]; then
+	    echo "ERROR: Unable to discover PEAR channel: $PHP_CHN_NAME"
+	    return 1
+	fi
+	echo "INFO: PEAR channel discovered: $PHP_CHN_NAME"
+    fi
+
+    # Update
+    $PHP_PREFIX/bin/pear channel-update $PHP_CHN_NAME
+    if [ "$?" != "0" ]; then
+        echo "ERROR: Unable to update PEAR channel: $PHP_CHN_NAME"
+        return 1
+    fi
+    echo "INFO: PEAR channel updated: $PHP_CHN_NAME"
+}
+
+
+
+###
+### Package check
+###
+_php_isPackageInstalled() {
     PHP_PREFIX="$1"
     PHP_PKG_TYPE="$2"
     PHP_PKG_NAME="$3"
-    RES=`$PHP_PREFIX/bin/$PHP_PKG_TYPE list | tail -n +4 | grep "^$PHP_PKG_NAME " -c | cat`
+
+    # Exec
+    RES=`$PHP_PREFIX/bin/$PHP_PKG_TYPE list -a |   grep -v '^INSTALLED PACKAGES, ' | grep -v '^===============' | grep -v '^PACKAGE ' | grep -Fv '(no packages installed)'| grep -v '^$'   | grep "^$PHP_PKG_NAME " -c | cat`
+    if [ "$?" != "0" ]; then
+	echo "ERROR: Failed checking if package is installed: $PHP_PKG_NAME"
+	exit 10
+    fi
+
+    # Evaluate
     if [ "$RES" == "0" ]; then
 	return 1
     elif [ "$RES" == "1" ]; then
@@ -207,37 +258,63 @@ php_isPackageInstalled() {
 php_isPackageInstalled_pecl() {
     PHP_PREFIX="$1"
     PHP_PKG_NAME="$2"
-    php_isPackageInstalled "$PHP_PREFIX" "pecl" "$PHP_PKG_NAME"
+    _php_isPackageInstalled "$PHP_PREFIX" "pecl" "$PHP_PKG_NAME"
 }
 php_isPackageInstalled_pear() {
     PHP_PREFIX="$1"
     PHP_PKG_NAME="$2"
-    php_isPackageInstalled "$PHP_PREFIX" "pear" "$PHP_PKG_NAME"
+    _php_isPackageInstalled "$PHP_PREFIX" "pear" "$PHP_PKG_NAME"
 }
 
+
+###
+### Package installation
+###
 php_installPackage_pecl() {
     PHP_PREFIX="$1"
     PHP_PKG_NAME_SEARCH="$2"
     PHP_PKG_NAME_INSTALL="$3"
+    _php_installPackage "$PHP_PREFIX" "pecl" "$PHP_PKG_NAME_SEARCH" "$PHP_PKG_NAME_INSTALL"
+}
+php_installPackage_pear() {
+    PHP_PREFIX="$1"
+    PHP_PKG_NAME_SEARCH="$2"
+    PHP_PKG_NAME_INSTALL="$3"
+    _php_installPackage "$PHP_PREFIX" "pear" "$PHP_PKG_NAME_SEARCH" "$PHP_PKG_NAME_INSTALL"
+}
+_php_installPackage() {
+    PHP_PREFIX="$1"
+    PHP_PKG_TYPE="$2"
+    PHP_PKG_NAME_SEARCH="$3"
+    PHP_PKG_NAME_INSTALL="$4"
 
     # If empty, search an install names are the same
     if [ "x$PHP_PKG_NAME_INSTALL" == "x" ]; then
 	PHP_PKG_NAME_INSTALL="$PHP_PKG_NAME_SEARCH"
     fi
-    php_isPackageInstalled_pecl "$PHP_PREFIX" "$PHP_PKG_NAME_SEARCH"
+    php_isPackageInstalled_$PHP_PKG_TYPE "$PHP_PREFIX" "$PHP_PKG_NAME_SEARCH"
     RETVAL=$?
-    if [ "$RETVAL" == "1" ]; then
-	printf "\n\n\n\n\n\n\n\n\n\n" | $PHP_PREFIX/bin/pecl upgrade --force $PHP_PKG_NAME_INSTALL
-	php_isPackageInstalled_pecl "$PHP_PREFIX" "$PHP_PKG_NAME_SEARCH"
+    if [ "$RETVAL" == "0" ]; then
+	echo "INFO: $PHP_PKG_TYPE package $PHP_PKG_NAME_INSTALL already installed"
+    elif [ "$RETVAL" == "1" ]; then
+	yes "" | $PHP_PREFIX/bin/$PHP_PKG_TYPE upgrade --force $PHP_PKG_NAME_INSTALL
+	php_isPackageInstalled_$PHP_PKG_TYPE "$PHP_PREFIX" "$PHP_PKG_NAME_SEARCH"
         RETVAL=$?
 	if [ "$RETVAL" == "1" ]; then
 	    exit 6
 	fi
+	echo "INFO: $PHP_PKG_TYPE package $PHP_PKG_NAME_INSTALL installed"
+    else
+	echo "ERROR: Invalid return value from function: $RETVAL"
+	exit 6
     fi
 }
 
 
 
+###
+### Clean up the environment
+###
 unset PNAME &&
 unset PVERSION &&
 unset PDIR &&
