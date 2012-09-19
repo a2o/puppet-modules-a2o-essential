@@ -164,6 +164,7 @@ Puppet::Type.type(:package).provide :a2o_linux_compiletool, :source => :sh, :par
 
 	notice("Compiling and installing #{packageTag}... ")
 	`cat  #{compileScript} >  #{logFile} 2>&1`
+	`export                >> #{logFile} 2>&1`
 	`bash #{compileScript} >> #{logFile} 2>&1`
 	unless $? == 0
 	    @resource.fail "ERROR: Compilation and installation of #{packageTag} FAILED"
