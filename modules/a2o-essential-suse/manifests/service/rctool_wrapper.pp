@@ -37,6 +37,7 @@ define   a2o-essential-suse::service::rctool_wrapper   ($ensure='running', $requ
         content  => template("$thisPuppetModule/rc.$serviceName"),
         owner    => root,
         group    => root,
+	mode     => 755,
 	require     => [
     	    File['/etc/rc.tool/common'],
     	    File['/etc/rc.d/rc._functions'], ### FIXME remove, compatibility
