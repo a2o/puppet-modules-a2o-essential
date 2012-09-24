@@ -40,7 +40,6 @@ class a2o-essential-linux-libs::httpd {
     include 'a2o-essential-linux-libs::libgcrypt'
     include 'a2o-essential-linux-libs::libgearman'
     include 'a2o-essential-linux-libs::libgpg-error'
-    include 'a2o-essential-linux-libs::libgcrypt'
     include 'a2o-essential-linux-libs::libiconv'
     include 'a2o-essential-linux-libs::libmemcached'
     include 'a2o-essential-linux-libs::libxml2'
