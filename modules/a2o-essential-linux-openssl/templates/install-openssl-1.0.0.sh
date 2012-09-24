@@ -35,11 +35,17 @@ export PVERSION="$PVERSION_OPENSSL" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
 export PURI="http://www.openssl.org/source/$PFILE" &&
+
 rm -rf $PDIR &&
 GetUnpackCd &&
+
+# Add versioning information
+wget http://source.a2o.si/patches/openssl-1.0.0i-symbolVersioning.diff &&
+patch -p1 < openssl-1.0.0i-symbolVersioning.diff &&
+
 ./config --prefix=$PDESTDIR_OPENSSL shared &&
 
-# WARNING: Don't argument make with -jX, it will compile but it won't work (tnx for notice David)
+# WARNING: Don't argument make with -jX, it will compile but it won't work (tnx for notice David {a@t} kuridza.si)
 make &&
 make install &&
 
