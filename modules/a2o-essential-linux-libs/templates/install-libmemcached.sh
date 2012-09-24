@@ -40,6 +40,11 @@ rm -rf $PDIR &&
 GetUnpackCd &&
 
 ./configure --without-memcached &&
+cp m4/ax_pthread.m4 m4/ax_pthread.m4.orig &&
+cat m4/ax_pthread.m4.orig \
+| sed -e 's/lthread -pthread -pthreads -mthreads pthread/lthread -lpthread -pthreads -mthreads pthread/' \
+> m4/ax_pthread.m4
+
 make &&
 make install &&
 ldconfig &&
