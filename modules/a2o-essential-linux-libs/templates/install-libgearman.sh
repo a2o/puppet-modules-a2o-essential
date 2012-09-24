@@ -33,7 +33,7 @@ export PNAME="gearmand" &&
 export PVERSION="$PVERSION_LIBGEARMAN" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
-export PURI="http://launchpad.net/gearmand/trunk/$PVERSION/+download/$PFILE" &&
+export PURI="https://launchpad.net/gearmand/1.0/$PVERSION/+download/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&
