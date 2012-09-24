@@ -19,7 +19,7 @@ class   a2o-essential-linux-libs::libgearman   inherits   a2o-essential-linux-li
     # Software details
     $packageName            = 'libgearman'
     $packageSoftware        = 'libgearman'
-    $packageSoftwareVersion = '0.26'
+    $packageSoftwareVersion = '0.39'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
