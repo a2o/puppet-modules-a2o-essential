@@ -49,6 +49,10 @@ cat ganglia-3.1.7-ignore_br.diff | patch -p1 &&
 wget http://source.a2o.si/patches/ganglia-3.1.7-net_if_long_long.diff &&
 cat ganglia-3.1.7-net_if_long_long.diff | patch -p1 &&
 
+# Patch to disable crash with active NFS mount
+wget http://source.a2o.si/patches/ganglia-3.1.7-fix_nfs_mount_crash.diff &&
+patch -p1 < ganglia-3.1.7-fix_nfs_mount_crash.diff &&
+
 export PKG_CONFIG_PATH='/usr/local/lib/pkgconfig' &&
 # FIXME should this be removed for all distributions?
 export LD_LIBRARY_PATH="$PDESTDIR_PYTHON/lib" &&

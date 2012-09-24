@@ -108,7 +108,7 @@ class   a2o-essential-linux-ganglia::package::gmond   inherits   a2o-essential-l
     $packageName      = 'ganglia-gmond'
     $packageSoftware  = 'ganglia-gmond'
     $packageVersion   = '3.1.7'
-    $packageRelease   = '7'
+    $packageRelease   = '8'
     $packageEnsure    = "$packageVersion-$packageRelease"
     $packageTag       = "$packageSoftware-$packageEnsure"
     $installScriptTpl = "install-$packageSoftware.sh"
