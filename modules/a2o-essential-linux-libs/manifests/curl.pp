@@ -19,15 +19,15 @@ class   a2o-essential-linux-libs::curl   inherits   a2o-essential-linux-libs::ba
     # Software details
     $packageName            = 'curl'
     $packageSoftware        = 'curl'
-    $packageSoftwareVersion = '7.23.1'
-    $packageRelease         = '1'
+    $packageSoftwareVersion = '7.27.0'
+    $packageRelease         = '3'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
     $installScriptTpl       = "install-$packageSoftware.sh"
     $installScript          = "install-$packageTag.sh"
 
     # External package references
-    $externalDestDir_openssl = '/usr/local/openssl-1.0.0h-1'
+    $externalDestDir_openssl = '/usr/local/openssl-1.0.0i-1'
 
 
     # Installation
