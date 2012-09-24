@@ -35,7 +35,7 @@ export PNAME="ganglia" &&
 export PVERSION="$PVERSION_GANGLIA" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
-export PURI="http://mesh.dl.sourceforge.net/sourceforge/ganglia/$PFILE" &&
+export PURI="http://switch.dl.sourceforge.net/sourceforge/ganglia/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&
