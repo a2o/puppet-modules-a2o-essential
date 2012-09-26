@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 ###########################################################################
 # a2o Essential Puppet Modules                                            #
 #-------------------------------------------------------------------------#
@@ -11,41 +11,20 @@
 #-------------------------------------------------------------------------#
 # Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
 ###########################################################################
+#
+# /etc/init.d/gearmand
+#
+### BEGIN INIT INFO
+# Provides:		gearmand
+# Required-Start:	$local_fs $syslog
+# Required-Stop:	$local_fs $syslog
+# Default-Start:	2 3 4 5
+# Default-Stop:		0 1 6
+# Short-Description:	Gearman Daemon
+# Long-Description:	Gearman Worker Engine Daemon
+### END INIT INFO
 
 
 
-### Init
-export SRCROOT="<%= compileDir %>" &&
-mkdir -p $SRCROOT &&
-cd $SRCROOT &&
-
-
-
-### Versions
-export PVERSION_GEARMAN="<%= packageSoftwareVersion %>" &&
-export PDESTDIR="<%= destDir %>" &&
-
-
-
-### Gearmand
-# CheckURI: http://gearman.org/index.php?id=download
-cd $SRCROOT && . ../_functions.sh &&
-export PNAME="gearmand" &&
-export PVERSION="$PVERSION_GEARMAN" &&
-export PDIR="$PNAME-$PVERSION" &&
-export PFILE="$PDIR.tar.gz" &&
-export PURI="https://launchpad.net/gearmand/1.0/$PVERSION/+download/$PFILE" &&
-
-rm -rf $PDIR &&
-GetUnpackCd &&
-
-./configure --prefix=$PDESTDIR &&
-make &&
-make install &&
-
-cd $SRCROOT &&
-rm -rf $PDIR &&
-
-
-
-exit 0
+### Just run the rctool wrapper
+/etc/rc.tool/wrapper.debian gearmand $@

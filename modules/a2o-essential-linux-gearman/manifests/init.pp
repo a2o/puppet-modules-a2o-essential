@@ -26,7 +26,7 @@ class   a2o-essential-linux-gearman::package   inherits   a2o-essential-linux-ge
     # Software details
     $packageName            = 'gearman'
     $packageSoftwareName    = 'gearman'
-    $packageSoftwareVersion = '0.26'
+    $packageSoftwareVersion = '0.39'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftwareName-$packageEnsure"
@@ -53,6 +53,7 @@ class   a2o-essential-linux-gearman::package   inherits   a2o-essential-linux-ge
     package { "$packageName":
 	require  => [
 	    File["$compileDir/$installScript"],
+	    Package['boost'],
 	    Package['libevent'],
 	    Package['libgearman'],
 	    Package['libmemcached'],
