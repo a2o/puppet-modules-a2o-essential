@@ -105,11 +105,32 @@ class   a2o-essential-linux-openssl::symlinks {
 }
 
 
+### CA certificate files
+class   a2o-essential-linux-openssl::files_ca   inherits   a2o-essential-linux-openssl::base {
+
+    File {
+	owner    => root,
+	group    => root,
+	mode     => 644,
+    }
+
+    file { '/etc/ssl/certs/mozilla-bundle.crt':
+	ensure   => present,
+	source   => "puppet:///modules/$thisPuppetModule/mozilla-bundle.crt",
+    }
+
+    # Symlinks
+    file { '/etc/ssl/certs/ca-bundle.crt':        ensure => link, target => 'mozilla-bundle.crt' }
+    file { '/etc/ssl/certs/curl-ca-bundle.crt':   ensure => link, target => 'ca-bundle.crt'      }
+}
+
+
 
 ### The final all-containing classes
 class   a2o-essential-linux-openssl {
     include 'a2o-essential-linux-openssl::packages'
     include 'a2o-essential-linux-openssl::symlinks'
+    include 'a2o-essential-linux-openssl::files_ca'
     include 'a2o-essential-linux-openssl::cleanup'
 #    class { 'a2o-essential-linux-openssl::cleanup': stage => cleanup; }
 }

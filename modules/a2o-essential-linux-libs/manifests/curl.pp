@@ -50,6 +50,7 @@ class   a2o-essential-linux-libs::curl   inherits   a2o-essential-linux-libs::ba
 #	    Package['libssh'],
 	    Package['openssl'],
 	    Package['zlib'],
+	    File['/etc/ssl/certs/curl-ca-bundle.crt'],
 	],
     }
 }
