@@ -13,16 +13,23 @@
 
 
 
-### Base class
-class a2o-essential-debian::base {
-    $thisPuppetModule = 'a2o-essential-debian'
+### NTP time sync
+class   a2o-essential-debian::sys::ntp   inherits   a2o-essential-debian::base {
+
+#    ### NTP config file
+#    File {
+#        owner    => root,
+#        group    => root,
+#        mode     => 755,
+#    }
+#    file { '/etc/ntp.conf':   source => "puppet:///modules/$thisPuppetModule/ntp.conf" }
+
+    a2o-essential-debian::service::generic { 'ntp': }
 }
 
 
 
-### Final class: server
-class a2o-essential-debian::server {
-    include 'a2o-essential-unix::server'
-    include 'a2o-essential-debian::fhs'
-    include 'a2o-essential-debian::sys'
+### Obligatory stuff for all servers
+class   a2o-essential-debian::sys {
+    include 'a2o-essential-debian::sys::ntp'
 }
