@@ -25,7 +25,7 @@ class   a2o_essential_linux_interpreters::python::symlinks   inherits   a2o_esse
     # Program symlinks
     file { '/usr/local/bin/python':      ensure => '/usr/local/python/bin/python',    }
     file { '/usr/local/bin/python2.6':   ensure => '/usr/local/python/bin/python2.6', }
-    file { '/usr/bin/python':            ensure => '/usr/local/bin/python',           }
+#    file { '/usr/bin/python':            ensure => '/usr/local/bin/python',           }
 
 
     # Library symlinks
