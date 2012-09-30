@@ -165,6 +165,58 @@ function load_graph_definitions_local($logarithmic = false, $tinylegend = false)
 		);
 
 
+
+	// Graph definitions: NTPD
+        $GraphDefs['frequency_offset'] = array(
+		'DEF:ppm_avg={file}:value:AVERAGE',
+		'DEF:ppm_min={file}:value:MIN',
+		'DEF:ppm_max={file}:value:MAX',
+		"AREA:ppm_max#$HalfBlue",
+		"AREA:ppm_min#$Canvas",
+		"LINE1:ppm_avg#$FullBlue:Offset",
+		'GPRINT:ppm_min:MIN:%5.2lf Min,',
+		'GPRINT:ppm_avg:AVERAGE:%5.2lf Avg,',
+		'GPRINT:ppm_max:MAX:%5.2lf Max,',
+		'GPRINT:ppm_avg:LAST:%5.2lf Last'
+		);
+        $GraphDefs['delay'] = array(
+                'DEF:s_avg={file}:value:AVERAGE',
+                'DEF:s_min={file}:value:MIN',
+                'DEF:s_max={file}:value:MAX',
+                "AREA:s_max#$HalfBlue",
+                "AREA:s_min#$Canvas",
+                "LINE1:s_avg#$FullBlue:Delay",
+                'GPRINT:s_min:MIN:%7.3lf%s Min,',
+                'GPRINT:s_avg:AVERAGE:%7.3lf%s Avg,',
+                'GPRINT:s_max:MAX:%7.3lf%s Max,',
+                'GPRINT:s_avg:LAST:%7.3lf%s Last'
+		);
+        $GraphDefs['time_dispersion'] = array(
+                'DEF:s_avg={file}:value:AVERAGE',
+                'DEF:s_min={file}:value:MIN',
+                'DEF:s_max={file}:value:MAX',
+                "AREA:s_max#$HalfBlue",
+                "AREA:s_min#$Canvas",
+                "LINE1:s_avg#$FullBlue:Seconds",
+                'GPRINT:s_min:MIN:%7.3lf%s Min,',
+                'GPRINT:s_avg:AVERAGE:%7.3lf%s Avg,',
+                'GPRINT:s_max:MAX:%7.3lf%s Max,',
+                'GPRINT:s_avg:LAST:%7.3lf%s Last'
+		);
+        $GraphDefs['time_offset'] = array(
+		'DEF:s_avg={file}:value:AVERAGE',
+		'DEF:s_min={file}:value:MIN',
+		'DEF:s_max={file}:value:MAX',
+		"AREA:s_max#$HalfBlue",
+		"AREA:s_min#$Canvas",
+		"LINE1:s_avg#$FullBlue:Seconds",
+		'GPRINT:s_min:MIN:%7.3lf%s Min,',
+		'GPRINT:s_avg:AVERAGE:%7.3lf%s Avg,',
+		'GPRINT:s_max:MAX:%7.3lf%s Max,',
+		'GPRINT:s_avg:LAST:%7.3lf%s Last');
+
+
+
 	// Graph definitions: PING
 	$GraphDefs['ping'] = array(
 		'-v', 'Miliseconds',
