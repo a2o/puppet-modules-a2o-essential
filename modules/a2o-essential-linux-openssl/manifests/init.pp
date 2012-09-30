@@ -120,8 +120,8 @@ class   a2o-essential-linux-openssl::files_ca   inherits   a2o-essential-linux-o
     }
 
     # Symlinks
-    file { '/etc/ssl/certs/ca-bundle.crt':        ensure => link, target => 'mozilla-bundle.crt' }
-    file { '/etc/ssl/certs/curl-ca-bundle.crt':   ensure => link, target => 'ca-bundle.crt'      }
+#    file { '/etc/ssl/certs/ca-bundle.crt':        ensure => link, target => 'mozilla-bundle.crt' }
+    file { '/etc/ssl/certs/curl-ca-bundle.crt':   ensure => link, target => 'mozilla-bundle.crt' }
 }
 
 
