@@ -38,7 +38,7 @@ export PURI="https://launchpad.net/gearmand/1.0/$PVERSION/+download/$PFILE" &&
 rm -rf $PDIR &&
 GetUnpackCd &&
 
-./configure &&
+./configure --with-mysql=no &&
 make &&
 make install-libLTLIBRARIES &&
 make install-nobase_includeHEADERS &&

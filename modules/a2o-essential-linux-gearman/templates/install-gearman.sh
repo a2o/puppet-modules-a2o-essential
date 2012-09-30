@@ -39,7 +39,7 @@ export PURI="https://launchpad.net/gearmand/1.0/$PVERSION/+download/$PFILE" &&
 rm -rf $PDIR &&
 GetUnpackCd &&
 
-./configure --prefix=$PDESTDIR &&
+./configure --prefix=$PDESTDIR --with-mysql=no &&
 make &&
 make install &&
 
