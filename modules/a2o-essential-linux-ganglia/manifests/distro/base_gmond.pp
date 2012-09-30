@@ -13,20 +13,20 @@
 
 
 
-### Service: gmond
-class   a2o-essential-linux-ganglia::distro::ubuntu_gmond::service   inherits   a2o-essential-linux-ganglia::distro::base_gmond {
+### Base class for service gmond
+class   a2o-essential-linux-ganglia::distro::base_gmond   inherits   a2o-essential-linux-ganglia::base {
 
-    a2o-essential-debian::service::rctool_wrapper { 'gmond':
-        require   => $require,
-        subscribe => $subscribe,
-    }
-}
+    $require   = [
+    ]
 
-
-
-### The final all-containing classes
-class a2o-essential-linux-ganglia::distro::ubuntu_gmond {
-
-    include 'a2o-essential-linux-ganglia::distro::common'
-    include 'a2o-essential-linux-ganglia::distro::ubuntu_gmond::service'
+    $subscribe = [
+        Package['ganglia-gmond'],
+        File['/usr/local/ganglia-gmond'],
+	File['/etc/ganglia/gmond.conf'],
+	File['/etc/ganglia/conf.d/modpython.conf'],
+	File['/etc/ganglia/conf.d/a2o'],
+	File['/etc/ganglia/python_modules'],
+	User['ganglia'],
+	Group['ganglia'],
+    ]
 }
