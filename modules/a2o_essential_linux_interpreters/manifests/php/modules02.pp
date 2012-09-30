@@ -29,7 +29,7 @@ class   a2o_essential_linux_interpreters::php::modules02   inherits   a2o_essent
 
 
     ### Actual module versions
-    $softwareVersion_apc = '3.1.11'   # 3.1.12 segfaults badly with Apache, be cautious here
+    $softwareVersion_apc = '3.1.13'
 
 
     ### Package

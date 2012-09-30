@@ -19,7 +19,7 @@ class   a2o_essential_linux_interpreters::php::package   inherits   a2o_essentia
     # Package / Software details
     # CheckURI: http://www.php.net
     $softwareName     = 'php-cli'
-    $softwareVersion  = '5.4.6'
+    $softwareVersion  = '5.4.7'
     $packageRelease   = '1'
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
     $destDir          = "/usr/local/$packageTag"
@@ -27,7 +27,7 @@ class   a2o_essential_linux_interpreters::php::package   inherits   a2o_essentia
 
     ### External dependencies
     $externalDestDir_openssl    = '/usr/local/openssl-1.0.0i-1'
-    $externalDestDir_openldap   = '/usr/local/openldap-2.4.31-1'
+    $externalDestDir_openldap   = '/usr/local/openldap-2.4.32-1'
     $externalDestDir_cyrusImap  = '/usr/local/imap-2007f-1'
     $externalDestDir_postgresql = '/usr/local/postgresql-9.1.4-1'
 

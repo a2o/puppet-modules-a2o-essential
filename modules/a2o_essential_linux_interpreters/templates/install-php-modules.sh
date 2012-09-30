@@ -34,7 +34,7 @@ export PNAME="ZendFramework" &&
 export PVERSION="$PVERSION_ZF" &&
 export PDIR="$PNAME-$PVERSION-minimal" &&
 export PFILE="$PDIR.tar.gz" &&
-export PURI="http://framework.zend.com/releases/ZendFramework-$PVERSION_ZF/$PFILE" &&
+export PURI="http://packages.zendframework.com/releases/ZendFramework-$PVERSION/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpack &&
