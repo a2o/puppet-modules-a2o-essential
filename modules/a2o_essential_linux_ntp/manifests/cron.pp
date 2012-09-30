@@ -29,12 +29,13 @@ class   a2o_essential_linux_ntp::cron   inherits   a2o_essential_linux_ntp::base
     $serviceName = $operatingsystem ? {
 	centos    => 'ntpd',
 	debian    => 'ntp',
+	opensuse  => 'ntp',
 	redhat    => 'ntpd',
 	slackware => 'a2o-linux-ntpd',
 	sles      => 'ntp',
 	suse      => 'ntp',
 	ubuntu    => 'ntp',
-	default   => 'ntpd',
+	default   => 'ntpd-unknown',
     }
 
 
