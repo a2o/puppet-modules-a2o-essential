@@ -13,17 +13,23 @@
 
 
 
-### Base class
-class   a2o-essential-redhat::base {
-    $thisPuppetModule = 'a2o-essential-redhat'
+### NTP time sync
+class   a2o-essential-redhat::sys::ntp   inherits   a2o-essential-redhat::base {
+
+#    ### NTP config file
+#    File {
+#        owner    => root,
+#        group    => root,
+#        mode     => 755,
+#    }
+#    file { '/etc/ntp.conf':   source => "puppet:///modules/$thisPuppetModule/ntp.conf" }
+
+    a2o-essential-redhat::service::generic { 'ntpd': }
 }
 
 
 
-### Final class: server
-class   a2o-essential-redhat::server {
-    include 'a2o-essential-unix::server'
-    include 'a2o-essential-redhat::fhs'
-    include 'a2o-essential-redhat::packages'
-    include 'a2o-essential-redhat::sys'
+### Obligatory stuff for all servers
+class   a2o-essential-redhat::sys {
+    include 'a2o-essential-redhat::sys::ntp'
 }

@@ -15,9 +15,11 @@
 
 ### Required packages
 class   a2o-essential-redhat::packages::sys   inherits   a2o-essential-redhat::packages::base {
+
+    # Compile time packages
     package { 'gcc':          }
     package { 'gcc-c++':      }
-    package { 'gettext':      }
+#    package { 'gettext':      }
     package { 'libtool':      }
     package { 'make':         }
     package { 'mc':           }
@@ -26,4 +28,7 @@ class   a2o-essential-redhat::packages::sys   inherits   a2o-essential-redhat::p
     package { 'xz':           }
     package { 'zlib':         }
     package { 'zlib-devel':   }
+
+    # Various system packages
+    package { 'ntp':          }
 }
