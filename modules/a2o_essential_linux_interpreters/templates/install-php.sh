@@ -83,8 +83,12 @@ export LD_LIBRARY_PATH="$PDESTDIR_OPENSSL/lib" &&
   --with-mssql \
   --with-mysql=mysqlnd --with-mysqli=mysqlnd \
   --with-unixODBC \
-  --enable-pdo --with-pdo-mysql=mysqlnd --with-pdo-sqlite --enable-sqlite-utf8 \
-  --with-pdo-odbc=unixODBC --with-pdo-pgsql=$PDESTDIR_POSTGRESQL \
+  --enable-pdo \
+  --with-pdo-dblib \
+  --with-pdo-mysql=mysqlnd \
+  --with-pdo-sqlite --enable-sqlite-utf8 \
+  --with-pdo-odbc=unixODBC \
+  --with-pdo-pgsql=$PDESTDIR_POSTGRESQL \
   --with-pgsql=$PDESTDIR_POSTGRESQL \
   --enable-reflection \
   --enable-session \
