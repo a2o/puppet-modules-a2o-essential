@@ -13,13 +13,15 @@
 
 
 
-class a2o_essential_linux_interpreters::python::all {
+### Software package: python
+class   a2o_essential_linux_interpreters::python::symlinks_invasive   inherits   a2o_essential_linux_interpreters::python::base {
 
-    Package['libs'] -> Package['python']
+    File {
+	require  => File['/usr/local/python'],
+	backup   => false,
+    }
 
-    include 'a2o_essential_linux_interpreters::python::package'
-    include 'a2o_essential_linux_interpreters::python::module_collection'
-    include 'a2o_essential_linux_interpreters::python::module_mysql'
-    include 'a2o_essential_linux_interpreters::python::symlinks'
-    include 'a2o_essential_linux_interpreters::python::symlinks_invasive'
+
+    # Program symlinks
+    file { '/usr/bin/python':            ensure => '/usr/local/bin/python',           }
 }
