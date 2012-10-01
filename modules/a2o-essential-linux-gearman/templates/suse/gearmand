@@ -1,3 +1,4 @@
+#!/bin/bash
 ###########################################################################
 # a2o Essential Puppet Modules                                            #
 #-------------------------------------------------------------------------#
@@ -10,34 +11,20 @@
 #-------------------------------------------------------------------------#
 # Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
 ###########################################################################
+#
+# /etc/init.d/gearmand
+#
+### BEGIN INIT INFO
+# Provides:		gearmand
+# Required-Start:	$local_fs $syslog
+# Required-Stop:	$local_fs $syslog
+# Default-Start:	2 3 4 5
+# Default-Stop:		0 1 6
+# Short-Description:	Gearman Daemon
+# Long-Description:	Gearman Worker Engine Daemon
+### END INIT INFO
 
 
 
-### Service: gearmand
-class   a2o-essential-linux-gearman::distro::suse::service   inherits   a2o-essential-linux-gearman::base {
-
-    ### Requires and subscribes
-    $require   = [
-        File['/var/gearman'],
-        File['/var/gearman/run'],
-    ]
-    $subscribe = [
-        Package['gearman'],
-	File['/usr/local/gearman'],
-    ]
-
-
-    ### Service
-    a2o-essential-suse::service::rctool_wrapper { 'gearmand':
-	require   => $require,
-	subscribe => $subscribe,
-    }
-}
-
-
-
-### Final all-containing class
-class a2o-essential-linux-gearman::distro::suse {
-    include 'a2o-essential-linux-gearman'
-    include 'a2o-essential-linux-gearman::distro::suse::service'
-}
+### Just run the rctool wrapper
+/etc/rc.tool/wrapper.suse gearmand $@
