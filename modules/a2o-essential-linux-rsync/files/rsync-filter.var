@@ -54,12 +54,18 @@ dir-merge .rsync-filter.site
 - /kvm/*.iso
 - /kvm/isos/*.iso
 - /kvm/*/vdisk.img
++ /lib/*/proc
+- /lib/*/proc/***
++ /lib/dhcp/proc
+- /lib/dhcp/proc/***
 - /lib/logrotate.status
 - /lib/lib/mlocate/mlocate.db
 + /lib/mongodb
 - /lib/mongodb/***
 + /lib/mysql
 - /lib/mysql/***
++ /lib/named/proc
+- /lib/named/proc/***
 + /lib/ntp/proc
 - /lib/ntp/proc/***
 + /lib/puppet
@@ -153,6 +159,8 @@ dir-merge .rsync-filter.site
 + /run/samba
 - /run/samba/***
 + /run/utmp
++ /spool/amavis/virusmails/
+- /spool/amavis/virusmails/***
 + /spool/cron
 - /spool/cron/cron.*
 + /spool/cron/crontabs
