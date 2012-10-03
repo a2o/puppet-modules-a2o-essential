@@ -24,7 +24,7 @@ class   a2o_essential_ubuntu::sys::ntp   inherits   a2o_essential_ubuntu::base {
 #    }
 #    file { '/etc/ntp.conf':   source => "puppet:///modules/$thisPuppetModule/ntp.conf" }
 
-    $require => [
+    $require = [
 	Package['ntp'],
     ]
     a2o-essential-debian::service::generic { 'ntp':
