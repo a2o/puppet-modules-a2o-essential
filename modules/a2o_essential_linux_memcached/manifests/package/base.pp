@@ -21,7 +21,7 @@ class   a2o_essential_linux_memcached::package::base   inherits   a2o_essential_
     # Package / Software details
     # CheckURI: http://www.memcached.org/downloads.html
     $softwareName_memcached    = 'memcached'
-    $softwareVersion_memcached = '1.4.10'
+    $softwareVersion_memcached = '1.4.15'
     $packageRelease_memcached  = '1'
     $packageTag_memcached      = "$softwareName_memcached-$softwareVersion_memcached-$packageRelease_memcached"
 }
