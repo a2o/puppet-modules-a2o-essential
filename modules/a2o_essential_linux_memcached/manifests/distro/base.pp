@@ -22,7 +22,7 @@ class   a2o_essential_linux_memcached::distro::base   inherits   a2o_essential_l
 
     $subscribe = [
 	Package['memcached'],
-        File['/usr/local/ganglia-gmond'],
+#        File['/usr/local/memcached'],
 #	User['nobody'],
 #	Group['nogorup'],
     ]
