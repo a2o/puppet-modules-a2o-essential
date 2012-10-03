@@ -25,7 +25,7 @@ class   a2o_essential_linux_memcached::distro::ubuntu::service   inherits   a2o_
 
 
 ### The final all-containing classes
-class a2o_essential_linux_memcached::distro::suse {
+class a2o_essential_linux_memcached::distro::ubuntu {
 
     include 'a2o_essential_linux_memcached::distro::common'
     include 'a2o_essential_linux_memcached::distro::ubuntu::service'
