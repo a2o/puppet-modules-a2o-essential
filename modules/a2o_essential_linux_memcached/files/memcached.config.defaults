@@ -1,0 +1,12 @@
+################################################################################
+#
+# WARNING: This file is controlled by configuration management.
+# INFO:    Use memcached.config.local for local adjustments.
+#
+################################################################################
+
+MEMCACHED_LISTEN_IP=127.0.0.1
+MEMCACHED_LISTEN_PORT=11211
+MEMCACHED_USERNAME=nobody
+MEMCACHED_MEMORY_MB=16
+MEMCACHED_CUSTOM_OPTS=

@@ -1,0 +1,82 @@
+#!/bin/sh
+. /etc/rc.d/rc._functions
+
+
+
+### Include config files
+if [ ! -f /etc/memcached/memcached.config.defaults ]; then
+    echo "ERROR: Defaults file not found: /etc/memcached/memcached.config.defaults"
+    exit 13
+fi
+. /etc/memcached/memcached.config.defaults
+
+# Optional ones
+if [ -f /etc/memcached/memcached.config.site ]; then
+    . /etc/memcached/memcached.config.site
+fi
+if [ -f /etc/memcached/memcached.config.local ]; then
+    . /etc/memcached/memcached.config.local
+fi
+
+
+
+PROC_NAME="/usr/local/bin/memcached"
+PID_FILE="/var/run/memcached/memcached.pid"
+APP_CMD_START="$PROC_NAME -d -P $PID_FILE -l $MEMCACHED_LISTEN_IP -p $MEMCACHED_LISTEN_PORT -u $MEMCACHED_USERNAME -m $MEMCACHED_MEMORY_MB $MEMCACHED_CUSTOM_OPTS"
+
+
+
+memcached_start() {
+    if app_start; then
+	ln -sf $PID_FILE /var/run/memcached.pid
+    fi
+}
+
+memcached_stop() {
+    if app_stop; then
+	rm -f /var/run/memcached.pid
+    fi
+}
+
+memcached_restart() {
+    memcached_stop
+    memcached_start
+}
+
+memcached_status() {
+    is_app_running__info
+}
+
+memcached_kill() {
+    if app_kill; then
+	rm -f $PID_FILE
+	rm -f /var/run/memcached.pid
+    fi
+}
+
+
+
+case "$1" in
+    'start')
+	memcached_start
+	;;
+
+    'stop')
+	memcached_stop
+	;;
+
+    'restart')
+	memcached_restart
+	;;
+
+    'status')
+	memcached_status
+	;;
+
+    'kill')
+	memcached_kill
+	;;
+
+    *)
+	echo "usage $0 start|stop|restart|status|kill"
+esac
