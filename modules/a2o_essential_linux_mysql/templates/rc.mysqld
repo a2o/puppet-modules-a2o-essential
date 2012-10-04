@@ -15,13 +15,20 @@
 
 
 
+### Parse Arguments to command and other
+MYSQLD_COMMAND="$1"
+shift
+MYSQLD_OTHER_ARGS="$@"
+
+
+
 export LD_LIBRARY_PATH="<%= destDir_openssl %>/lib"
 
 
 
 PROC_NAME="/usr/local/mysql/libexec/mysqld"
 PID_FILE="/var/mysql/run/mysqld.pid"
-APP_CMD_START="/usr/local/mysql/share/mysql/mysql.server start --defaults-file=/etc/mysql/my.cnf"
+APP_CMD_START="/usr/local/mysql/share/mysql/mysql.server start --defaults-file=/etc/mysql/my.cnf $MYSQLD_OTHER_ARGS"
 APP_CMD_STOP="/usr/local/mysql/share/mysql/mysql.server stop"
 
 
@@ -61,7 +68,7 @@ mysqld_kill() {
 
 
 
-case "$1" in
+case "$MYSQLD_COMMAND" in
     'start')
         mysqld_start
         ;;
@@ -78,5 +85,5 @@ case "$1" in
         mysqld_kill
         ;;
     *)
-        echo "usage $0 start|stop|restart|status|kill"
+        echo "usage $0 start|stop|restart|status|kill [additional parameters for starting MySQL]"
 esac
