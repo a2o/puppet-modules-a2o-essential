@@ -1,0 +1,11 @@
+user      = <%= mysql_root_username %>
+pass      = <%= mysql_root_password %>
+host      = localhost
+db        =
+delay     = 1
+port      =
+socket    = /var/mysql/run/mysql.sock
+batchmode = 0
+header    = 1
+color     = 1
+idle      = 1
