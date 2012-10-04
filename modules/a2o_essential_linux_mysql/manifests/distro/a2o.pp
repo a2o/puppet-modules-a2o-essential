@@ -34,6 +34,9 @@ class   a2o_essential_linux_mysql::distro::a2o::service   inherits   a2o_essenti
 class   a2o_essential_linux_mysql::distro::a2o {
 
     include 'a2o_essential_linux_mysql::distro::common'
+    include 'a2o_essential_linux_mysql::package::mysql_db'
+    include 'a2o_essential_linux_mysql::package::mytop'
+    include 'a2o_essential_linux_mysql::files::mytop'
     include 'a2o_essential_linux_mysql::distro::a2o::service'
     include 'a2o_essential_linux_mysql::files::symlinks_lib'
 }
