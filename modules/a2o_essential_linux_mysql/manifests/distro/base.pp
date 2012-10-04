@@ -13,20 +13,26 @@
 
 
 
-### Service: mysql
-class   a2o_essential_linux_mysql::distro::ubuntu::service   inherits   a2o_essential_linux_mysql::distro::base {
+### Service dependencies
+class   a2o_essential_linux_mysql::distro::base   inherits   a2o_essential_linux_mysql::base {
 
-    a2o-essential-debian::service::rctool_wrapper { 'mysqld':
-        require   => $require,
-        subscribe => $subscribe,
-    }
-}
+    # Get external references
+    $externalDestDir_openssl = $a2o_essential_linux_mysql::package::mysql::externalDestDir_openssl
 
 
-
-### The final all-containing classes
-class   a2o_essential_linux_mysql::distro::ubuntu {
-
-    include 'a2o_essential_linux_mysql::distro::common'
-    include 'a2o_essential_linux_mysql::distro::ubuntu::service'
+    $require   = [
+        File['/var/mysql/data'],
+        File['/var/mysql/log'],
+        File['/var/mysql/run'],
+        File['/var/mysql/tmp'],
+        File['/etc/mysql/my.cnf-local'],
+    ]
+    $subscribe = [
+	Package['mysql'],
+#	Package['mysql-db'],
+#	Package['mysql-db-users'],
+        File['/usr/local/mysql'],
+        File['/etc/mysql/my.cnf'],
+        File['/etc/mysql/my.cnf-site'],
+    ]
 }

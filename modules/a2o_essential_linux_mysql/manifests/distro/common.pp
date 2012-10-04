@@ -13,20 +13,10 @@
 
 
 
-### Service: mysql
-class   a2o_essential_linux_mysql::distro::ubuntu::service   inherits   a2o_essential_linux_mysql::distro::base {
+### Common resources for all distributions
+class   a2o_essential_linux_mysql::distro::common {
 
-    a2o-essential-debian::service::rctool_wrapper { 'mysqld':
-        require   => $require,
-        subscribe => $subscribe,
-    }
-}
-
-
-
-### The final all-containing classes
-class   a2o_essential_linux_mysql::distro::ubuntu {
-
-    include 'a2o_essential_linux_mysql::distro::common'
-    include 'a2o_essential_linux_mysql::distro::ubuntu::service'
+    include 'a2o_essential_linux_mysql::package'
+    include 'a2o_essential_linux_mysql::files'
+    include 'a2o_essential_linux_mysql::users_groups'
 }
