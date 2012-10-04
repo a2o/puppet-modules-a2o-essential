@@ -28,4 +28,9 @@ class   a2o_essential_linux_mysql::files::helpers   inherits   a2o_essential_lin
     file { '/opt/scripts/mysql/dump.config.defaults':   source => "puppet:///modules/$thisPuppetModule/dump.config.defaults" }
     file { '/opt/scripts/mysql/dump.mysql.sh':          source => "puppet:///modules/$thisPuppetModule/dump.mysql.sh"        }
     file { '/opt/scripts/mysql/import.mysql.sh':        source => "puppet:///modules/$thisPuppetModule/import.mysql.sh"      }
+
+    # Logger, optimizer, analyzer
+    file { '/opt/scripts/mysql/optimize-all-tables.sh': source => "puppet:///modules/$thisPuppetModule/optimize-all-tables.sh" }
+    file { '/opt/scripts/mysql/tuning-primer.sh':       source => "puppet:///modules/$thisPuppetModule/tuning-primer.sh"       }
+    file { '/opt/scripts/mysql/log_processlist.sh':     source => "puppet:///modules/$thisPuppetModule/log_processlist.sh"     }
 }
