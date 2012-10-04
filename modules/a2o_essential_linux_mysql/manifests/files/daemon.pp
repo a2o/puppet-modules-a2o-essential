@@ -25,6 +25,7 @@ class   a2o_essential_linux_mysql::files::daemon_runtime   inherits   a2o_essent
 
     file { '/var/mysql/data':   mode => 700 }
     file { '/var/mysql/log':    }
+    file { '/var/mysql/log/processlist_logs':    }
     file { '/var/mysql/run':    }
     file { '/var/mysql/tmp':    }
 }
@@ -46,7 +47,6 @@ class   a2o_essential_linux_mysql::files::daemon_config   inherits   a2o_essenti
 
     # Files
     file { '/etc/mysql/my.cnf':         source => "puppet:///modules/$thisPuppetModule/my.cnf" }
-    file { '/etc/mysql/my.cnf-local':   ensure => present }
 }
 
 
