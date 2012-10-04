@@ -36,18 +36,8 @@ define   a2o-essential-unix::rctool::service::generic   ($ensure='running', $req
         content  => template("$thisPuppetModule/rc.$serviceName"),
         owner    => root,
         group    => root,
-
-# Mode property is commented out because service provider a2o_linux_rctool
-# takes care of it through enable property
-#        mode     => $serviceEnsure ? {
-#	    running => 755,
-#	    stopped => 644,
-#	    default => 644,
-#	},
-
-	require     => [
+	require  => [
     	    File['/etc/rc.tool/common'],
-    	    File['/etc/rc.d/rc._functions'], ### FIXME remove, compatibility
             $require,
 	],
     }

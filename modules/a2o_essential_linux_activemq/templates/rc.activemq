@@ -1,5 +1,5 @@
 #!/bin/sh
-. /etc/rc.d/rc._functions
+. /etc/rc.tool/common
 
 
 

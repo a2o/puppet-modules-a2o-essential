@@ -37,7 +37,7 @@ class   a2o-essential-linux-rrdcached::service   inherits   a2o-essential-linux-
     	    stopped => 644,
     	    default => 644,
     	},
-	require  => File['/etc/rc.d/rc._functions'],
+	require  => File['/etc/rc.tool/common'],
     }
 
 

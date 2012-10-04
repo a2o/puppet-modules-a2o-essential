@@ -38,9 +38,8 @@ define   a2o-essential-suse::service::rctool_wrapper   ($ensure='running', $requ
         owner    => root,
         group    => root,
 	mode     => 755,
-	require     => [
+	require  => [
     	    File['/etc/rc.tool/common'],
-    	    File['/etc/rc.d/rc._functions'], ### FIXME remove, compatibility
             $require,
         ],
     }
@@ -49,7 +48,7 @@ define   a2o-essential-suse::service::rctool_wrapper   ($ensure='running', $requ
         owner    => root,
         group    => root,
         mode     => 755,
-	require     => [
+	require  => [
             $require,
 	    $subscribe,
     	    File["/etc/rc.d/rc.$serviceName"],

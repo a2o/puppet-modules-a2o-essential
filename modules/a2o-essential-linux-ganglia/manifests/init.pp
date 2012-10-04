@@ -246,7 +246,7 @@ class a2o-essential-linux-ganglia::service::gmond   inherits   a2o-essential-lin
     	    stopped => 644,
     	    default => 644,
     	},
-	require  => File['/etc/rc.d/rc._functions'],
+	require  => File['/etc/rc.tool/rc.common'],
     }
 
 
@@ -307,7 +307,7 @@ class a2o-essential-linux-ganglia::service::gmetad   inherits   a2o-essential-li
     	    stopped => 644,
     	    default => 644,
     	},
-	require  => File['/etc/rc.d/rc._functions'],
+	require  => File['/etc/rc.tool/rc.common'],
     }
 
 

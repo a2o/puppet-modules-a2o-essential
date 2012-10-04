@@ -36,7 +36,7 @@ class   a2o-essential-linux-gearman::distro::a2o::service   inherits   a2o-essen
 	    stopped => 644,
 	    default => 644,
 	},
-	require  => File['/etc/rc.d/rc._functions'],
+	require  => File['/etc/rc.tool/common'],
     }
 
 

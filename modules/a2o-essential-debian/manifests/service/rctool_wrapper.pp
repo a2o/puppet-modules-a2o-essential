@@ -38,9 +38,8 @@ define   a2o-essential-debian::service::rctool_wrapper   ($ensure='running', $re
         owner    => root,
         group    => root,
         mode     => 755,
-	require     => [
+	require  => [
 	    File['/etc/rc.tool/common'],
-	    File['/etc/rc.d/rc._functions'], ### FIXME remove, compatibility
             $require,
 	],
     }
