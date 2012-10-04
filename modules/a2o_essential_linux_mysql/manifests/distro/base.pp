@@ -17,7 +17,7 @@
 class   a2o_essential_linux_mysql::distro::base   inherits   a2o_essential_linux_mysql::base {
 
     # Get external references
-    $externalDestDir_openssl = $a2o_essential_linux_mysql::package::mysql::externalDestDir_openssl
+    $destDir_openssl = $a2o_essential_linux_mysql::package::mysql::externalDestDir_openssl
 
 
     $require   = [
@@ -25,14 +25,11 @@ class   a2o_essential_linux_mysql::distro::base   inherits   a2o_essential_linux
         File['/var/mysql/log'],
         File['/var/mysql/run'],
         File['/var/mysql/tmp'],
-        File['/etc/mysql/my.cnf-local'],
+        File['/etc/mysql/conf.d'],
     ]
     $subscribe = [
 	Package['mysql'],
-#	Package['mysql-db'],
-#	Package['mysql-db-users'],
         File['/usr/local/mysql'],
         File['/etc/mysql/my.cnf'],
-        File['/etc/mysql/my.cnf-site'],
     ]
 }

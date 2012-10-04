@@ -34,8 +34,4 @@ class   a2o_essential_linux_mysql::files::symlinks   inherits   a2o_essential_li
     file { '/var/log/mysql':
 	ensure   => '/var/mysql/log',
     }
-
-    # Library symlink - FIXME why? Postfix again?
-#    file { '/usr/lib/libmysqlclient.so'   :   ensure => '/usr/local/mysql/lib/mysql/libmysqlclient.so',    backup => false, force => true, }
-#    file { '/usr/lib/libmysqlclient.so.16':   ensure => '/usr/local/mysql/lib/mysql/libmysqlclient.so.16', backup => false, force => true, }
 }
