@@ -13,19 +13,11 @@
 
 
 
-### Service: nrpe
-class   a2o_essential_linux_nagios::distro::a2o::nrpe::service   inherits   a2o_essential_linux_nagios::distro::service_base_nrpe {
-
-    a2o-essential-unix::rctool::service::generic { 'nrpe':
-        require   => $require,
-        subscribe => $subscribe,
-    }
-}
-
-
-
-### Final all-containing class
-class   a2o_essential_linux_nagios::distro::a2o::nrpe {
-    include 'a2o_essential_linux_nagios::distro::common_nrpe'
-    include 'a2o_essential_linux_nagios::distro::a2o::nrpe::service'
+### Common NRPE stuff
+class   a2o_essential_linux_nagios::distro::common_nrpe {
+    include 'a2o_essential_linux_nagios::users_groups'
+    include 'a2o_essential_linux_nagios::package::nrpe'
+    include 'a2o_essential_linux_nagios::package::nagios_plugins'
+    include 'a2o_essential_linux_nagios::files::common'
+    include 'a2o_essential_linux_nagios::files::nrpe'
 }

@@ -13,19 +13,24 @@
 
 
 
-### Service: nrpe
-class   a2o_essential_linux_nagios::distro::a2o::nrpe::service   inherits   a2o_essential_linux_nagios::distro::service_base_nrpe {
+### Service base class: nrpe
+class   a2o_essential_linux_nagios::distro::service_base_nrpe   inherits   a2o_essential_linux_nagios::base {
 
-    a2o-essential-unix::rctool::service::generic { 'nrpe':
-        require   => $require,
-        subscribe => $subscribe,
-    }
-}
+    # External resources
+    $destDir_openssl = $a2o_essential_linux_nagios::package::base::externalDestDir_openssl
+    $destDir_mysql   = $a2o_essential_linux_nagios::package::base::externalDestDir_mysql
 
 
+    $require   = [
+        File['/etc/nrpe'],
+    ]
 
-### Final all-containing class
-class   a2o_essential_linux_nagios::distro::a2o::nrpe {
-    include 'a2o_essential_linux_nagios::distro::common_nrpe'
-    include 'a2o_essential_linux_nagios::distro::a2o::nrpe::service'
+    $subscribe = [
+	Package['nrpe'],
+	Package['nagios-plugins'],
+        File['/usr/local/nrpe'],
+        File['/usr/local/nagios-plugins'],
+        File['/etc/nrpe/nrpe.cfg'],
+        File['/etc/nrpe/commands.cfg'],
+    ]
 }
