@@ -13,19 +13,24 @@
 
 
 
-### Service: nagios
-class   a2o_essential_linux_nagios::distro::a2o::nagios::service   inherits   a2o_essential_linux_nagios::distro::service_base_nagios {
+### Service base class: nagios
+class   a2o_essential_linux_nagios::distro::service_base_nagios   inherits   a2o_essential_linux_nagios::base {
 
-    a2o-essential-unix::rctool::service::generic { 'nagios':
-        require   => $require,
-        subscribe => $subscribe,
-    }
-}
+    # External resources
+    $destDir_openssl = $a2o_essential_linux_nagios::package::base::externalDestDir_openssl
+    $destDir_mysql   = $a2o_essential_linux_nagios::package::base::externalDestDir_mysql
 
 
+    $require   = [
+        File['/etc/nagios'],
+    ]
 
-### Final all-containing class
-class   a2o_essential_linux_nagios::distro::a2o::nagios {
-    include 'a2o_essential_linux_nagios::distro::common_nagios'
-    include 'a2o_essential_linux_nagios::distro::a2o::nagios::service'
+    $subscribe = [
+	Package['nagios'],
+	Package['nagios-plugins'],
+	Package[$a2o_essential_linux_nagios::package::base::softwareName_mk_livestatus],
+	Package[$a2o_essential_linux_nagios::package::base::softwareName_pnp4nagios],
+        File['/usr/local/nagios'],
+        File['/usr/local/nagios-plugins'],
+    ]
 }

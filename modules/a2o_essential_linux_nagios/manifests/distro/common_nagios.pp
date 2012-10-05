@@ -13,19 +13,13 @@
 
 
 
-### Service: nagios
-class   a2o_essential_linux_nagios::distro::a2o::nagios::service   inherits   a2o_essential_linux_nagios::distro::service_base_nagios {
-
-    a2o-essential-unix::rctool::service::generic { 'nagios':
-        require   => $require,
-        subscribe => $subscribe,
-    }
-}
-
-
-
-### Final all-containing class
-class   a2o_essential_linux_nagios::distro::a2o::nagios {
-    include 'a2o_essential_linux_nagios::distro::common_nagios'
-    include 'a2o_essential_linux_nagios::distro::a2o::nagios::service'
+### Common Nagios stuff
+class   a2o_essential_linux_nagios::distro::common_nagios {
+    include 'a2o_essential_linux_nagios::users_groups'
+    include 'a2o_essential_linux_nagios::package::nagios'
+    include 'a2o_essential_linux_nagios::package::nagios_plugins'
+    include 'a2o_essential_linux_nagios::package::pnp4nagios'
+    include 'a2o_essential_linux_nagios::package::mk_livestatus'
+    include 'a2o_essential_linux_nagios::files::common'
+    include 'a2o_essential_linux_nagios::files::nagios'
 }

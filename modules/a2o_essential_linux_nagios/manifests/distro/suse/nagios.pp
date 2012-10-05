@@ -14,23 +14,11 @@
 
 
 ### Service: nagios
-class   a2o_essential_linux_nagios::distro::suse::nagios::service   inherits   a2o_essential_linux_nagios::base {
-
-    $requireDefs = [
-        File['/etc/nagios'],
-    ]
-    $subscribeDefs = [
-	Package['nagios'],
-	Package['nagios-plugins'],
-	Package[$a2o_essential_linux_nagios::package::base::softwareName_mk_livestatus],
-	Package[$a2o_essential_linux_nagios::package::base::softwareName_pnp4nagios],
-        File['/usr/local/nagios'],
-        File['/usr/local/nagios-plugins'],
-    ]
+class   a2o_essential_linux_nagios::distro::suse::nagios::service   inherits   a2o_essential_linux_nagios::distro::service_base_nagios {
 
     a2o-essential-suse::service::rctool_wrapper { 'nagios':
-        require   => $requireDefs,
-        subscribe => $subscribeDefs,
+        require   => $require,
+        subscribe => $subscribe,
     }
 }
 
@@ -38,12 +26,6 @@ class   a2o_essential_linux_nagios::distro::suse::nagios::service   inherits   a
 
 ### Final all-containing class
 class   a2o_essential_linux_nagios::distro::suse::nagios {
-    include 'a2o_essential_linux_nagios::users_groups'
-    include 'a2o_essential_linux_nagios::package::nagios'
-    include 'a2o_essential_linux_nagios::package::nagios_plugins'
-    include 'a2o_essential_linux_nagios::package::pnp4nagios'
-    include 'a2o_essential_linux_nagios::package::mk_livestatus'
-    include 'a2o_essential_linux_nagios::files::common'
-    include 'a2o_essential_linux_nagios::files::nagios'
+    include 'a2o_essential_linux_nagios::distro::common_nagios'
     include 'a2o_essential_linux_nagios::distro::suse::nagios::service'
 }
