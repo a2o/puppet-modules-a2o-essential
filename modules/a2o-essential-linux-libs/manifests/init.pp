@@ -93,8 +93,11 @@ class a2o-essential-linux-libs::ruby {
 }
 
 
+
 ### Libs in testing phase - to be migrated to ::all
 class a2o-essential-linux-libs::testing {
+    include 'a2o_essential_linux_libs::libcap_ng'
+    include 'a2o_essential_linux_libs::libnl'
     include 'a2o-essential-linux-libs::openipmi'
 }
 
