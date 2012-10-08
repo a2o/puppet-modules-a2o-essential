@@ -1,0 +1,205 @@
+#
+# WARNING: This file is generated and controlled by configuration management.
+# WARNING: All changes will be overwritten.
+# WARNING: Please use -site and -local config files or conf.d directory instead.
+#
+
+
+
+################################
+# General system configuration #
+################################
+
+### Daemon config
+inet_interfaces = all
+mail_owner = postfix
+setgid_group = postdrop
+default_privs = nobody
+
+### Directory structure
+daemon_directory = /usr/local/postfix/libexec/postfix
+data_directory = /var/postfix/data
+queue_directory = /var/postfix/spool
+# TODO in the future
+#queue_directory = /var/postfix/queue
+mail_spool_directory = /var/spool/mail
+home_mailbox = Maildir/
+
+### Command paths
+command_directory = /usr/local/postfix/sbin
+sendmail_path = /usr/local/postfix/sbin/sendmail
+newaliases_path = /usr/local/postfix/bin/newaliases
+mailq_path = /usr/local/postfix/bin/mailq
+
+### Various options, re-added by install if removed manually
+readme_directory = no
+sample_directory = no
+html_directory = no
+manpage_directory = /usr/local/man
+
+
+
+###############
+# Host config #
+###############
+myhostname = <%= hostname %>.<%= domain %>
+mydomain   = $myhostname
+myorigin   = $myhostname
+mynetworks = 127.0.0.0/8
+
+
+
+################################################################
+# SMTPD configuration - daemon that accepts mail from internet #
+################################################################
+
+# TLS settings
+smtpd_tls_cert_file      = /etc/ssl/certs/_default.pem
+smtpd_tls_key_file       = $smtpd_tls_cert_file
+smtpd_tls_loglevel       = 1
+smtpd_tls_security_level = may
+smtpd_tls_auth_only      = yes
+
+# SASL authentication
+smtpd_sasl_auth_enable          = yes
+smtpd_sasl_type                 = dovecot
+smtpd_sasl_path                 = /var/run/dovecot/auth-client
+broken_sasl_auth_clients        = no
+smtpd_sasl_authenticated_header = yes
+
+### Configuration about message acception
+smtpd_client_restrictions    =
+  permit
+
+smtpd_banner            = $myhostname ESMTP $mail_name
+smtpd_helo_required     = yes
+smtpd_helo_restrictions =
+  permit_mynetworks,
+  permit_sasl_authenticated,
+  check_client_access hash:/etc/postfix/access,
+#  reject_invalid_helo_hostname,
+#  reject_non_fqdn_helo_hostname,
+#  reject_unknown_client_hostname,
+  permit
+
+smtpd_discard_ehlo_keywords = silent-discard, dsn, etrn
+
+smtpd_sender_restrictions =
+  permit_sasl_authenticated,
+  check_client_access hash:/etc/postfix/access,
+  check_sender_access hash:/etc/postfix/senders,
+  reject_non_fqdn_sender,
+  reject_unknown_sender_domain,
+  permit
+
+smtpd_recipient_restrictions =
+  reject_non_fqdn_recipient,
+  reject_unknown_recipient_domain,
+  permit_mynetworks,
+  permit_sasl_authenticated,
+  check_client_access hash:/etc/postfix/access,
+  check_recipient_access hash:/etc/postfix/recipients,
+  reject_unauth_destination,
+  reject_unauth_pipelining,
+  reject_rbl_client b.barracudacentral.org,
+#  check_policy_service inet:127.0.0.1:10023,
+#  sleep 2,
+  permit
+
+
+
+####################################################
+# Message and other daemon behaviour configuration #
+####################################################
+
+# Message restrictions
+header_checks        = regexp:/etc/postfix/header_checks
+message_size_limit   = 51200000
+
+# Behaviour
+delay_warning_time      = 1h
+disable_vrfy_command    = yes
+#strict_rfc821_envelopes = yes
+
+# THINK FIXME Should we enable this? Because some clients do not sent message id.
+# MessageID is used to trace message through maildir and dovecot logs
+# Adding headers may invalidate DKIM signed messages.
+always_add_missing_headers = yes
+
+
+
+########################################
+# System aliases and virtual addresses #
+########################################
+
+### Transports
+transport_maps        = hash:/etc/postfix/transport
+
+### Virtual addresses
+virtual_alias_domains = /etc/postfix/virtual_domains
+virtual_alias_maps    = hash:/etc/postfix/virtual
+
+### Local aliases
+alias_maps            = btree:/etc/postfix/aliases, btree:/etc/postfix/aliases-local
+alias_database        = btree:/etc/postfix/aliases, btree:/etc/postfix/aliases-local
+
+### Local delivery
+local_recipient_maps  = $alias_maps unix:passwd.byname
+
+
+
+###############################################################
+# SMTP configuration - daemon that transmits mail to internet #
+###############################################################
+
+smtp_tls_cert_file           = /etc/ssl/certs/_default.pem
+smtp_tls_key_file            = $smtp_tls_cert_file
+smtp_tls_loglevel            = 1
+smtp_tls_security_level      = may
+smtp_tls_note_starttls_offer = yes
+
+
+
+##############################################################
+# SMTP SLOW configuration - slow sending variation of SMTP   #
+##############################################################
+
+smtp-instant_destination_rate_delay  =  0s
+smtp-slow-1s_destination_rate_delay  =  1s
+smtp-slow-2s_destination_rate_delay  =  2s
+smtp-slow-3s_destination_rate_delay  =  3s
+smtp-slow-5s_destination_rate_delay  =  5s
+smtp-slow-10s_destination_rate_delay = 10s
+smtp-slow-15s_destination_rate_delay = 15s
+smtp-slow-20s_destination_rate_delay = 20s
+smtp-slow-30s_destination_rate_delay = 30s
+smtp-slow-45s_destination_rate_delay = 45s
+smtp-slow-60s_destination_rate_delay = 60s
+smtp-slow-1m_destination_rate_delay  =  1m
+smtp-slow-2m_destination_rate_delay  =  2m
+smtp-slow-3m_destination_rate_delay  =  3m
+smtp-slow-5m_destination_rate_delay  =  5m
+smtp-slow-10m_destination_rate_delay = 10m
+smtp-slow-15m_destination_rate_delay = 15m
+smtp-slow-20m_destination_rate_delay = 20m
+smtp-slow-30m_destination_rate_delay = 30m
+
+#smtp_destination_concurrency_limit = 5
+
+
+
+################################################################################
+################################################################################
+#
+# Site-specific and local configuration is included below.
+#
+# WARNING: Do not edit here, do it in the following files:
+# - /etc/postfix/main.cf-site    (only with site-specific config mgmt)
+# - /etc/postfix/main.cf-local   (edit directly)
+#
+# When done, restart postfix with 'rctool postfix restart' and main.cf
+# configuration file will be rebuilt with your new options automagically.
+#
+################################################################################
+################################################################################
+

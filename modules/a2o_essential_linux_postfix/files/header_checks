@@ -1,0 +1,4 @@
+/^X-SourcePwd:/ WARN
+/^Subject:/ WARN
+/^Received: from [^ ]+ \([^)]+\)\s+\(Authenticated sender: [^)]+\)\s+(.+)/
+ REPLACE Received: from undisclosed (undisclosed [127.0.0.254]) (Authenticated sender: undisclosed) $1

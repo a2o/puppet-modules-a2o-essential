@@ -1,0 +1,106 @@
+#!/bin/sh
+###########################################################################
+# a2o Essential Puppet Modules                                            #
+#-------------------------------------------------------------------------#
+# Copyright (c) 2012 Bostjan Skufca                                       #
+#-------------------------------------------------------------------------#
+# This source file is subject to version 2.0 of the Apache License,       #
+# that is bundled with this package in the file LICENSE, and is           #
+# available through the world-wide-web at the following url:              #
+# http://www.apache.org/licenses/LICENSE-2.0                              #
+#-------------------------------------------------------------------------#
+# Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
+###########################################################################
+. /etc/rc.tool/common
+
+
+
+export LD_LIBRARY_PATH="<%= destDir_openssl %>/lib"
+
+
+
+PROC_NAME="/usr/local/postfix/libexec/postfix/master"
+PID_FILE="/var/run/postfix.pid"
+PID_FILE_GENERATE="1"
+PID_FILE_GENERATE_DELAY="1"
+PID_FILE_REMOVE="1"
+APP_CMD_START="/usr/local/postfix/sbin/postfix start 2>/dev/null"
+APP_CMD_STOP="/usr/local/postfix/sbin/postfix stop 2>/dev/null"
+
+
+
+postfix_start() {
+    # Update databases
+    newaccess
+    newaliases
+    newrecipients
+    newsenders
+    newtransport
+    newvirt
+
+    # Generate new temporary config file
+    if [ ! -e /etc/postfix/main.cf-global ]; then
+	echo "WARNING: Global config file main.cf-global not found, not rebuilding final config file"
+    else
+	cat /etc/postfix/main.cf-global > /etc/postfix/main.cf.tmp
+	if [ -e /etc/postfix/main.cf-site ]; then
+	    cat /etc/postfix/main.cf-site >> /etc/postfix/main.cf.tmp
+	fi
+	if [ -e /etc/postfix/main.cf-local ]; then
+	    cat /etc/postfix/main.cf-local >> /etc/postfix/main.cf.tmp
+	fi
+
+	diff -q /etc/postfix/main.cf.tmp /etc/postfix/main.cf > /dev/null
+	RES=$?
+	if [ "$RES" == "0" ]; then
+	    rm /etc/postfix/main.cf.tmp
+	else
+	    mv /etc/postfix/main.cf.tmp /etc/postfix/main.cf
+	    echo "INFO: Configuration file main.cf has been rebuilt."
+	fi
+    fi
+
+    # Start the application
+    app_start
+}
+
+postfix_stop() {
+    app_stop
+}
+
+postfix_restart() {
+    postfix_stop
+    postfix_start
+}
+
+postfix_status() {
+    is_app_running__info
+}
+
+postfix_kill() {
+    if app_kill; then
+	rm -f $PID_FILE
+    fi
+}
+
+
+
+case "$1" in
+    'start')
+	postfix_start
+	;;
+    'stop')
+	postfix_stop
+	;;
+    'restart')
+	postfix_restart
+	;;
+    'status')
+	postfix_status
+	;;
+    'kill')
+	postfix_kill
+	;;
+    *)
+	echo "usage $0 start|stop|restart|status|kill"
+esac
