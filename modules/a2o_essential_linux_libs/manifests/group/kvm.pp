@@ -22,5 +22,6 @@ class a2o_essential_linux_libs::group::kvm {
     include 'a2o-essential-linux-libs::libgcrypt'
     include 'a2o-essential-linux-libs::libiconv'
     include 'a2o_essential_linux_libs::libnl'
+    include 'a2o_essential_linux_libs::yajl'
     include 'a2o_essential_linux_libs::zlib'
 }

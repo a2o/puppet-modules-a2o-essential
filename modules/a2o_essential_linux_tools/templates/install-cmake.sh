@@ -1,3 +1,4 @@
+#!/bin/bash
 ###########################################################################
 # a2o Essential Puppet Modules                                            #
 #-------------------------------------------------------------------------#
@@ -13,15 +14,37 @@
 
 
 
-class a2o_essential_linux_tools::group::kvm {
-    include 'a2o_essential_linux_tools::arptables'
-    include 'a2o_essential_linux_tools::dmidecode'
-    include 'a2o_essential_linux_tools::dnsmasq'
-    include 'a2o_essential_linux_tools::ebtables'
-    include 'a2o_essential_linux_tools::netcf'
+### Init
+export SRCROOT="<%= compileDir %>" &&
+mkdir -p $SRCROOT &&
+cd $SRCROOT &&
 
-    include 'a2o_essential_linux_tools::cmake'
 
-    # Tools from old puppet tools module
-    include 'a2o-essential-linux-tools::netcat'
-}
+
+### Set versions and directories
+export PVERSION_SW="<%= softwareVersion %>" &&
+export PVERSION_SW_MAJOR=`echo "$PVERSION_SW" | cut -d'.' -f1,2` &&
+
+
+
+### cmake
+cd $SRCROOT && . ../build_functions.sh &&
+export PNAME="cmake" &&
+export PVERSION="$PVERSION_SW" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="http://www.cmake.org/files/v$PVERSION_SW_MAJOR/$PFILE" &&
+
+rm -rf $PDIR &&
+GetUnpackCd &&
+
+./configure &&
+make &&
+make install &&
+
+cd $SRCROOT &&
+rm -rf $PDIR &&
+
+
+
+true

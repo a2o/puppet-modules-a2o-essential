@@ -13,15 +13,20 @@
 
 
 
-class a2o_essential_linux_tools::group::kvm {
-    include 'a2o_essential_linux_tools::arptables'
-    include 'a2o_essential_linux_tools::dmidecode'
-    include 'a2o_essential_linux_tools::dnsmasq'
-    include 'a2o_essential_linux_tools::ebtables'
-    include 'a2o_essential_linux_tools::netcf'
+### Software package: yajl
+class   a2o_essential_linux_libs::yajl   inherits   a2o_essential_linux_libs::base {
 
-    include 'a2o_essential_linux_tools::cmake'
+    # CheckURI: http://lloyd.github.com/yajl/
+    # WARNING: Download it manually to source.a2o.si
+    $softwareName     = 'yajl'
+    $softwareVersion  = '2.0.1'
+    $packageRelease   = '1'
+    $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
 
-    # Tools from old puppet tools module
-    include 'a2o-essential-linux-tools::netcat'
+
+    ### Package
+    $require = [
+	Package['cmake']
+    ]
+    a2o-essential-unix::compiletool::package::generic { "$packageTag": require => $require }
 }

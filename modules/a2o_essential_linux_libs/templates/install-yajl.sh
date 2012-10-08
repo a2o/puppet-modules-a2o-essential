@@ -1,3 +1,4 @@
+#!/bin/bash
 ###########################################################################
 # a2o Essential Puppet Modules                                            #
 #-------------------------------------------------------------------------#
@@ -13,15 +14,37 @@
 
 
 
-class a2o_essential_linux_tools::group::kvm {
-    include 'a2o_essential_linux_tools::arptables'
-    include 'a2o_essential_linux_tools::dmidecode'
-    include 'a2o_essential_linux_tools::dnsmasq'
-    include 'a2o_essential_linux_tools::ebtables'
-    include 'a2o_essential_linux_tools::netcf'
+### Init
+export SRCROOT="<%= compileDir %>" &&
+mkdir -p $SRCROOT &&
+cd $SRCROOT &&
 
-    include 'a2o_essential_linux_tools::cmake'
 
-    # Tools from old puppet tools module
-    include 'a2o-essential-linux-tools::netcat'
-}
+
+### Set versions and directories
+export PVERSION_SW="<%= softwareVersion %>" &&
+
+
+
+### yajl
+cd $SRCROOT && . ../build_functions.sh &&
+export PNAME="yajl" &&
+export PVERSION="$PVERSION_SW" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="http://source.a2o.si/source-packages/$PFILE" &&
+
+rm -rf $PDIR &&
+GetUnpackCd &&
+
+./configure &&
+make &&
+make install &&
+ldconfig &&
+
+cd $SRCROOT &&
+rm -rf $PDIR &&
+
+
+
+true

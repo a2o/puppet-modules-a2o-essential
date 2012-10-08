@@ -13,15 +13,16 @@
 
 
 
-class a2o_essential_linux_tools::group::kvm {
-    include 'a2o_essential_linux_tools::arptables'
-    include 'a2o_essential_linux_tools::dmidecode'
-    include 'a2o_essential_linux_tools::dnsmasq'
-    include 'a2o_essential_linux_tools::ebtables'
-    include 'a2o_essential_linux_tools::netcf'
+### Software package: netcf
+class   a2o_essential_linux_tools::netcf   inherits   a2o_essential_linux_tools::base {
 
-    include 'a2o_essential_linux_tools::cmake'
+    # CheckURI: https://fedorahosted.org/released/netcf/
+    $softwareName     = 'netcf'
+    $softwareVersion  = '0.2.2'
+    $packageRelease   = '1'
+    $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
 
-    # Tools from old puppet tools module
-    include 'a2o-essential-linux-tools::netcat'
+
+    ### Package
+    a2o-essential-unix::compiletool::package::generic { "$packageTag": }
 }
