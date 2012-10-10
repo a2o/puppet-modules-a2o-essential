@@ -23,7 +23,7 @@ class a2o_essential_linux_tools::group::all {
     include 'a2o-essential-linux-tools::git::symlinks'
     include 'a2o-essential-linux-tools::hdparm'
     include 'a2o-essential-linux-tools::ifenslave'
-#    include 'a2o-essential-linux-tools::ifupdown'
+    include 'a2o_essential_linux_tools::ifupdown'
     include 'a2o-essential-linux-tools::imagemagick'
     include 'a2o-essential-linux-tools::inotify-tools'
     include 'a2o-essential-linux-tools::iotop'
