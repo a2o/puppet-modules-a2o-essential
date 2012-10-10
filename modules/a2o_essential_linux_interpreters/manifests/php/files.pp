@@ -28,6 +28,12 @@ class   a2o_essential_linux_interpreters::php::files   inherits   a2o_essential_
     file { '/etc/php/cli':          ensure => directory, mode => 755 }
     file { '/etc/php/cli/conf.d':   ensure => directory, mode => 755 }
 
+    # PHP runtime dirs
+    file { '/var/tmp/php':            ensure => directory               }
+    file { '/var/tmp/php/sessions':   ensure => directory, mode => 1777 }
+    file { '/var/tmp/php/soap':       ensure => directory, mode => 1777 }
+    file { '/var/tmp/php/uploads':    ensure => directory, mode => 1777 }
+
     # Config files
     file { '/etc/php/cli/php.ini':
 	source   => "puppet:///modules/$thisPuppetModule/php.ini",
