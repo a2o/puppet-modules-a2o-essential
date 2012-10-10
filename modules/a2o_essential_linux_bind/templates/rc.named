@@ -1,0 +1,56 @@
+#!/bin/sh
+. /etc/rc.tool/common
+
+export LD_LIBRARY_PATH="<%= destDir_openssl %>/lib"
+
+PROC_NAME="/usr/local/bind/sbin/named"
+PID_FILE="/var/named/run/named.pid"
+APP_CMD_START="$PROC_NAME -u named -t /var/named"
+
+named_start() {
+  if app_start; then
+    ln -sf $PID_FILE /var/run/named.pid
+  fi
+}
+
+named_stop() {
+  if app_stop; then
+    rm -f /var/run/named.pid
+  fi
+}
+
+named_restart() {
+  named_stop
+  named_start
+}
+
+named_status() {
+  is_app_running__info
+}
+
+named_kill() {
+  if app_kill; then
+    rm -f $PID_FILE
+    rm -f /var/run/named.pid
+  fi
+}
+
+case "$1" in
+'start')
+  named_start
+  ;;
+'stop')
+  named_stop
+  ;;
+'restart')
+  named_restart
+  ;;
+'status')
+  named_status
+  ;;
+'kill')
+  named_kill
+  ;;
+*)
+  echo "usage $0 start|stop|restart|status|kill"
+esac
