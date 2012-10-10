@@ -26,7 +26,7 @@ export PVERSION_SW="<%= softwareVersion %>" &&
 
 
 
-### NetCF
+### NoWeb
 cd $SRCROOT && . ../build_functions.sh &&
 export PNAME="noweb" &&
 export PVERSION="$PVERSION_SW" &&
