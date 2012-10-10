@@ -13,17 +13,8 @@
 
 
 
-### Base class
-class a2o-essential-linux-tools::base {
-    $thisPuppetModule = "a2o-essential-linux-tools"
-
-    # Where the packages will be compiled
-    $compileDir = '/var/src/tools'
-}
-
-
-
-### Final all-containing class - FIXME legacy, remove ASAP, like this since 2012-10-10
-class a2o-essential-linux-tools {
-    include 'a2o_essential_linux_tools'
+### Class for fake package, which ensures all tools are installed before this one
+class   a2o_essential_linux_tools::package::tools {
+    a2o-essential-unix::compiletool::fake-package { 'a2o-essential-linux-tools': }
+    Class['a2o_essential_linux_tools::group::all'] -> Package['a2o-essential-linux-tools']
 }
