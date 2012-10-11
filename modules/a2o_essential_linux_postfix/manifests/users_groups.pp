@@ -23,10 +23,10 @@ class   a2o_essential_linux_postfix::users_groups {
 
     # Create group, user, homedir
     a2o-essential-unix::usergroup::daemon { "$user":
-	uid   => "$uid",
-	gid   => "$gid",
-	home  => "$home",
-	shell => '/bin/false',
+        uid    => "$uid",
+        gid    => "$gid",
+        home   => "$home",
+        shell  => '/bin/false',
     }
 
     # Additional group

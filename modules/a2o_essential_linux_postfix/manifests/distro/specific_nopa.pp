@@ -13,20 +13,10 @@
 
 
 
-### Service: postfix
-class   a2o_essential_linux_postfix::distro::a2o::service   inherits   a2o_essential_linux_postfix::distro::service_base_nopa {
+### Common resources for all distributions
+class   a2o_essential_linux_postfix::distro::specific_nopa {
 
-    a2o-essential-unix::rctool::service::generic { 'postfix':
-        require   => $require,
-        subscribe => $subscribe,
-    }
-}
-
-
-
-### Final all-containing class
-class   a2o_essential_linux_postfix::distro::a2o {
-    include 'a2o_essential_linux_postfix::distro::common'
-    include 'a2o_essential_linux_postfix::distro::specific_nopa'
-    include 'a2o_essential_linux_postfix::distro::a2o::service'
+    include 'a2o_essential_linux_postfix::users_groups'
+    include 'a2o_essential_linux_postfix::package::postfix'
+    include 'a2o_essential_linux_postfix::files::daemon'
 }

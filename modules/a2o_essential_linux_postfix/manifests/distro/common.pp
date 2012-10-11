@@ -16,9 +16,6 @@
 ### Common resources for all distributions
 class   a2o_essential_linux_postfix::distro::common {
 
-    include 'a2o_essential_linux_postfix::users_groups'
-    include 'a2o_essential_linux_postfix::package::postfix'
-    include 'a2o_essential_linux_postfix::files::daemon'
     include 'a2o_essential_linux_postfix::files::helpers'
     include 'a2o_essential_linux_postfix::files::symlinks'
     include 'a2o_essential_linux_postfix::files::symlinks_log'

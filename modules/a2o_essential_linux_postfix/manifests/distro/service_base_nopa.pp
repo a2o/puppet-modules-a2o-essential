@@ -14,7 +14,7 @@
 
 
 ### Service base class: postfix
-class   a2o_essential_linux_postfix::distro::service_base_postfix   inherits   a2o_essential_linux_postfix::base {
+class   a2o_essential_linux_postfix::distro::service_base_nopa   inherits   a2o_essential_linux_postfix::base {
 
     # External resources
     $destDir_openssl = $a2o_essential_linux_postfix::package::postfix::destDir_openssl

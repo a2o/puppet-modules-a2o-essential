@@ -13,20 +13,23 @@
 
 
 
-### Service: postfix
-class   a2o_essential_linux_postfix::distro::a2o::service   inherits   a2o_essential_linux_postfix::distro::service_base_nopa {
+### Runtime dirs
+class   a2o_essential_linux_postfix::files::daemon::runtime   inherits   a2o_essential_linux_postfix::base {
 
-    a2o-essential-unix::rctool::service::generic { 'postfix':
-        require   => $require,
-        subscribe => $subscribe,
+    File {
+	ensure   => directory,
+        owner    => root,
+        group    => root,
+        mode     => 755,
+        require  => [
+	    File['/usr/local/postfix'],
+	],
     }
-}
 
-
-
-### Final all-containing class
-class   a2o_essential_linux_postfix::distro::a2o {
-    include 'a2o_essential_linux_postfix::distro::common'
-    include 'a2o_essential_linux_postfix::distro::specific_nopa'
-    include 'a2o_essential_linux_postfix::distro::a2o::service'
+    file { '/etc/postfix':                  }
+    file { '/etc/mail':                     ensure => link, target => 'postfix' }
+    file { '/var/postfix':                  }
+    file { '/var/postfix/spool':            }
+    file { '/var/postfix/queue':            ensure => link, target => 'spool' }
+    file { '/var/postfix/spool/maildrop':   mode => 730, owner => postfix, group => postdrop }
 }

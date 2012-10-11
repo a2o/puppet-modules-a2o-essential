@@ -13,20 +13,18 @@
 
 
 
-### Service: postfix
-class   a2o_essential_linux_postfix::distro::a2o::service   inherits   a2o_essential_linux_postfix::distro::service_base_nopa {
+### Common config files
+class   a2o_essential_linux_postfix::files::daemon::config_specific_nopa   inherits   a2o_essential_linux_postfix::base {
 
-    a2o-essential-unix::rctool::service::generic { 'postfix':
-        require   => $require,
-        subscribe => $subscribe,
+    File {
+	ensure   => present,
+        owner    => root,
+        group    => root,
+        mode     => 644,
+	require  => File['/usr/local/postfix'],
     }
-}
 
-
-
-### Final all-containing class
-class   a2o_essential_linux_postfix::distro::a2o {
-    include 'a2o_essential_linux_postfix::distro::common'
-    include 'a2o_essential_linux_postfix::distro::specific_nopa'
-    include 'a2o_essential_linux_postfix::distro::a2o::service'
+    # Main config files
+    file { '/etc/postfix/master.cf':         content => template("$thisPuppetModule/master.cf")      }
+    file { '/etc/postfix/main.cf-global':    content => template("$thisPuppetModule/main.cf-global") }
 }
