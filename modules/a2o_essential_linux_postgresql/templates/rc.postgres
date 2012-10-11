@@ -18,7 +18,7 @@
 PROC_NAME="/usr/local/postgresql/bin/postgres"
 PID_FILE="/var/postgresql/run/postgres.pid"
 APP_CMD_START="su - postgresql -c '/usr/local/postgresql/bin/postgres --config-file=/etc/postgresql/postgresql.conf' > /var/postgresql/log/stderr.log 2>&1 &"
-#APP_CMD_STOP="/usr/local/postgres/share/postgres/postgres.server stop"
+APP_CMD_STOP="su - postgresql -c '/usr/local/postgresql/bin/pg_ctl stop -D /var/postgresql/data -s -m fast'"
 APP_STOP_STALE_PID_FILE_NOWARNING=1
 
 
