@@ -14,17 +14,21 @@
 
 
 ### Software package: postfix-pa
-class   a2o_essential_linux_postfix::package::postfix_pa   inherits   a2o_essential_linux_postfix::package::base {
+class   a2o_essential_linux_postfix::package::postfix_pa   inherits   a2o_essential_linux_postfix::package::base_pa {
 
     # CheckURI: ftp://ftp.arnes.si/packages/postfix-release/index.html
     $softwareName     = 'postfix-pa'
     $softwareVersion  = '2.9.4'
-    $packageRelease   = '1'
+    $packageRelease   = '2'
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
     $destDir          = "/usr/local/$packageTag"
 
+    # VDA versions
+    # CheckURI: http://vda.sourceforge.net/
+    $softwareVersion_vda = 'v11-2.9.1'
+
     # Extenal references
-    $destDir_mysql    = '/usr/local/mysql-5.1.65-1'
+    $destDir_mysql    = '/usr/local/mysql-5.1.63-1'
     $destDir_openssl  = '/usr/local/openssl-1.0.0i-1'
 
 
@@ -34,23 +38,17 @@ class   a2o_essential_linux_postfix::package::postfix_pa   inherits   a2o_essent
 	Package['mysql'],
 	Package['openssl'],
 	User['postfix'],
+	Service['a2o-linux-clamav-milter'],
     ]
     a2o-essential-unix::compiletool::package::generic { "$packageTag": require => $require }
 
 
     ### Symlink
-    file { "/usr/local/$softwareName":
-	ensure  => "$packageTag",
+    file { "/usr/local/postfix":
+	ensure  => link,
+	target  => "$packageTag",
 	require => [
 	    Package["$softwareName"],
-        ],
-        backup   => false,
-    }
-
-    file { "/usr/local/postfix":
-	ensure  => "$softwareName",
-	require => [
-	    File["/usr/local/$softwareName"],
         ],
         backup   => false,
     }

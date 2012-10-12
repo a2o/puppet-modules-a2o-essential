@@ -1,0 +1,6 @@
+hosts    = <%= pa_db_host %>
+user     = <%= pa_db_username %>
+password = <%= pa_db_password %>
+dbname   = <%= pa_db_name %>
+
+query    = SELECT goto FROM alias WHERE address=CONVERT('%s' USING latin1) AND active=1

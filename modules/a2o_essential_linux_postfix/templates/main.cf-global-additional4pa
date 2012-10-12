@@ -1,0 +1,51 @@
+####################
+# SSL Certificates #
+####################
+
+smtpd_tls_cert_file = /etc/ssl/certs/pa-postfix.cert
+smtpd_tls_key_file  = /etc/ssl/certs/pa-postfix.key
+smtp_tls_cert_file  = /etc/ssl/certs/pa-postfix.cert
+smtp_tls_key_file   = /etc/ssl/certs/pa-postfix.key
+
+
+
+#########################
+# ClamAV virus scanning #
+#########################
+
+smtpd_milters     = unix:/var/run/clamav/clamav-milter.sock
+#non_smtpd_milters = unix:/var/run/clamav/clamav-milter.sock
+
+
+
+##########################################################
+# Virtual mailbox configuration - postfix.admin database #
+##########################################################
+
+### MySQL support for Postfix admin
+virtual_mailbox_domains = mysql:/etc/postfix/mysql_virtual_domain_maps.cf
+virtual_mailbox_maps    = mysql:/etc/postfix/mysql_virtual_mailbox_maps.cf
+virtual_alias_maps      = hash:/etc/postfix/virtual, mysql:/etc/postfix/mysql_virtual_alias_maps.cf
+virtual_uid_maps        = static:9997
+virtual_gid_maps        = static:9997
+virtual_minimum_uid     = 9997
+virtual_mailbox_base    = /var/mail/virtual
+virtual_mailbox_limit   = 51200000
+virtual_transport       = virtual
+
+# Additional for quota support
+virtual_create_maildirsize     = no
+virtual_maildir_extended       = yes
+virtual_mailbox_limit_maps     = mysql:/etc/postfix/mysql_virtual_mailbox_limit_maps.cf
+virtual_mailbox_limit_override = yes
+virtual_mailbox_limit_inbox    = no
+virtual_maildir_limit_message  = Sorry, the user's maildir has overdrawn his diskspace quota, please try again later.
+virtual_overquota_bounce       = yes
+
+virtual_trash_count = yes
+
+# Support for backup MX - use with caution
+relay_domains = mysql:/etc/postfix/mysql_relay_domains.cf
+
+
+
