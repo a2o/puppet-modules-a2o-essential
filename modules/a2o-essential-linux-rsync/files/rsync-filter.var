@@ -60,6 +60,8 @@ dir-merge .rsync-filter.site
 - /lib/dhcp/proc/***
 - /lib/logrotate.status
 - /lib/lib/mlocate/mlocate.db
++ /lib/libvirt/images
+- /lib/libvirt/images/***
 + /lib/mongodb
 - /lib/mongodb/***
 + /lib/mysql
