@@ -88,6 +88,13 @@ class a2o-essential-linux-libs::nagios {
     include 'a2o-essential-linux-libs::libjpeg'
     include 'a2o-essential-linux-libs::libpng'
 }
+class a2o-essential-linux-libs::nrpe {
+    include 'a2o_essential_linux_interpreter::perl::minimal'
+    include 'a2o-essential-linux-libs::berkeley-db'
+    include 'a2o-essential-linux-libs::cyrus-sasl'
+    include 'a2o-essential-linux-openldap::package'
+    include 'a2o_essential_linux_mysql::package'
+}
 class a2o-essential-linux-libs::ruby {
     include 'a2o-essential-linux-libs::yaml'
 }
