@@ -40,14 +40,9 @@ export PURI="http://collectd.org/files/$PFILE" &&
 rm -rf $PDIR &&
 GetUnpackCd &&
 
-# Patch IRQ error logging
-wget http://source.a2o.si/patches/collectd-5.0.1-fix-irq-error.diff &&
-cat collectd-5.0.1-fix-irq-error.diff | patch -p1 &&
-
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig &&
 
 ./configure --prefix=$PDESTDIR --sysconfdir=/etc \
-  --enable-ping \
   --with-included-ltdl \
   --with-libmysql=$PDESTDIR_MYSQL &&
 make &&
@@ -56,4 +51,8 @@ make install &&
 unset PKG_CONFIG_PATH &&
 
 cd $SRCROOT &&
-rm -rf $PDIR
+rm -rf $PDIR &&
+
+
+
+true

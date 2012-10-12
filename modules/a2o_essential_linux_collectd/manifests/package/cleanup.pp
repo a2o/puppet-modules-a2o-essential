@@ -16,11 +16,17 @@
 ### Remove old packages
 class   a2o_essential_linux_collectd::package::cleanup   inherits   a2o_essential_linux_collectd::package::base {
 
+    $serviceName = $operatingsystem ? {
+	'slackware' => 'a2o-linux-collectd',
+	default     => 'collectd',
+    }
     $require = [
 	Package['collectd'],
 	File['/usr/local/collectd'],
+	Service["$serviceName"],
     ]
 
     a2o-essential-unix::compiletool::package::remove { 'collectd-5.0.3-1': compileDir => $compileDir, require => $require }
     a2o-essential-unix::compiletool::package::remove { 'collectd-5.0.4-1': compileDir => $compileDir, require => $require }
+    a2o-essential-unix::compiletool::package::remove { 'collectd-5.0.4-2': compileDir => $compileDir, require => $require }
 }
