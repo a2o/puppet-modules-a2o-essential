@@ -107,3 +107,28 @@ class   a2o-essential-linux-tools::git::symlinks   inherits   a2o-essential-linu
     file { "/usr/bin/git-upload-archive": ensure  => "/usr/local/git/bin/git-upload-archive", }
     file { "/usr/bin/git-upload-pack":    ensure  => "/usr/local/git/bin/git-upload-pack",    }
 }
+
+
+
+### Files
+class   a2o-essential-linux-tools::git::files   inherits   a2o-essential-linux-tools::base {
+
+    File {
+	owner   => root,
+	group   => root,
+	mode    => 644,
+	require => File['/usr/local/git'],
+    }
+
+    file { "/etc/bash_completion.d/git":   source => "puppet:///modules/$thisPuppetModule/git/bash_completion.d/git" }
+}
+
+
+
+### All
+class   a2o-essential-linux-tools::git::all   inherits   a2o-essential-linux-tools::base {
+    include 'a2o-essential-linux-tools::git::package'
+    include 'a2o-essential-linux-tools::git::cleanup'
+    include 'a2o-essential-linux-tools::git::symlinks'
+    include 'a2o-essential-linux-tools::git::files'
+}
