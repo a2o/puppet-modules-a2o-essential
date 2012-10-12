@@ -82,6 +82,7 @@ define   a2o-essential-suse::service::rctool_wrapper   ($ensure='running', $requ
 	],
         subscribe   => [
 	    File["/etc/init.d/$serviceName"],
+	    File["/etc/rc.d/rc.$serviceName"],
 	    $subscribe,
 	]
     }
