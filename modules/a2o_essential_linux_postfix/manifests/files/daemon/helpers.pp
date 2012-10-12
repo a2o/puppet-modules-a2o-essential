@@ -33,10 +33,10 @@ class   a2o_essential_linux_postfix::files::daemon::helpers   inherits   a2o_ess
         refreshonly => true,
 	require     => File['/usr/local/postfix'],
     }
-    exec { 'exec usr bin newaccess':       command => '/usr/bin/newaccess',     subscribe => File['/etc/postfix/access']     }
-    exec { 'exec usr bin newaliases':      command => '/usr/bin/newaliases',    subscribe => File['/etc/postfix/aliases']    }
-    exec { 'exec usr bin newrecipients':   command => '/usr/bin/newrecipients', subscribe => File['/etc/postfix/recipients'] }
-    exec { 'exec usr bin newsenders':      command => '/usr/bin/newsenders',    subscribe => File['/etc/postfix/senders']    }
-    exec { 'exec usr bin newtransport':    command => '/usr/bin/newtransport',  subscribe => File['/etc/postfix/transport']  }
-    exec { 'exec usr bin newvirt':         command => '/usr/bin/newvirt',       subscribe => File['/etc/postfix/virtual']    }
+    exec { 'exec /usr/bin/newaccess':       command => '/usr/bin/newaccess',     subscribe => File['/etc/postfix/access']     }
+    exec { 'exec /usr/bin/newaliases':      command => '/usr/bin/newaliases',    subscribe => File['/etc/postfix/aliases']    }
+    exec { 'exec /usr/bin/newrecipients':   command => '/usr/bin/newrecipients', subscribe => File['/etc/postfix/recipients'] }
+    exec { 'exec /usr/bin/newsenders':      command => '/usr/bin/newsenders',    subscribe => File['/etc/postfix/senders']    }
+    exec { 'exec /usr/bin/newtransport':    command => '/usr/bin/newtransport',  subscribe => File['/etc/postfix/transport']  }
+    exec { 'exec /usr/bin/newvirt':         command => '/usr/bin/newvirt',       subscribe => File['/etc/postfix/virtual']    }
 }

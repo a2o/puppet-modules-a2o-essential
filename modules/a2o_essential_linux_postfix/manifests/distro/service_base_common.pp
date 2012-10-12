@@ -14,16 +14,30 @@
 
 
 ### Service base class: postfix
-class   a2o_essential_linux_postfix::distro::service_base_nopa   inherits   a2o_essential_linux_postfix::distro::service_base_common {
+class   a2o_essential_linux_postfix::distro::service_base_common   inherits   a2o_essential_linux_postfix::base {
 
-    $destDir_openssl = $a2o_essential_linux_postfix::package::postfix::destDir_openssl
-
-    $require   = [
-	$requireCommon,
+    $requireCommon   = [
+        File['/etc/postfix/access'],
+        File['/etc/postfix/aliases'],
+        File['/etc/postfix/recipients'],
+        File['/etc/postfix/senders'],
+        File['/etc/postfix/transport'],
+        File['/etc/postfix/virtual'],
+        File['/etc/postfix/virtual_domains'],
+        File['/usr/bin/newaccess'],
+        File['/usr/bin/newrecipients'],
+        File['/usr/bin/newsenders'],
+        File['/usr/bin/newtransport'],
+        File['/usr/bin/newvirt'],
+        File['/var/postfix'],
+        File['/var/postfix/spool'],
+        File['/var/postfix/spool/maildrop'],
+        Service['a2o-linux-dovecot'],
     ]
 
-    $subscribe = [
-	$subscribeCommon,
-	Package['postfix'],
+    $subscribeCommon = [
+	File['/usr/local/postfix'],
+        File['/etc/postfix/main.cf-global'],
+        File['/etc/postfix/master.cf'],
     ]
 }
