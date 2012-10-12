@@ -29,13 +29,14 @@ class   a2o-essential-linux-openldap::package::base   inherits   a2o-essential-l
 
     $require    = [
 	Package['perl'],
+	Package['cyrus-sasl'],
     ]
 }
 
 
 
 ### Software package - current
-class   a2o-essential-linux-openldap::package::current   inherits   a2o-essential-linux-openldap::base {
+class   a2o-essential-linux-openldap::package::current   inherits   a2o-essential-linux-openldap::package::base {
 
     # External software versions
     $externalDestDir_openssl = '/usr/local/openssl-1.0.0i-1'
