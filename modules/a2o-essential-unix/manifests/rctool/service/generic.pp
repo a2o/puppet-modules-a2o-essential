@@ -19,7 +19,12 @@
 # Pass it the service name, require and subscribe definitions and it will generate
 # service resource for you.
 
-define   a2o-essential-unix::rctool::service::generic   ($ensure='running', $require=[], $subscribe=[]) {
+define   a2o-essential-unix::rctool::service::generic   (
+    $ensure     = 'running',
+    $require    = [],
+    $subscribe  = [],
+    $rcTemplate = undef
+) {
 
 
     ###
@@ -27,13 +32,14 @@ define   a2o-essential-unix::rctool::service::generic   ($ensure='running', $req
     ###
     $serviceName   = "$name"
     $serviceEnsure = "$ensure"
+    if $rcTemplate != undef { $realRcTemplate = "$rcTemplate" } else { $realRcTemplate = "$thisPuppetModule/rc.$serviceName" }
 
 
     ###
     ### Startup file definition
     ###
     file { "/etc/rc.d/rc.$serviceName":
-        content  => template("$thisPuppetModule/rc.$serviceName"),
+        content  => template("$realRcTemplate"),
         owner    => root,
         group    => root,
 	require  => [
