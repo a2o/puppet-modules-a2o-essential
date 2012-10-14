@@ -24,5 +24,10 @@ class   a2o_essential_linux_tools::netcf   inherits   a2o_essential_linux_tools:
 
 
     ### Package
-    a2o-essential-unix::compiletool::package::generic { "$packageTag": }
+    $require = [
+	Package['libnl'],
+    ]
+    a2o-essential-unix::compiletool::package::generic { "$packageTag":
+	require => $require,
+    }
 }
