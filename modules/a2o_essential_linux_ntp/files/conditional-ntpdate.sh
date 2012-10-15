@@ -15,7 +15,8 @@
 
 
 ### Get parameters from command line
-MAX_DIFF_SECONDS=10
+NTP_SERVER="pool.ntp.org"
+MAX_DIFF_SECONDS="10"
 if [ "x$1" != "x" ]; then
     if [[ "$1" =~ ^[0-9]+$ ]]; then
 	MAX_DIFF_SECONDS=$1
@@ -29,12 +30,20 @@ fi
 
 ### Get program locations
 HWCLOCK=/sbin/hwclock
-if [ -x /usr/local/bin/ntpdate ]; then
-    NTPDATE=/usr/local/bin/ntpdate
+if [ -x /usr/local/bin/sntp ]; then
+    CLIENT_MODE="sntp"
+    SNTP="/usr/local/bin/sntp"
+elif [ -x /usr/bin/sntp ]; then
+    CLIENT_MODE="sntp"
+    SNTP="/usr/bin/sntp"
+elif [ -x /usr/local/bin/ntpdate ]; then
+    CLIENT_MODE="ntpdate"
+    NTPDATE="/usr/local/bin/ntpdate"
 elif [ -x /usr/sbin/ntpdate ]; then
-    NTPDATE=/usr/sbin/ntpdate
+    CLIENT_MODE="ntpdate"
+    NTPDATE="/usr/sbin/ntpdate"
 else
-    echo "ERROR: Unable to find ntpdate"
+    echo "ERROR: Unable to find stnp or ntpdate"
     exit 1
 fi
 
@@ -48,19 +57,40 @@ sleep $SLEEP_SECONDS
 
 
 ### Get whole number of seconds of time desync between this system and NTP server
-NTPDATE_Q_RES=`$NTPDATE -q pool.ntp.org | tail -n1 | grep '\(adjust\|step\) time server'`
-if [ "$?" != 0 ]; then
-    echo "ERROR: ntpdate output did not contain line with 'adjust/step time server'"
+if [ "$CLIENT_MODE" == "sntp" ]; then
+
+    DIFF_SECONDS=`$SNTP $NTP_SERVER | cut -d' ' -f6 | sort -n | grep -v sntp | awk '{sum+=$1} END { print sum/NR}' | cut -d'.' -f1`
+    if [ "$?" != 0 ]; then
+	echo "ERROR: unable to parse sntp output"
+	exit 1
+    fi
+
+elif [ "$CLIENT_MODE" == "ntpdate" ]; then
+
+    NTPDATE_Q_RES=`$NTPDATE -q $NTP_SERVER | tail -n1 | grep '\(adjust\|step\) time server'`
+    if [ "$?" != 0 ]; then
+	echo "ERROR: ntpdate output did not contain line with 'adjust/step time server'"
+	exit 1
+    fi
+
+    echo "$NTPDATE_Q_RES" | grep -Eo 'offset [+-]?[0-9]+\.[0-9]+ sec$' > /dev/null 2>&1
+    if [ "$?" != 0 ]; then
+        echo "ERROR: Unable to find pattern 'offset X sec' in ntpdate output"
+        exit 1
+    fi
+
+    DIFF_SECONDS=`echo "$NTPDATE_Q_RES" | grep -Eo 'offset [+-]?[0-9]+\.[0-9]+ sec$' | sed -e 's/offset [+-]\?//' | sed -e 's/\.[0-9]\+ sec//'`
+
+else
+
+    echo "ERROR: Internal bug, unknown client mode: $CLIENT_MODE"
     exit 1
+
 fi
 
-echo "$NTPDATE_Q_RES" | grep -Eo 'offset [+-]?[0-9]+\.[0-9]+ sec$' > /dev/null 2>&1
-if [ "$?" != 0 ]; then
-    echo "ERROR: Unable to find pattern 'offset X sec' in ntpdate output"
-    exit 1
-fi
 
-DIFF_SECONDS=`echo "$NTPDATE_Q_RES" | grep -Eo 'offset [+-]?[0-9]+\.[0-9]+ sec$' | sed -e 's/offset [+-]\?//' | sed -e 's/\.[0-9]\+ sec//'`
+
+### Check if we really have a int digit
 if [[ "$DIFF_SECONDS" =~ ^[0-9]+$ ]]; then
     echo -n
 else
