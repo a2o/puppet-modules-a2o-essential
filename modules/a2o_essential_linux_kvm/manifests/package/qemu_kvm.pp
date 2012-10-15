@@ -39,11 +39,20 @@ class   a2o_essential_linux_kvm::package::qemu_kvm   inherits   a2o_essential_li
     a2o-essential-unix::compiletool::package::generic { "$packageTag": require => $require }
 
 
-    ### Symlink
+    ### Symlinks
     file { "/usr/local/$softwareName":
-        ensure  => "$packageTag",
+        ensure  => link,
+        target  => "$packageTag",
 	require => [
 	    Package["$softwareName"],
+	],
+        backup   => false,
+    }
+    file { '/usr/local/kvm':
+        ensure  => link,
+	target  => "$softwareName",
+	require => [
+	    File["/usr/local/$softwareName"],
 	],
         backup   => false,
     }
