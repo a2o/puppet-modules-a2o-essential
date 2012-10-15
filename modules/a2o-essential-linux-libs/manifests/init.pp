@@ -155,7 +155,10 @@ class a2o-essential-linux-libs::all {
     include 'a2o-essential-linux-libs::libxml2'
     include 'a2o-essential-linux-libs::libxslt'
     include 'a2o-essential-linux-libs::neon'
-    include 'a2o-essential-linux-libs::net-snmp'
+    if ! (($operatingsystem == 'slackware') and ($operatingsystemrelease == '12.2.0')) {
+	# Do not include net-snmp on Slack 12.2, some weird compilation failures
+	include 'a2o-essential-linux-libs::net-snmp'
+    }
     include 'a2o-essential-linux-libs::pango'
     include 'a2o-essential-linux-libs::pcre'
     include 'a2o-essential-linux-libs::pixman'

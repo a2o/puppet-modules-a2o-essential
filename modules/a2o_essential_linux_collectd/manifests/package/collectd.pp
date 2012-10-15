@@ -30,6 +30,7 @@ class   a2o_essential_linux_collectd::package::collectd   inherits   a2o_essenti
         Package['mysql'],
         Package['rrdtool'],
 #        Package['liboping'],
+#        Package['net-snmp'],
     ]
     a2o-essential-unix::compiletool::package::generic { "$packageTag": require => $require }
 
