@@ -41,8 +41,8 @@ class   a2o_essential_linux_ntp::cron   inherits   a2o_essential_linux_ntp::base
 
     cron { '/opt/scripts/ntp/conditional-ntpdate.sh':
 	user     => root,
-        minute   => 57,
-	hour     => 0,
+	minute   => fqdn_rand(60),
+	hour     => fqdn_rand(24),
         command  => '/opt/scripts/cron/run-and-mail-if-error.sh   "/opt/scripts/ntp/conditional-ntpdate.sh"   "root"',
 	require  => [
 	    Service["$serviceName"],

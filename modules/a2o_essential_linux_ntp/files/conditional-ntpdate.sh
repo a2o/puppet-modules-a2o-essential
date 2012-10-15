@@ -29,23 +29,23 @@ fi
 
 
 ### Get program locations
-HWCLOCK=/sbin/hwclock
-if [ -x /usr/local/bin/sntp ]; then
+# PATH
+if ! echo "$PATH" | grep 'local' >/dev/null; then
+    export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+fi
+# stnp or ntpdate
+if which sntp >/dev/null 2>&1; then
     CLIENT_MODE="sntp"
-    SNTP="/usr/local/bin/sntp"
-elif [ -x /usr/bin/sntp ]; then
-    CLIENT_MODE="sntp"
-    SNTP="/usr/bin/sntp"
-elif [ -x /usr/local/bin/ntpdate ]; then
+    SNTP=`which sntp`
+elif which ntpdate >/dev/null 2>&1; then
     CLIENT_MODE="ntpdate"
-    NTPDATE="/usr/local/bin/ntpdate"
-elif [ -x /usr/sbin/ntpdate ]; then
-    CLIENT_MODE="ntpdate"
-    NTPDATE="/usr/sbin/ntpdate"
+    SNTP=`which ntpdate`
 else
     echo "ERROR: Unable to find stnp or ntpdate"
     exit 1
 fi
+# hwclock
+HWCLOCK=/sbin/hwclock
 
 
 
