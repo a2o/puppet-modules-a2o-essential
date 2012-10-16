@@ -13,34 +13,15 @@
 
 
 
-### Service: collectd
-class   a2o_essential_linux_collectd::distro::a2o::service   inherits   a2o_essential_linux_collectd::package::base {
+### a2o-specific config files
+class   a2o_essential_linux_collectd::files::daemon_a2o   inherits   a2o_essential_linux_collectd::base {
 
-    ### Requires and subscribes
-    $require   = [
-        File['/etc/collectd.d'],
-        File['/etc/collectd.d/PLACEHOLDER.conf'],
-        File['/var/collectd'],
-    ]
-    $subscribe = [
-	Package['collectd'],
-        File['/usr/local/collectd'],
-        File['/etc/collectd.conf'],
-    ]
-
-    ### Instantiate from template
-    a2o-essential-unix::rctool::service::generic { 'collectd':
-	require   => $require,
-	subscribe => $subscribe,
+    File {
+        owner    => root,
+        group    => root,
+        mode     => 644,
     }
-}
 
-
-
-### The final all-containing classes
-class a2o_essential_linux_collectd::distro::a2o {
-    include 'a2o_essential_linux_collectd::package'
-    include 'a2o_essential_linux_collectd::files'
-    include 'a2o_essential_linux_collectd::files::daemon_a2o'
-    include 'a2o_essential_linux_collectd::distro::a2o::service'
+    file { '/etc/collectd.d/a2o_filecount.conf':   content => template("$thisPuppetModule/a2o_filecount.conf") }
+    File['/etc/collectd.d/a2o_filecount.conf'] ~> Service['a2o-essential-collectd']
 }
