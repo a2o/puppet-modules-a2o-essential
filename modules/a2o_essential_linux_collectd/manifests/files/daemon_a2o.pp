@@ -22,6 +22,9 @@ class   a2o_essential_linux_collectd::files::daemon_a2o   inherits   a2o_essenti
         mode     => 644,
     }
 
-    file { '/etc/collectd.d/a2o_filecount.conf':   content => template("$thisPuppetModule/a2o_filecount.conf") }
-    File['/etc/collectd.d/a2o_filecount.conf'] ~> Service['a2o-essential-collectd']
+    file { '/etc/collectd.d/a2o_additional.conf':   content => template("$thisPuppetModule/a2o_additional.conf") }
+    File['/etc/collectd.d/a2o_additional.conf'] ~> Service['a2o-essential-collectd']
+
+    # FIXME remove, added at on 2012-10-17
+    file { '/etc/collectd.d/a2o_filecount.conf':    ensure  => absent }
 }

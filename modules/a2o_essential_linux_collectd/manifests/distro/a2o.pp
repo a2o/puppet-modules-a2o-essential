@@ -16,6 +16,9 @@
 ### Service: collectd
 class   a2o_essential_linux_collectd::distro::a2o::service   inherits   a2o_essential_linux_collectd::package::base {
 
+    ### Additional dependencies
+    Package['rrdtool'] -> Package['collectd']
+
     ### Requires and subscribes
     $require   = [
         File['/etc/collectd.d'],
