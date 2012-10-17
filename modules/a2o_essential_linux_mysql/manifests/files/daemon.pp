@@ -23,6 +23,7 @@ class   a2o_essential_linux_mysql::files::daemon_runtime   inherits   a2o_essent
         mode     => 755,
     }
 
+    file { '/var/mysql/binlog': }
     file { '/var/mysql/data':   mode => 700 }
     file { '/var/mysql/log':    }
     file { '/var/mysql/log/processlist_logs':    }

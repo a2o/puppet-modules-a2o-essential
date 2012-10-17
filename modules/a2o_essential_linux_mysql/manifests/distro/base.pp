@@ -21,6 +21,7 @@ class   a2o_essential_linux_mysql::distro::base   inherits   a2o_essential_linux
 
 
     $require   = [
+        File['/var/mysql/binlog'],
         File['/var/mysql/data'],
         File['/var/mysql/log'],
         File['/var/mysql/run'],
