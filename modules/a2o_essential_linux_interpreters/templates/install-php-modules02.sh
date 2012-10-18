@@ -25,66 +25,52 @@ cd $SRCROOT &&
 ### Set versions, releases and directories
 export PDESTDIR_PHP="<%= destDir_php %>" &&
 export PVERSION_APC="<%= softwareVersion_apc %>" &&
-true
-
-if [ "$?" != "0" ]; then
-    exit 1
-fi
-
-
-
-### First discover all channels - no exit status checking here
-$PDESTDIR_PHP/bin/pear channel-discover components.ez.no
-$PDESTDIR_PHP/bin/pear channel-discover pear.pdepend.org
-$PDESTDIR_PHP/bin/pear channel-discover pear.phing.info
-$PDESTDIR_PHP/bin/pear channel-discover pear.phpmd.org
-$PDESTDIR_PHP/bin/pear channel-discover pear.phpunit.de
-$PDESTDIR_PHP/bin/pear channel-discover pear.symfony-project.com
-
-$PDESTDIR_PHP/bin/pear channel-update   components.ez.no
-$PDESTDIR_PHP/bin/pear channel-update   pear.pdepend.org
-$PDESTDIR_PHP/bin/pear channel-update   pear.phing.info
-$PDESTDIR_PHP/bin/pear channel-update   pear.phpmd.org
-$PDESTDIR_PHP/bin/pear channel-update   pear.phpunit.de
-$PDESTDIR_PHP/bin/pear channel-update   pear.symfony-project.com
 
 
 
 ### Pecl extensions
 php_installPackage_pecl $PDESTDIR_PHP APC       APC-$PVERSION_APC        &&
-php_installPackage_pecl $PDESTDIR_PHP gearman   gearman                  &&
-
-export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig &&
-php_installPackage_pecl $PDESTDIR_PHP imagick   imagick-beta             &&
-unset PKG_CONFIG_PATH &&
-
+php_installPackage_pecl $PDESTDIR_PHP gearman   &&
 php_installPackage_pecl $PDESTDIR_PHP memcache  &&
 php_installPackage_pecl $PDESTDIR_PHP memcached &&
 php_installPackage_pecl $PDESTDIR_PHP mongo     &&
 php_installPackage_pecl $PDESTDIR_PHP uuid      &&
 php_installPackage_pecl $PDESTDIR_PHP xdebug    &&
 php_installPackage_pecl $PDESTDIR_PHP yaf       &&
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig &&
+php_installPackage_pecl $PDESTDIR_PHP imagick   imagick-beta             &&
+unset PKG_CONFIG_PATH &&
 
 
 
-### PHP code testing
-$PDESTDIR_PHP/bin/pear install --force phpunit/PHPUnit &&
-$PDESTDIR_PHP/bin/pear install --force phpunit/DbUnit &&
-$PDESTDIR_PHP/bin/pear install --force phpunit/PHPUnit_MockObject &&
-$PDESTDIR_PHP/bin/pear install --force phpunit/PHPUnit_Selenium &&
-printf "\n\n\n" | $PDESTDIR_PHP/bin/pear upgrade --force --alldeps phing/phing &&
+### Pear - channel discovery
+php_discoverChannel_pear   $PDESTDIR_PHP   components.ez.no           &&
+php_discoverChannel_pear   $PDESTDIR_PHP   pear.pdepend.org           &&
+php_discoverChannel_pear   $PDESTDIR_PHP   pear.phing.info            &&
+php_discoverChannel_pear   $PDESTDIR_PHP   pear.phpmd.org             &&
+php_discoverChannel_pear   $PDESTDIR_PHP   pear.phpunit.de            &&
+php_discoverChannel_pear   $PDESTDIR_PHP   pear.symfony-project.com   &&
+php_discoverChannel_pear   $PDESTDIR_PHP   pear.symfony.com           &&
+
+
+
+### Pear - module installation
+php_installPackage_pear   $PDESTDIR_PHP   PHPUnit              phpunit/PHPUnit              &&
+php_installPackage_pear   $PDESTDIR_PHP   DbUnit               phpunit/DbUnit               &&
+php_installPackage_pear   $PDESTDIR_PHP   PHPUnit_MockObject   phpunit/PHPUnit_MockObject   &&
+php_installPackage_pear   $PDESTDIR_PHP   PHPUnit_Selenium     phpunit/PHPUnit_Selenium     &&
+php_installPackage_pear   $PDESTDIR_PHP   phing                phing/phing                  &&
+php_installPackage_pear   $PDESTDIR_PHP   Yaml                 pear.symfony.com/Yaml        &&
+
+
 
 ### Jenkins prerequisites
-$PDESTDIR_PHP/bin/pear upgrade           pdepend/PHP_Depend &&
-$PDESTDIR_PHP/bin/pear upgrade --alldeps phpmd/PHP_PMD &&
-$PDESTDIR_PHP/bin/pear upgrade           phpunit/phploc &&
-$PDESTDIR_PHP/bin/pear upgrade           phpunit/PHP_CodeBrowser &&
-$PDESTDIR_PHP/bin/pear upgrade           PHP_CodeSniffer
+php_installPackage_pear   $PDESTDIR_PHP   PHP_Depend        pdepend/PHP_Depend &&
+php_installPackage_pear   $PDESTDIR_PHP   PHP_PMD           phpmd/PHP_PMD &&   # --alldeps?
+php_installPackage_pear   $PDESTDIR_PHP   phploc            phpunit/phploc &&
+php_installPackage_pear   $PDESTDIR_PHP   PHP_CodeBrowser   phpunit/PHP_CodeBrowser &&
+php_installPackage_pear   $PDESTDIR_PHP   PHP_CodeSniffer   &&
 # phpcpd already by phpunit? phing?
-
-if [ "$?" != "0" ]; then
-    exit 1
-fi
 
 
 
