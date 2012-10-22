@@ -19,7 +19,7 @@ class   a2o_essential_linux_interpreters::php::package   inherits   a2o_essentia
     # Package / Software details
     # CheckURI: http://www.php.net
     $softwareName     = 'php-cli'
-    $softwareVersion  = '5.4.7'
+    $softwareVersion  = '5.4.8'
     $packageRelease   = '1'
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
     $destDir          = "/usr/local/$packageTag"
