@@ -1,0 +1,78 @@
+#!/bin/sh
+###########################################################################
+# a2o Essential Puppet Modules                                            #
+#-------------------------------------------------------------------------#
+# Copyright (c) 2012 Bostjan Skufca                                       #
+#-------------------------------------------------------------------------#
+# This source file is subject to version 2.0 of the Apache License,       #
+# that is bundled with this package in the file LICENSE, and is           #
+# available through the world-wide-web at the following url:              #
+# http://www.apache.org/licenses/LICENSE-2.0                              #
+#-------------------------------------------------------------------------#
+# Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
+###########################################################################
+. /etc/rc.tool/common
+
+
+
+### Sample usage
+#
+# Create file /etc/rc.d/rc.YOUR-DAEMON-NAME, with the following (adjusted!)
+# config:
+# -------------------------------------------------------------------------
+# ### Settings
+# PROC_NAME="/path/to/YOUR-DAEMON-NAME"   # Also used for searching process table, can be replaced with PROC_REGEX
+# PID_FILE="/var/run/YOUR-DAEMON-NAME.pid"
+# APP_CMD_START="$PROC_NAME $YOUR-DAEMON-STARTUP-CONFIG-OPTIONS"
+# #PID_FILE_GENERATE="1"
+# #PID_FILE_REMOVE="1"
+#
+# # Run template startup file
+# . /etc/rc.tool/rc.template
+# -------------------------------------------------------------------------
+
+
+
+template_start() {
+    app_start
+}
+
+template_stop() {
+    app_stop
+}
+
+template_restart() {
+    app_restart
+}
+
+template_status() {
+    is_app_running__info
+}
+
+template_kill() {
+    if app_kill; then
+	rm -f $PID_FILE
+    fi
+}
+
+
+
+case "$1" in
+    'start')
+	template_start
+	;;
+    'stop')
+	template_stop
+	;;
+    'restart')
+	template_restart
+	;;
+    'status')
+	template_status
+	;;
+    'kill')
+	template_kill
+	;;
+    *)
+	echo "usage $0 start|stop|restart|status|kill"
+esac

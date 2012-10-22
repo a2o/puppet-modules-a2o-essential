@@ -26,6 +26,7 @@ class a2o-essential-unix::rctool inherits a2o-essential-unix::base {
     # Service init script helper files
     file { '/etc/rc.tool':                  ensure => directory }
     file { '/etc/rc.tool/common':           source => "puppet:///modules/$thisPuppetModule/rctool/common" }
+    file { '/etc/rc.tool/rc.template':      source => "puppet:///modules/$thisPuppetModule/rctool/rc.template" }
 
     # FIXME compatibility, added on 2012-09, to be removed ASAP, all references to it cleaned on 2012-10-05
     file { '/etc/rc.d/rc._functions':       ensure => '../rc.tool/common', require => File['/etc/rc.tool/common'] }
