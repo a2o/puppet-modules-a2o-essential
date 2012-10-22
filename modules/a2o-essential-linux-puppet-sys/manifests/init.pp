@@ -255,14 +255,18 @@ class   a2o-essential-linux-puppet-sys::cron   inherits   a2o-essential-linux-pu
         group  => root,
         mode   => 755,
     }
-    file { '/opt/scripts/puppet-sys':                      ensure => directory }
-    file { '/opt/scripts/puppet-sys/puppet-sys.cron.sh':   source => "puppet:///modules/$thisPuppetModule/puppet-sys.cron.sh" }
+    file { '/opt/scripts/puppet-sys':                         ensure => directory }
+    file { '/opt/scripts/puppet-sys/puppet-sys.postrun.sh':   source => "puppet:///modules/$thisPuppetModule/puppet-sys.postrun.sh" }
+    file { '/opt/scripts/puppet-sys/puppet-sys.cron.sh':      source => "puppet:///modules/$thisPuppetModule/puppet-sys.cron.sh" }
 
     cron { "/opt/scripts/puppet-sys/puppet-sys.cron.sh":
         user    => root,
 	minute  => fqdn_rand(57),
 	command => '/opt/scripts/puppet-sys/puppet-sys.cron.sh > /dev/null 2>&1',
 	require  => [
+	    File['/usr/local/puppet-sys'],
+    	    File['/etc/puppet-sys/puppet.conf'],
+    	    File['/opt/scripts/puppet-sys/puppet-sys.postrun.sh'],
 	    File['/opt/scripts/puppet-sys/puppet-sys.cron.sh'],
 	],
     }

@@ -249,14 +249,18 @@ class   a2o-essential-linux-puppet::cron   inherits   a2o-essential-linux-puppet
         group  => root,
         mode   => 755,
     }
-    file { '/opt/scripts/puppet':                  ensure => directory }
-    file { '/opt/scripts/puppet/puppet.cron.sh':   source => "puppet:///modules/$thisPuppetModule/puppet.cron.sh" }
+    file { '/opt/scripts/puppet':                     ensure => directory }
+    file { '/opt/scripts/puppet/puppet.postrun.sh':   source => "puppet:///modules/$thisPuppetModule/puppet.postrun.sh" }
+    file { '/opt/scripts/puppet/puppet.cron.sh':      source => "puppet:///modules/$thisPuppetModule/puppet.cron.sh" }
 
     cron { "/opt/scripts/puppet/puppet.cron.sh":
 	user    => root,
 	minute  => fqdn_rand(57) + 3, # Three minute delay between puppet and puppet-sys
 	command => '/opt/scripts/puppet/puppet.cron.sh > /dev/null 2>&1',
 	require  => [
+    	    File['/usr/local/puppet'],
+    	    File['/etc/puppet/puppet.conf'],
+    	    File['/opt/scripts/puppet/puppet.postrun.sh'],
     	    File['/opt/scripts/puppet/puppet.cron.sh'],
 	],
     }
