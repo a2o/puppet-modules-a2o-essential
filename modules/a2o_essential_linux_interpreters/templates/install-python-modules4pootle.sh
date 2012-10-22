@@ -23,8 +23,6 @@ cd $SRCROOT &&
 
 ### Set versions, releases and directories
 export PDESTDIR_PYTHON="<%= destDir_python %>" &&
-export PVERSION_SETUPT="<%= softwareVersion_setuptools %>" &&
-export PVERSION_DJANGO="<%= softwareVersion_django %>" &&
 
 
 
@@ -33,47 +31,9 @@ export PATH="$PDESTDIR_PYTHON/bin:$PATH" &&
 
 
 
-### SetupTools
-# CheckURI: http://pypi.python.org/pypi/setuptools#files
-cd $SRCROOT && . /var/src/build_functions.sh &&
-export PNAME="setuptools" &&
-export PVERSION="$PVERSION_SETUPT" &&
-export PDIR="$PNAME-$PVERSION" &&
-export PFILE="$PDIR.tar.gz" &&
-export PURI="http://pypi.python.org/packages/source/s/setuptools/$PFILE" &&
-
-rm -rf $PDIR &&
-GetUnpackCd &&
-
-$PDESTDIR_PYTHON/bin/python setup.py install &&
-
-cd $SRCROOT &&
-rm -rf $PDIR &&
-
-
-
-### Django
-# CheckURI: https://www.djangoproject.com/download/
-cd $SRCROOT && . /var/src/build_functions.sh &&
-export PNAME="Django" &&
-export PVERSION="$PVERSION_DJANGO" &&
-export PVERSION_MAJOR=`echo "$PVERSION" | cut -d'.' -f1,2 `&&
-export PDIR="$PNAME-$PVERSION" &&
-export PFILE="$PDIR.tar.gz" &&
-export PURI="http://www.djangoproject.com/m/releases/$PVERSION_MAJOR/$PFILE" &&
-
-rm -rf $PDIR &&
-GetUnpackCd &&
-
-$PDESTDIR_PYTHON/bin/python setup.py install &&
-
-cd $SRCROOT &&
-rm -rf $PDIR &&
-
-
-
-### Install other modules
-$PDESTDIR_PYTHON/bin/easy_install   lxml &&
+### Install modules for pootle
+$PDESTDIR_PYTHON/bin/easy_install   translate-toolkit &&
+$PDESTDIR_PYTHON/bin/easy_install   south             &&
 
 
 
