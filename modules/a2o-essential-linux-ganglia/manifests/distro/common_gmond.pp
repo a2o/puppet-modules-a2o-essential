@@ -14,7 +14,7 @@
 
 
 ### Common class for all distros to include
-class   a2o-essential-linux-ganglia::distro::common   inherits   a2o-essential-linux-ganglia::base {
+class   a2o-essential-linux-ganglia::distro::common_gmond   inherits   a2o-essential-linux-ganglia::base {
 
     include 'a2o-essential-linux-ganglia::users'
     include 'a2o-essential-linux-ganglia::package::gmond'

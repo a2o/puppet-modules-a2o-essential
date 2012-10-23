@@ -24,9 +24,9 @@ class   a2o-essential-linux-ganglia::distro::debian_gmond::service   inherits   
 
 
 
-### The final all-containing classes
+### The final all-containing class
 class a2o-essential-linux-ganglia::distro::debian_gmond {
 
-    include 'a2o-essential-linux-ganglia::distro::common'
+    include 'a2o-essential-linux-ganglia::distro::common_gmond'
     include 'a2o-essential-linux-ganglia::distro::debian_gmond::service'
 }

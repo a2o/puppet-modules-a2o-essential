@@ -13,20 +13,11 @@
 
 
 
-### Service: gmond
-class   a2o-essential-linux-ganglia::distro::redhat_gmond::service   inherits   a2o-essential-linux-ganglia::distro::base_gmond {
+### Common class for all distros to include: gmetad
+class   a2o-essential-linux-ganglia::distro::common_gmetad   inherits   a2o-essential-linux-ganglia::base {
 
-    a2o-essential-redhat::service::rctool_wrapper { 'gmond':
-        require   => $require,
-        subscribe => $subscribe,
-    }
-}
-
-
-
-### The final all-containing class
-class a2o-essential-linux-ganglia::distro::redhat_gmond {
-
-    include 'a2o-essential-linux-ganglia::distro::common_gmond'
-    include 'a2o-essential-linux-ganglia::distro::redhat_gmond::service'
+    include 'a2o-essential-linux-ganglia::users'
+    include 'a2o-essential-linux-ganglia::package'
+    include 'a2o-essential-linux-ganglia::files'
+    include 'a2o-essential-linux-ganglia::files::gmetad'
 }

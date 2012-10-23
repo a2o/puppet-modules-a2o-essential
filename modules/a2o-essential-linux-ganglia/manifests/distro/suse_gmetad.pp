@@ -14,19 +14,7 @@
 
 
 ### Service: gmetad
-class   a2o-essential-linux-ganglia::distro::suse_gmetad::service   inherits   a2o-essential-linux-ganglia::base {
-
-    $require   = [
-        File['/etc/ganglia/gmetad.conf'],
-        File['/var/ganglia/rrds'],
-    ]
-
-    $subscribe = [
-        Package['ganglia'],
-        Service['a2o-essential-linux-rrdcached'],
-        File['/usr/local/ganglia'],
-        File['/etc/ganglia/gmetad.conf'],
-    ]
+class   a2o-essential-linux-ganglia::distro::suse_gmetad::service   inherits   a2o-essential-linux-ganglia::distro::base_gmetad {
 
     a2o-essential-suse::service::rctool_wrapper { 'gmetad':
         require   => $require,
@@ -36,11 +24,9 @@ class   a2o-essential-linux-ganglia::distro::suse_gmetad::service   inherits   a
 
 
 
-### The final all-containing classes
+### The final all-containing class
 class a2o-essential-linux-ganglia::distro::suse_gmetad {
-    include 'a2o-essential-linux-ganglia::users'
-    include 'a2o-essential-linux-ganglia::package'
-    include 'a2o-essential-linux-ganglia::files'
-    include 'a2o-essential-linux-ganglia::files::gmetad'
+
+    include 'a2o-essential-linux-ganglia::distro::common_gmetad'
     include 'a2o-essential-linux-ganglia::distro::suse_gmetad::service'
 }

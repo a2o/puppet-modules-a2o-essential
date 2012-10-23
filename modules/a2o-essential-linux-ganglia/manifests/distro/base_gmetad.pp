@@ -13,20 +13,17 @@
 
 
 
-### Service: gmond
-class   a2o-essential-linux-ganglia::distro::redhat_gmond::service   inherits   a2o-essential-linux-ganglia::distro::base_gmond {
+### Service base: gmetad
+class   a2o-essential-linux-ganglia::distro::base_gmetad   inherits   a2o-essential-linux-ganglia::base {
 
-    a2o-essential-redhat::service::rctool_wrapper { 'gmond':
-        require   => $require,
-        subscribe => $subscribe,
-    }
-}
+    $require   = [
+        File['/var/ganglia/rrds'],
+    ]
 
-
-
-### The final all-containing class
-class a2o-essential-linux-ganglia::distro::redhat_gmond {
-
-    include 'a2o-essential-linux-ganglia::distro::common_gmond'
-    include 'a2o-essential-linux-ganglia::distro::redhat_gmond::service'
+    $subscribe = [
+        Package['ganglia'],
+        Service['a2o-linux-rrdcached'],
+        File['/usr/local/ganglia'],
+        File['/etc/ganglia/gmetad.conf'],
+    ]
 }

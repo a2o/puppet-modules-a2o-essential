@@ -24,9 +24,9 @@ class   a2o-essential-linux-ganglia::distro::suse_gmond::service   inherits   a2
 
 
 
-### The final all-containing classes
+### The final all-containing class
 class a2o-essential-linux-ganglia::distro::suse_gmond {
 
-    include 'a2o-essential-linux-ganglia::distro::common'
+    include 'a2o-essential-linux-ganglia::distro::common_gmond'
     include 'a2o-essential-linux-ganglia::distro::suse_gmond::service'
 }
