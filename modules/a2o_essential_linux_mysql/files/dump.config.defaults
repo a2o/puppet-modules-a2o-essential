@@ -29,7 +29,7 @@
 MYSQL="mysql"
 MYSQLDUMP="mysqldump"
 MYSQLDUMP_OPTS="--force --add-locks --disable-keys --extended-insert --quote-names --routines --single-transaction --triggers"
-MYSQLDUMP_ADD_INNODB_IMPORT_OPTIMIZATIONS="1"
+MYSQLDUMP_ADD_INNODB_IMPORT_OPTIMIZATIONS="0" ### FIXME BUGGY, screws up the file
 MYCNF="/root/.my.cnf.backup"
 MYSQL_DATADIR="/var/lib/mysql"   # For backing up replication coordinates
 
