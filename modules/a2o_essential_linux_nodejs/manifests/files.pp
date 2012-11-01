@@ -27,7 +27,8 @@ class   a2o_essential_linux_nodejs::files   inherits   a2o_essential_linux_nodej
     }
 
     # Symlinks
-    file { '/usr/local/bin/node':   ensure => '/usr/local/nodejs/bin/node', }
-    file { '/usr/local/bin/npm':    ensure => '/usr/local/nodejs/bin/npm',  }
-    file { '/usr/bin/node':         ensure => '/usr/local/bin/node',        }
+    file { '/usr/local/bin/node':       ensure => '/usr/local/nodejs/bin/node' }
+    file { '/usr/local/bin/node-waf':   ensure => '/usr/local/nodejs/bin/node-waf' }
+    file { '/usr/local/bin/npm':        ensure => '/usr/local/nodejs/bin/npm' }
+    file { '/usr/bin/node':             ensure => '/usr/local/bin/node' }
 }
