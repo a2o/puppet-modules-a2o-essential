@@ -1,3 +1,4 @@
+#!/bin/bash
 ###########################################################################
 # a2o Essential Puppet Modules                                            #
 #-------------------------------------------------------------------------#
@@ -10,26 +11,20 @@
 #-------------------------------------------------------------------------#
 # Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
 ###########################################################################
+#
+# /etc/init.d/rrdcached
+#
+### BEGIN INIT INFO
+# Provides:		rrdcached
+# Required-Start:	$local_fs $syslog
+# Required-Stop:	$local_fs $syslog
+# Default-Start:	2 3 4 5
+# Default-Stop:		0 1 6
+# Short-Description:	RRDcached Daemon
+# Long-Description:	RRD update aggregation daemon
+### END INIT INFO
 
 
 
-### Service base: gmetad
-class   a2o-essential-linux-ganglia::distro::base_gmetad   inherits   a2o-essential-linux-ganglia::base {
-
-    # Get distro-dependent service name
-    $rrdcachedServiceName = $operatingsystem ? {
-	'slackware' => 'a2o-linux-rrdcached',
-	default     => 'rrdcached',
-    }
-
-    $require   = [
-        File['/var/ganglia/rrds'],
-    ]
-
-    $subscribe = [
-        Package['ganglia'],
-        Service[$rrdcachedServiceName],
-        File['/usr/local/ganglia'],
-        File['/etc/ganglia/gmetad.conf'],
-    ]
-}
+### Just run the rctool wrapper
+/etc/rc.tool/wrapper.suse rrdcached $@

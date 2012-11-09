@@ -13,23 +13,13 @@
 
 
 
-### Service base: gmetad
-class   a2o-essential-linux-ganglia::distro::base_gmetad   inherits   a2o-essential-linux-ganglia::base {
-
-    # Get distro-dependent service name
-    $rrdcachedServiceName = $operatingsystem ? {
-	'slackware' => 'a2o-linux-rrdcached',
-	default     => 'rrdcached',
-    }
+### Service base class: rrdcached
+class   a2o_essential_linux_rrdcached::distro::service_base   inherits   a2o_essential_linux_rrdcached::base {
 
     $require   = [
-        File['/var/ganglia/rrds'],
     ]
 
     $subscribe = [
-        Package['ganglia'],
-        Service[$rrdcachedServiceName],
-        File['/usr/local/ganglia'],
-        File['/etc/ganglia/gmetad.conf'],
+	Package['rrdtool'],
     ]
 }
