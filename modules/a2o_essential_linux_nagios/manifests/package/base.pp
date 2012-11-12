@@ -25,8 +25,8 @@ class   a2o_essential_linux_nagios::package::base   inherits   a2o_essential_lin
 
     # CheckURI: http://www.nagios.org/download/plugins/
     $softwareName_plugins          = 'nagios-plugins'
-    $softwareVersion_plugins       = '1.4.15'
-    $packageRelease_plugins        = '3'
+    $softwareVersion_plugins       = '1.4.16'
+    $packageRelease_plugins        = '1'
     $packageTag_plugins            = "$softwareName_plugins-$softwareVersion_plugins-$packageRelease_plugins"
     $destDir_plugins               = "/usr/local/$packageTag_plugins"
 
@@ -57,8 +57,8 @@ class   a2o_essential_linux_nagios::package::base   inherits   a2o_essential_lin
     ### External package references
     $externalDestDir_perl     = '/usr/local/perl-5.14.2-1'
     $externalDestDir_perllib  = '/usr/local/lib/perl/5.14.2'
-    $externalDestDir_mysql    = '/usr/local/mysql-5.1.63-1'
-    $externalDestDir_openldap = '/usr/local/openldap-2.4.31-1'
+    $externalDestDir_mysql    = '/usr/local/mysql-5.1.66-1'
+    $externalDestDir_openldap = '/usr/local/openldap-2.4.32-1'
     $externalDestDir_openssl  = '/usr/local/openssl-1.0.0i-1'
 
 
