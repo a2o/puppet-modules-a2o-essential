@@ -25,11 +25,11 @@ class   a2o_essential_linux_interpreters::python::module_mysql   inherits   a2o_
     # CheckURI: http://pypi.python.org/pypi/MySQL-python
     $softwareName     = "$packageTag_python-module_mysql"
     $softwareVersion  = '1.2.3'
-    $packageRelease   = '1'
+    $packageRelease   = '2'
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
 
     ### External dependencies
-    $externalDestDir_mysql = '/usr/local/mysql-5.1.63-1'
+    $externalDestDir_mysql = '/usr/local/mysql-5.1.66-1'
 
 
     ### Package
