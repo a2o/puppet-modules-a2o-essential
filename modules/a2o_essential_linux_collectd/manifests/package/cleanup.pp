@@ -29,4 +29,5 @@ class   a2o_essential_linux_collectd::package::cleanup   inherits   a2o_essentia
     a2o-essential-unix::compiletool::package::remove { 'collectd-5.0.3-1': compileDir => $compileDir, require => $require }
     a2o-essential-unix::compiletool::package::remove { 'collectd-5.0.4-1': compileDir => $compileDir, require => $require }
     a2o-essential-unix::compiletool::package::remove { 'collectd-5.0.4-2': compileDir => $compileDir, require => $require }
+    a2o-essential-unix::compiletool::package::remove { 'collectd-5.1.0-1': compileDir => $compileDir, require => $require }
 }
