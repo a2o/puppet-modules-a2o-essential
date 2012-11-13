@@ -3,17 +3,21 @@
 # WARNING: All changes will be overwritten.
 #
 
+
 ### Daemon
 PidFile                   /var/run/sshd.pid
 LogLevel                  VERBOSE
 UseDNS                    no
+
 
 ### Connectivity
 Port                    22
 Protocol                 2
 PermitRootLogin           without-password
 PermitUserEnvironment     yes
+AuthorizedKeysFile        .ssh/authorized_keys .ssh/authorized_keys2 .ssh/authorized_keys-site .ssh/authorized_keys-global
 Subsystem                 sftp   internal-sftp
+
 
 ### SFTP options
 # At least one non-negative pattern item must be present for Match Group to work
