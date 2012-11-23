@@ -10,22 +10,20 @@
 #-------------------------------------------------------------------------#
 # Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
 ###########################################################################
+#
+# /etc/init.d/redis
+#
+### BEGIN INIT INFO
+# Provides:		redis
+# Required-Start:	$local_fs $syslog
+# Required-Stop:	$local_fs $syslog
+# Default-Start:	2 3 4 5
+# Default-Stop:		0 1 6
+# Short-Description:	Redis
+# Long-Description:	Redis Fast Key-Value Store
+### END INIT INFO
 
 
 
-### Service: redis
-class   a2o_essential_linux_redis::distro::a2o::service   inherits   a2o_essential_linux_redis::distro::service_base {
-
-    a2o-essential-unix::rctool::service::generic { 'redis':
-        require   => $requireDefs,
-        subscribe => $subscribeDefs,
-    }
-}
-
-
-
-### Final all-containing class
-class   a2o_essential_linux_redis::distro::a2o {
-    include 'a2o_essential_linux_redis::distro::common'
-    include 'a2o_essential_linux_redis::distro::a2o::service'
-}
+### Just run the rctool wrapper
+/etc/rc.tool/wrapper.debian redis $@

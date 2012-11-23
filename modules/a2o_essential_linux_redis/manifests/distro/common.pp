@@ -13,19 +13,10 @@
 
 
 
-### Service: redis
-class   a2o_essential_linux_redis::distro::a2o::service   inherits   a2o_essential_linux_redis::distro::service_base {
-
-    a2o-essential-unix::rctool::service::generic { 'redis':
-        require   => $requireDefs,
-        subscribe => $subscribeDefs,
-    }
-}
-
-
-
-### Final all-containing class
-class   a2o_essential_linux_redis::distro::a2o {
-    include 'a2o_essential_linux_redis::distro::common'
-    include 'a2o_essential_linux_redis::distro::a2o::service'
+### Common resources for all distributions
+class   a2o_essential_linux_redis::distro::common {
+    include 'a2o_essential_linux_redis::package'
+    include 'a2o_essential_linux_redis::files'
+    include 'a2o_essential_linux_redis::users_groups'
+    include 'a2o_essential_linux_redis::files_service'
 }
