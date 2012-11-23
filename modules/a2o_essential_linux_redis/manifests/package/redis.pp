@@ -19,7 +19,7 @@ class   a2o_essential_linux_redis::package::redis   inherits   a2o_essential_lin
     # Package / Software details
     # CheckURI: http://redis.org
     $softwareName     = 'redis'
-    $softwareVersion  = '2.4.16'
+    $softwareVersion  = '2.4.17'   # What about 2.6.x
     $packageRelease   = '1'
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
     $destDir          = "/usr/local/$packageTag"
