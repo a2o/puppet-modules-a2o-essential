@@ -45,7 +45,7 @@ class   a2o-essential-linux-openldap::package::current   inherits   a2o-essentia
     # WARNING: If you change version here, add old version to legacy classes below
     #          if references to this version exist in other modules
     $softwareName    = 'openldap'
-    $softwareVersion = '2.4.32'
+    $softwareVersion = '2.4.33'
     $packageRelease  = '1'
     $packageTag      = "$softwareName-$softwareVersion-$packageRelease"
 
@@ -91,6 +91,7 @@ class   a2o-essential-linux-openldap::package::cleanup   inherits   a2o-essentia
     a2o-essential-unix::compiletool::package::remove { 'openldap-2.4.26-1': compileDir => $compileDir, require => $require, }
     a2o-essential-unix::compiletool::package::remove { 'openldap-2.4.28-1': compileDir => $compileDir, require => $require, }
 #    a2o-essential-unix::compiletool::package::remove { 'openldap-2.4.31-1': compileDir => $compileDir, require => $require, }
+#    a2o-essential-unix::compiletool::package::remove { 'openldap-2.4.32-1': compileDir => $compileDir, require => $require, }
 }
 
 

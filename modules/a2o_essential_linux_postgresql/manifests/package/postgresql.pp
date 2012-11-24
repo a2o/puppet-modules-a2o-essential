@@ -19,7 +19,7 @@ class   a2o_essential_linux_postgresql::package::postgresql   inherits   a2o_ess
     # Package / Software details
     # CheckURI: http://ftp.arnes.si/postgresql/Downloads/
     $softwareName     = 'postgresql'
-    $softwareVersion  = '9.1.4'
+    $softwareVersion  = '9.2.1'
     $packageRelease   = '1'
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
     $destDir          = "/usr/local/$packageTag"
