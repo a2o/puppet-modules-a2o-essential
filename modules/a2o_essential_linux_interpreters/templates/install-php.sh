@@ -40,7 +40,7 @@ export PNAME="php" &&
 export PVERSION="$PVERSION_PHP" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
-export PURI="http://www.php.net/distributions/$PFILE" &&
+export PURI="http://php.net/get/$PFILE/from/this/mirror" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&
