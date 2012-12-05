@@ -20,7 +20,7 @@ class   a2o_essential_linux_bind::package::bind   inherits   a2o_essential_linux
     # INFO: If there is a version with dash in it (9.9.1-P1), enter it with an
     # INFO: underscore: 9.9.1_P1.
     $softwareName     = 'bind'
-    $softwareVersion  = '9.9.2'
+    $softwareVersion  = '9.9.2_P1'
     $packageRelease   = '1'
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
     $destDir          = "/usr/local/$packageTag"
