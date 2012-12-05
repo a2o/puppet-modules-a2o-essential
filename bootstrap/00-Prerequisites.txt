@@ -37,6 +37,8 @@ On RedHat based systems, please use:   yum     install PACKAGENAME
 ### Quick commands to install all prerequisites at once:
 ###
 
-Debian based (tested on Ubuntu Server 12.04.1):
+# Debian based (tested on Ubuntu Server 12.04.1):
+apt-get install autoconf automake diffutils gcc g++ gettext groff libtool make patch pkg-config zlib1g zlib1g-dev
 
-    apt-get install autoconf automake diffutils gcc g++ gettext groff libtool make patch pkg-config zlib1g zlib1g-dev
+# RedHat based (tested on CentOS 6.3):
+yum install autoconf automake diffutils gcc gcc-c++ gettext groff libtool make patch pkgconfig zlib zlib-devel
