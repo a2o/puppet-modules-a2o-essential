@@ -44,6 +44,7 @@ export LD_LIBRARY_PATH="$PDESTDIR_OPENSSL/lib" &&
 ./configure --prefix=$PDESTDIR \
   --sysconfdir=/etc/named --localstatedir=/var/named \
   --with-openssl=$PDESTDIR_OPENSSL &&
+### Warning: parallel compiles are not supported (-jX)
 make &&
 make install &&
 
