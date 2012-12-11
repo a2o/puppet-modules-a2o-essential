@@ -41,7 +41,7 @@ elif which ntpdate >/dev/null 2>&1; then
     CLIENT_MODE="ntpdate"
     SNTP=`which ntpdate`
 else
-    echo "ERROR: Unable to find stnp or ntpdate"
+    echo "ERROR: Unable to find sntp or ntpdate"
     exit 1
 fi
 # hwclock
