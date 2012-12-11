@@ -13,31 +13,10 @@
 
 
 
-### Service: mysql
-class   a2o_essential_linux_mysql::distro::a2o::service   inherits   a2o_essential_linux_mysql::distro::base {
+### Crons
+class   a2o_essential_linux_mysql::crons   inherits   a2o_essential_linux_mysql::base {
 
-    $requireA2o = [
-	$require,
-	File['/etc/ssl/certs/mysql.key'],
-	File['/etc/ssl/certs/mysql.cert'],
-    ]
-
-    a2o-essential-unix::rctool::service::generic { 'mysqld':
-        require   => $requireA2o,
-        subscribe => $subscribe,
-    }
-}
-
-
-
-### The final all-containing classes
-class   a2o_essential_linux_mysql::distro::a2o {
-
-    include 'a2o_essential_linux_mysql::distro::common'
-    include 'a2o_essential_linux_mysql::package::mysql_db'
-    include 'a2o_essential_linux_mysql::package::mytop'
-    include 'a2o_essential_linux_mysql::files::mytop'
-    include 'a2o_essential_linux_mysql::distro::a2o::service'
-    include 'a2o_essential_linux_mysql::files::symlinks_lib'
-    include 'a2o_essential_linux_mysql::crons'
+    include 'a2o_essential_linux_mysql::cron::backup'
+    include 'a2o_essential_linux_mysql::cron::log_processlist'
+    include 'a2o_essential_linux_mysql::cron::optimize'
 }

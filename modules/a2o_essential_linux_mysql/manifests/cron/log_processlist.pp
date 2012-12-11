@@ -13,31 +13,17 @@
 
 
 
-### Service: mysql
-class   a2o_essential_linux_mysql::distro::a2o::service   inherits   a2o_essential_linux_mysql::distro::base {
+### Cron: log_processlist
+class   a2o_essential_linux_mysql::cron::log_processlist   inherits   a2o_essential_linux_mysql::base {
 
-    $requireA2o = [
-	$require,
-	File['/etc/ssl/certs/mysql.key'],
-	File['/etc/ssl/certs/mysql.cert'],
-    ]
-
-    a2o-essential-unix::rctool::service::generic { 'mysqld':
-        require   => $requireA2o,
-        subscribe => $subscribe,
+    cron { '/opt/scripts/mysql/log_processlist.sh':
+	user     => root,
+	command  => "/opt/scripts/cron/run-and-mail-if-error.sh   \"/opt/scripts/mysql/log_processlist.sh\"   \"$root_email\"",
+	require  => [
+	    File['/opt/scripts/mysql/log_processlist.sh'],
+	    Service['a2o-linux-mysqld'],
+	    File['/usr/local/bin/mysql'],
+	    File['/var/mysql/log/processlist_logs'],
+	],
     }
-}
-
-
-
-### The final all-containing classes
-class   a2o_essential_linux_mysql::distro::a2o {
-
-    include 'a2o_essential_linux_mysql::distro::common'
-    include 'a2o_essential_linux_mysql::package::mysql_db'
-    include 'a2o_essential_linux_mysql::package::mytop'
-    include 'a2o_essential_linux_mysql::files::mytop'
-    include 'a2o_essential_linux_mysql::distro::a2o::service'
-    include 'a2o_essential_linux_mysql::files::symlinks_lib'
-    include 'a2o_essential_linux_mysql::crons'
 }
