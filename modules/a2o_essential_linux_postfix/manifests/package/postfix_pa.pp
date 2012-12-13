@@ -18,8 +18,8 @@ class   a2o_essential_linux_postfix::package::postfix_pa   inherits   a2o_essent
 
     # CheckURI: ftp://ftp.arnes.si/packages/postfix-release/index.html
     $softwareName     = 'postfix-pa'
-    $softwareVersion  = '2.9.4'
-    $packageRelease   = '2'
+    $softwareVersion  = '2.9.5'
+    $packageRelease   = '1'
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
     $destDir          = "/usr/local/$packageTag"
 
@@ -28,7 +28,7 @@ class   a2o_essential_linux_postfix::package::postfix_pa   inherits   a2o_essent
     $softwareVersion_vda = 'v11-2.9.1'
 
     # Extenal references
-    $destDir_mysql    = '/usr/local/mysql-5.1.63-1'
+    $destDir_mysql    = '/usr/local/mysql-5.1.66-1'
     $destDir_openssl  = '/usr/local/openssl-1.0.0i-1'
 
 

@@ -18,7 +18,7 @@ class   a2o_essential_linux_postfix::package::postfix   inherits   a2o_essential
 
     # CheckURI: ftp://ftp.arnes.si/packages/postfix-release/index.html
     $softwareName     = 'postfix'
-    $softwareVersion  = '2.9.4'
+    $softwareVersion  = '2.9.5'
     $packageRelease   = '1'
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
     $destDir          = "/usr/local/$packageTag"
