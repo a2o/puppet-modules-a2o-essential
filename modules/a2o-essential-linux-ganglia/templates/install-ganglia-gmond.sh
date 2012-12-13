@@ -58,6 +58,11 @@ export LDFLAGS="-L$PDESTDIR_PYTHON/lib" &&
 # Search for APR
 export APR_1_CONFIG_PATH=`PATH="/usr/local/apr/bin:$PATH" which apr-1-config` &&
 
+# Workaround for 32-bit systems
+if [ `uname -m` == "i686" ]; then
+    export CFLAGS="$CFLAGS -D_LARGEFILE64_SOURCE"
+fi &&
+
 ./configure --prefix=$PDESTDIR --sysconfdir=/etc/ganglia \
   --enable-setuid=ganglia \
   --enable-setgid=ganglia \
