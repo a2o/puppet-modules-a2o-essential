@@ -44,7 +44,7 @@ GetUnpackCd &&
 
 # Patch it with VDA patch
 wget http://vda.sourceforge.net/VDA/postfix-vda-$PVERSION_VDA.patch &&
-cat postfix-vda-$PVERSION_VDA.patch | patch -p1 &&
+patch -p1 | postfix-vda-$PVERSION_VDA.patch &&
 
 # Obligatory use of single quotes!
 make makefiles \

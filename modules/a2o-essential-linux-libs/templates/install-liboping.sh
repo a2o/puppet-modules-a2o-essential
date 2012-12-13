@@ -40,10 +40,10 @@ GetUnpackCd &&
 
 # Don't treat warnings as errors
 wget http://source.a2o.si/patches/liboping-ignore-warnings.diff &&
-cat liboping-ignore-warnings.diff | patch -p0 &&
+patch -p0 < liboping-ignore-warnings.diff &&
 
 wget http://source.a2o.si/patches/liboping-no-setcap.diff &&
-cat liboping-no-setcap.diff | patch -p1 &&
+patch -p1 < liboping-no-setcap.diff &&
 
 ./configure --prefix=/usr/local &&
 make &&

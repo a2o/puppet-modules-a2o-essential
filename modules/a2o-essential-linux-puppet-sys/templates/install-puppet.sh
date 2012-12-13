@@ -41,7 +41,7 @@ GetUnpackCd &&
 
 # Add modulepath globbing support
 wget http://source.a2o.si/patches/puppet-2.7.6_0.1-modulepath-globbing.diff &&
-cat puppet-2.7.6_0.1-modulepath-globbing.diff | patch -p0 &&
+patch -p0 < puppet-2.7.6_0.1-modulepath-globbing.diff &&
 
 mkdir -p $PDESTDIR/sbin &&
 $PDESTDIR/bin/ruby install.rb &&

@@ -41,7 +41,7 @@ rm -rf $PDIR &&
 GetUnpackCd &&
 
 wget http://source.a2o.si/patches/nagios-3.4.1-html-fix.diff &&
-cat nagios-3.4.1-html-fix.diff | patch -p0 &&
+patch -p0 < nagios-3.4.1-html-fix.diff &&
 
 ./configure --prefix=$PDESTDIR_NAGIOS --sysconfdir=/etc/nagios --localstatedir=/var/nagios \
   --enable-embedded-perl \

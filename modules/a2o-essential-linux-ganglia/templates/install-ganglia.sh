@@ -42,12 +42,12 @@ GetUnpackCd &&
 
 # Patch to disable collection of br* net interface metrics
 wget http://source.a2o.si/patches/ganglia-3.4.0-ignore_br.diff &&
-cat ganglia-3.4.0-ignore_br.diff | patch -p1 &&
+patch -p1 < ganglia-3.4.0-ignore_br.diff &&
 
 # Patch to fix interface data collection on 32bit systems with if drivers that have 
 # greater traffic counter than 32bit int
 wget http://source.a2o.si/patches/ganglia-3.4.0-net_if_long_long.diff &&
-cat ganglia-3.4.0-net_if_long_long.diff | patch -p1 &&
+patch -p1 < ganglia-3.4.0-net_if_long_long.diff &&
 
 export PKG_CONFIG_PATH='/usr/local/lib/pkgconfig' &&
 # FIXME should this be removed for all distributions?
