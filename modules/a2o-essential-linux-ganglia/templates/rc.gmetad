@@ -25,7 +25,7 @@ APP_STOP_STALE_PID_FILE_NOWARNING=1
 gmetad_start() {
     ldconfig
     /etc/rc.d/rc.rrdcached start
-    export RRDCACHED_ADDRESS="unix:/var/run/rrdcached.sock"
+    export RRDCACHED_ADDRESS="unix:/var/run/rrdcached.sock.ganglia"
     app_start
 }
 

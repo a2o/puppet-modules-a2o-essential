@@ -19,6 +19,7 @@ PROC_NAME="/usr/local/bin/rrdcached"
 PID_FILE="/var/run/rrdcached.pid"
 APP_CMD_START="$PROC_NAME -p $PID_FILE -w 600 -z 30 -f 3600 -t 10 -F \
 -s root -m 770 -l unix:/var/run/rrdcached.sock \
+-s ganglia -m 770 -l unix:/var/run/rrdcached.sock.ganglia \
 -s nogroup -m 777 -P FLUSH,STATS,HELP -l unix:/var/run/rrdcached.sock.nogroup"
 
 

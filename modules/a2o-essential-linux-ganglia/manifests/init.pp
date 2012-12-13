@@ -51,8 +51,8 @@ class   a2o-essential-linux-ganglia::package   inherits   a2o-essential-linux-ga
     # Software details
     $packageName      = 'ganglia'
     $packageSoftware  = 'ganglia'
-    $packageVersion   = '3.1.7'
-    $packageRelease   = '6'
+    $packageVersion   = '3.4.0'
+    $packageRelease   = '1'
     $packageEnsure    = "$packageVersion-$packageRelease"
     $packageTag       = "$packageSoftware-$packageEnsure"
     $installScriptTpl = "install-$packageSoftware.sh"
@@ -215,14 +215,14 @@ class   a2o-essential-linux-ganglia::files::gmetad   inherits   a2o-essential-li
 
     file { '/var/ganglia':
 	ensure   => directory,
-        owner    => nobody,
-        group    => nogroup,
+        owner    => ganglia,
+        group    => ganglia,
         mode     => 755,
     }
     file { '/var/ganglia/rrds':
 	ensure   => directory,
-        owner    => nobody,
-        group    => nogroup,
+        owner    => ganglia,
+        group    => ganglia,
         mode     => 755,
     }
 }

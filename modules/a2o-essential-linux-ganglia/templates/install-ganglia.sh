@@ -27,7 +27,7 @@ export PDESTDIR="<%= destDir %>" &&
 export PDESTDIR_PYTHON="<%= externalPackageDestDir_python %>" &&
 
 
-### ganglia - gmond
+### Ganglia - gmetad
 # CheckURI: http://sourceforge.net/project/showfiles.php?group_id=43021&package_id=35280
 # Req: libconfuse
 cd $SRCROOT && . ../build_functions.sh &&
@@ -35,23 +35,19 @@ export PNAME="ganglia" &&
 export PVERSION="$PVERSION_GANGLIA" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
-export PURI="http://switch.dl.sourceforge.net/sourceforge/ganglia/$PFILE" &&
+export PURI="http://downloads.sourceforge.net/sourceforge/ganglia/ganglia%20monitoring%20core/$PVERSION/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&
 
 # Patch to disable collection of br* net interface metrics
-wget http://source.a2o.si/patches/ganglia-3.1.7-ignore_br.diff &&
-cat ganglia-3.1.7-ignore_br.diff | patch -p1 &&
+wget http://source.a2o.si/patches/ganglia-3.4.0-ignore_br.diff &&
+cat ganglia-3.4.0-ignore_br.diff | patch -p1 &&
 
 # Patch to fix interface data collection on 32bit systems with if drivers that have 
 # greater traffic counter than 32bit int
-wget http://source.a2o.si/patches/ganglia-3.1.7-net_if_long_long.diff &&
-cat ganglia-3.1.7-net_if_long_long.diff | patch -p1 &&
-
-# Patch to disable crash with active NFS mount
-wget http://source.a2o.si/patches/ganglia-3.1.7-fix_nfs_mount_crash.diff &&
-patch -p1 < ganglia-3.1.7-fix_nfs_mount_crash.diff &&
+wget http://source.a2o.si/patches/ganglia-3.4.0-net_if_long_long.diff &&
+cat ganglia-3.4.0-net_if_long_long.diff | patch -p1 &&
 
 export PKG_CONFIG_PATH='/usr/local/lib/pkgconfig' &&
 # FIXME should this be removed for all distributions?
@@ -61,6 +57,11 @@ export LDFLAGS="-L$PDESTDIR_PYTHON/lib" &&
 
 # Search for APR
 export APR_1_CONFIG_PATH=`PATH="/usr/local/apr/bin:$PATH" which apr-1-config` &&
+
+# Workaround for 32-bit systems
+if [ `uname -m` == "i686" ]; then
+    export CFLAGS="$CFLAGS -D_LARGEFILE64_SOURCE"
+fi &&
 
 ./configure --prefix=$PDESTDIR --sysconfdir=/etc/ganglia \
   --enable-setuid=ganglia \
