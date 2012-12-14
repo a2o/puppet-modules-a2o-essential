@@ -33,7 +33,7 @@ export PNAME="qemu-kvm" &&
 export PVERSION="$PVERSION_SW" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
-export PURI="http://downloads.sourceforge.net/project/kvm/qemu-kvm/$PVERSION/$PFILE" &&
+export PURI="http://downloads.sourceforge.net/sourceforge/kvm/qemu-kvm/$PVERSION/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&

@@ -36,7 +36,7 @@ export PNAME="pnp4nagios" &&
 export PVERSION="$PVERSION_PNP4NAGIOS" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
-export PURI="http://surfnet.dl.sourceforge.net/sourceforge/pnp4nagios/PNP-0.6/$PFILE" &&
+export PURI="http://downloads.sourceforge.net/sourceforge/pnp4nagios/PNP-0.6/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&

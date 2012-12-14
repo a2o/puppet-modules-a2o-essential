@@ -33,7 +33,7 @@ export PNAME="net-snmp" &&
 export PVERSION="$PVERSION_NET_SNMP" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
-export PURI="http://surfnet.dl.sourceforge.net/sourceforge/net-snmp/5.7/$PFILE" &&
+export PURI="http://downloads.sourceforge.net/sourceforge/net-snmp/5.7/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&

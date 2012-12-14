@@ -33,7 +33,7 @@ export PNAME="scons" &&
 export PVERSION="$PVERSION_SW" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
-export PURI="http://prdownloads.sourceforge.net/scons/$PFILE" &&
+export PURI="http://downloads.sourceforge.net/sourceforge/scons/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&

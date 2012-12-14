@@ -36,7 +36,7 @@ export PNAME="awstats" &&
 export PVERSION="$PVERSION_AWSTATS" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
-export PURI="http://garr.dl.sourceforge.net/project/awstats/AWStats/$PVERSION/$PFILE" &&
+export PURI="http://downloads.sourceforge.net/sourceforge/awstats/AWStats/$PVERSION/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpack &&

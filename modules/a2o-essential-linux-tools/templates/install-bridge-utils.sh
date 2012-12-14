@@ -33,7 +33,7 @@ export PNAME="bridge-utils" &&
 export PVERSION="$PVERSION_SW" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
-export PURI="http://switch.dl.sourceforge.net/sourceforge/bridge/$PFILE" &&
+export PURI="http://downloads.sourceforge.net/sourceforge/bridge/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&

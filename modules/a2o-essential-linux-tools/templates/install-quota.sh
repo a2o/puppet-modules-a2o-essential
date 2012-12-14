@@ -33,7 +33,7 @@ export PNAME="quota" &&
 export PVERSION="$PVERSION_SW" &&
 export PDIR="quota-tools" &&
 export PFILE="$PNAME-$PVERSION.tar.gz" &&
-export PURI="http://surfnet.dl.sourceforge.net/sourceforge/linuxquota/$PFILE" &&
+export PURI="http://downloads.sourceforge.net/sourceforge/linuxquota/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&

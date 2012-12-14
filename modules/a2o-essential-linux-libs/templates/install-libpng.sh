@@ -33,7 +33,7 @@ export PNAME="libpng" &&
 export PVERSION="$PVERSION_LIBPNG" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
-export PURI="http://surfnet.dl.sourceforge.net/sourceforge/libpng/$PFILE" &&
+export PURI="http://downloads.sourceforge.net/sourceforge/libpng/$PFILE" &&
 rm -rf $PDIR &&
 GetUnpackCd &&
 ./configure &&

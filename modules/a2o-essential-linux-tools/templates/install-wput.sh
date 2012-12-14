@@ -33,7 +33,7 @@ export PNAME="wput" &&
 export PVERSION="$PVERSION_SW" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tgz" &&
-export PURI="http://garr.dl.sourceforge.net/sourceforge/wput/$PFILE" &&
+export PURI="http://downloads.sourceforge.net/sourceforge/wput/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&

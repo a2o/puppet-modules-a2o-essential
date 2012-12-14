@@ -33,7 +33,7 @@ export PNAME="inotify-tools" &&
 export PVERSION="$PVERSION_SW" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PNAME-$PVERSION.tar.gz" &&
-export PURI="http://garr.dl.sourceforge.net/sourceforge/inotify-tools/$PFILE" &&
+export PURI="http://downloads.sourceforge.net/sourceforge/inotify-tools/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&

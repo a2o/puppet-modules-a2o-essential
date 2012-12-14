@@ -35,7 +35,7 @@ export PNAME="nrpe" &&
 export PVERSION="$PVERSION_NRPE" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
-export PURI="http://garr.dl.sourceforge.net/sourceforge/nagios/$PFILE" &&
+export PURI="http://downloads.sourceforge.net/sourceforge/nagios/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&

@@ -34,7 +34,7 @@ export PNAME="boost" &&
 export PVERSION="$PVERSION_BOOST" &&
 export PDIR="${PNAME}_`echo $PVERSION | sed -e 's/\./_/g'`" &&
 export PFILE="$PDIR.tar.gz" &&
-export PURI="http://downloads.sourceforge.net/project/boost/boost/$PVERSION/$PFILE"
+export PURI="http://downloads.sourceforge.net/sourceforge/boost/boost/$PVERSION/$PFILE"
 
 rm -rf $PDIR &&
 GetUnpackCd &&

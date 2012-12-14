@@ -34,7 +34,7 @@ export PNAME="ebtables" &&
 export PVERSION="$PVERSION_SW" &&
 export PDIR="$PNAME-v$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
-export PURI="http://downloads.sourceforge.net/project/ebtables/ebtables/ebtables-$PVERSION_SW_DL/$PFILE" &&
+export PURI="http://downloads.sourceforge.net/sourceforge/ebtables/ebtables/ebtables-$PVERSION_SW_DL/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&

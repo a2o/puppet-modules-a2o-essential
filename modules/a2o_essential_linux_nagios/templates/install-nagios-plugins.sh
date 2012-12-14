@@ -38,7 +38,7 @@ export PNAME="nagios-plugins" &&
 export PVERSION="$PVERSION_PLUGINS" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
-export PURI="http://switch.dl.sourceforge.net/sourceforge/nagiosplug/$PFILE" &&
+export PURI="http://downloads.sourceforge.net/sourceforge/nagiosplug/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&

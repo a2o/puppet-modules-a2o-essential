@@ -33,7 +33,7 @@ export PNAME="libmcrypt" &&
 export PVERSION="$PVERSION_LIBMCRYPT" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
-export PURI="http://garr.dl.sourceforge.net/sourceforge/mcrypt/$PFILE" &&
+export PURI="http://downloads.sourceforge.net/sourceforge/mcrypt/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&

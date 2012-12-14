@@ -33,8 +33,8 @@ export PNAME="OpenIPMI" &&
 export PVERSION="$PVERSION_OPENIPMI" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
-#export PURI="http://surfnet.dl.sourceforge.net/sourceforge/openipmi/OpenIPMI%202.0%20Library/$PVERSION/$PFILE" &&
-export PURI="http://surfnet.dl.sourceforge.net/sourceforge/openipmi/OpenIPMI%202.0%20Library/$PFILE" &&
+#export PURI="http://downloads.sourceforge.net/sourceforge/openipmi/OpenIPMI%202.0%20Library/$PVERSION/$PFILE" &&
+export PURI="http://downloads.sourceforge.net/sourceforge/openipmi/OpenIPMI%202.0%20Library/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&

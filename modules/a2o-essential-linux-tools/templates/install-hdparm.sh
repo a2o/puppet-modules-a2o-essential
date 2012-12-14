@@ -33,7 +33,7 @@ export PNAME="hdparm" &&
 export PVERSION="$PVERSION_SW" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
-export PURI="http://surfnet.dl.sourceforge.net/sourceforge/hdparm/$PFILE" &&
+export PURI="http://downloads.sourceforge.net/sourceforge/hdparm/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&

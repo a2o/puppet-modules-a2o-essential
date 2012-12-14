@@ -33,7 +33,7 @@ export PNAME="expat" &&
 export PVERSION="$PVERSION_EXPAT" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
-export PURI="http://surfnet.dl.sourceforge.net/sourceforge/expat/$PFILE" &&
+export PURI="http://downloads.sourceforge.net/sourceforge/expat/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&

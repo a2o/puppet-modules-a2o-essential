@@ -35,7 +35,7 @@ export PNAME="nagios" &&
 export PVERSION="$PVERSION_NAGIOS" &&
 export PDIR="$PNAME" &&
 export PFILE="$PDIR-$PVERSION.tar.gz" &&
-export PURI="http://garr.dl.sourceforge.net/sourceforge/nagios/$PFILE" &&
+export PURI="http://downloads.sourceforge.net/sourceforge/nagios/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&

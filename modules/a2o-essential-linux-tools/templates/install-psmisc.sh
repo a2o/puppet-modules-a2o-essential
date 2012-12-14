@@ -33,7 +33,7 @@ export PNAME="psmisc" &&
 export PVERSION="$PVERSION_SW" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
-export PURI="http://garr.dl.sourceforge.net/sourceforge/psmisc/psmisc/$PFILE" &&
+export PURI="http://downloads.sourceforge.net/sourceforge/psmisc/psmisc/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&
