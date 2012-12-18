@@ -1,0 +1,70 @@
+#!/bin/sh
+###########################################################################
+# a2o Essential Puppet Modules                                            #
+#-------------------------------------------------------------------------#
+# Copyright (c) 2012 Bostjan Skufca                                       #
+#-------------------------------------------------------------------------#
+# This source file is subject to version 2.0 of the Apache License,       #
+# that is bundled with this package in the file LICENSE, and is           #
+# available through the world-wide-web at the following url:              #
+# http://www.apache.org/licenses/LICENSE-2.0                              #
+#-------------------------------------------------------------------------#
+# Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
+###########################################################################
+. /etc/rc.tool/common
+
+
+
+PROC_NAME="/usr/local/keepalived/sbin/keepalived"
+PID_FILE="/var/run/keepalived.pid"
+APP_CMD_START="$PROC_NAME"
+
+
+
+keepalived_start() {
+    app_start
+}
+
+keepalived_stop() {
+    app_stop
+}
+
+keepalived_restart() {
+    keepalived_stop
+    keepalived_start
+}
+
+keepalived_status() {
+    is_app_running__info
+}
+
+keepalived_kill() {
+    if app_kill; then
+	rm -f $PID_FILE
+    fi
+}
+
+
+
+case "$1" in
+    'start')
+	keepalived_start
+	;;
+    'stop')
+	keepalived_stop
+	;;
+    'restart')
+	keepalived_restart
+	;;
+    'status')
+	keepalived_status
+	;;
+    'kill')
+	keepalived_kill
+	;;
+    'reload')
+	keepalived_reload
+	;;
+    *)
+	echo "usage $0 start|stop|restart|status|kill"
+esac
