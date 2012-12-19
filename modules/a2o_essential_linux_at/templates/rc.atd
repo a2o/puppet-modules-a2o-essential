@@ -62,9 +62,6 @@ case "$1" in
     'kill')
 	atd_kill
 	;;
-    'reload')
-	atd_reload
-	;;
     *)
 	echo "usage $0 start|stop|restart|status|kill"
 esac
