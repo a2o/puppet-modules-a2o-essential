@@ -17,7 +17,7 @@
 
 PROC_NAME="/usr/local/keepalived/sbin/keepalived"
 PID_FILE="/var/run/keepalived.pid"
-APP_CMD_START="$PROC_NAME"
+APP_CMD_START="$PROC_NAME -f /etc/keepalived/keepalived.conf"
 
 
 
@@ -40,7 +40,17 @@ keepalived_status() {
 
 keepalived_kill() {
     if app_kill; then
-	rm -f $PID_FILE
+        rm -f $PID_FILE
+    fi
+}
+
+keepalived_reload() {
+    if is_app_running $PROC_NAME $PID_FILE; then
+        echo -n "Sending SIGHUP (1) to $PROC_NAME (pid `cat $PID_FILE`)... "
+        kill -1 `cat $PID_FILE`
+        echo "done."
+    else
+        is_app_running__info
     fi
 }
 

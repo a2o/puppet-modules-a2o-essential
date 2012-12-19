@@ -45,5 +45,6 @@ class   a2o_essential_linux_keepalived::distro::a2o::service   inherits   a2o_es
 ### The final all-containing classes
 class a2o_essential_linux_keepalived::distro::a2o {
     include 'a2o_essential_linux_keepalived::package::keepalived'
+    include 'a2o_essential_linux_keepalived::files'
     include 'a2o_essential_linux_keepalived::distro::a2o::service'
 }

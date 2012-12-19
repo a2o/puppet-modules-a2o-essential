@@ -13,30 +13,25 @@
 
 
 
-### Software package: keepalived
-class   a2o_essential_linux_keepalived::package::keepalived   inherits   a2o_essential_linux_keepalived::package::base {
+### Files: config
+class   a2o_essential_linux_keepalived::files::config   inherits   a2o_essential_linux_keepalived::base {
 
-    # Package / Software details
-    $softwareName     = "$softwareName_keepalived"
-    $softwareVersion  = "$softwareVersion_keepalived"
-    $packageRelease   = "$packageRelease_keepalived"
-    $packageTag       = "$packageTag_keepalived"
-    $destDir          = "$destDir_keepalived"
-
-
-    ### Package
-    $require = [
-        Package['openssl'],
-    ]
-    a2o-essential-unix::compiletool::package::generic { "$packageTag": require => $require, }
-
-
-    ### Symlink
-    file { "/usr/local/$softwareName":
-        ensure  => "$packageTag",
-        require => [
-            Package["$softwareName"],
-        ],
-        backup   => false,
+    File {
+        owner    => root,
+        group    => root,
+        mode     => 644,
     }
+
+    # Dirs
+    file { '/etc/keepalived':   ensure => directory, mode => 755 }
+
+    # Files
+    file { '/etc/keepalived/keepalived.conf':   ensure => present }
+}
+
+
+
+### Include-all class for files
+class   a2o_essential_linux_keepalived::files {
+    include 'a2o_essential_linux_keepalived::files::config'
 }
