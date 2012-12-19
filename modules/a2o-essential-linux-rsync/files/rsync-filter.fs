@@ -39,6 +39,8 @@ dir-merge .rsync-filter.site
 + /root/tmp
 - /root/tmp/***
 + /root/***
++ /storage
+- /storage/***
 + /sys
 - /sys/***
 + /tmp

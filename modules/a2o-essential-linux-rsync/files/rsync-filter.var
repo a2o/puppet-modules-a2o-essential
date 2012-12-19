@@ -171,6 +171,8 @@ dir-merge .rsync-filter.site
 - /spool/exim/***
 + /src
 - /src/***
++ /storage
+- /storage/***
 + /svn/db
 - /svn/db/***
 + /svn/log
