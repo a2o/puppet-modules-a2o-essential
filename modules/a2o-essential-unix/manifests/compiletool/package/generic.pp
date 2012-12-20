@@ -29,9 +29,9 @@ define   a2o-essential-unix::compiletool::package::generic (
     ###
     ### Software and package details - retrieve from define $name
     ###
-    $softwareName    = regsubst($name, '^(.+)-([^-]+)-([^-])$', '\1')
-    $softwareVersion = regsubst($name, '^(.+)-([^-]+)-([^-])$', '\2')
-    $packageRelease  = regsubst($name, '^(.+)-([^-]+)-([^-])$', '\3')
+    $softwareName    = regsubst($name, '^(.+)-([^-]+)-([^-]+)$', '\1')
+    $softwareVersion = regsubst($name, '^(.+)-([^-]+)-([^-]+)$', '\2')
+    $packageRelease  = regsubst($name, '^(.+)-([^-]+)-([^-]+)$', '\3')
     $packageEnsure   = "${softwareVersion}-${packageRelease}"
     $packageTag      = "${softwareName}-${packageEnsure}"
 
