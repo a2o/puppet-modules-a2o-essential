@@ -29,7 +29,7 @@ class   a2o_essential_linux_interpreters::php::modules   inherits   a2o_essentia
 
 
     ### Actual module versions
-    $softwareVersion_zf = '1.11.12'
+    $softwareVersion_zf = '1.12.1'
 
 
     ### Package
