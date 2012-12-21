@@ -21,25 +21,6 @@ class   a2o_essential_linux_mysql::package::cleanup   inherits   a2o_essential_l
 	File['/usr/local/mysql'],
     ]
 
-    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.40-1': compileDir => $compileDir, require => $require, }
-    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.40-2': compileDir => $compileDir, require => $require, }
-    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.41-1': compileDir => $compileDir, require => $require, }
-    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.42-1': compileDir => $compileDir, require => $require, }
-    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.43-1': compileDir => $compileDir, require => $require, }
-    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.44-1': compileDir => $compileDir, require => $require, }
-    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.45-1': compileDir => $compileDir, require => $require, }
-    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.46-1': compileDir => $compileDir, require => $require, }
-    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.47-1': compileDir => $compileDir, require => $require, }
-    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.48-1': compileDir => $compileDir, require => $require, }
-    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.49-1': compileDir => $compileDir, require => $require, }
-    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.50-1': compileDir => $compileDir, require => $require, }
-    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.51-1': compileDir => $compileDir, require => $require, }
-    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.52-1': compileDir => $compileDir, require => $require, }
-    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.53-1': compileDir => $compileDir, require => $require, }
-    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.54-1': compileDir => $compileDir, require => $require, }
-    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.55-1': compileDir => $compileDir, require => $require, }
-    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.56-1': compileDir => $compileDir, require => $require, }
-    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.57-1': compileDir => $compileDir, require => $require, }
     a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.58-1': compileDir => $compileDir, require => $require, }
     a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.59-1': compileDir => $compileDir, require => $require, }
     a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.60-1': compileDir => $compileDir, require => $require, }
@@ -47,4 +28,5 @@ class   a2o_essential_linux_mysql::package::cleanup   inherits   a2o_essential_l
 #    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.62-1': compileDir => $compileDir, require => $require, }
 #    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.63-1': compileDir => $compileDir, require => $require, }
 #    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.65-1': compileDir => $compileDir, require => $require, }
+#    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.66-1': compileDir => $compileDir, require => $require, }
 }
