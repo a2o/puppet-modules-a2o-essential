@@ -2,7 +2,7 @@
 ###########################################################################
 # a2o Essential Puppet Modules                                            #
 #-------------------------------------------------------------------------#
-# Copyright (c) 2012 Bostjan Skufca                                       #
+# Copyright (c) Bostjan Skufca                                            #
 #-------------------------------------------------------------------------#
 # This source file is subject to version 2.0 of the Apache License,       #
 # that is bundled with this package in the file LICENSE, and is           #
