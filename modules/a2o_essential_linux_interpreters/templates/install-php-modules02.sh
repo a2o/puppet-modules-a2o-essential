@@ -37,6 +37,7 @@ php_installPackage_pecl $PDESTDIR_PHP mongo     &&
 php_installPackage_pecl $PDESTDIR_PHP uuid      &&
 php_installPackage_pecl $PDESTDIR_PHP xdebug    &&
 php_installPackage_pecl $PDESTDIR_PHP yaf       &&
+php_installPackage_pecl $PDESTDIR_PHP yaml      &&
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig &&
 php_installPackage_pecl $PDESTDIR_PHP imagick   imagick-beta             &&
 unset PKG_CONFIG_PATH &&
