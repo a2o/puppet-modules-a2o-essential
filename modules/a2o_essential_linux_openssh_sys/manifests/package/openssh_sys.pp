@@ -19,7 +19,7 @@ class   a2o_essential_linux_openssh_sys::package::openssh_sys   inherits   a2o_e
     # Package / Software details
     # CheckURI: http://www.openssh.org
     $softwareName     = 'openssh-sys'
-    $softwareVersion  = '5.9p1'
+    $softwareVersion  = '6.1p1'
     $packageRelease   = '1'
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
     $destDir          = "/usr/local/$packageTag"
