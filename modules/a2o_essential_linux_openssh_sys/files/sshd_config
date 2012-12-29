@@ -1,9 +1,20 @@
-Port                    10022
-Protocol                2
-PidFile                 /dev/shm/sshd-sys.pid
-AllowGroups             root
-PermitRootLogin         without-password
-PermitUserEnvironment   yes
-Subsystem               sftp   /usr/local/ssh-sys/libexec/sftp-server
-LogLevel                VERBOSE
-UseDNS                  no
+#
+# WARNING: This file is generated and controlled by configuration management.
+# WARNING: All changes will be overwritten.
+#
+
+
+### Daemon
+PidFile                   /var/run/sshd-sys.pid
+LogLevel                  VERBOSE
+UseDNS                    no
+
+
+### Connectivity
+Port                 10022
+Protocol                 2
+PermitRootLogin           without-password
+AllowGroups               root wheel admin adm
+PermitUserEnvironment     yes
+AuthorizedKeysFile        .ssh/authorized_keys .ssh/authorized_keys2 .ssh/authorized_keys.local .ssh/authorized_keys.site
+Subsystem                 sftp   internal-sftp
