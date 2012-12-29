@@ -5,7 +5,7 @@
 
 
 ### Daemon
-PidFile                   /var/run/sshd-sys.pid
+PidFile                   /dev/shm/sshd-sys.pid
 LogLevel                  VERBOSE
 UseDNS                    no
 

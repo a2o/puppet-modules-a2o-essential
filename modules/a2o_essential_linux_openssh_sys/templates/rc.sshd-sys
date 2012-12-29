@@ -45,7 +45,7 @@ sshd_stop() {
     echo "         connections will now use the new version, which should be a safe"
     echo "         enough approach."
     if app_stop; then
-	rm /var/run/sshd-sys.pid
+	rm -f  /var/run/sshd-sys.pid
 	rm -rf /dev/shm/privsep
     fi
 }

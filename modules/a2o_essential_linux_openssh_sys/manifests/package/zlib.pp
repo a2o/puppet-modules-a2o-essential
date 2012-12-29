@@ -13,40 +13,25 @@
 
 
 
-### Software package: openssh-sys
-class   a2o_essential_linux_openssh_sys::package::openssh_sys   inherits   a2o_essential_linux_openssh_sys::package::base {
+### Software package: zlib for openssh-sys
+class   a2o_essential_linux_openssh_sys::package::zlib   inherits   a2o_essential_linux_openssh_sys::package::base {
 
     # Package / Software details
-    # CheckURI: http://www.openssh.org
-    $softwareName     = "$softwareName_openssh"
-    $softwareVersion  = "$softwareVersion_openssh"
-    $packageRelease   = "$packageRelease_openssh"
-    $packageTag       = "$packageTag_openssh"
+    # CheckURI: http://www.zlib.org
+    # WARNING: Only bump this version/release if you also recompile openssh,
+    # WARNING: Otherwise you can lock yourself out of machine.
+    $softwareName     = "$softwareName_zlib"
+    $softwareVersion  = "$softwareVersion_zlib"
+    $packageRelease   = "$packageRelease_zlib"
+    $packageTag       = "$packageTag_zlib"
     $destDir          = "$destDir_openssh"
 
 
     ### Package
-    $require = [
-        Package['openssl'],
-        Package["$packageTag-zlib"],
-    ]
-    a2o-essential-unix::compiletool::package::generic { "$packageTag": require => $require, }
-
-
-    ### Symlinks
-    file { "/usr/local/$softwareName":
-	ensure  => "$packageTag",
-	require => [
-	    Package["$softwareName"],
-	],
-	backup  => false,
-    }
-    file { '/usr/local/ssh-sys':
-	ensure  => 'openssh-sys',
-	require => [
-	    Package["$softwareName"],
-	    File["/usr/local/$softwareName"],
-	],
-	backup  => false,
+    a2o_essential_linux_libs::zlib::instance { "$packageTag":
+	packageName     => $softwareName,
+	softwareVersion => $packageVersion,
+	packageRelease  => $packageRelease,
+	destDir         => $destDir_openssh
     }
 }
