@@ -15,7 +15,7 @@ Port                    22
 Protocol                 2
 PermitRootLogin           without-password
 PermitUserEnvironment     yes
-AuthorizedKeysFile        .ssh/authorized_keys .ssh/authorized_keys2 .ssh/authorized_keys-site .ssh/authorized_keys-global
+AuthorizedKeysFile        .ssh/authorized_keys .ssh/authorized_keys2 .ssh/authorized_keys.local .ssh/authorized_keys.site
 Subsystem                 sftp   internal-sftp
 
 
