@@ -13,9 +13,19 @@
 
 
 
-### All files
-class   a2o_essential_linux_openssh_sys::files {
+### Configuration files
+class   a2o_essential_linux_openssh_sys::files::symlinks   inherits   a2o_essential_linux_openssh_sys::base {
 
-    include 'a2o_essential_linux_openssh_sys::files::daemon'
-    include 'a2o_essential_linux_openssh_sys::files::symlinks'
+    # Template
+    File {
+        require  => File['/usr/local/ssh-sys'],
+        owner    => root,
+        group    => root,
+        mode     => 0755,
+        backup   => true,
+    }
+
+    # 'Symlinks'
+    file { '/usr/local/bin/ssh-sys':   content => '/usr/local/ssh-sys/bin/ssh -p10022 $@' }
+    file { '/usr/local/bin/scp-sys':   content => '/usr/local/ssh-sys/bin/scp -P10022 $@' }
 }

@@ -13,9 +13,19 @@
 
 
 
-### All files
-class   a2o_essential_linux_openssh_sys::files {
+### Service: sshd-sys
+class   a2o_essential_linux_openssh_sys::distro::a2o::service   inherits   a2o_essential_linux_openssh_sys::distro::service_base {
 
-    include 'a2o_essential_linux_openssh_sys::files::daemon'
-    include 'a2o_essential_linux_openssh_sys::files::symlinks'
+    a2o-essential-unix::rctool::service::generic { 'sshd-sys':
+	require   => $require,
+	subscribe => $subscribe,
+    }
+}
+
+
+
+### The final all-containing classes
+class a2o_essential_linux_openssh_sys::distro::a2o {
+    include 'a2o_essential_linux_openssh_sys::distro::common'
+    include 'a2o_essential_linux_openssh_sys::distro::a2o::service'
 }

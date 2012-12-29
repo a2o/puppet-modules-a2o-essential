@@ -13,9 +13,8 @@
 
 
 
-### All files
-class   a2o_essential_linux_openssh_sys::files {
-
-    include 'a2o_essential_linux_openssh_sys::files::daemon'
-    include 'a2o_essential_linux_openssh_sys::files::symlinks'
+### Common resources for all distributions
+class   a2o_essential_linux_openssh_sys::distro::common {
+    include 'a2o_essential_linux_openssh_sys::package'
+    include 'a2o_essential_linux_openssh_sys::files'
 }

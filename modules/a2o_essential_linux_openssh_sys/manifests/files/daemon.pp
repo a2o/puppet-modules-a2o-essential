@@ -13,9 +13,21 @@
 
 
 
-### All files
-class   a2o_essential_linux_openssh_sys::files {
+### Configuration files
+class   a2o_essential_linux_openssh_sys::files::daemon   inherits   a2o_essential_linux_openssh_sys::base {
 
-    include 'a2o_essential_linux_openssh_sys::files::daemon'
-    include 'a2o_essential_linux_openssh_sys::files::symlinks'
+    # Template
+    File {
+        owner   => root,
+        group   => root,
+        mode    => 644,
+    }
+
+    # Configuration directory and files
+    file { '/etc/ssh-sys':
+        ensure  => directory,
+        mode    => 755,
+    }
+    file { '/etc/ssh-sys/ssh_config':    source => "puppet:///modules/$thisPuppetModule/ssh_config"  }
+    file { '/etc/ssh-sys/sshd_config':   source => "puppet:///modules/$thisPuppetModule/sshd_config" }
 }

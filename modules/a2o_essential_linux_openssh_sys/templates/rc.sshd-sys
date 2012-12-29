@@ -1,0 +1,99 @@
+#!/bin/sh
+. /etc/rc.tool/common
+
+
+
+export LD_LIBRARY_PATH="<%= externalDestDir_openssl %>/lib"
+
+
+
+PROC_NAME="/usr/local/ssh-sys/sbin/sshd"
+PID_FILE="/dev/shm/sshd-sys.pid"
+APP_CMD_START="$PROC_NAME"
+
+
+
+sshd_start() {
+    mkdir -p /dev/shm/privsep
+
+    # Create host keys if needed.
+    if [ ! -r /etc/ssh-sys/ssh_host_key ]; then
+	/usr/local/ssh-sys/bin/ssh-keygen -t rsa1 -f /etc/ssh-sys/ssh_host_key -N '' 
+    fi
+    if [ ! -f /etc/ssh-sys/ssh_host_dsa_key ]; then
+	/usr/local/ssh-sys/bin/ssh-keygen -t dsa -f /etc/ssh-sys/ssh_host_dsa_key -N ''
+    fi
+    if [ ! -f /etc/ssh-sys/ssh_host_ecdsa_key ]; then
+	/usr/local/ssh-sys/bin/ssh-keygen -t ecdsa -f /etc/ssh-sys/ssh_host_ecdsa_key -N ''
+    fi
+    if [ ! -f /etc/ssh-sys/ssh_host_rsa_key ]; then
+	/usr/local/ssh-sys/bin/ssh-keygen -t rsa -f /etc/ssh-sys/ssh_host_rsa_key -N ''
+    fi
+
+    if app_start; then
+	ln -sf $PID_FILE /var/run/sshd-sys.pid
+    fi
+}
+
+
+
+sshd_stop() {
+    echo "WARNING: killing listener process only.  To kill every sshd process, you must"
+    echo "         manually kill all sshd instances.  'rc.sshd restart' kills only the"
+    echo "         parent sshd to allow an admin logged in through sshd to use 'rc.sshd"
+    echo "         restart' without being cut off.  If sshd has been upgraded, new"
+    echo "         connections will now use the new version, which should be a safe"
+    echo "         enough approach."
+    if app_stop; then
+	rm /var/run/sshd-sys.pid
+	rm -rf /dev/shm/privsep
+    fi
+}
+
+
+
+sshd_restart() {
+    sshd_stop
+    sshd_start
+}
+
+sshd_status() {
+    is_app_running__info
+}
+
+sshd_kill() {
+    if app_kill; then
+	rm -f $PID_FILE
+	rm -f /var/run/sshd-sys.pid
+	rm -rf /dev/shm/privsep
+    fi
+}
+
+sshd_reload() {
+    kill -HUP `cat $PID_FILE`
+}
+
+
+
+case "$1" in
+    'start')
+	sshd_start
+	;;
+    'stop')
+	sshd_stop
+	;;
+    'restart')
+	sshd_restart
+	;;
+    'status')
+	sshd_status
+	;;
+    'kill')
+	sshd_kill
+	;;
+    'kill')
+	sshd_reload
+	;;
+    *)
+	echo "usage $0 start|stop|restart|status|kill|reload"
+esac

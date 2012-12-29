@@ -26,7 +26,7 @@ class   a2o_essential_linux_openssh_sys::package::openssh_sys   inherits   a2o_e
 
 
     ### Additinal versions
-    # $externalDestDir_openssl defined in base class
+    $externalDestDir_openssl = '/usr/local/openssl-1.0.0i-1'
 
 
     ### Package
