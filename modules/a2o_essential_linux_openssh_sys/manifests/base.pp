@@ -18,5 +18,6 @@ class   a2o_essential_linux_openssh_sys::base {
     $thisPuppetModule = 'a2o_essential_linux_openssh_sys'
 
     ### Additinal versions
+    # Here because distro::X::service uses it for startup file
     $externalDestDir_openssl = '/usr/local/openssl-1.0.0i-1'
 }
