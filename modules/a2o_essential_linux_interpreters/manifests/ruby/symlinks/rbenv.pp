@@ -13,17 +13,14 @@
 
 
 
-class a2o_essential_linux_interpreters::ruby::all {
+### Symlinks for: rbenv
+class   a2o_essential_linux_interpreters::ruby::symlinks::rbenv   inherits   a2o_essential_linux_interpreters::ruby::base {
 
-    Package['libs'] -> Package['ruby']
+    File {
+	require  => File['/usr/local/rbenv'],
+	backup   => false,
+    }
 
-    include 'a2o_essential_linux_interpreters::ruby::package'
-    include 'a2o_essential_linux_interpreters::ruby::gem_collection'
-    include 'a2o_essential_linux_interpreters::ruby::gem_mysql'
-    include 'a2o_essential_linux_interpreters::ruby::gem_postgresql'
-    include 'a2o_essential_linux_interpreters::ruby::gem_rmagick'
-    include 'a2o_essential_linux_interpreters::ruby::symlinks'
-
-    include 'a2o_essential_linux_interpreters::ruby::package::rbenv'
-    include 'a2o_essential_linux_interpreters::ruby::symlinks::rbenv'
+    # Program symlinks
+    file { '/usr/local/bin/rbenv':   ensure => '/usr/local/rbenv/bin/rbenv' }
 }
