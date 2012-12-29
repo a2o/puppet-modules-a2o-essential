@@ -1,0 +1,8 @@
+#
+# WARNING: This file is generated and controlled by configuration management.
+# WARNING: All manual changes will be overwritten.
+#
+# To enable manually-added public keys, add them to either:
+# - configuration management, to the autorized_keys or authorizedkeys.site files
+# - to the autorized_keys.local file (check your sshd_config for this)
+#
