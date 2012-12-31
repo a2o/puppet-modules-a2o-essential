@@ -14,7 +14,7 @@
 
 
 define   a2o-essential-unix::account::shell::root (
-    $ensure            ='present',
+    $ensure = 'present',
     $password,
     $authorizedKeysUri = undef
 ) {
@@ -41,36 +41,33 @@ define   a2o-essential-unix::account::shell::root (
     }
 
 
-    # Directories and files
-    file {
-	[
-	    "/home/$userName",
-	    "/home/$userName/.ssh",
-	]:
-	ensure  => directory,
+    # File template
+    File {
 	require => User["$userName"],
 	owner   => root,
 	group   => root,
-	mode    => 700,
     }
 
+
+    # Directories
+    file {"/home/$userName":        ensure => directory, mode => 700 }
+    file {"/home/$userName/.ssh":   ensure => directory, mode => 700 }
+
+
+    # SSH authorized keys file
     if $authorizedKeysUri != undef {
 	$authorizedKeysUriReal = $authorizedKeysUri
     } else {
 	$authorizedKeysUriReal = [
 	    "puppet:///modules/$thisPuppetModule/authorized_keys.$userName",
-#	    "puppet:///modules/$thisPuppetModule/authorized_keys.root.$name",
-#	    "puppet:///modules/$thisPuppetModule/authorized_keys.$name",
 	    "puppet:///modules/a2o-essential-unix/account/shell/authorized_keys.root.empty",
 	]
     }
     file { "/home/$userName/.ssh/authorized_keys":
-	require => File["/home/$userName/.ssh"],
-	owner   => root,
-	group   => root,
-	mode    => 600,
 	source  => $authorizedKeysUriReal,
+	mode    => 600,
     }
+
 
     # Symlinks
     file { "/home/$userName/.my.cnf":   ensure => link, target => '/root/.my.cnf' }

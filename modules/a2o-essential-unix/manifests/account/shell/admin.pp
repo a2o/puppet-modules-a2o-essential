@@ -13,7 +13,12 @@
 
 
 
-define   a2o-essential-unix::account::shell::admin   ($ensure='present', $uid, $password) {
+define   a2o-essential-unix::account::shell::admin (
+    $ensure = 'present',
+    $password,
+    $uid,
+    $authorizedKeysUri = undef
+) {
 
     ###
     ### Get username from resource name
@@ -23,7 +28,7 @@ define   a2o-essential-unix::account::shell::admin   ($ensure='present', $uid, $
 
     # User
     user { "$userName":
-        ensure      => $ensure,
+	ensure      => $ensure,
 	allowdupe   => false,
 
 	uid         => "$uid",
@@ -35,7 +40,7 @@ define   a2o-essential-unix::account::shell::admin   ($ensure='present', $uid, $
 	password_min_age => 0,
 	password_max_age => 99999,
 
-        groups      => $operatingsystem ? {
+	groups      => $operatingsystem ? {
 	    slackware => [
 		'root',
 		'admin',
@@ -45,23 +50,30 @@ define   a2o-essential-unix::account::shell::admin   ($ensure='present', $uid, $
     }
 
 
-    # Directories and files
-    file {
-	[
-	    "/home/$userName",
-	    "/home/$userName/.ssh",
-	]:
-	ensure  => directory,
+    # File template
+    File {
 	require => User["$userName"],
 	owner   => "$userName",
 	group   => users,
-	mode    => 700,
+    }
+
+
+    # Directories
+    file {"/home/$userName":        ensure => directory, mode => 755 }
+    file {"/home/$userName/.ssh":   ensure => directory, mode => 700 }
+
+
+    # SSH authorized keys file
+    if $authorizedKeysUri != undef {
+	$authorizedKeysUriReal = $authorizedKeysUri
+    } else {
+	$authorizedKeysUriReal = [
+	    "puppet:///modules/$thisPuppetModule/authorized_keys.$userName",
+	    "puppet:///modules/a2o-essential-unix/account/shell/authorized_keys.admin.empty",
+	]
     }
     file { "/home/$userName/.ssh/authorized_keys":
-	require => File["/home/$userName/.ssh"],
-	owner   => "$userName",
-	group   => users,
+	source  => $authorizedKeysUriReal,
 	mode    => 600,
-	source  => "puppet:///modules/$thisPuppetModule/authorized_keys.$userName",
     }
 }
