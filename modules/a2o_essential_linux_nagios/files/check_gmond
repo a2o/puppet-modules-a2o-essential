@@ -1,0 +1,118 @@
+#!/bin/bash
+
+
+
+### Function: _displayHelp
+_displayHelp() {
+    echo "Usage: $0 metric operator threshold_warn threshold_crit"
+    echo ""
+    echo "       metric         : as reported by ganglia gmond daemon"
+    echo "       operator       : 'less' or 'more'"
+    echo "       thresholdA_warn : trigger nagios warning if value is "
+    echo "                          'less' or 'more' than this threshold"
+    echo "       threshold_crit : trigger nagios critical state if value is "
+    echo "                          'less' or 'more' than this threshold"
+    echo ""
+}
+
+
+
+### Return functions
+_returnError() {
+    echo "ERROR: $1"
+    exit 3
+}
+_returnUnknown() {
+    echo "UNKNOWN: $1"
+    exit 3
+}
+_returnCrit() {
+    echo "CRITICAL: $1"
+    exit 2
+}
+_returnWarn() {
+    echo "WARNING: $1"
+    exit 1
+}
+_returnOk() {
+    echo "OK: $1"
+    exit 0
+}
+
+
+
+### Parameters
+if [ "$#" -ne "4" ]; then
+    echo "ERROR: asdf"
+    _displayHelp
+    _returnError "Exactly four parameters are required"
+fi
+METRIC_NAME="$1"
+CHECK_OPERATOR="$2"
+THRESHOLD_WARN="$3"
+THRESHOLD_CRIT="$4"
+
+
+
+### Additional variables
+CHECK_HOSTNAME=`hostname -f`
+
+
+
+### Extract the value and units
+RES1=`nc localhost 8649 2>/dev/null | grep "HOST NAME=\"$CHECK_HOSTNAME\" IP" -A1000 | grep "METRIC NAME=\"$METRIC_NAME\" VAL" | head -1`
+if [ "x$RES1" == "x" ]; then
+    _returnUnknown "Unable to find metric $METRIC_NAME for hostname $CHECK_HOSTNAME"
+fi
+
+RES2=`echo $RES1 | grep -o 'VAL="[^"]\+"' | cut -d'"' -f2 `
+METRIC_VALUE_FLOAT="$RES2"
+METRIC_VALUE_INT=${METRIC_VALUE_FLOAT/.*}
+
+RES2=`echo $RES1 | grep -o 'UNITS="[^"]\+"' | cut -d'"' -f2 `
+METRIC_UNITS="$RES2"
+
+# Check
+if [ "x$METRIC_VALUE_FLOAT" == "x" ]; then
+    _returnUnknown "Unable to extract value for metric $METRIC_NAME for hostname $CHECK_HOSTNAME"
+fi
+#if [ "x$METRIC_UNITS" == "x" ]; then
+#    _returnUnknown "Unable to extract units for metric $METRIC_NAME for hostname $CHECK_HOSTNAME"
+#fi
+
+
+
+### Compare and return correct status code
+case $CHECK_OPERATOR in
+
+    'more')
+	if [ "$THRESHOLD_WARN" -gt "$THRESHOLD_CRIT" ]; then
+	    _returnError "WARN threshold is higher than CRIT threshold, nonsense!"
+	fi
+	if [ "$METRIC_VALUE_INT" -gt "$THRESHOLD_CRIT" ]; then
+	    _returnCrit "$METRIC_NAME: $METRIC_VALUE_INT $METRIC_UNITS, threshold crit: $THRESHOLD_CRIT $METRIC_UNITS"
+	fi
+	if [ "$METRIC_VALUE_INT" -gt "$THRESHOLD_WARN" ]; then
+	    _returnWarn "$METRIC_NAME: $METRIC_VALUE_INT $METRIC_UNITS, threshold warn: $THRESHOLD_WARN $METRIC_UNITS"
+	fi
+	_returnOk "$METRIC_NAME: $METRIC_VALUE_INT $METRIC_UNITS"
+	;;
+
+    'less')
+	if [ "$THRESHOLD_WARN" -lt "$THRESHOLD_CRIT" ]; then
+	    _returnError "WARN threshold is lower than CRIT threshold, nonsense!"
+	fi
+	if [ "$METRIC_VALUE_INT" -lt "$THRESHOLD_CRIT" ]; then
+	    _returnCrit "$METRIC_NAME: $METRIC_VALUE_INT $METRIC_UNITS, threshold crit: $THRESHOLD_CRIT $METRIC_UNITS"
+	fi
+	if [ "$METRIC_VALUE_INT" -lt "$THRESHOLD_WARN" ]; then
+	    _returnWarn "$METRIC_NAME: $METRIC_VALUE_INT $METRIC_UNITS, threshold warn: $THRESHOLD_WARN $METRIC_UNITS"
+	fi
+	_returnOk "$METRIC_NAME: $METRIC_VALUE_INT $METRIC_UNITS"
+	;;
+
+    *)
+	_returnError "Invalid operator: $CHECK_OPERATOR"
+	;;
+
+esac
