@@ -25,13 +25,25 @@ class   a2o_essential_linux_nagios::package::nagios_plugins   inherits   a2o_ess
 
 
     ### Package
-    $require = [
-        Package['perl'],
-        Package['openssl'],
-        Package['openldap'],
-        Package['mysql'],
-    ]
-    a2o-essential-unix::compiletool::package::generic { "$packageTag": require => $require, }
+    if $a2o_linux_nagios_plugins_lite == 'true' {
+        $require = [
+            Package['perl'],
+            Package['openssl'],
+        ]
+        $installScriptTplUri = "$thisPuppetModule/install-$softwareName-lite.sh"
+    } else {
+        $require = [
+            Package['perl'],
+            Package['openssl'],
+            Package['openldap'],
+            Package['mysql'],
+        ]
+        $installScriptTplUri = "$thisPuppetModule/install-$softwareName.sh"
+    }
+    a2o-essential-unix::compiletool::package::generic { "$packageTag":
+        require             => $require,
+        installScriptTplUri => $installScriptTplUri,
+    }
 
 
     ### Symlink

@@ -26,7 +26,13 @@ class   a2o_essential_linux_nagios::package::base   inherits   a2o_essential_lin
     # CheckURI: http://www.nagios.org/download/plugins/
     $softwareName_plugins          = 'nagios-plugins'
     $softwareVersion_plugins       = '1.4.16'
-    $packageRelease_plugins        = '1'
+
+    if $a2o_linux_nagios_plugins_lite == 'true' {
+        $packageRelease_plugins    = '1_lite'
+    } else {
+        $packageRelease_plugins    = '1'
+    }
+
     $packageTag_plugins            = "$softwareName_plugins-$softwareVersion_plugins-$packageRelease_plugins"
     $destDir_plugins               = "/usr/local/$packageTag_plugins"
 
