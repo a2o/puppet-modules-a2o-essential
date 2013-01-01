@@ -30,5 +30,7 @@ class   a2o-essential-redhat::packages::sys   inherits   a2o-essential-redhat::p
     package { 'zlib-devel':   }
 
     # Various system packages
+    package { 'nc':           }
     package { 'ntp':          }
+    package { 'telnet':       }
 }
