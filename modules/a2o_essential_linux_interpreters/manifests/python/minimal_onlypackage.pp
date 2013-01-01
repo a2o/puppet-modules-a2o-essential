@@ -1,4 +1,3 @@
-#!/bin/bash
 ###########################################################################
 # a2o Essential Puppet Modules                                            #
 #-------------------------------------------------------------------------#
@@ -14,37 +13,7 @@
 
 
 
-### Compile directory
-export SRCROOT="<%= compileDir %>" &&
-mkdir -p $SRCROOT &&
-cd $SRCROOT &&
+class a2o_essential_linux_interpreters::python::minimal_onlypackage {
 
-
-
-### Set versions and directories
-export PVERSION_NODEJS="<%= softwareVersion %>" &&
-export PDESTDIR="<%= destDir %>" &&
-
-
-
-### NodeJS
-# CheckURI: http://nodejs.org/
-cd $SRCROOT && . ../build_functions.sh &&
-export PNAME="node" &&
-export PVERSION="$PVERSION_NODEJS" &&
-export PDIR="$PNAME-v$PVERSION" &&
-export PFILE="$PDIR.tar.gz" &&
-export PURI="http://nodejs.org/dist/v$PVERSION/$PFILE" &&
-
-rm -rf $PDIR &&
-GetUnpackCd &&
-
-# Otherwise it takes system python, which could be not-2.6
-export PATH="/usr/local/python/bin:$PATH" &&
-
-./configure --prefix=$PDESTDIR &&
-make &&
-make install &&
-
-cd $SRCROOT &&
-rm -rf $PDIR
+    include 'a2o_essential_linux_interpreters::python::package'
+}

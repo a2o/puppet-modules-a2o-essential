@@ -24,11 +24,15 @@ class   a2o_essential_linux_nodejs::package::nodejs   inherits   a2o_essential_l
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
     $destDir          = "/usr/local/$packageTag"
 
+    ### Python destdir
+#    $destDir_python = $a2o_essential_linux_interpreters::python::package::destDir
 
     ### Package
     $require = [
 #        Package['openssl'],
 #        Package['zlib'],
+        Package['python'],
+        File['/usr/local/python'],
     ]
     a2o-essential-unix::compiletool::package::generic { "$packageTag": require => $require, }
 
