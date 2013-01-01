@@ -22,7 +22,7 @@ class   a2o_essential_linux_openssh_sys::package::base   inherits   a2o_essentia
     # CheckURI: http://www.openssh.org
     $softwareName_openssh     = 'openssh-sys'
     $softwareVersion_openssh  = '6.1p1'
-    $packageRelease_openssh   = '2'
+    $packageRelease_openssh   = '3'
     $packageTag_openssh       = "$softwareName_openssh-$softwareVersion_openssh-$packageRelease_openssh"
     $destDir_openssh          = "/usr/local/$packageTag_openssh"
 

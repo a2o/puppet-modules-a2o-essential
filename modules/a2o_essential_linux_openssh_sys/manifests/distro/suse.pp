@@ -13,37 +13,19 @@
 
 
 
-### Base class
-class   a2o_essential_linux_openssh_sys::distro::suse::base   inherits a2o_essential_linux_openssh_sys::base {
-}
-
-
-
 ### Service: sshd-sys
-class   a2o_essential_linux_openssh_sys::distro::suse::service   inherits   a2o_essential_linux_openssh_sys::distro::suse::base {
+class   a2o_essential_linux_openssh_sys::distro::suse::service   inherits   a2o_essential_linux_openssh_sys::distro::service_base {
 
-
-    ### Requires and subscribes
-    $require   = []
-    $subscribe = [
-	Package['openssh-sys'],
-        File['/usr/local/openssh-sys'],
-        File['/usr/local/ssh-sys'],
-        File['/etc/ssh-sys/sshd_config'],
-    ]
-
-    ### Instantiate from template
-    a2o-essential-suse::service::generic_withstartupfile { 'sshd-sys':
-	require   => $require,
-	subscribe => $subscribe,
+    a2o-essential-suse::service::rctool_wrapper { 'sshd-sys':
+        require   => $require,
+        subscribe => $subscribe,
     }
 }
 
 
 
 ### The final all-containing classes
-class a2o_essential_linux_openssh_sys::distro::suse {
-    include 'a2o_essential_linux_openssh_sys::package'
-    include 'a2o_essential_linux_openssh_sys::files'
+class   a2o_essential_linux_openssh_sys::distro::suse {
+    include 'a2o_essential_linux_openssh_sys::distro::common'
     include 'a2o_essential_linux_openssh_sys::distro::suse::service'
 }

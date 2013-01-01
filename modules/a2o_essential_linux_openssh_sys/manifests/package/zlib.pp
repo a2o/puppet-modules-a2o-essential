@@ -30,7 +30,7 @@ class   a2o_essential_linux_openssh_sys::package::zlib   inherits   a2o_essentia
     ### Package
     a2o_essential_linux_libs::zlib::instance { "$packageTag":
 	packageName     => $softwareName,
-	softwareVersion => $packageVersion,
+	softwareVersion => $softwareVersion,
 	packageRelease  => $packageRelease,
 	destDir         => $destDir_openssh
     }

@@ -25,7 +25,7 @@ class   a2o_essential_linux_openssh_sys::distro::a2o::service   inherits   a2o_e
 
 
 ### The final all-containing classes
-class a2o_essential_linux_openssh_sys::distro::a2o {
+class   a2o_essential_linux_openssh_sys::distro::a2o {
     include 'a2o_essential_linux_openssh_sys::distro::common'
     include 'a2o_essential_linux_openssh_sys::distro::a2o::service'
 }
