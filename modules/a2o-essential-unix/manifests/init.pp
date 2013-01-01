@@ -29,10 +29,11 @@ class   a2o-essential-unix::base {
 ### Miscelaneous tools
 class   a2o-essential-unix::tools-misc    inherits   a2o-essential-unix::base {
 
-    file { '/bin/pidfind':     source => "puppet:///modules/$thisPuppetModule/tools/pidfind",  mode => 755, }
-    file { '/bin/psfind':      source => "puppet:///modules/$thisPuppetModule/tools/psfind",   mode => 755, }
-    file { '/bin/taillog':     source => "puppet:///modules/$thisPuppetModule/tools/taillog",  mode => 755, }
-    file { '/usr/bin/untar':   source => "puppet:///modules/$thisPuppetModule/tools/untar",    mode => 755, }
+    file { '/bin/addquotes':   source => "puppet:///modules/$thisPuppetModule/tools/addquotes", mode => 755, }
+    file { '/bin/pidfind':     source => "puppet:///modules/$thisPuppetModule/tools/pidfind",   mode => 755, }
+    file { '/bin/psfind':      source => "puppet:///modules/$thisPuppetModule/tools/psfind",    mode => 755, }
+    file { '/bin/taillog':     source => "puppet:///modules/$thisPuppetModule/tools/taillog",   mode => 755, }
+    file { '/usr/bin/untar':   source => "puppet:///modules/$thisPuppetModule/tools/untar",     mode => 755, }
 }
 
 
