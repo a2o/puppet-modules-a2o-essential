@@ -23,6 +23,11 @@
 # Short-Description:	Ganglia Metrics Daemon
 # Long-Description:	Ganglia Metrics Daemon
 ### END INIT INFO
+#
+### BEGIN CHKCONFIG part
+# chkconfig: 2345 55 25
+# description: Ganglia gmond monitoring daemon
+### END CHKCONFIG part
 
 
 
