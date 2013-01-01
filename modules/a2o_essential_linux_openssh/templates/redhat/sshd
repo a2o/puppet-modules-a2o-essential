@@ -1,3 +1,4 @@
+#!/bin/bash
 ###########################################################################
 # a2o Essential Puppet Modules                                            #
 #-------------------------------------------------------------------------#
@@ -10,23 +11,24 @@
 #-------------------------------------------------------------------------#
 # Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
 ###########################################################################
+#
+# /etc/init.d/sshd
+#
+### BEGIN INIT INFO
+# Provides:		sshd
+# Required-Start:	$local_fs $syslog $network
+# Required-Stop:	$local_fs $syslog $network
+# Default-Start:	2 3 4 5
+# Default-Stop:		0 1 6
+# Short-Description:	OpenSSH daemon
+# Long-Description:	OpenSSH daemon
+### END INIT INFO
+#
+### BEGIN CHKCONFIG part
+# chkconfig: 2345 55 25
+# description: OpenSSH server daemon
+### END CHKCONFIG part
 
 
-
-### Program symlinks
-class   a2o_essential_linux_openssh::symlinks   inherits   a2o_essential_linux_openssh::base {
-
-    # Template
-    File {
-        owner   => root,
-        group   => root,
-        mode    => 755,
-        require => File['/usr/local/ssh'],
-    }
-
-    file { '/usr/local/bin/scp':           ensure => '/usr/local/ssh/bin/scp'         }
-    file { '/usr/local/bin/sftp':          ensure => '/usr/local/ssh/bin/sftp'        }
-    file { '/usr/local/bin/ssh':           ensure => '/usr/local/ssh/bin/ssh'         }
-    file { '/usr/local/bin/ssh-keygen':    ensure => '/usr/local/ssh/bin/ssh-keygen'  }
-    file { '/usr/local/bin/ssh-keyscan':   ensure => '/usr/local/ssh/bin/ssh-keyscan' }
-}
+### Just run the rctool wrapper
+/etc/rc.tool/wrapper.redhat sshd $@

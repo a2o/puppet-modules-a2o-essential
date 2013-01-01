@@ -13,20 +13,20 @@
 
 
 
-### Program symlinks
-class   a2o_essential_linux_openssh::symlinks   inherits   a2o_essential_linux_openssh::base {
+### Service: sshd
+class   a2o_essential_linux_openssh::distro::redhat::service   inherits   a2o_essential_linux_openssh::distro::service_base {
 
-    # Template
-    File {
-        owner   => root,
-        group   => root,
-        mode    => 755,
-        require => File['/usr/local/ssh'],
+    a2o-essential-redhat::service::rctool_wrapper { 'sshd':
+        require   => $require,
+        subscribe => $subscribe,
     }
+}
 
-    file { '/usr/local/bin/scp':           ensure => '/usr/local/ssh/bin/scp'         }
-    file { '/usr/local/bin/sftp':          ensure => '/usr/local/ssh/bin/sftp'        }
-    file { '/usr/local/bin/ssh':           ensure => '/usr/local/ssh/bin/ssh'         }
-    file { '/usr/local/bin/ssh-keygen':    ensure => '/usr/local/ssh/bin/ssh-keygen'  }
-    file { '/usr/local/bin/ssh-keyscan':   ensure => '/usr/local/ssh/bin/ssh-keyscan' }
+
+
+### The final all-containing classes
+class a2o_essential_linux_openssh::distro::redhat {
+    include 'a2o_essential_linux_openssh::distro::common'
+    include 'a2o_essential_linux_openssh::symlinks'
+    include 'a2o_essential_linux_openssh::distro::redhat::service'
 }
