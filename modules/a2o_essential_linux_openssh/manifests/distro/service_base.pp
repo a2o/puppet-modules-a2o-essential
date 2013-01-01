@@ -13,20 +13,17 @@
 
 
 
-### Service: sshd
-class   a2o_essential_linux_openssh::distro::a2o::service   inherits   a2o_essential_linux_openssh::distro::service_base {
+### Service base
+class   a2o_essential_linux_openssh::distro::service_base   inherits   a2o_essential_linux_openssh::base {
 
-    a2o-essential-unix::rctool::service::generic { 'sshd':
-        require   => $require,
-        subscribe => $subscribe,
-    }
-}
-
-
-
-### The final all-containing classes
-class a2o_essential_linux_openssh::distro::a2o {
-    include 'a2o_essential_linux_openssh::distro::common'
-    include 'a2o_essential_linux_openssh::symlinks'
-    include 'a2o_essential_linux_openssh::distro::a2o::service'
+    $require   = [
+        File['/var/empty'],
+        File['/var/run'],
+    ]
+    $subscribe = [
+        Package['openssh'],
+        File['/usr/local/openssh'],
+        File['/usr/local/ssh'],
+        File['/etc/ssh/sshd_config'],
+    ]
 }
