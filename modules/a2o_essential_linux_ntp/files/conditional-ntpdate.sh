@@ -19,7 +19,7 @@ NTP_SERVER="pool.ntp.org"
 MAX_DIFF_SECONDS="10"
 if [ "x$1" != "x" ]; then
     if [[ "$1" =~ ^[0-9]+$ ]]; then
-	MAX_DIFF_SECONDS=$1
+        MAX_DIFF_SECONDS=$1
     else
         echo "ERROR: Invalid argument MAX_DIFF_SECONDS: $1"
         exit 1
@@ -31,7 +31,7 @@ fi
 ### Get program locations
 # PATH
 if ! echo "$PATH" | grep 'local' >/dev/null; then
-    export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+    export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:$PATH"
 fi
 # stnp or ntpdate
 if which sntp >/dev/null 2>&1; then
