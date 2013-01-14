@@ -140,8 +140,8 @@ virtual_alias_domains = /etc/postfix/virtual_domains
 virtual_alias_maps    = hash:/etc/postfix/virtual
 
 ### Local aliases
-alias_maps            = btree:/etc/postfix/aliases, btree:/etc/postfix/aliases-local
-alias_database        = btree:/etc/postfix/aliases, btree:/etc/postfix/aliases-local
+alias_maps            = btree:/etc/postfix/aliases-local, btree:/etc/postfix/aliases
+alias_database        = btree:/etc/postfix/aliases-local, btree:/etc/postfix/aliases
 
 ### Local delivery
 local_recipient_maps  = $alias_maps unix:passwd.byname
