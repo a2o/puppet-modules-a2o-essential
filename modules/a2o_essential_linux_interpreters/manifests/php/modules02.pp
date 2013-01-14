@@ -23,13 +23,13 @@ class   a2o_essential_linux_interpreters::php::modules02   inherits   a2o_essent
     # Package / Software details
     # CheckURI: No version here, only below at actual modules
     $softwareName      = "$packageTag_php-modules02"
-    $softwareVersion   = '0.1.1'
+    $softwareVersion   = '0.1.2'
     $packageRelease    = '1'
     $packageTag        = "$softwareName-$softwareVersion-$packageRelease"
 
 
     ### Actual module versions
-    $softwareVersion_apc = '3.1.13'
+    $softwareVersion_apc = '3.1.14'
 
 
     ### Package
