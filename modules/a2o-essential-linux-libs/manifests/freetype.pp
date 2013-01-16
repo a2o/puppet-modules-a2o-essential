@@ -19,7 +19,7 @@ class   a2o-essential-linux-libs::freetype   inherits   a2o-essential-linux-libs
     # Software details
     $packageName            = 'freetype'
     $packageSoftware        = 'freetype'
-    $packageSoftwareVersion = '2.4.10'
+    $packageSoftwareVersion = '2.4.11'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
