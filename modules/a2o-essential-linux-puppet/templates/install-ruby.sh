@@ -36,7 +36,7 @@ export PNAME="ruby" &&
 export PVERSION="$PVERSION_RUBY" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
-export PURI="ftp://ftp.ruby-lang.org/pub/ruby/$PVERSION_RUBY_MAJOR/$PFILE" &&
+export PURI="http://ftp.ruby-lang.org/pub/ruby/$PVERSION_RUBY_MAJOR/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&
