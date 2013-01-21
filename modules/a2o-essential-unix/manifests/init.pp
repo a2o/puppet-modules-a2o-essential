@@ -62,3 +62,8 @@ class   a2o-essential-unix::server-minimal {
     include 'a2o-essential-unix::rctool'
     include 'a2o-essential-unix::sys'
 }
+class   a2o-essential-unix::server::puppetonly {
+    include 'a2o-essential-unix::fhs'
+    include 'a2o-essential-unix::compiletool'
+    include 'a2o-essential-unix::rctool'
+}
