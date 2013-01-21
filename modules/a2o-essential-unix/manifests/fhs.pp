@@ -17,7 +17,7 @@
 class a2o-essential-unix::fhs inherits a2o-essential-unix::base {
 
     $mode_osdep = $operatingsystem ? {
-	redhat  => 555,
+#	redhat  => 555,
 	default => 755,
     }
     $mode_osdep_sys = $operatingsystem ? {
@@ -32,6 +32,7 @@ class a2o-essential-unix::fhs inherits a2o-essential-unix::base {
         mode     => 755,
     }
 
+    file { '/.':                    }
     file { '/bin':                 mode => $mode_osdep, }
     file { '/boot':                mode => $mode_osdep, }
     file { '/dev':                 }
