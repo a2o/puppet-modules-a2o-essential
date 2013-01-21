@@ -13,17 +13,19 @@
 
 
 
-### Base class
-class   a2o-essential-redhat::base {
-    $thisPuppetModule = 'a2o-essential-redhat'
-}
-
-
-
 ### Final class: server
 class   a2o-essential-redhat::server {
     include 'a2o-essential-unix::server'
     include 'a2o-essential-redhat::fhs'
     include 'a2o-essential-redhat::packages'
     include 'a2o-essential-redhat::sys'
+}
+
+
+### Final class: puppetonly server, for puppet-sys
+class   a2o-essential-redhat::server::puppetonly {
+    include 'a2o-essential-unix::server::puppetonly'
+    include 'a2o-essential-redhat::fhs'
+    include 'a2o-essential-linux-openssl'
+    include 'a2o-essential-linux-puppet'
 }
