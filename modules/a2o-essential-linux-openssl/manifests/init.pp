@@ -105,6 +105,24 @@ class   a2o-essential-linux-openssl::symlinks {
 }
 
 
+### Directories
+class   a2o-essential-linux-openssl::dirs   inherits   a2o-essential-linux-openssl::base {
+
+    File {
+	ensure   => directory,
+	owner    => root,
+	group    => root,
+	mode     => 755,
+	force    => false,
+	links    => follow,
+    }
+
+    file { '/etc/ssl':         }
+    file { '/etc/ssl/certs':   }
+}
+
+
+
 ### CA certificate files
 class   a2o-essential-linux-openssl::files_ca   inherits   a2o-essential-linux-openssl::base {
 
@@ -130,7 +148,7 @@ class   a2o-essential-linux-openssl::files_ca   inherits   a2o-essential-linux-o
 class   a2o-essential-linux-openssl {
     include 'a2o-essential-linux-openssl::packages'
     include 'a2o-essential-linux-openssl::symlinks'
+    include 'a2o-essential-linux-openssl::dirs'
     include 'a2o-essential-linux-openssl::files_ca'
     include 'a2o-essential-linux-openssl::cleanup'
-#    class { 'a2o-essential-linux-openssl::cleanup': stage => cleanup; }
 }
