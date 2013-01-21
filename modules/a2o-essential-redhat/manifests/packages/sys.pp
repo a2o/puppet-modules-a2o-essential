@@ -22,14 +22,17 @@ class   a2o-essential-redhat::packages::sys   inherits   a2o-essential-redhat::p
 #    package { 'gettext':      }
     package { 'libtool':      }
     package { 'make':         }
-    package { 'mc':           }
     package { 'patch':        }
     package { 'pkgconfig':    }
     package { 'xz':           }
     package { 'zlib':         }
     package { 'zlib-devel':   }
 
-    # Various system packages
+    # Various system tools
+    package { 'iotop':        }
+    package { 'iptraf':       }
+    package { 'lsof':         }
+    package { 'mc':           }
     package { 'nc':           }
     package { 'ntp':          }
     package { 'telnet':       }

@@ -27,5 +27,5 @@ class   a2o-essential-redhat::fhs   inherits   a2o-essential-redhat::base {
     file { '/etc/rc.d':     }
     file { '/home':         links  => follow }
     file { '/proc':         mode   => 555 }
-    file { '/root':         mode   => 550 }
+    file { '/root':         mode   => 750 }
 }
