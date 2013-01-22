@@ -26,8 +26,8 @@
 # Provides: sshd-sys
 # Required-Start: $network
 # Required-Stop: $network
-# Default-Start: 3 5
-# Default-Stop: 0 1 2 6
+# Default-Start: 1 2 3 4 5
+# Default-Stop: 0 6
 # Description: Start the sshd-sys daemon
 ### END INIT INFO
 

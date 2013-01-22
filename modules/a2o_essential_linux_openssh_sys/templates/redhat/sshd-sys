@@ -18,14 +18,14 @@
 # Provides:		sshd-sys
 # Required-Start:	$local_fs $syslog $network
 # Required-Stop:	$local_fs $syslog $network
-# Default-Start:	2 3 4 5
-# Default-Stop:		0 1 6
+# Default-Start:	1 2 3 4 5
+# Default-Stop:		0 6
 # Short-Description:	System SSH daemon
 # Long-Description:	System SSH daemon
 ### END INIT INFO
 #
 ### BEGIN CHKCONFIG part
-# chkconfig: 2345 55 25
+# chkconfig: 12345 55 25
 # description: OpenSSH server daemon
 ### END CHKCONFIG part
 
