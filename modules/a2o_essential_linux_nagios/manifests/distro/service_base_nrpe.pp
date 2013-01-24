@@ -26,6 +26,8 @@ class   a2o_essential_linux_nagios::distro::service_base_nrpe   inherits   a2o_e
     ]
 
     $subscribe = [
+	User['nagios'],
+	Group['nagios'],
 	Package['nrpe'],
 	Package['nagios-plugins'],
         File['/usr/local/nrpe'],

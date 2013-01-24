@@ -16,17 +16,24 @@
 ### Required users and groups
 class   a2o_essential_linux_nagios::users_groups {
 
+    # Additional definitions
+    if defined(Group['ossec']) {
+	$groups = ['ossec']
+    } else {
+	$groups = []
+    }
+
     group { 'nagios':    ensure => present, gid => 1248, }
     group { 'nagcmd':    ensure => present, gid => 1249, }
 
     User  {
         provider   => useradd,
         allowdupe  => false,
-	ensure     => present,
+        ensure     => present,
         password   => '*',
         shell      => '/bin/bash',
         managehome => true,
     }
-    user  { 'nagios':   require => Group['nagios'], uid => 1248, gid => 1248, home => '/var/nagios',    }
+    user  { 'nagios':   require => Group['nagios'], uid => 1248, gid => 1248, home => '/var/nagios',    groups => $groups }
     user  { 'nagcmd':   require => Group['nagcmd'], uid => 1249, gid => 1249, home => '/var/nagios/rw', }
 }
