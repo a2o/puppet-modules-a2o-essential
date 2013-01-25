@@ -32,7 +32,8 @@ node 'a2o_essential_node_template' {
 
 
     ### Management IPs - REQUIRED
-    #$net_management_sources = []
+    #$net_management_sources      = []
+    #$net_management_sources_ipv6 = []
 
 
     ### Bind cluster - REQUIRED
@@ -40,8 +41,8 @@ node 'a2o_essential_node_template' {
 
 
     ### Ganglia cluster - REQUIRED
-    $ganglia_headnode_ips = ['89.212.63.130', '89.212.63.131']
-    $ganglia_cluster_name = 's.itsis.si'
+    #$ganglia_headnode_ips = ['1.1.1.1', '1.1.1.2']
+    #$ganglia_cluster_name = 'servers.example.net'
 
 
     ### MySQL credentials - REQUIRED?
