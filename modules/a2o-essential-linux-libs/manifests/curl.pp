@@ -19,8 +19,8 @@ class   a2o-essential-linux-libs::curl   inherits   a2o-essential-linux-libs::ba
     # Software details
     $packageName            = 'curl'
     $packageSoftware        = 'curl'
-    $packageSoftwareVersion = '7.27.0'
-    $packageRelease         = '3'
+    $packageSoftwareVersion = '7.28.1'
+    $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
     $installScriptTpl       = "install-$packageSoftware.sh"

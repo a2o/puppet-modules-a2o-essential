@@ -41,8 +41,8 @@ GetUnpackCd &&
 
 ### Because of this error: /usr/local/bin/curl-config: line 140: CPPFLAG_CURL_STATICLIB: command not found
 # Supposedly fixed in 7.28.0
-wget --no-check-certificate https://trac.macports.org/raw-attachment/ticket/35631/patch-curl-config.diff &&
-patch -p0 < patch-curl-config.diff &&
+#wget --no-check-certificate https://trac.macports.org/raw-attachment/ticket/35631/patch-curl-config.diff &&
+#patch -p0 < patch-curl-config.diff &&
 
 # Disable SSLv2 support entirely
 wget http://source.a2o.si/patches/curl-7.27.0_sslv2-disable.diff &&
@@ -51,7 +51,8 @@ patch -p0 < curl-7.27.0_sslv2-disable.diff &&
 export LD_LIBRARY_PATH=$PDESTDIR_OPENSSL/lib &&
 
 ./configure --with-ssl=$PDESTDIR_OPENSSL \
-  --with-ca-bundle=/etc/ssl/certs/curl-ca-bundle.crt &&
+  --with-ca-bundle=/etc/ssl/certs/curl-ca-bundle.crt \
+  --enable-ipv6 &&
 make -j 2 &&
 make install &&
 ldconfig &&
