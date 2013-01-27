@@ -35,5 +35,7 @@ class   a2o-essential-redhat::packages::sys   inherits   a2o-essential-redhat::p
     package { 'mc':           }
     package { 'nc':           }
     package { 'ntp':          }
+    package { 'screen':       }
+    package { 'strace':       }
     package { 'telnet':       }
 }
