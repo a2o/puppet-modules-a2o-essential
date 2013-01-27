@@ -16,8 +16,26 @@
 ### Network time protocol - clock synchronisation
 class   a2o-essential-suse::ntp   inherits   a2o-essential-suse::base {
 
+    ### Package name
+    case $operatingsystem {
+	opensuse: {
+	    case $operatingsystemrelease {
+		10.3: {
+		    $packageName = "xntp"
+		}
+		default: {
+		    $packageName = "ntp"
+		}
+	    }
+	}
+	default: {
+	    $packageName = "ntp"
+	}
+    }
+
+
     ### Software and configuration file
-    package { 'ntp':
+    package { "$packageName":
 	provider => zypper,
 	ensure   => present,
     }
@@ -26,14 +44,14 @@ class   a2o-essential-suse::ntp   inherits   a2o-essential-suse::base {
 	owner    => root,
 	group    => ntp,
 	mode     => 644,
-	require  => Package['ntp'],
+	require  => Package["$packageName"],
     }
 
 
-    ### Service
+    ### Service - DISABLED BECAUSE IT MIGHT HANG THE SERVER AT BOOT
     $subscribeDefs = [
-	Package['ntp'],
+	Package["$packageName"],
 	File['/etc/ntp.conf'],
     ]
-    a2o-essential-suse::service::generic { 'ntp':   subscribe => $subscribeDefs }
+    a2o-essential-suse::service::generic { 'ntp':   ensure => disabled, subscribe => $subscribeDefs }
 }
