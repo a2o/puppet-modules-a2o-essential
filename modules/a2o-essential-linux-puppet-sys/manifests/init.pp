@@ -216,33 +216,32 @@ class   a2o-essential-linux-puppet-sys::packages {
 
 
 ### Configuration files and directories
-class   a2o-essential-linux-puppet-sys::files   inherits   a2o-essential-linux-puppet-sys::base {
-    file { "/etc/puppet-sys":
-	ensure => directory,
+class   a2o-essential-linux-puppet-sys::dirs   inherits   a2o-essential-linux-puppet-sys::base {
+    File {
+        ensure => directory,
         owner  => root,
         group  => root,
         mode   => 755,
+    }
+    file { '/etc/puppet-sys':         }
+    file { '/var/lib/puppet-sys':     }
+    file { '/opt/scripts/puppet-sys': }
+}
+class   a2o-essential-linux-puppet-sys::files   inherits   a2o-essential-linux-puppet-sys::base {
+    File {
+        owner   => root,
+        group   => root,
+        mode    => 644,
     }
     file { "/etc/puppet-sys/puppet.conf":
-	content => template("$thisPuppetModule/puppet.conf"),
-        owner   => root,
-        group   => root,
-        mode    => 644,
+        content => template("$thisPuppetModule/puppet.conf"),
     }
     file { "/etc/puppet-sys/namespaceauth.conf":
-	content => template("$thisPuppetModule/namespaceauth.conf"),
-        owner   => root,
-        group   => root,
-        mode    => 644,
+        content => template("$thisPuppetModule/namespaceauth.conf"),
     }
-}
-
-class   a2o-essential-linux-puppet-sys::dirs   inherits   a2o-essential-linux-puppet-sys::base {
-    file { "/var/lib/puppet-sys":
-	ensure => directory,
-        owner  => root,
-        group  => root,
-        mode   => 755,
+    file { '/opt/scripts/puppet-sys/puppet-sys.postrun.sh':
+        source => "puppet:///modules/$thisPuppetModule/puppet-sys.postrun.sh",
+        mode    => 755,
     }
 }
 
@@ -250,14 +249,12 @@ class   a2o-essential-linux-puppet-sys::dirs   inherits   a2o-essential-linux-pu
 
 ### Cron for periodic puppet runs
 class   a2o-essential-linux-puppet-sys::cron   inherits   a2o-essential-linux-puppet-sys::base {
-    File {
+    file { '/opt/scripts/puppet-sys/puppet-sys.cron.sh':
+        source => "puppet:///modules/$thisPuppetModule/puppet-sys.cron.sh",
         owner  => root,
         group  => root,
         mode   => 755,
     }
-    file { '/opt/scripts/puppet-sys':                         ensure => directory }
-    file { '/opt/scripts/puppet-sys/puppet-sys.postrun.sh':   source => "puppet:///modules/$thisPuppetModule/puppet-sys.postrun.sh" }
-    file { '/opt/scripts/puppet-sys/puppet-sys.cron.sh':      source => "puppet:///modules/$thisPuppetModule/puppet-sys.cron.sh" }
 
     cron { "/opt/scripts/puppet-sys/puppet-sys.cron.sh":
         user    => root,
@@ -265,8 +262,8 @@ class   a2o-essential-linux-puppet-sys::cron   inherits   a2o-essential-linux-pu
 	command => '/opt/scripts/puppet-sys/puppet-sys.cron.sh > /dev/null 2>&1',
 	require  => [
 	    File['/usr/local/puppet-sys'],
-    	    File['/etc/puppet-sys/puppet.conf'],
-    	    File['/opt/scripts/puppet-sys/puppet-sys.postrun.sh'],
+	    File['/etc/puppet-sys/puppet.conf'],
+	    File['/opt/scripts/puppet-sys/puppet-sys.postrun.sh'],
 	    File['/opt/scripts/puppet-sys/puppet-sys.cron.sh'],
 	],
     }
@@ -277,7 +274,7 @@ class   a2o-essential-linux-puppet-sys::cron   inherits   a2o-essential-linux-pu
 ### The final all-containing classes
 class   a2o-essential-linux-puppet-sys {
     include 'a2o-essential-linux-puppet-sys::packages'
-    include 'a2o-essential-linux-puppet-sys::files'
     include 'a2o-essential-linux-puppet-sys::dirs'
+    include 'a2o-essential-linux-puppet-sys::files'
 #    include 'a2o-essential-linux-puppet-sys::cron'
 }

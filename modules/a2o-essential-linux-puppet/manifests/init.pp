@@ -224,8 +224,8 @@ class   a2o-essential-linux-puppet::dirs   inherits   a2o-essential-linux-puppet
 }
 class   a2o-essential-linux-puppet::files   inherits   a2o-essential-linux-puppet::base {
     File {
-        owner  => root,
-        group  => root,
+        owner   => root,
+        group   => root,
         mode    => 644,
     }
     file { "/etc/puppet/puppet.conf":
