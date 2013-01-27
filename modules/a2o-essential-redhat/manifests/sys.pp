@@ -29,7 +29,21 @@ class   a2o-essential-redhat::sys::ntp   inherits   a2o-essential-redhat::base {
 
 
 
+### SElinux
+class   a2o-essential-redhat::sys::selinux_disable   inherits   a2o-essential-redhat::base {
+
+    File {
+        owner    => root,
+        group    => root,
+        mode     => 644,
+    }
+    file { '/etc/selinux/config':   source => "puppet:///modules/$thisPuppetModule/selinux/config" }
+}
+
+
+
 ### Obligatory stuff for all servers
 class   a2o-essential-redhat::sys {
     include 'a2o-essential-redhat::sys::ntp'
+    include 'a2o-essential-redhat::sys::selinux_disable'
 }
