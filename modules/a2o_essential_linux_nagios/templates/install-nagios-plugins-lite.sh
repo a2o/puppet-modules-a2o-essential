@@ -55,6 +55,10 @@ rm -rf Params-Validate-0.88 &&
 cd .. &&
 
 
+# Export PERL path for installation
+export PATH=$PDESTDIR_PERL/bin:$PATH &&
+
+
 ./configure --prefix=$PDESTDIR_PLUGINS \
   --enable-perl-modules \
   --with-trusted-path="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin" \
