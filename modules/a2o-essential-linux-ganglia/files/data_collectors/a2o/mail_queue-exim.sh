@@ -14,15 +14,10 @@
 
 
 
-### Try postfix first
-if /bin/ps aux | grep 'libexec/postfix/master$' > /dev/null; then
-    /etc/ganglia/data_collectors/a2o/mail_queue-postfix.sh
-    exit $?
-fi
+### Get count
+QUEUE_SIZE=`/usr/sbin/exim -bpc`
 
 
-### Then exim
-if /bin/ps aux | grep '/usr/sbin/exim ' > /dev/null; then
-    /etc/ganglia/data_collectors/a2o/mail_queue-exim.sh
-    exit $?
-fi
+
+### Return it
+echo $QUEUE_SIZE
