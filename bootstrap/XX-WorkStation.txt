@@ -1,0 +1,35 @@
+################################################################################
+# Bootstrap for Workstation
+################################################################################
+
+
+
+###
+### Puppet installation made simple
+###
+#
+# On workstation we do not care that much if puppet installation gets borked.
+# Therefore we install whatever distribution has to offer and use that.
+#
+
+# Debian based (tested on Ubuntu 12.10):
+apt-get install puppet
+
+# RedHat based:
+yum install puppet
+
+
+
+###
+### Puppet configuration
+###
+
+mcedit /etc/puppet/puppet.conf
+
+
+
+###
+### Puppet run
+###
+
+puppet agent --test
