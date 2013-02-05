@@ -27,6 +27,7 @@ class   a2o_essential_ubuntu::packages::workstation   inherits   a2o-essential-d
     package { 'mc':            }
     package { 'nano':          }
     package { 'strace':        }
+    package { 'sysstat':        }
 
     ### Browsers
     # For Google Chrome
@@ -40,9 +41,36 @@ class   a2o_essential_ubuntu::packages::workstation   inherits   a2o-essential-d
 
     # For workspace configuration
     package { 'compizconfig-settings-manager':   }
+    package { 'compiz-plugins':                  }
+
+    # On 12.10 default network manager sucks, we install this one
+    package { 'network-manager':                  }
+    package { 'network-manager-openconnect':                  }
+    package { 'network-manager-openvpn':                  }
+    package { 'network-manager-pptp':                  }
+    # ... and we enable it too
+    line_in_file { '/etc/NetworkManager/NetworkManager.conf managed true ':
+        ensure       => present,
+        file         => '/etc/NetworkManager/NetworkManager.conf',
+        line_regex   => "managed\s*=\s*true",
+        line         => "managed=true",
+        remove_regex => "managed\s*=\s*.+",
+        require      => Package['network-manager'],
+    }
 
     # Tools
     package { 'git':            }
+    package { 'subversion':            }
+    package { 'mercurial':            }
+    package { 'gimp':            }
+    package { 'shutter':            }
     package { 'default-jre':    }
     package { 'transmission':            }
+    package { 'pidgin':            }
+    package { 'sshfs':            }
+    package { 'rsync':            }
+
+    # Virtualization
+    package { 'virtualbox':              }
+
 }
