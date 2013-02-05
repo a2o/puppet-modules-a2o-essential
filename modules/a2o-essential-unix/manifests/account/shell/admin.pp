@@ -14,9 +14,9 @@
 
 
 define   a2o-essential-unix::account::shell::admin (
-    $ensure = 'present',
+    $ensure            = 'present',
     $password,
-    $uid,
+    $uid               = undef,
     $authorizedKeysUri = undef
 ) {
 
@@ -25,13 +25,19 @@ define   a2o-essential-unix::account::shell::admin (
     ###
     $userName = "$name"
 
+    # Get UID
+    if $uid != undef {
+        $uidReal = $uid
+    } else {
+        $uidReal = undef
+    }
 
     # User
     user { "$userName":
 	ensure      => $ensure,
 	allowdupe   => false,
 
-	uid         => "$uid",
+	uid         => $uidReal,
 	gid         => users,
 	shell       => '/bin/bash',
 	managehome  => true,
@@ -41,10 +47,10 @@ define   a2o-essential-unix::account::shell::admin (
 	password_max_age => 99999,
 
 	groups      => $operatingsystem ? {
-	    slackware => [
-		'root',
-		'admin',
-	    ],
+	    centos    => ['root', 'wheel'],
+	    opensuse  => ['root', 'wheel'],
+	    redhat    => ['root', 'wheel'],
+	    slackware => ['root', 'admin'],
 	    default   => fail('Unsupported operating system'),
 	}
     }
