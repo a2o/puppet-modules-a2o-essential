@@ -60,7 +60,17 @@ CHECK_HOSTNAME=`hostname -f`
 
 
 ### Extract the value and units
-RES1=`nc localhost 8649 2>/dev/null | grep "HOST NAME=\"$CHECK_HOSTNAME\" IP" -A1000 | grep "METRIC NAME=\"$METRIC_NAME\" VAL" | head -1`
+# Get netcat
+NETCAT=`which netcat 2> /dev/null`
+if [ "$?" != "0" ]; then
+    NETCAT=`which nc 2> /dev/null`
+    if [ "$?" != "0" ]; then
+	_returnError "Netcat (or nc) not found"
+    fi
+fi
+
+# Extract
+RES1=`$NETCAT localhost 8649 2>/dev/null | grep "HOST NAME=\"$CHECK_HOSTNAME\" IP" -A1000 | grep "METRIC NAME=\"$METRIC_NAME\" VAL" | head -1`
 if [ "x$RES1" == "x" ]; then
     _returnUnknown "Unable to find metric $METRIC_NAME for hostname $CHECK_HOSTNAME"
 fi
