@@ -39,7 +39,8 @@ class   a2o-essential-linux-openssl::packages {
     a2o-essential-linux-openssl::package::generic { 'openssl-0.9.8w-1': }
     a2o-essential-linux-openssl::package::generic { 'openssl-1.0.0h-1': }
     a2o-essential-linux-openssl::package::generic { 'openssl-1.0.0i-1': }
-    a2o-essential-linux-openssl::package::latest  { 'openssl-1.0.0k-1': }
+    a2o-essential-linux-openssl::package::generic { 'openssl-1.0.0k-1': }
+    a2o-essential-linux-openssl::package::latest  { 'openssl-1.0.1d-1': }
 }
 
 
@@ -87,6 +88,13 @@ class   a2o-essential-linux-openssl::symlinks {
 	backup   => false,
     }
 
+    ### Testing symlink
+    file { '/usr/local/openssl-1.0.1':
+	ensure   => 'openssl-1.0.1d-1',
+	require  => Package['openssl'],
+	backup   => false,
+    }
+
     ### Current symlink
     # Major version symlink
     file { '/usr/local/openssl-1.0.0':
@@ -104,6 +112,7 @@ class   a2o-essential-linux-openssl::symlinks {
 	backup   => false,
     }
 }
+
 
 
 ### Directories
