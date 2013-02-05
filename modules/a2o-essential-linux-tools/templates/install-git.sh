@@ -44,6 +44,7 @@ GetUnpackCd &&
 export PATH="/usr/local/python/bin:$PATH" &&
 
 ./configure --prefix=$PDESTDIR \
+  --with-python=`which python` \
   --with-openssl=$PDESTDIR_OPENSSL \
   --with-curl \
   --with-expat &&
