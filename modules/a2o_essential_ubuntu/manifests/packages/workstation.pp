@@ -67,6 +67,7 @@ class   a2o_essential_ubuntu::packages::workstation   inherits   a2o-essential-d
     package { 'default-jre':    }
     package { 'transmission':            }
     package { 'pidgin':            }
+    package { 'skype':            }
     package { 'sshfs':            }
     package { 'rsync':            }
 
