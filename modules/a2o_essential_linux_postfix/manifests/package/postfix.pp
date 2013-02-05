@@ -18,13 +18,13 @@ class   a2o_essential_linux_postfix::package::postfix   inherits   a2o_essential
 
     # CheckURI: ftp://ftp.arnes.si/packages/postfix-release/index.html
     $softwareName     = 'postfix'
-    $softwareVersion  = '2.9.5'
+    $softwareVersion  = '2.9.6'
     $packageRelease   = '1'
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
     $destDir          = "/usr/local/$packageTag"
 
     # Extenal references
-    $destDir_openssl  = '/usr/local/openssl-1.0.0i-1'
+    $destDir_openssl  = '/usr/local/openssl-1.0.1d-1'
 
 
     ### Package
