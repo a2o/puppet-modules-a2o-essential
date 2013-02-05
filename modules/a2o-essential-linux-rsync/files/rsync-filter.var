@@ -149,6 +149,8 @@ dir-merge .rsync-filter.site
 - /puppet/***
 + /puppet-sys
 - /puppet-sys/***
++ /rrdcached/journal
+- /rrdcached/journal/***
 + /run
 - /run/*.lock
 - /run/*.pid

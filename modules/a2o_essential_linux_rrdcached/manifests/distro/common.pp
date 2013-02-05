@@ -16,5 +16,5 @@
 ### Common resources for all distributions
 class   a2o_essential_linux_rrdcached::distro::common {
 
-    # Nothing :)
+    include 'a2o_essential_linux_rrdcached::files'
 }

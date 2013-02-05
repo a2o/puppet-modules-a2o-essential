@@ -13,14 +13,24 @@
 
 
 
-### Service base class: rrdcached
-class   a2o_essential_linux_rrdcached::distro::service_base   inherits   a2o_essential_linux_rrdcached::base {
+### Directories
+class   a2o_essential_linux_rrdcached::files::dirs   inherits   a2o_essential_linux_rrdcached::base {
 
-    $require   = [
-	File['/var/rrdcached/journal'],
-    ]
+    File {
+        ensure   => directory,
+        owner    => root,
+        group    => root,
+        mode     => 755,
+    }
 
-    $subscribe = [
-	Package['rrdtool'],
-    ]
+    # Dirs
+    file { '/var/rrdcached':           }
+    file { '/var/rrdcached/journal':   }
+}
+
+
+
+### Include-all class for files
+class   a2o_essential_linux_rrdcached::files {
+    include 'a2o_essential_linux_rrdcached::files::dirs'
 }
