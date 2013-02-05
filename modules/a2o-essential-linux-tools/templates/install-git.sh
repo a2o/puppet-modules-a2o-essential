@@ -41,6 +41,8 @@ export PURI="http://git-core.googlecode.com/files/$PFILE" &&
 rm -rf $PDIR &&
 GetUnpackCd &&
 
+export PATH="/usr/local/python/bin:$PATH" &&
+
 ./configure --prefix=$PDESTDIR \
   --with-openssl=$PDESTDIR_OPENSSL \
   --with-curl \
