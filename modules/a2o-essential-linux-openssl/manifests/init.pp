@@ -27,7 +27,7 @@ class   a2o-essential-linux-openssl::packages {
     #
     # Packages 0.9.8x are old and kept here for legacy reasons, but to be removed ASAP
     # Packages 1.0.0x are current
-    # Packages 1.0.1x and up are new, do not add them
+    # Packages 1.0.1x and up are new, we will start with testing them
     #
     # To add new version, just add new line below with new version
     #
@@ -38,7 +38,8 @@ class   a2o-essential-linux-openssl::packages {
 
     a2o-essential-linux-openssl::package::generic { 'openssl-0.9.8w-1': }
     a2o-essential-linux-openssl::package::generic { 'openssl-1.0.0h-1': }
-    a2o-essential-linux-openssl::package::latest  { 'openssl-1.0.0i-1': }
+    a2o-essential-linux-openssl::package::generic { 'openssl-1.0.0i-1': }
+    a2o-essential-linux-openssl::package::latest  { 'openssl-1.0.0k-1': }
 }
 
 
@@ -89,9 +90,9 @@ class   a2o-essential-linux-openssl::symlinks {
     ### Current symlink
     # Major version symlink
     file { '/usr/local/openssl-1.0.0':
-	ensure   => 'openssl-1.0.0i-1',
+	ensure   => 'openssl-1.0.0k-1',
 	require  => [
-#	    Package['openssl-1.0.0i-1'],
+#	    Package['openssl-1.0.0k-1'],
 	    Package['openssl'],
 	],
 	backup   => false,
