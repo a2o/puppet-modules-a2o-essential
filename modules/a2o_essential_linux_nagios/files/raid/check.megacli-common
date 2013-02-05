@@ -1,0 +1,91 @@
+#!/bin/bash
+###########################################################################
+# a2o Essential Puppet Modules                                            #
+#-------------------------------------------------------------------------#
+# Copyright (c) Bostjan Skufca                                            #
+#-------------------------------------------------------------------------#
+# This source file is subject to version 2.0 of the Apache License,       #
+# that is bundled with this package in the file LICENSE, and is           #
+# available through the world-wide-web at the following url:              #
+# http://www.apache.org/licenses/LICENSE-2.0                              #
+#-------------------------------------------------------------------------#
+# Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
+###########################################################################
+
+#
+# WARNING: This file is controlled by configuration management system.
+#
+
+
+### INFO
+# 1. MegaCli* must be setuid to root for correct group
+# 2. setfacl -m u:ganglia:r /dev/megaraid_sas_ioctl_node
+# 3. Make MegaCli executable for ganglia user (add ganglia user to root group)
+### end INFO
+
+
+# Check for MegaCli command variable presence
+if [ "x$MEGACLI" == "x" ]; then
+    echo "ERROR: MEGACLI variable not set"
+    exit 3
+fi
+
+
+# Check for MegaCli command presence
+if [ ! -x $MEGACLI ]; then
+    echo "ERROR: $MEGACLI not available"
+    exit 3
+fi
+
+
+# Check if any controller is available
+STATUS=`$MEGACLI -CfgDsply -aALL -NoLog | grep -c .`
+if [ "$STATUS" -lt "10" ]; then
+    echo "NO CONTROLLERS FOUND"
+    exit 0
+fi
+
+
+# Check RAID
+STATUS=`$MEGACLI -CfgDsply -aALL -NoLog | grep -i '^\(state\|firmware state\)' | grep -v Optimal | grep -v Online | grep -v 'Foreign State' | grep -c .`
+if [ "$STATUS" != "0" ]; then
+    echo "DISK FAILED"
+    exit 0
+fi
+
+
+# Check if BBU is present, if not, return success
+STATUS=`$MEGACLI -CfgDsply -aALL -NoLog | grep -i '^BBU: Absent' | grep -c .`
+if [ "$STATUS" != "0" ]; then
+    echo "OK"
+    exit 0
+fi
+
+
+# Check BBU status
+STATUS=`$MEGACLI -AdpBbuCmd -GetBbuStatus -aALL -NoLog | grep -c ': OK$'`
+if [ "$STATUS" != "3" ]; then
+    STATUS=`$MEGACLI -AdpBbuCmd -GetBbuStatus -aALL -NoLog | grep 'Learn Cycle Active' | grep -c 'Yes'`
+    if [ "$STATUS" != "1" ]; then
+	echo "BATTERY FAILED 1"
+	exit 0
+    fi
+fi
+
+# Disabled because it seems controller does periodic battery discharge)
+#STATUS=`$MEGACLI -AdpBbuCmd -GetBbuStatus -aALL -NoLog | grep -c ': Yes$'`
+#if [ "$STATUS" != "3" ]; then
+#    echo "BATTERY FAILED 2"
+#    exit 0
+#fi
+#
+#STATUS=`$MEGACLI -AdpBbuCmd -GetBbuStatus -aALL -NoLog | grep -c ': No$'`
+#if [ "$STATUS" != "20" ]; then
+#    echo "BATTERY FAILED 3"
+#    exit 0
+#fi
+
+
+# If no error present, then it is OK
+echo "OK"
+exit 0

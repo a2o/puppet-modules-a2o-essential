@@ -1,0 +1,76 @@
+#!/bin/bash
+###########################################################################
+# a2o Essential Puppet Modules                                            #
+#-------------------------------------------------------------------------#
+# Copyright (c) Bostjan Skufca                                            #
+#-------------------------------------------------------------------------#
+# This source file is subject to version 2.0 of the Apache License,       #
+# that is bundled with this package in the file LICENSE, and is           #
+# available through the world-wide-web at the following url:              #
+# http://www.apache.org/licenses/LICENSE-2.0                              #
+#-------------------------------------------------------------------------#
+# Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
+###########################################################################
+
+#
+# WARNING: This file is controlled by configuration management system.
+#
+
+
+### Config
+MDSTATFILE='/proc/mdstat'
+
+
+### Check if status file exists
+if [ ! -e $MDSTATFILE ]; then
+    echo "ERROR: status file does not exist ($MDSTATFILE)"
+    exit 3
+fi
+
+
+### Count RAIDs and statuses
+RAID_COUNT=`cat $MDSTATFILE | grep -c '^md[0-9]' | cat`
+FAILED_COUNT=`cat $MDSTATFILE | grep blocks | grep -vc '\[U\+\]' | cat`
+RECOVERY_COUNT=`cat $MDSTATFILE | grep -c '\(recovery\|resync\) =' | cat`
+
+
+### Check if no RAID at all
+if [ "$RAID_COUNT" == "0" ]; then
+    echo "WARNING: No arrays found"
+    exit 0
+fi
+
+
+### If more arrays are failed than are recovering, report imediatelly
+# Probability of multiple failed and same number of recovering arrays is neglected here
+if [ $FAILED_COUNT -gt $RECOVERY_COUNT ]; then
+    echo "DISK FAILED"
+    exit 0
+fi
+
+
+### Test if recovering
+if [ $RECOVERY_COUNT -gt 0 ]; then
+
+    # Display status for single recovery process
+    if [ $RECOVERY_COUNT -eq 1 ]; then
+	RECOVERY_STATUS=`cat $MDSTATFILE | grep '\(recovery\|resync\) =' | awk '{OFS=""; print $2,$3,$4,",",$6}'`
+	echo "W $RECOVERY_STATUS"
+	exit 0
+    else
+	echo "WARNING: Multiple arrays are recovering"
+	exit 0
+    fi
+fi
+
+
+### If any array has failed, report imediatelly
+if [ $FAILED_COUNT -gt 0 ]; then
+    echo "DISK FAILED"
+    exit 0
+fi
+
+
+### Otherwise everything is ok
+echo "OK"
+exit 0

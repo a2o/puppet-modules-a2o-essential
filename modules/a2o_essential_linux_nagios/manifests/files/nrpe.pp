@@ -58,6 +58,13 @@ class   a2o_essential_linux_nagios::files::nrpe::plugins   inherits   a2o_essent
     file { '/etc/nrpe/plugins/check_dns_host':           source  => "puppet:///modules/$thisPuppetModule/check_dns_host"         }
     file { '/etc/nrpe/plugins/check_dns_host_reverse':   source  => "puppet:///modules/$thisPuppetModule/check_dns_host_reverse" }
     file { '/etc/nrpe/plugins/check_gmond':              source  => "puppet:///modules/$thisPuppetModule/check_gmond"            }
+
+    # Raid check scripts
+    file { '/opt/scripts/raid':
+        ensure  => directory,
+        source  => "puppet:///modules/$thisPuppetModule/raid",
+        recurse => true,
+    }
 }
 
 
