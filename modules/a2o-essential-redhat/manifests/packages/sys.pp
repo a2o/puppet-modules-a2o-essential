@@ -29,12 +29,14 @@ class   a2o-essential-redhat::packages::sys   inherits   a2o-essential-redhat::p
     package { 'zlib-devel':   }
 
     # Various system tools
+    package { 'dmidecode':    }
     package { 'iotop':        }
     package { 'iptraf':       }
     package { 'lsof':         }
     package { 'mc':           }
     package { 'nc':           }
     package { 'ntp':          }
+    package { 'pciutils':     }
     package { 'screen':       }
     package { 'strace':       }
     package { 'telnet':       }
