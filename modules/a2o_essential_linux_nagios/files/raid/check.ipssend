@@ -1,0 +1,62 @@
+#!/bin/bash
+###########################################################################
+# a2o Essential Puppet Modules                                            #
+#-------------------------------------------------------------------------#
+# Copyright (c) Bostjan Skufca                                            #
+#-------------------------------------------------------------------------#
+# This source file is subject to version 2.0 of the Apache License,       #
+# that is bundled with this package in the file LICENSE, and is           #
+# available through the world-wide-web at the following url:              #
+# http://www.apache.org/licenses/LICENSE-2.0                              #
+#-------------------------------------------------------------------------#
+# Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
+###########################################################################
+
+#
+# WARNING: This file is controlled by configuration management system.
+#
+
+
+# Config
+IPSSEND=`which ipssend`
+
+
+# Check for array-info command presence
+if [ ! -x $IPSSEND ]; then
+    echo "ERROR: ipssend not available"
+    exit 3
+fi
+
+
+# Get list of all controllers
+CONTROLLER_IDS=`$IPSSEND GETVERSION | grep 'ServeRAID Controller Number' | cut -d' ' -f4`
+RET_STATUS=$?
+if [ "$RET_STATUS" != "0" ]; then
+    echo "ERROR: Unable to get list of controller IDs"
+    exit 3
+fi
+if [ "x$CONTROLLER_IDS" == "x" ]; then
+    echo "ERROR: No controllers found"
+    exit 3
+fi
+
+
+### Check each controller
+for CONTROLLER_ID in $CONTROLLER_IDS; do
+    LD_COUNT=`$IPSSEND GETCONFIG $CONTROLLER_ID | grep 'Logical drive number' -c`
+    if [ "$LD_COUNT" == "0" ]; then
+	echo "WARNING: No logical drives found on controller #$CONTROLLER_ID"
+	exit 1
+    fi
+
+    FAILED_STATUS_COUNT=`$IPSSEND GETCONFIG $CONTROLLER_ID | grep -i 'stat' | grep -iv 'cache' | grep -v '\(Hot spare\|Okay\|Online\|Standby\)' | grep -c .`
+    if [ "$FAILED_STATUS_COUNT" != "0" ]; then
+	echo "ERROR: Disk failed on controller #$CONTROLLER_ID"
+	exit 2
+    fi
+done
+
+
+# If no error present, then it is OK
+echo "OK"
+exit 0

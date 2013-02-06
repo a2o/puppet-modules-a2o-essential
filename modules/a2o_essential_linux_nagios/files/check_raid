@@ -17,17 +17,27 @@
 #
 
 
-# Config
-export PATH="/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:$PATH"
-ARCCONF='arcconf'
+### Settings
+CHECK_SCRIPT="/opt/scripts/raid/check"
 
 
-# Check RAID
-STATUS=`$ARCCONF getconfig 1 | grep '\(State\|Status\)' | grep -v 'Status of Enclosure services device' | grep -v '\(Hot Spare\|Okay\|Online\|Optimal\|Ready\)' | grep -c . | cat`
-if [ "$STATUS" == "0" ]; then
-    echo "OK"
+### Check if check script exists and is executable
+if [ ! -f $CHECK_SCRIPT ]; then
+    echo "ERROR: RAID check script not found: $CHECK_SCRIPT"
+    exit 3
+fi
+if [ ! -x $CHECK_SCRIPT ]; then
+    echo "ERROR: RAID check script not executable: $CHECK_SCRIPT"
+    exit 3
+fi
+
+
+### Run it
+RES=`$CHECK_SCRIPT`
+if [ "$RES" == "OK" ]; then
+    echo "RAID OK"
     exit 0
 else
-    echo "DISK FAILED"
-    exit 0
+    echo "RAID $RES"
+    exit 2
 fi
