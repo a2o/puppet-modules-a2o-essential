@@ -29,8 +29,9 @@ class   a2o_essential_linux_mysql::distro::base   inherits   a2o_essential_linux
         File['/etc/mysql/conf.d'],
     ]
     $subscribe = [
-	Package['mysql'],
+        Package['mysql'],
         File['/usr/local/mysql'],
         File['/etc/mysql/my.cnf'],
+        File['/opt/scripts/mysql/mysql.server'],
     ]
 }

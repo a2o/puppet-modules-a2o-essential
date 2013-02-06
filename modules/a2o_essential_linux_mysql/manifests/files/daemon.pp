@@ -46,8 +46,16 @@ class   a2o_essential_linux_mysql::files::daemon_config   inherits   a2o_essenti
     file { '/etc/mysql':          ensure => directory, mode => 755 }
     file { '/etc/mysql/conf.d':   ensure => directory, mode => 755 }
 
-    # Files
+    # Configuration files
     file { '/etc/mysql/my.cnf':         source => "puppet:///modules/$thisPuppetModule/my.cnf" }
+
+    # Startup script - rearranged order of parameters
+    file { '/opt/scripts/mysql/mysql.server':
+        content  => template("$thisPuppetModule/mysql.server"),
+        mode     => 755,
+        require  => Package['mysql'],
+    }
+
 }
 
 

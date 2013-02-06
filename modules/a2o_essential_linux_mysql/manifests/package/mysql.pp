@@ -36,24 +36,11 @@ class   a2o_essential_linux_mysql::package::mysql   inherits   a2o_essential_lin
     a2o-essential-unix::compiletool::package::generic { "$packageTag": require => $require, }
 
 
-    # Startup script fixup - rearrange order of parameters
-    file { "$destDir/share/mysql/mysql.server":
-	content  => template("$thisPuppetModule/mysql.server"),
-	owner    => root,
-	group    => root,
-	mode     => 755,
-	require  => [
-	    Package["$softwareName"],
-	],
-    }
-
-
     ### Symlink
     file { "/usr/local/$softwareName":
 	ensure  => "$packageTag",
 	require => [
 	    Package["$softwareName"],
-	    File["$destDir/share/mysql/mysql.server"],
 	],
 	backup   => false,
     }

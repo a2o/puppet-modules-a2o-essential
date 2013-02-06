@@ -28,8 +28,8 @@ export LD_LIBRARY_PATH="<%= destDir_openssl %>/lib"
 
 PROC_NAME="/usr/local/mysql/libexec/mysqld"
 PID_FILE="/var/mysql/run/mysqld.pid"
-APP_CMD_START="/usr/local/mysql/share/mysql/mysql.server start --defaults-file=/etc/mysql/my.cnf $MYSQLD_OTHER_ARGS"
-APP_CMD_STOP="/usr/local/mysql/share/mysql/mysql.server stop"
+APP_CMD_START="/opt/scripts/mysql/mysql.server start --defaults-file=/etc/mysql/my.cnf $MYSQLD_OTHER_ARGS"
+APP_CMD_STOP="/opt/scripts/mysql/mysql.server stop"
 
 
 
