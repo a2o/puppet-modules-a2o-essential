@@ -59,6 +59,7 @@ class   a2o_essential_ubuntu::packages::workstation   inherits   a2o-essential-d
     }
 
     # Tools
+    package { 'netbeans':            }
     package { 'git':            }
     package { 'subversion':            }
     package { 'mercurial':            }
@@ -70,6 +71,9 @@ class   a2o_essential_ubuntu::packages::workstation   inherits   a2o-essential-d
     package { 'skype':            }
     package { 'sshfs':            }
     package { 'rsync':            }
+
+    package { 'ruby':            }
+    package { 'rake':            }
 
     # Virtualization
     package { 'virtualbox':              }
