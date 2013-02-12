@@ -13,8 +13,8 @@ cd $SRCROOT &&
 export PVERSION_RUBY="1.8.7-p370" &&
 export PVERSION_RUBY_MAJOR=`echo "$PVERSION_RUBY" | cut -d. -f1,2` &&
 export PVERSION_GEMS="1.8.17" &&
-export PDESTDIR="/usr/local/puppet-sys-2.7.19-init" &&
-export PDESTDIR_OPENSSL="/usr/local/openssl-1.0.0i-init" &&
+export PDESTDIR="/usr/local/puppet-sys-2.7.20-init" &&
+export PDESTDIR_OPENSSL="/usr/local/openssl-1.0.0k-init" &&
 
 
 
