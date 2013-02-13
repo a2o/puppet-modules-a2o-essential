@@ -220,6 +220,7 @@ class   a2o-essential-linux-puppet::dirs   inherits   a2o-essential-linux-puppet
     }
     file { '/etc/puppet':         }
     file { '/var/lib/puppet':     }
+    file { '/opt/scripts':        }   # Needs to be here for initial run
     file { '/opt/scripts/puppet': }
 }
 class   a2o-essential-linux-puppet::files   inherits   a2o-essential-linux-puppet::base {
