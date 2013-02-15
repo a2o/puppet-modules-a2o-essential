@@ -22,6 +22,7 @@ define   a2o-essential-unix::compiletool::package::generic (
     $packageNameLong     = 0,
     $installScriptTplUri = undef,
     $compileDirPath      = undef,
+    $resourceName        = undef,
     $require             = []
 ) {
 
@@ -80,6 +81,16 @@ define   a2o-essential-unix::compiletool::package::generic (
     }
 
 
+    ###
+    ### Resource name selection
+    ###
+    if $resourceName == undef {
+	$resourceNameReal = "$packageName"
+    } else {
+	$resourceNameReal = "$resourceName"
+    }
+
+
     # Some debugging
 #    notice "INFO: $name : name    : $softwareName"
 #    notice "INFO: $name : version : $softwareVersion"
@@ -102,7 +113,8 @@ define   a2o-essential-unix::compiletool::package::generic (
     	    File['/var/src/build_functions.sh']
 	],
     }
-    package { "$packageName":
+    package { "$resourceNameReal":
+        name     => "$packageName",
         provider => 'a2o_linux_compiletool',
         ensure   => "$packageEnsure",
 	source   => "$installScriptPath",
