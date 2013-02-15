@@ -34,8 +34,12 @@ class   a2o_essential_ubuntu::packages   inherits   a2o-essential-debian::packag
 #    package { 'zlib1g-dev':    }   # Already defined in debian
 
     ### Compile - Additional
+    package { 'libdb5.1':        }
+    package { 'libdb5.1-dev':    }
     package { 'libncurses5':     }
     package { 'libncurses5-dev': }
+    package { 'libsasl2-2':      }
+    package { 'libsasl2-dev':    }
 
     ### Startup tools
     package { 'chkconfig': }
