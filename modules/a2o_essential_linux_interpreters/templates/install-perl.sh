@@ -30,7 +30,8 @@ export PURI="http://www.cpan.org/src/5.0/$PFILE" &&
 rm -rf $PDIR &&
 GetUnpackCd &&
 
-./configure.gnu -Dprefix=$PDESTDIR_PERL -Dusethreads -Duseshrplib &&
+# -Dnoextensions=ODBM_File - because of OpenSuSE compile failure
+./configure.gnu -Dprefix=$PDESTDIR_PERL -Dusethreads -Duseshrplib -Dnoextensions=ODBM_File &&
 make -j 2 &&
 make install &&
 
