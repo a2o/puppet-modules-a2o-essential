@@ -28,7 +28,7 @@ class   a2o_essential_linux_nagios::package::base   inherits   a2o_essential_lin
     $softwareVersion_plugins       = '1.4.16'
 
     if $a2o_linux_nagios_plugins_lite == 'true' {
-        $packageRelease_plugins    = '1_lite'
+        $packageRelease_plugins    = '2_lite'
     } else {
         $packageRelease_plugins    = '1'
     }

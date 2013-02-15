@@ -57,12 +57,13 @@ cd .. &&
 
 # Export PERL path for installation
 export PATH=$PDESTDIR_PERL/bin:$PATH &&
+export PATH_TO_PERL=`which perl` &&
 
 
 ./configure --prefix=$PDESTDIR_PLUGINS \
   --enable-perl-modules \
   --with-trusted-path="/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin" \
-  --with-perl=$PDESTDIR_PERL/bin/perl \
+  --with-perl=$PATH_TO_PERL \
   --with-openssl=$PDESTDIR_OPENSSL \
   --without-mysql &&
 make &&
