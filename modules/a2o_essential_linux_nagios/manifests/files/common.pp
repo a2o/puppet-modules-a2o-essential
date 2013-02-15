@@ -22,4 +22,5 @@ class   a2o_essential_linux_nagios::files::common {
     }
 
     file { '/etc/nagios':   ensure => directory, mode => 755 }
+    file { '/var/nagios':   ensure => directory, mode => 755, owner => nagios, group => nagios }
 }
