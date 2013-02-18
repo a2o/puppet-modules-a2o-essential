@@ -30,7 +30,7 @@ done
 ### Then execute
 for FILE in $FILES; do
     cd $LOCAL_BOOTSTRAP_DIR &&
-    ./$FILE
+    sh ./$FILE
     RES=$?
     if [ "$RES" != "0" ]; then
 	echo "ERROR: Failure while executing file $FILE"
