@@ -46,6 +46,9 @@ GetUnpackCd &&
 wget http://vda.sourceforge.net/VDA/postfix-vda-$PVERSION_VDA.patch &&
 patch -p1 < postfix-vda-$PVERSION_VDA.patch &&
 
+# Force exact OpenSSL version
+export LD_LIBRARY_PATH="$PDESTDIR_OPENSSL/lib" &&
+
 # Obligatory use of single quotes!
 make makefiles \
   CCARGS='-DUSE_TLS -I<%= destDir_openssl %>/include -DUSE_SASL_AUTH -DHAS_MYSQL -I<%= destDir_mysql %>/include/mysql' \

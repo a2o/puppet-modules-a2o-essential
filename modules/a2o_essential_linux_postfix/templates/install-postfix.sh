@@ -43,6 +43,9 @@ GetUnpackCd &&
 wget http://source.a2o.si/patches/postfix-2.9.2-delivery_logging-0.1.patch.diff &&
 patch -p1 < postfix-2.9.2-delivery_logging-0.1.patch.diff &&
 
+# Force exact OpenSSL version
+export LD_LIBRARY_PATH="$PDESTDIR_OPENSSL/lib" &&
+
 # Obligatory use of single quotes!
 make makefiles \
   CCARGS='-DUSE_TLS -I<%= destDir_openssl %>/include -DUSE_SASL_AUTH' \
