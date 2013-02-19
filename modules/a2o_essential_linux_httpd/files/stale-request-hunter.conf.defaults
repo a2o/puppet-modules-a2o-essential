@@ -1,0 +1,7 @@
+HTTPD_STATUS_URI='http://127.0.0.1/server-status'
+
+EXCLUDE_CMD_DEFAULT='grep -v "\.\(avi\|f4v\|flv\|jpg\|js\|mp3\|pdf\|png\|swf\|ttf\|zip\)$"'    # Must be a single command
+EXCLUDE_CMD_SITE='cat'       # Must be a single command
+EXCLUDE_CMD_LOCAL='cat'      # Must be a single command
+
+STALE_REQUEST_TIMEOUT='300'  # 300 seconds is considered enought for all requests:)
