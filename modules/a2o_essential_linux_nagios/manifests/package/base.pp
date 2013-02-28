@@ -18,7 +18,7 @@ class   a2o_essential_linux_nagios::package::base   inherits   a2o_essential_lin
 
     # CheckURI: http://www.nagios.org/download/core/thanks/
     $softwareName_nagios           = 'nagios'
-    $softwareVersion_nagios        = '3.4.1'
+    $softwareVersion_nagios        = '3.4.4'
     $packageRelease_nagios         = '1'
     $packageTag_nagios             = "$softwareName_nagios-$softwareVersion_nagios-$packageRelease_nagios"
     $destDir_nagios                = "/usr/local/$packageTag_nagios"
@@ -28,9 +28,9 @@ class   a2o_essential_linux_nagios::package::base   inherits   a2o_essential_lin
     $softwareVersion_plugins       = '1.4.16'
 
     if $a2o_linux_nagios_plugins_lite == 'true' {
-        $packageRelease_plugins    = '1_lite'
+        $packageRelease_plugins    = '2_lite'
     } else {
-        $packageRelease_plugins    = '1'
+        $packageRelease_plugins    = '2'
     }
 
     $packageTag_plugins            = "$softwareName_plugins-$softwareVersion_plugins-$packageRelease_plugins"
@@ -38,7 +38,7 @@ class   a2o_essential_linux_nagios::package::base   inherits   a2o_essential_lin
 
     # CheckURI: http://mathias-kettner.de/check_mk_download.html
     $softwareName_mk_livestatus    = "$packageTag_nagios-mk-livestatus"
-    $softwareVersion_mk_livestatus = '1.1.12p6'
+    $softwareVersion_mk_livestatus = '1.2.0p4'
     $packageRelease_mk_livestatus  = '1'
     $packageEnsure_mk_livestatus   = "$softwareVersion_mk_livestatus-$packageRelease_mk_livestatus"
     $packageTag_mk_livestatus      = "$softwareName_mk_livestatus-$packageEnsure_mk_livestatus"
@@ -46,7 +46,7 @@ class   a2o_essential_linux_nagios::package::base   inherits   a2o_essential_lin
 
     # CheckURI: http://sourceforge.net/projects/pnp4nagios/
     $softwareName_pnp4nagios       = "$packageTag_nagios-pnp4nagios"
-    $softwareVersion_pnp4nagios    = '0.6.16'
+    $softwareVersion_pnp4nagios    = '0.6.19'
     $packageRelease_pnp4nagios     = '1'
     $packageEnsure_pnp4nagios      = "$softwareVersion_pnp4nagios-$packageRelease_pnp4nagios"
     $packageTag_pnp4nagios         = "$softwareName_pnp4nagios-$packageEnsure_pnp4nagios"
@@ -55,17 +55,17 @@ class   a2o_essential_linux_nagios::package::base   inherits   a2o_essential_lin
     # CheckURI: http://exchange.nagios.org/directory/Addons/Monitoring-Agents/NRPE--2D-Nagios-Remote-Plugin-Executor/details
     $softwareName_nrpe             = 'nrpe'
     $softwareVersion_nrpe          = '2.13'
-    $packageRelease_nrpe           = '2'
+    $packageRelease_nrpe           = '3'
     $packageTag_nrpe               = "$softwareName_nrpe-$softwareVersion_nrpe-$packageRelease_nrpe"
     $destDir_nrpe                  = "/usr/local/$packageTag_nrpe"
 
 
     ### External package references
-    $externalDestDir_perl     = '/usr/local/perl-5.14.2-1'
-    $externalDestDir_perllib  = '/usr/local/lib/perl/5.14.2'
-    $externalDestDir_mysql    = '/usr/local/mysql-5.1.66-1'
-    $externalDestDir_openldap = '/usr/local/openldap-2.4.32-1'
-    $externalDestDir_openssl  = '/usr/local/openssl-1.0.0i-1'
+    $externalDestDir_perl     = '/usr/local/perl-5.16.2-1'
+    $externalDestDir_perllib  = '/usr/local/lib/perl/5.16.2'
+    $externalDestDir_mysql    = '/usr/local/mysql-5.1.68-2'
+    $externalDestDir_openldap = '/usr/local/openldap-2.4.33-2'
+    $externalDestDir_openssl  = '/usr/local/openssl-1.0.1e-2'
 
 
     # Destination directories and symlinks
