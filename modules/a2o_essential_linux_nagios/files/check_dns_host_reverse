@@ -28,4 +28,5 @@ elif [ "$RES" == "1" ]; then
     exit 0
 else
     echo "HOST rDNS UNKNOWN: Multiple results for $CHECK_IP"
+    exit 3
 fi
