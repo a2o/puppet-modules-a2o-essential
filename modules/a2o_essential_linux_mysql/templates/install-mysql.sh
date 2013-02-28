@@ -41,6 +41,9 @@ export PURI="http://cdn.mysql.com/Downloads/MySQL-$PVERSION_MYSQL_MAJOR/$PFILE" 
 rm -rf $PDIR &&
 GetUnpackCd &&
 
+# Force exact OpenSSL version
+export LD_LIBRARY_PATH="$PDESTDIR_OPENSSL/lib" &&
+
 # Does not compile on Ubuntu without these, bug 38324
 export CCFLAGS="-I$PDESTDIR_OPENSSL/include" &&
 export CPPFLAGS="-I$PDESTDIR_OPENSSL/include"  &&
