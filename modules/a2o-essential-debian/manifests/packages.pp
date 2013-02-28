@@ -42,6 +42,7 @@ class   a2o-essential-debian::packages   inherits   a2o-essential-debian::base {
     package { 'ethtool':       }
     package { 'hdparm':        }
     package { 'iperf':         }
-    package { 'ntp':           }
     package { 'lynx':          }
+    package { 'ntp':           }
+    package { 'traceroute':    }
 }
