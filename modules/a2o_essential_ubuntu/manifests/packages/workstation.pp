@@ -72,6 +72,7 @@ class   a2o_essential_ubuntu::packages::workstation   inherits   a2o-essential-d
     package { 'sshfs':            }
     package { 'rsync':            }
 
+    package { 'php5-cli':        }
     package { 'ruby':            }
     package { 'rake':            }
 
