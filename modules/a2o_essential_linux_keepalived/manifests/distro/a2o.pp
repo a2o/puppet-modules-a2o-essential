@@ -14,7 +14,7 @@
 
 
 ### Base class
-class   a2o_essential_linux_keepalived::distro::a2o::base   inherits a2o_essential_linux_keepalived::base {
+class   a2o_essential_linux_keepalived::distro::a2o::base   inherits a2o_essential_linux_keepalived::package::base {
 }
 
 
@@ -24,13 +24,9 @@ class   a2o_essential_linux_keepalived::distro::a2o::service   inherits   a2o_es
 
     ### Requires and subscribes
     $require   = [
-#        File['/var/spool/cron/atjobs'],
-#        File['/var/spool/cron/atspool'],
-#        Package['ntp'],
     ]
     $subscribe = [
 	Package['keepalived'],
-#        File['/etc/at.deny'],
     ]
 
     ### Instantiate from template

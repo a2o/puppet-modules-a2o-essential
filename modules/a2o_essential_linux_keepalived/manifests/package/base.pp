@@ -22,7 +22,10 @@ class   a2o_essential_linux_keepalived::package::base   inherits   a2o_essential
     # CheckURI: http://www.keepalived.org/download.html
     $softwareName_keepalived     = 'keepalived'
     $softwareVersion_keepalived  = '1.2.7'
-    $packageRelease_keepalived   = '1'
+    $packageRelease_keepalived   = '2'
     $packageTag_keepalived       = "$softwareName_keepalived-$softwareVersion_keepalived-$packageRelease_keepalived"
     $destDir_keepalived          = "/usr/local/$packageTag_keepalived"
+
+    ### External package references
+    $externalDestDir_openssl = '/usr/local/openssl-1.0.1e-2'
 }

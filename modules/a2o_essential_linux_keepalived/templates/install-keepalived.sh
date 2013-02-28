@@ -24,6 +24,7 @@ cd $SRCROOT &&
 ### Set versions and directories
 export PVERSION_SW="<%= softwareVersion %>" &&
 export PDESTDIR="<%= destDir %>" &&
+export PDESTDIR_OPENSSL="<%= externalDestDir_openssl %>" &&
 
 
 
@@ -37,6 +38,9 @@ export PURI="http://www.keepalived.org/software/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&
+
+export CFLAGS="-I$PDESTDIR_OPENSSL/include" &&
+export LDFLAGS="-L$PDESTDIR_OPENSSL/lib" &&
 
 ./configure --prefix=$PDESTDIR &&
 make &&
