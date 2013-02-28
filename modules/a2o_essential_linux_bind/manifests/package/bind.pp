@@ -21,12 +21,12 @@ class   a2o_essential_linux_bind::package::bind   inherits   a2o_essential_linux
     # INFO: underscore: 9.9.1_P1.
     $softwareName     = 'bind'
     $softwareVersion  = '9.9.2_P1'
-    $packageRelease   = '1'
+    $packageRelease   = '2'
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
     $destDir          = "/usr/local/$packageTag"
 
     # Extenal references
-    $destDir_openssl  = '/usr/local/openssl-1.0.0i-1'
+    $destDir_openssl  = '/usr/local/openssl-1.0.1e-2'
 
 
     ### Package

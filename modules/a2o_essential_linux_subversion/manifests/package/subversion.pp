@@ -20,13 +20,13 @@ class   a2o_essential_linux_subversion::package::subversion   inherits   a2o_ess
     # CheckURI: http://subversion.apache.org/download/
     $softwareName     = 'svn'
     $softwareVersion  = '1.7.8'
-    $packageRelease   = '1'
+    $packageRelease   = '2'
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
     $destDir          = "/usr/local/$packageTag"
 
 
     ### Additinal versions
-    $externalDestDir_openssl = '/usr/local/openssl-1.0.0i-1'
+    $externalDestDir_openssl = '/usr/local/openssl-1.0.1e-2'
 
 
     ### Package

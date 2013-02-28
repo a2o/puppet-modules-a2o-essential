@@ -19,14 +19,14 @@ class   a2o_essential_linux_mysql::package::mysql   inherits   a2o_essential_lin
     # Package / Software details
     # CheckURI: http://ftp.arnes.si/mysql/Downloads/
     $softwareName     = 'mysql'
-    $softwareVersion  = '5.1.67'
-    $packageRelease   = '1'
+    $softwareVersion  = '5.1.68'
+    $packageRelease   = '2'
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
     $destDir          = "/usr/local/$packageTag"
 
 
     ### Additinal versions
-    $externalDestDir_openssl = '/usr/local/openssl-1.0.0i-1'
+    $externalDestDir_openssl = '/usr/local/openssl-1.0.1e-2'
 
 
     ### Package

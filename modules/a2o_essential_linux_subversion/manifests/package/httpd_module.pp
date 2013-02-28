@@ -25,13 +25,13 @@ class   a2o_essential_linux_subversion::package::httpd_module   inherits   a2o_e
     # CheckURI: http://subversion.apache.org/download/
     $softwareName     = "${packageTag_httpd}-svn"
     $softwareVersion  = '1.7.8'
-    $packageRelease   = '1'
+    $packageRelease   = '2'
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
     $destDir          = "$destDir_httpd"
 
 
     ### Additinal versions
-    $externalDestDir_openssl = '/usr/local/openssl-1.0.0i-1'
+    $externalDestDir_openssl = '/usr/local/openssl-1.0.1e-2'
 
 
     ### Package

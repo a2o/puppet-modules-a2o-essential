@@ -22,9 +22,9 @@ class   a2o_essential_linux_ntp::package::base   inherits   a2o_essential_linux_
     # CheckURI: http://www.ntp.org/downloads.html
     $softwareName_ntp     = 'ntp'
     $softwareVersion_ntp  = '4.2.6_p5'
-    $packageRelease_ntp   = '2'
+    $packageRelease_ntp   = '3'
     $packageTag_ntp       = "$softwareName_ntp-$softwareVersion_ntp-$packageRelease_ntp"
 
     # External references
-    $externalDestDir_openssl = '/usr/local/openssl-1.0.0i-1'
+    $externalDestDir_openssl = '/usr/local/openssl-1.0.1e-2'
 }
