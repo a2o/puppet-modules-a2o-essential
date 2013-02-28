@@ -83,7 +83,7 @@ cd $SRCROOT && rm -rf $PDIR &&
 
 cd $SRCROOT && . ../../_functions.sh &&
 export PNAME="Bit-Vector" &&
-export PVERSION="7.1" &&
+export PVERSION="7.2" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
 export PURI="http://www.cpan.org/authors/id/S/ST/STBEY/$PFILE" &&

@@ -17,6 +17,6 @@
 class a2o_essential_linux_interpreters::perl::base   inherits   a2o_essential_linux_interpreters::base {
 
     # External software versions
-    $externalDestDir_openssl   = '/usr/local/openssl-1.0.0i-1'
-    $externalDestDir_mysql     = '/usr/local/mysql-5.1.63-1'
+    $externalDestDir_openssl   = '/usr/local/openssl-1.0.1e-2'
+    $externalDestDir_mysql     = '/usr/local/mysql-5.1.68-2'
 }
