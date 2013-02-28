@@ -23,6 +23,7 @@ cd $SRCROOT &&
 
 ### Set versions and directories
 export PVERSION_LIBSSH2="<%= packageSoftwareVersion %>" &&
+export PDESTDIR_OPENSSL="<%= externalDestDir_openssl %>" &&
 
 
 
@@ -38,7 +39,9 @@ export PURI="http://www.libssh2.org/download/$PFILE" &&
 rm -rf $PDIR &&
 GetUnpackCd &&
 
-./configure &&
+./configure \
+  --with-openssl \
+  --with-libssl-prefix=$PDESTDIR_OPENSSL &&
 make -j 2 &&
 make install &&
 ldconfig &&
