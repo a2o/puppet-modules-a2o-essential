@@ -20,14 +20,14 @@ class   a2o-essential-linux-libs::freetds   inherits   a2o-essential-linux-libs:
     $packageName            = 'freetds'
     $packageSoftware        = 'freetds'
     $packageSoftwareVersion = '0.91'
-    $packageRelease         = '1'
+    $packageRelease         = '2'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
     $installScriptTpl       = "install-$packageSoftware.sh"
     $installScript          = "install-$packageTag.sh"
 
     # External packages
-    $externalDestDir_openssl = '/usr/local/openssl-1.0.0h-1'
+    $externalDestDir_openssl = '/usr/local/openssl-1.0.1e-2'
 
 
     # Installation

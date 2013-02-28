@@ -20,7 +20,7 @@ class   a2o-essential-linux-libs::imap::package   inherits   a2o-essential-linux
     $packageName            = 'imap'
     $packageSoftware        = 'imap'
     $packageSoftwareVersion = '2007f'
-    $packageRelease         = '1'
+    $packageRelease         = '2'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
     $installScriptTpl       = "install-$packageSoftware.sh"
@@ -30,7 +30,7 @@ class   a2o-essential-linux-libs::imap::package   inherits   a2o-essential-linux
     $destDir                = "/usr/local/$packageTag"
 
     # External packages
-    $externalDestDir_openssl = '/usr/local/openssl-1.0.0h-1'
+    $externalDestDir_openssl = '/usr/local/openssl-1.0.1e-2'
 
 
     # Installation

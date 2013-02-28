@@ -20,12 +20,15 @@ class   a2o-essential-linux-libs::libssh2   inherits   a2o-essential-linux-libs:
     $packageName            = 'libssh2'
     $packageSoftware        = 'libssh2'
     # CheckURI: http://www.libssh2.org/
-    $packageSoftwareVersion = '1.4.0'
+    $packageSoftwareVersion = '1.4.3'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
     $installScriptTpl       = "install-$packageSoftware.sh"
     $installScript          = "install-$packageTag.sh"
+
+    # External package references
+    $externalDestDir_openssl = '/usr/local/openssl-1.0.1e-2'
 
 
     # Installation
@@ -45,6 +48,7 @@ class   a2o-essential-linux-libs::libssh2   inherits   a2o-essential-linux-libs:
 	require  => [
 	    File["$compileDir/$installScript"],
 	    Package['libgcrypt'],
+	    Package['openssl'],
 	    Package['zlib'],
 	],
     }

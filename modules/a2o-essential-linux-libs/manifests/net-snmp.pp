@@ -19,7 +19,7 @@ class   a2o-essential-linux-libs::net-snmp   inherits   a2o-essential-linux-libs
     # Software details
     $packageName            = 'net-snmp'
     $packageSoftware        = 'net-snmp'
-    $packageSoftwareVersion = '5.7.1'
+    $packageSoftwareVersion = '5.7.2'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
