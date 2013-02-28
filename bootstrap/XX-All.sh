@@ -30,7 +30,8 @@ done
 ### Then execute
 for FILE in $FILES; do
     cd $LOCAL_BOOTSTRAP_DIR &&
-    sh ./$FILE
+    chmod 755 ./$FILE &&
+    ./$FILE
     RES=$?
     if [ "$RES" != "0" ]; then
 	echo "ERROR: Failure while executing file $FILE"
