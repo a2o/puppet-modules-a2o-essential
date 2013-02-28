@@ -19,7 +19,14 @@
 # Pass it the service name, require and subscribe definitions and it will generate
 # service resource for you.
 
-define   a2o-essential-debian::service::generic   ($ensure='running', $require=[], $subscribe=[]) {
+define   a2o-essential-debian::service::generic
+(
+    $ensure    = 'running',
+    $hasStatus = true,
+    $statusCmd = undef,
+    $require   = [],
+    $subscribe = []
+) {
 
 
     ###
@@ -47,7 +54,8 @@ define   a2o-essential-debian::service::generic   ($ensure='running', $require=[
 	    default => stopped,
 	},
 	hasrestart  => true,
-        hasstatus   => true,
+        hasstatus   => $hasStatus,
+        status      => $statusCmd,
 	provider    => 'debian',
         require     => [
 	    $require,

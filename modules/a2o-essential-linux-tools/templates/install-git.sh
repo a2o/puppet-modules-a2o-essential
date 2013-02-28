@@ -42,6 +42,7 @@ rm -rf $PDIR &&
 GetUnpackCd &&
 
 export PATH="/usr/local/python/bin:$PATH" &&
+export LD_LIBRARY_PATH="/usr/local/python/lib" &&
 
 ./configure --prefix=$PDESTDIR \
   --with-python=`which python` \

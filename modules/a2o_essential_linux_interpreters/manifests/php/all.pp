@@ -17,9 +17,15 @@ class a2o_essential_linux_interpreters::php::all {
 
     Package['a2o-essential-linux-libs'] -> Package['php-cli']
 
-    include 'a2o_essential_linux_interpreters::php::package'
-    include 'a2o_essential_linux_interpreters::php::modules'
-    include 'a2o_essential_linux_interpreters::php::modules02'
+    if $a2o_php_cli_major_version == "5.2" {
+	include 'a2o_essential_linux_interpreters::php::package52'
+	include 'a2o_essential_linux_interpreters::php::modules52'
+    } else {
+	include 'a2o_essential_linux_interpreters::php::package'
+	include 'a2o_essential_linux_interpreters::php::modules'
+	include 'a2o_essential_linux_interpreters::php::modules02'
+    }
+
     include 'a2o_essential_linux_interpreters::php::symlinks'
     include 'a2o_essential_linux_interpreters::php::files'
 }

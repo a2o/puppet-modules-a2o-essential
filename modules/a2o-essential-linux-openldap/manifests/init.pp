@@ -27,10 +27,20 @@ class   a2o-essential-linux-openldap::package::base   inherits   a2o-essential-l
     # Where the packages will be compiled
     $compileDir = '/var/src/daemons'
 
-    $require    = [
-	Package['perl'],
-	Package['cyrus-sasl'],
-    ]
+    # Required resources
+    $require    = $operatingsystem ? {
+	'ubuntu' => [
+	    Package['perl'],
+	    Package['libdb5.1'],
+	    Package['libdb5.1-dev'],
+	    Package['libsasl2-2'],
+	    Package['libsasl2-dev'],
+	],
+	default  => [
+	    Package['perl'],
+	    Package['cyrus-sasl'],
+	],
+    }
 }
 
 

@@ -24,7 +24,7 @@ class   a2o_essential_linux_nagios::files::nagios   inherits   a2o_essential_lin
     }
 
     # Nagios runtime dirs
-    file { '/var/nagios':       }
+#    file { '/var/nagios':       }   # Defined in common files class
     file { '/var/nagios/cache': }
     file { '/var/nagios/log':   }
     file { '/var/nagios/rrd':   }

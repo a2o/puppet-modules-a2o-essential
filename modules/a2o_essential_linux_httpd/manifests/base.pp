@@ -1,4 +1,3 @@
-#!/bin/bash
 ###########################################################################
 # a2o Essential Puppet Modules                                            #
 #-------------------------------------------------------------------------#
@@ -11,66 +10,10 @@
 #-------------------------------------------------------------------------#
 # Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
 ###########################################################################
-. /etc/rc.tool/common
 
 
 
-export LD_LIBRARY_PATH="<%= destDir_openssl %>/lib:<%= destDir_mysql %>/lib"
-
-
-
-PROC_NAME="/usr/local/nrpe/bin/nrpe"
-PID_FILE="/var/run/nrpe.pid"
-APP_CMD_START="$PROC_NAME -c /etc/nrpe/nrpe.cfg -d"
-APP_STOP_STALE_PID_FILE_NOWARNING=1
-
-
-
-nrpe_start() {
-    if app_start; then
-	sleep 1 && chown nagios.nagios $PID_FILE &
-    fi
+### Base class
+class   a2o_essential_linux_httpd::base {
+    $thisPuppetModule = 'a2o_essential_linux_httpd'
 }
-
-nrpe_stop() {
-    if app_stop; then
-	rm -f $PID_FILE
-    fi
-}
-
-nrpe_restart() {
-    nrpe_stop
-    nrpe_start
-}
-
-nrpe_status() {
-    is_app_running__info
-}
-
-nrpe_kill() {
-    if app_kill; then
-	rm -f $PID_FILE
-    fi
-}
-
-
-
-case "$1" in
-    'start')
-	nrpe_start
-	;;
-    'stop')
-	nrpe_stop
-	;;
-    'restart')
-	nrpe_restart
-	;;
-    'status')
-	nrpe_status
-	;;
-    'kill')
-	nrpe_kill
-	;;
-    *)
-	echo "usage $0 start|stop|restart|status|kill"
-esac

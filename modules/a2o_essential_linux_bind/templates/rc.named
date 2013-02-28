@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 . /etc/rc.tool/common
 
 export LD_LIBRARY_PATH="<%= destDir_openssl %>/lib"
