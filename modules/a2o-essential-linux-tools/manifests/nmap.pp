@@ -20,7 +20,7 @@ class   a2o-essential-linux-tools::nmap   inherits   a2o-essential-linux-tools::
     $packageName            = 'nmap'
     $packageSoftware        = 'nmap'
     # CheckURI:
-    $packageSoftwareVersion = '5.51'
+    $packageSoftwareVersion = '6.25'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
@@ -28,7 +28,7 @@ class   a2o-essential-linux-tools::nmap   inherits   a2o-essential-linux-tools::
     $installScript          = "install-$packageTag.sh"
 
     # External software versions
-    $externalDestDir_openssl = '/usr/local/openssl-1.0.0h-1'
+    $externalDestDir_openssl = '/usr/local/openssl-1.0.1e-2'
 
 
     # Installation

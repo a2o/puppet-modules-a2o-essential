@@ -21,7 +21,7 @@ class   a2o-essential-linux-tools::socat   inherits   a2o-essential-linux-tools:
     $packageSoftware        = 'socat'
     # CheckURI:
     $packageSoftwareVersion = '1.7.2.0'
-    $packageRelease         = '1'
+    $packageRelease         = '2'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
     $installScriptTpl       = "install-$packageSoftware.sh"
@@ -29,7 +29,7 @@ class   a2o-essential-linux-tools::socat   inherits   a2o-essential-linux-tools:
 
 
     # External software versions
-    $externalDestDir_openssl = '/usr/local/openssl-1.0.0h-1'
+    $externalDestDir_openssl = '/usr/local/openssl-1.0.1e-2'
 
 
     # Installation

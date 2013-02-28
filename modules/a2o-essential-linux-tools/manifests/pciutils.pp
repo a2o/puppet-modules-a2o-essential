@@ -20,7 +20,7 @@ class   a2o-essential-linux-tools::pciutils   inherits   a2o-essential-linux-too
     $packageName            = 'pciutils'
     $packageSoftware        = 'pciutils'
     # CheckURI:
-    $packageSoftwareVersion = '3.1.8'
+    $packageSoftwareVersion = '3.1.10'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
@@ -28,7 +28,7 @@ class   a2o-essential-linux-tools::pciutils   inherits   a2o-essential-linux-too
     $installScript          = "install-$packageTag.sh"
 
     # External software versions
-    $externalDestDir_openssl = '/usr/local/openssl-1.0.0h-1'
+    $externalDestDir_openssl = '/usr/local/openssl-1.0.1e-2'
 
 
     # Installation

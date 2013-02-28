@@ -20,7 +20,7 @@ class   a2o-essential-linux-tools::tcpdump   inherits   a2o-essential-linux-tool
     $packageName            = 'tcpdump'
     $packageSoftware        = 'tcpdump'
     # CheckURI:
-    $packageSoftwareVersion = '4.2.0'
+    $packageSoftwareVersion = '4.3.0'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
@@ -29,7 +29,7 @@ class   a2o-essential-linux-tools::tcpdump   inherits   a2o-essential-linux-tool
 
 
     # External software versions
-    $externalDestDir_openssl = '/usr/local/openssl-1.0.0h-1'
+    $externalDestDir_openssl = '/usr/local/openssl-1.0.1e-2'
 
 
     # Installation
