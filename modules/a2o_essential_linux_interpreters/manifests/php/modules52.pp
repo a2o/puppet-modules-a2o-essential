@@ -14,7 +14,7 @@
 
 
 ### Software package: php modules
-class   a2o_essential_linux_interpreters::php::modules   inherits   a2o_essential_linux_interpreters::php::base {
+class   a2o_essential_linux_interpreters::php::modules52   inherits   a2o_essential_linux_interpreters::php::base {
 
     # External references
     $packageTag_php = $a2o_essential_linux_interpreters::php::package52::packageTag
