@@ -52,7 +52,8 @@ export LD_LIBRARY_PATH=$PDESTDIR_OPENSSL/lib &&
 
 ./configure --with-ssl=$PDESTDIR_OPENSSL \
   --with-ca-bundle=/etc/ssl/certs/curl-ca-bundle.crt \
-  --enable-ipv6 &&
+  --enable-ipv6 \
+  --without-libssh2 &&
 make -j 2 &&
 make install &&
 ldconfig &&
