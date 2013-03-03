@@ -43,14 +43,11 @@ GetUnpackCd &&
 wget http://source.a2o.si/patches/ntp-patch-MOD_NANO.diff &&
 patch -p1 < ntp-patch-MOD_NANO.diff &&
 
-./configure &&
+./configure \
+  --with-openssl-libdir=$PDESTDIR_OPENSSL/lib \
+  --with-openssl-incdir=$PDESTDIR_OPENSSL/include \
+  --with-crypto &&
 make -j 2 &&
-
-# WORKAROUND on 4.2.4p8 make install fails, we disable installing man page sntp.1
-cp sntp/Makefile sntp/Makefile.tmp &&
-cat sntp/Makefile.tmp | sed -e 's/dist_man_MANS = sntp.1/dist_man_MANS = /' > sntp/Makefile &&
-rm sntp/Makefile.tmp &&
-
 make install &&
 
 cd $SRCROOT &&
@@ -59,8 +56,3 @@ rm -rf $PDIR &&
 
 
 true
-# FIXME reinclude? Old configure line
-#./configure \
-#  --with-openssl-libdir=/usr/local/openssl-$PVERSION_OPENSSL/lib \
-#  --with-openssl-incdir=/usr/local/openssl-$PVERSION_OPENSSL/include \
-#  --with-crypto &&
