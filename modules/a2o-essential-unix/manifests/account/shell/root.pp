@@ -59,7 +59,7 @@ define   a2o-essential-unix::account::shell::root (
 	$authorizedKeysUriReal = $authorizedKeysUri
     } else {
 	$authorizedKeysUriReal = [
-	    "puppet:///modules/$thisPuppetModule/authorized_keys.$userName",
+	    "puppet:///modules/$thisPuppetModule/authorized_keys.${name}",
 	    "puppet:///modules/a2o-essential-unix/account/shell/authorized_keys.root.empty",
 	]
     }
