@@ -67,6 +67,7 @@ class   a2o_essential_ubuntu::packages::workstation   inherits   a2o-essential-d
     package { 'shutter':            }
     package { 'default-jre':    }
     package { 'transmission':            }
+    package { 'pdftk':            }
     package { 'pidgin':            }
     package { 'skype':            }
     package { 'sshfs':            }
