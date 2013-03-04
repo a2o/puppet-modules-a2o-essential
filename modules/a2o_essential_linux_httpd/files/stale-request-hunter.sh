@@ -35,21 +35,31 @@ ACTIVE_REQUESTS=`lynx -dump -width=1000 $HTTPD_STATUS_URI | grep ' W ' | grep '/
 
 
 ### Loop throught requests and decide what to do with each
-printf %s "$ACTIVE_REQUESTS" | while IFS= read -r REQ; do
+printf "%s\n" "$ACTIVE_REQUESTS" | while IFS= read -r REQ; do
 
     REQ_TIME=`echo $REQ | awk '{print $1}'`
     REQ_PID=`echo $REQ | awk '{print $2}'`
     REQ_INFO=`echo $REQ | awk '{print $3,$4,$5,$6}'`
-#    echo "$REQ_TIME"
-#    echo "$REQ_PID"
-#    echo "$REQ_INFO"
 
-    if [ "$REQ_TIME" -gt "$STALE_REQUEST_TIMEOUT" ]; then
+    # Shoot first, ask later:)
+    if [ "$REQ_TIME" -gt "$STALE_REQUEST_TIMEOUT_9" ]; then
 	if [ "$COMMIT" == "true" ]; then
-	    echo "Killing Apache HTTPD child pid $REQ_PID ($REQ_TIME seconds serving $REQ_INFO)"
+	    echo "Killing Apache HTTPD child pid $REQ_PID with SIGKILL ($REQ_TIME seconds serving $REQ_INFO)"
+	    kill -9 $REQ_PID
+	else
+	    echo "DEBUG MODE: NOT killing Apache HTTPD child pid $REQ_PID with SIGKILL ($REQ_TIME seconds serving $REQ_INFO)"
+	fi
+	continue
+    fi
+
+    # Ask politely to terminate itself
+    if [ "$REQ_TIME" -gt "$STALE_REQUEST_TIMEOUT_15" ]; then
+	if [ "$COMMIT" == "true" ]; then
+	    echo "Killing Apache HTTPD child pid $REQ_PID with SIGTERM ($REQ_TIME seconds serving $REQ_INFO)"
 	    kill -15 $REQ_PID
 	else
-	    echo "DEBUG MODE: NOT Killing Apache HTTPD child pid $REQ_PID ($REQ_TIME seconds serving $REQ_INFO)"
+	    echo "DEBUG MODE: NOT killing Apache HTTPD child pid $REQ_PID with SIGTERM ($REQ_TIME seconds serving $REQ_INFO)"
 	fi
+	continue
     fi
 done
