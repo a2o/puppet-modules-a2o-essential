@@ -17,8 +17,11 @@
 #
 
 
-### Settings
+### Which check script to use
 CHECK_SCRIPT="/opt/scripts/raid/check"
+if [ "$1" != "" ]; then
+    CHECK_SCRIPT="$1"
+fi
 
 
 ### Check if check script exists and is executable

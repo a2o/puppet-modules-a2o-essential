@@ -27,6 +27,7 @@ class   a2o_essential_linux_nagios::files::nagios   inherits   a2o_essential_lin
 #    file { '/var/nagios':       }   # Defined in common files class
     file { '/var/nagios/cache': }
     file { '/var/nagios/log':   }
+    file { '/var/nagios/log/archives':   }
     file { '/var/nagios/rrd':   }
     file { '/var/nagios/run':   }
     file { '/var/nagios/rw':    mode => 2775 }
