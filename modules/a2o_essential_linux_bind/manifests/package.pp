@@ -13,14 +13,9 @@
 
 
 
-### Base class
-class   a2o_essential_linux_bind::base
-(
-    $thisPuppetModule = a2o_get_current_module_name(),
+### Package resources combined
+class   a2o_essential_linux_bind::package {
 
-    $acl_recursion    = a2o_get_param('acl_recursion'),
-    $acl_transfer     = a2o_get_param('acl_transfer'),
-
-    $fakeLastParamWithNoTailingComma = ''
-)
-inherits   a2o_essential_linux_bind::params {}
+    include 'a2o_essential_linux_bind::package::bind'
+    include 'a2o_essential_linux_bind::package::cleanup'
+}

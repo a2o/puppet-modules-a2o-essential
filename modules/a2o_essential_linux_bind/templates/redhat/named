@@ -1,3 +1,4 @@
+#!/bin/bash
 ###########################################################################
 # a2o Essential Puppet Modules                                            #
 #-------------------------------------------------------------------------#
@@ -10,17 +11,24 @@
 #-------------------------------------------------------------------------#
 # Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
 ###########################################################################
+#
+# /etc/init.d/named
+#
+### BEGIN INIT INFO
+# Provides:		named
+# Required-Start:	$local_fs $syslog $network
+# Required-Stop:	$local_fs $syslog $network
+# Default-Start:	1 2 3 4 5
+# Default-Stop:		0 6
+# Short-Description:	Bind DNS server
+# Long-Description:	Bind DNS server
+### END INIT INFO
+#
+### BEGIN CHKCONFIG part
+# chkconfig: 12345 55 25
+# description: Bind DNS server
+### END CHKCONFIG part
 
 
-
-### Base class
-class   a2o_essential_linux_bind::base
-(
-    $thisPuppetModule = a2o_get_current_module_name(),
-
-    $acl_recursion    = a2o_get_param('acl_recursion'),
-    $acl_transfer     = a2o_get_param('acl_transfer'),
-
-    $fakeLastParamWithNoTailingComma = ''
-)
-inherits   a2o_essential_linux_bind::params {}
+### Just run the rctool wrapper
+/etc/rc.tool/wrapper.redhat named $@

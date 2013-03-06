@@ -13,14 +13,18 @@
 
 
 
-### Base class
-class   a2o_essential_linux_bind::base
-(
-    $thisPuppetModule = a2o_get_current_module_name(),
+### Module Parameters
+#
+# WARNING: This class must not inherit base class, it is the other way around
+#
+class   a2o_essential_linux_bind::params {
 
-    $acl_recursion    = a2o_get_param('acl_recursion'),
-    $acl_transfer     = a2o_get_param('acl_transfer'),
+    $acl_recursion = ['127.0.0.1', $::ipaddress ]
+    $acl_transfer  = ['127.0.0.1' ]
 
-    $fakeLastParamWithNoTailingComma = ''
-)
-inherits   a2o_essential_linux_bind::params {}
+    $serviceName = $::operatingsystem ? {
+	/(?i:Slackware)/                       => 'a2o-linux-named',
+	/(?i:RedHat|Centos|Scientific|Fedora)/ => 'named',
+	default                                => 'named',
+  }
+}

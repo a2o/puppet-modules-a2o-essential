@@ -34,10 +34,11 @@ class   a2o_essential_linux_bind::distro::service_base   inherits   a2o_essentia
     ]
 
     $subscribe = [
-	Package['bind'],
-	File['/usr/local/bind'],
+        Package['bind'],
+        File['/usr/local/bind'],
         File['/var/named/etc/named/named.conf'],
         File['/var/named/etc/named/rndc.key'],
+        Exec['rndc-confgen /var/named/etc/named/rndc.key'],
         File['/var/named/zones/127.0.0'],
         File['/var/named/zones/localhost'],
         File['/var/named/zones/root.hints'],

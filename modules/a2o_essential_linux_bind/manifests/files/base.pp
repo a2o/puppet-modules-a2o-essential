@@ -1,3 +1,4 @@
+
 ###########################################################################
 # a2o Essential Puppet Modules                                            #
 #-------------------------------------------------------------------------#
@@ -13,14 +14,11 @@
 
 
 
-### Base class
-class   a2o_essential_linux_bind::base
-(
-    $thisPuppetModule = a2o_get_current_module_name(),
+### Files base class
+class   a2o_essential_linux_bind::files::base   inherits   a2o_essential_linux_bind::base {
 
-    $acl_recursion    = a2o_get_param('acl_recursion'),
-    $acl_transfer     = a2o_get_param('acl_transfer'),
-
-    $fakeLastParamWithNoTailingComma = ''
-)
-inherits   a2o_essential_linux_bind::params {}
+    File {
+	owner => root,
+	group => root,
+    }
+}

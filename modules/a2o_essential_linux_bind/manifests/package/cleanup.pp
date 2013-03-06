@@ -13,14 +13,15 @@
 
 
 
-### Base class
-class   a2o_essential_linux_bind::base
-(
-    $thisPuppetModule = a2o_get_current_module_name(),
+### Cleanup old versions
+class   a2o_essential_linux_bind::package::cleanup   inherits   a2o_essential_linux_bind::package::base {
 
-    $acl_recursion    = a2o_get_param('acl_recursion'),
-    $acl_transfer     = a2o_get_param('acl_transfer'),
+    $require = [
+	Package['bind'],
+	File['/usr/local/bind'],
+	Service["$serviceName"],
+    ]
 
-    $fakeLastParamWithNoTailingComma = ''
-)
-inherits   a2o_essential_linux_bind::params {}
+    a2o-essential-unix::compiletool::package::remove { 'bind-9.8.2-1':    compileDir => $compileDir, require => $require }
+    a2o-essential-unix::compiletool::package::remove { 'bind-9.9.1-1':    compileDir => $compileDir, require => $require }
+}

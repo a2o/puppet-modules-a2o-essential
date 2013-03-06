@@ -1,0 +1,12 @@
+$TTL 1H
+@		SOA	localhost. root.localhost. (
+                        1000000001   ; Serial
+                        1D           ; Refresh
+                        1M           ; Retry
+                        2W           ; Expire
+            		30M)         ; NX domain TTL
+
+		NS	localhost.
+
+		A	127.0.0.1
+		AAAA	::1

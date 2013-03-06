@@ -17,9 +17,7 @@
 class   a2o_essential_linux_bind::distro::common {
 
     include 'a2o_essential_linux_bind::users_groups'
-    include 'a2o_essential_linux_bind::package::bind'
-#    include 'a2o_essential_linux_bind::files::daemon'
-#    include 'a2o_essential_linux_bind::files::helpers'
-#    include 'a2o_essential_linux_bind::files::symlinks'
-#    include 'a2o_essential_linux_bind::files::symlinks_log'
+    include 'a2o_essential_linux_bind::package'
+    include 'a2o_essential_linux_bind::files::daemon'
+    include 'a2o_essential_linux_bind::files::symlinks'
 }
