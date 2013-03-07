@@ -21,6 +21,8 @@ class   a2o_essential_linux_bind::base
     $acl_recursion    = a2o_get_param('acl_recursion'),
     $acl_transfer     = a2o_get_param('acl_transfer'),
 
+    $forwarders       = a2o_get_param('forwarders'),
+
     $fakeLastParamWithNoTailingComma = ''
 )
 inherits   a2o_essential_linux_bind::params {}

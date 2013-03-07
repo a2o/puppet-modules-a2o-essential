@@ -19,10 +19,15 @@
 #
 class   a2o_essential_linux_bind::params {
 
+    ### ACL definitions
     $acl_recursion = ['127.0.0.1', $::ipaddress ]
     $acl_transfer  = ['127.0.0.1' ]
 
-    $serviceName = $::operatingsystem ? {
+    ### Whether queries should be forwarded or not, and where
+    $forwarders    = []
+
+    ### Actual puppet service name
+    $serviceName   = $::operatingsystem ? {
 	/(?i:Slackware)/                       => 'a2o-linux-named',
 	/(?i:RedHat|Centos|Scientific|Fedora)/ => 'named',
 	default                                => 'named',
