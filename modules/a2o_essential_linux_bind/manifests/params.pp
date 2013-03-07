@@ -26,5 +26,5 @@ class   a2o_essential_linux_bind::params {
 	/(?i:Slackware)/                       => 'a2o-linux-named',
 	/(?i:RedHat|Centos|Scientific|Fedora)/ => 'named',
 	default                                => 'named',
-  }
+    }
 }

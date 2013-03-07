@@ -18,7 +18,11 @@
 class   a2o_essential_linux_bind::files::base   inherits   a2o_essential_linux_bind::base {
 
     File {
-	owner => root,
-	group => root,
+	owner   => root,
+	group   => root,
+	require => [
+	    Package['bind'],
+	    File['/usr/local/bind'],
+	],
     }
 }
