@@ -13,19 +13,14 @@
 
 
 
-### Service: keepalived
-class   a2o_essential_linux_keepalived::distro::a2o::service   inherits   a2o_essential_linux_keepalived::distro::service_base {
+### Service base
+class   a2o_essential_linux_keepalived::distro::service_base   inherits   a2o_essential_linux_keepalived::distro::base {
 
-    a2o-essential-unix::rctool::service::generic { 'keepalived':
-	require   => $require,
-	subscribe => $subscribe,
-    }
-}
+    $require   = [
+    ]
 
-
-
-### The final all-containing classes
-class a2o_essential_linux_keepalived::distro::a2o {
-    include 'a2o_essential_linux_keepalived::distro::common'
-    include 'a2o_essential_linux_keepalived::distro::a2o::service'
+    $subscribe = [
+	Package['keepalived'],
+	File['/usr/local/keepalived'],
+    ]
 }
