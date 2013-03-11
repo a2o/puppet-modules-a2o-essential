@@ -21,7 +21,7 @@ APP_CMD_START="$PROC_NAME -f /etc/keepalived/keepalived.conf"
 
 
 
-LD_LIBRARY_PATH="<%= externalDestDir_openssl %>/lib"
+export LD_LIBRARY_PATH="<%= externalDestDir_openssl %>/lib"
 
 
 
