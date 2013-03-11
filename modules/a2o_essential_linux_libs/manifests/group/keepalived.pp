@@ -13,31 +13,6 @@
 
 
 
-### Software package: keepalived
-class   a2o_essential_linux_keepalived::package::keepalived   inherits   a2o_essential_linux_keepalived::package::base {
-
-    # Package / Software details
-    $softwareName     = "$softwareName_keepalived"
-    $softwareVersion  = "$softwareVersion_keepalived"
-    $packageRelease   = "$packageRelease_keepalived"
-    $packageTag       = "$packageTag_keepalived"
-    $destDir          = "$destDir_keepalived"
-
-
-    ### Package
-    $require = [
-        Package['openssl'],
-        Package['popt'],
-    ]
-    a2o-essential-unix::compiletool::package::generic { "$packageTag": require => $require, }
-
-
-    ### Symlink
-    file { "/usr/local/$softwareName":
-        ensure  => "$packageTag",
-        require => [
-            Package["$softwareName"],
-        ],
-        backup   => false,
-    }
+class a2o_essential_linux_libs::group::keepalived {
+    include 'a2o-essential-linux-libs::popt'
 }
