@@ -27,9 +27,9 @@ class   a2o_essential_linux_bind::params {
     $forwarders    = []
 
     ### Actual puppet service name
-    $serviceName   = $::operatingsystem ? {
-	/(?i:Slackware)/                       => 'a2o-linux-named',
-	/(?i:RedHat|Centos|Scientific|Fedora)/ => 'named',
-	default                                => 'named',
+    $serviceNameBase = 'named'
+    $serviceName     = $::operatingsystem ? {
+	/(?i:Slackware)/ => "a2o-linux-$serviceNameBase",
+	default          => $serviceNameBase,
     }
 }
