@@ -27,5 +27,5 @@ class   a2o-essential-redhat::server::puppetonly {
     include 'a2o-essential-unix::server::puppetonly'
     include 'a2o-essential-redhat::fhs'
     include 'a2o-essential-linux-openssl'
-    include 'a2o-essential-linux-puppet'
+    include 'a2o_essential_linux_puppet'
 }

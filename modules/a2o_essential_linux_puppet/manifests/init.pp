@@ -14,10 +14,10 @@
 
 
 ### Base class
-class   a2o-essential-linux-puppet::base {
+class   a2o_essential_linux_puppet::base {
 
     # This puppet module name
-    $thisPuppetModule = 'a2o-essential-linux-puppet'
+    $thisPuppetModule = 'a2o_essential_linux_puppet'
 
     # External software versions
     $externalDestDir_openssl = '/usr/local/openssl-1.0.0i-1'
@@ -26,7 +26,7 @@ class   a2o-essential-linux-puppet::base {
 
 
 ### Software packages basics
-class   a2o-essential-linux-puppet::package::base   inherits   a2o-essential-linux-puppet::base {
+class   a2o_essential_linux_puppet::package::base   inherits   a2o_essential_linux_puppet::base {
 
     $packageName_puppet            = "puppet"
     $packageSoftwareName_puppet    = "puppet"
@@ -67,7 +67,7 @@ class   a2o-essential-linux-puppet::package::base   inherits   a2o-essential-lin
 
 
 ### Software package: ruby
-class   a2o-essential-linux-puppet::package::ruby   inherits   a2o-essential-linux-puppet::package::base {
+class   a2o_essential_linux_puppet::package::ruby   inherits   a2o_essential_linux_puppet::package::base {
 
     # Software details
     $packageName            = "$packageName_ruby"
@@ -120,7 +120,7 @@ class   a2o-essential-linux-puppet::package::ruby   inherits   a2o-essential-lin
 
 
 ### Software package: facter
-class   a2o-essential-linux-puppet::package::facter   inherits   a2o-essential-linux-puppet::package::base {
+class   a2o_essential_linux_puppet::package::facter   inherits   a2o_essential_linux_puppet::package::base {
 
     # Software details
     $packageName            = "$packageName_facter"
@@ -154,7 +154,7 @@ class   a2o-essential-linux-puppet::package::facter   inherits   a2o-essential-l
 
 
 ### Software package: puppet
-class   a2o-essential-linux-puppet::package::puppet   inherits   a2o-essential-linux-puppet::package::base {
+class   a2o_essential_linux_puppet::package::puppet   inherits   a2o_essential_linux_puppet::package::base {
 
     # Software details
     $packageName            = "$packageName_puppet"
@@ -202,16 +202,16 @@ class   a2o-essential-linux-puppet::package::puppet   inherits   a2o-essential-l
 
 
 ### All packages in single class
-class   a2o-essential-linux-puppet::packages {
-    include 'a2o-essential-linux-puppet::package::ruby'
-    include 'a2o-essential-linux-puppet::package::facter'
-    include 'a2o-essential-linux-puppet::package::puppet'
+class   a2o_essential_linux_puppet::packages {
+    include 'a2o_essential_linux_puppet::package::ruby'
+    include 'a2o_essential_linux_puppet::package::facter'
+    include 'a2o_essential_linux_puppet::package::puppet'
 }
 
 
 
 ### Configuration files and directories
-class   a2o-essential-linux-puppet::dirs   inherits   a2o-essential-linux-puppet::base {
+class   a2o_essential_linux_puppet::dirs   inherits   a2o_essential_linux_puppet::base {
     File {
         ensure => directory,
         owner  => root,
@@ -223,7 +223,7 @@ class   a2o-essential-linux-puppet::dirs   inherits   a2o-essential-linux-puppet
 #    file { '/opt/scripts':        }   # Define it in FHS, which gets included in basic definition
     file { '/opt/scripts/puppet': }
 }
-class   a2o-essential-linux-puppet::files   inherits   a2o-essential-linux-puppet::base {
+class   a2o_essential_linux_puppet::files   inherits   a2o_essential_linux_puppet::base {
     File {
         owner   => root,
         group   => root,
@@ -244,7 +244,7 @@ class   a2o-essential-linux-puppet::files   inherits   a2o-essential-linux-puppe
 
 
 ### Cron for periodic puppet runs
-class   a2o-essential-linux-puppet::cron   inherits   a2o-essential-linux-puppet::base {
+class   a2o_essential_linux_puppet::cron   inherits   a2o_essential_linux_puppet::base {
     file { '/opt/scripts/puppet/puppet.cron.sh':
         source => "puppet:///modules/$thisPuppetModule/puppet.cron.sh",
         owner  => root,
@@ -268,9 +268,9 @@ class   a2o-essential-linux-puppet::cron   inherits   a2o-essential-linux-puppet
 
 
 ### The final all-containing classes
-class   a2o-essential-linux-puppet {
-    include 'a2o-essential-linux-puppet::packages'
-    include 'a2o-essential-linux-puppet::dirs'
-    include 'a2o-essential-linux-puppet::files'
-#    include 'a2o-essential-linux-puppet::cron'
+class   a2o_essential_linux_puppet {
+    include 'a2o_essential_linux_puppet::packages'
+    include 'a2o_essential_linux_puppet::dirs'
+    include 'a2o_essential_linux_puppet::files'
+#    include 'a2o_essential_linux_puppet::cron'
 }
