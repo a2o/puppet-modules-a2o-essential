@@ -19,6 +19,7 @@ class   a2o_essential_linux_mysql::package::cleanup   inherits   a2o_essential_l
     $require = [
 	Package['mysql'],
 	File['/usr/local/mysql'],
+	Service["$serviceName"],
     ]
 
     a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.58-1': compileDir => $compileDir, require => $require, }
@@ -29,4 +30,5 @@ class   a2o_essential_linux_mysql::package::cleanup   inherits   a2o_essential_l
 #    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.63-1': compileDir => $compileDir, require => $require, }
 #    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.65-1': compileDir => $compileDir, require => $require, }
 #    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.66-1': compileDir => $compileDir, require => $require, }
+#    a2o-essential-unix::compiletool::package::remove { 'mysql-5.1.68-2': compileDir => $compileDir, require => $require, }
 }

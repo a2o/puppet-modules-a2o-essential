@@ -16,5 +16,6 @@
 ### All containing class
 class   a2o_essential_linux_mysql::package {
     include 'a2o_essential_linux_mysql::package::mysql'
+    include 'a2o_essential_linux_mysql::package::mysql_db_upgrade'
     include 'a2o_essential_linux_mysql::package::cleanup'
 }

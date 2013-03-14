@@ -1,0 +1,74 @@
+#!/bin/bash
+###########################################################################
+# a2o Essential Puppet Modules                                            #
+#-------------------------------------------------------------------------#
+# Copyright (c) Bostjan Skufca                                            #
+#-------------------------------------------------------------------------#
+# This source file is subject to version 2.0 of the Apache License,       #
+# that is bundled with this package in the file LICENSE, and is           #
+# available through the world-wide-web at the following url:              #
+# http://www.apache.org/licenses/LICENSE-2.0                              #
+#-------------------------------------------------------------------------#
+# Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
+###########################################################################
+
+
+
+### Compile directory
+export SRCROOT="<%= compileDir %>" &&
+mkdir -p $SRCROOT &&
+cd $SRCROOT &&
+
+
+
+### Set versions and directories
+export PVERSION_MYSQL="<%= softwareVersion %>" &&
+export PVERSION_MYSQL_MAJOR=`echo "$PVERSION_MYSQL" | cut -d. -f1,2` &&
+export PDESTDIR="<%= destDir %>" &&
+#export PDESTDIR_OPENSSL="<%= externalDestDir_openssl %>" &&
+
+
+
+### MySQL
+# CheckURI: http://ftp.arnes.si/mysql/Downloads/
+cd $SRCROOT && . /var/src/_functions.sh &&
+export PNAME="mysql" &&
+export PVERSION="$PVERSION_MYSQL" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="http://cdn.mysql.com/Downloads/MySQL-$PVERSION_MYSQL_MAJOR/$PFILE" &&
+
+rm -rf $PDIR &&
+GetUnpackCd &&
+
+# Force exact OpenSSL version
+#export LD_LIBRARY_PATH="$PDESTDIR_OPENSSL/lib" &&
+
+# Does not compile on Ubuntu without these, bug 38324
+#export CCFLAGS="-I$PDESTDIR_OPENSSL/include" &&
+#export CPPFLAGS="-I$PDESTDIR_OPENSSL/include"  &&
+#export CXXFLAGS="-I$PDESTDIR_OPENSSL/include" &&
+
+cmake . \
+  -DCMAKE_INSTALL_PREFIX=$PDESTDIR \
+  -DSYSCONFDIR=/etc/mysql \
+  -DWITH_ARCHIVE_STORAGE_ENGINE=1 \
+  -DWITH_BLACKHOLE_STORAGE_ENGINE=1 \
+  -DWITH_INNOBASE_STORAGE_ENGINE=1 \
+  -DDEFAULT_CHARSET=utf8 \
+  -DDEFAULT_COLLATION=utf8_general_ci \
+  -DMYSQL_UNIX_ADDR=/var/mysql/run/mysql.sock \
+  -DWITH_READLINE=ON \
+  -DWITH_SSL=bundled &&
+#  --with-mysqld-user=mysql \
+make -j 2 &&
+make install &&
+
+
+
+cd $SRCROOT &&
+rm -rf $PDIR &&
+
+
+
+true

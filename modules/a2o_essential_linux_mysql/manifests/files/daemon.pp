@@ -47,15 +47,21 @@ class   a2o_essential_linux_mysql::files::daemon_config   inherits   a2o_essenti
     file { '/etc/mysql/conf.d':   ensure => directory, mode => 755 }
 
     # Configuration files
-    file { '/etc/mysql/my.cnf':         source => "puppet:///modules/$thisPuppetModule/my.cnf" }
+    if $version_major == '5.5' {
+	$mainConfigFileUri = "puppet:///modules/$thisPuppetModule/my.cnf_5.5"
+	$startupFileTpl    = "$thisPuppetModule/mysql.server_5.5"
+    } else {
+	$mainConfigFileUri = "puppet:///modules/$thisPuppetModule/my.cnf"
+	$startupFileTpl    = "$thisPuppetModule/mysql.server"
+    }
+    file { '/etc/mysql/my.cnf':   source => "$mainConfigFileUri" }
 
     # Startup script - rearranged order of parameters
     file { '/opt/scripts/mysql/mysql.server':
-        content  => template("$thisPuppetModule/mysql.server"),
+        content  => template("$startupFileTpl"),
         mode     => 755,
         require  => Package['mysql'],
     }
-
 }
 
 

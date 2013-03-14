@@ -13,58 +13,28 @@
 
 
 
-### Software package: mysql
-class   a2o_essential_linux_mysql::package::mysql   inherits   a2o_essential_linux_mysql::package::base {
+### Software package: mysql database schema/data upgrade
+class   a2o_essential_linux_mysql::package::mysql_db_upgrade   inherits   a2o_essential_linux_mysql::package::base {
+
+    # Get external variables
+    $packageTag_mysql = $a2o_essential_linux_mysql::package::mysql::packageTag
+    $destDir_mysql    = $a2o_essential_linux_mysql::package::mysql::destDir
 
     # Package / Software details
-    # CheckURI: http://ftp.arnes.si/mysql/Downloads/
-    $softwareName     = 'mysql'
-    if $version_major == '5.5' {
-	$softwareVersion  = '5.5.30'
-	$packageRelease   = '1'
-    } else {
-	$softwareVersion  = '5.1.68'
-	$packageRelease   = '2'
-    }
+    $softwareName     = "$packageTag_mysql-mysql-db-upgrade"
+    $softwareVersion  = '0.1.0'
+    $packageRelease   = '1'
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
-    $destDir          = "/usr/local/$packageTag"
-
-
-    ### Additinal versions
-    $externalDestDir_openssl = '/usr/local/openssl-1.0.1e-2'
-
-
-    # Install is version specific?
-    if $version_major == '5.5' {
-	$installScriptTplUri = "$thisPuppetModule/install-mysql.sh_5.5"
-    } else {
-	$installScriptTplUri = "$thisPuppetModule/install-mysql.sh"
-    }
 
 
     ### Package
-    if $version_major == '5.5' {
-	$require = [
-	    Package['cmake'],
-	    Package['openssl'],
-	]
-    } else {
-	$require = [
-	    Package['openssl'],
-	]
-    }
+    $require = [
+        Package['mysql'],
+        File['/usr/local/mysql'],
+        Service["$serviceName"],
+    ]
     a2o-essential-unix::compiletool::package::generic { "$packageTag":
 	require             => $require,
-	installScriptTplUri => $installScriptTplUri,
-    }
-
-
-    ### Symlink
-    file { "/usr/local/$softwareName":
-	ensure  => "$packageTag",
-	require => [
-	    Package["$softwareName"],
-	],
-	backup   => false,
+	installScriptTplUri => "$thisPuppetModule/install-mysql-db-upgrade.sh",
     }
 }

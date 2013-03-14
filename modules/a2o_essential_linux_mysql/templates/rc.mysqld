@@ -26,7 +26,9 @@ export LD_LIBRARY_PATH="<%= destDir_openssl %>/lib"
 
 
 
-PROC_NAME="/usr/local/mysql/libexec/mysqld"
+#PROC_NAME="/usr/local/mysql/libexec/mysqld" # MySQL 5.1
+PROC_NAME="/usr/local/mysql/bin/mysqld"
+PROC_REGEX='/usr/local/mysql/\(bin\|libexec\)/mysqld'
 PID_FILE="/var/mysql/run/mysqld.pid"
 APP_CMD_START="/opt/scripts/mysql/mysql.server start --defaults-file=/etc/mysql/my.cnf $MYSQLD_OTHER_ARGS"
 APP_CMD_STOP="/opt/scripts/mysql/mysql.server stop"
