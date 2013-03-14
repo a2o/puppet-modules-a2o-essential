@@ -109,10 +109,14 @@ Puppet::Type.type(:mysql_user).provide :mysql_cli, :parent => Puppet::Provider::
     #
     # Tolerated mysql.user table columns - present here to omit warnings in logs
     #
-    # Privilege columns which may exists on server (as of MySQL 5.1.48) but are not 
+    # Privilege columns which may exists on server (v5.5.30 vs v5.1.68) but are not
     # used by this provider
     #
-    @tolerated_priv_columns = []
+    @tolerated_priv_columns = [
+        'Create_tablespace_priv', \
+        'plugin', \
+        'authentication_string' \
+    ]
     @tolerated_priv_column_positions = Hash.new
 
 
