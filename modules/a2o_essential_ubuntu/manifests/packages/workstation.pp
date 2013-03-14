@@ -34,10 +34,7 @@ class   a2o_essential_ubuntu::packages::workstation   inherits   a2o-essential-d
     package { 'libgconf2-4':            }
     package { 'libxss1':                }
     package { 'google-chrome-stable':   }
-
-    package { 'chromium-browser':   }
-
-    package { 'lm-sensors':   }
+    package { 'chromium-browser':       }
 
     # For workspace configuration
     package { 'compizconfig-settings-manager':   }
@@ -58,26 +55,31 @@ class   a2o_essential_ubuntu::packages::workstation   inherits   a2o-essential-d
         require      => Package['network-manager'],
     }
 
-    # Tools
-    package { 'netbeans':            }
-    package { 'git':            }
-    package { 'subversion':            }
-    package { 'mercurial':            }
-    package { 'gimp':            }
-    package { 'shutter':            }
-    package { 'default-jre':    }
-    package { 'transmission':            }
+    ### General Tools
+    package { 'gimp':             }
     package { 'pdftk':            }
-    package { 'pidgin':            }
-    package { 'skype':            }
-    package { 'sshfs':            }
     package { 'rsync':            }
+    package { 'shutter':          }
+    package { 'lm-sensors':       }
+    package { 'sshfs':            }
+    package { 'transmission':     }
 
-    package { 'php5-cli':        }
-    package { 'ruby':            }
-    package { 'rake':            }
+    ### Developer Tools
+    package { 'default-jre':      }
+    package { 'git':              }
+    package { 'kcachegrind':      }
+    package { 'mercurial':        }
+    package { 'netbeans':         }
+    package { 'php5-cli':         }
+    package { 'rake':             }
+    package { 'ruby':             }
+    package { 'subversion':       }
 
-    # Virtualization
-    package { 'virtualbox':              }
+    ### Communication tools
+    package { 'pidgin':           }
+    package { 'skype':            }
+
+    ### Virtualization
+    package { 'virtualbox':       }
 
 }
