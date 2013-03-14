@@ -17,6 +17,7 @@ class a2o_essential_linux_tools::group::all {
 #    include 'a2o-essential-linux-tools::ant'
     include 'a2o-essential-linux-tools::bc'
     include 'a2o-essential-linux-tools::bridge-utils'
+    include 'a2o_essential_linux_tools::cmake'
     include 'a2o-essential-linux-tools::conntrack-tools'
     include 'a2o-essential-linux-tools::dstat'
     include 'a2o-essential-linux-tools::git::all'

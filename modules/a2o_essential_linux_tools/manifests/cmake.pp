@@ -18,11 +18,16 @@ class   a2o_essential_linux_tools::cmake   inherits   a2o_essential_linux_tools:
 
     # CheckURI: http://www.cmake.org/cmake/resources/software.html
     $softwareName     = 'cmake'
-    $softwareVersion  = '2.8.9'
+    $softwareVersion  = '2.8.10'
     $packageRelease   = '1'
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
 
 
     ### Package
+#    $require = [
+#	Package['expat'],
+#	Package['libunwind'],
+#	Package['zlib'],
+#    ]
     a2o-essential-unix::compiletool::package::generic { "$packageTag": }
 }
