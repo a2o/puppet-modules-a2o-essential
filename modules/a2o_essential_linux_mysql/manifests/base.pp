@@ -13,7 +13,13 @@
 
 
 
-### Final all-containing class
-class   a2o_essential_linux_mysql {
-    include 'a2o_essential_linux_mysql::files'
-}
+### Base class
+class   a2o_essential_linux_mysql::base
+(
+    $thisPuppetModule = a2o_get_current_module_name(),
+
+    $version_major    = a2o_get_param('version_major'),
+
+    $fakeLastParamWithNoTailingComma = ''
+)
+inherits   a2o_essential_linux_mysql::params {}

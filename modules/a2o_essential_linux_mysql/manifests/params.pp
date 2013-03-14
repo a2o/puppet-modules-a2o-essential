@@ -13,7 +13,21 @@
 
 
 
-### Final all-containing class
-class   a2o_essential_linux_mysql {
-    include 'a2o_essential_linux_mysql::files'
+### Module Parameters
+#
+# WARNING: This class must not inherit base class, it is the other way around
+#
+class   a2o_essential_linux_mysql::params {
+
+    ### Major version to install
+    $version_major = '5.1'
+#    $version_major = '5.5'
+#    $version_major = '5.6'
+
+    ### Actual puppet service name
+    $serviceNameBase = 'mysqld'
+    $serviceName     = $::operatingsystem ? {
+	/(?i:Slackware)/ => "a2o-linux-$serviceNameBase",
+	default          => $serviceNameBase,
+    }
 }
