@@ -49,7 +49,7 @@ class   a2o-essential-linux-puppet-sys::package::base   inherits   a2o-essential
     $packageName_facter            = "${packageTag_puppet}-facter"
     $packageSoftwareName_facter    = "facter"
     # CheckURI:http://projects.puppetlabs.com/projects/1/wiki/Downloading_Puppet
-    $packageSoftwareVersion_facter = '1.6.17'
+    $packageSoftwareVersion_facter = '1.6.18'
     $packageRelease_facter         = '1'
     $packageEnsure_facter          = "${packageSoftwareVersion_facter}-${packageRelease_facter}"
     $packageTag_facter             = "${packageName_facter}-${packageEnsure_facter}"
