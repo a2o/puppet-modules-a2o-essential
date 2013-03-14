@@ -19,7 +19,7 @@ class   a2o_essential_linux_interpreters::perl::package   inherits   a2o_essenti
     # Package / Software details
     # CheckURI: http://www.perl.org
     $softwareName     = 'perl'
-    $softwareVersion  = '5.16.2'
+    $softwareVersion  = '5.16.3'
     $packageRelease   = '1'
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
     $destDir          = "/usr/local/$packageTag"
