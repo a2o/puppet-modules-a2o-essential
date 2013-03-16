@@ -25,7 +25,7 @@ class   a2o_essential_linux_mysql::package::mysql_db   inherits   a2o_essential_
 
 
     ### Additional external data
-    $destDir_mysql    = $a2o_essential_linux_mysql::package::mysql::destDir
+    $destDir_mysql    = "/usr/local/${a2o_essential_linux_mysql::package::mysql::packageTag}"
 
 
     ### Package
