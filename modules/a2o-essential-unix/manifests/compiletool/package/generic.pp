@@ -67,6 +67,9 @@ define   a2o-essential-unix::compiletool::package::generic (
     ###
     if $destDir == undef {
 	$destDir = "/usr/local/$packageTag"
+	$destDirReal = "/usr/local/$packageTag"
+    } else {
+	$destDirReal = "$destDir"
     }
 
 
@@ -93,6 +96,7 @@ define   a2o-essential-unix::compiletool::package::generic (
 
     # Some debugging
 #    notice "INFO: $name : name    : $softwareName"
+#    notice "INFO: $name : rname   : $resourceName"
 #    notice "INFO: $name : version : $softwareVersion"
 #    notice "INFO: $name : release : $packageRelease"
 #    notice "INFO: $name : cdir    : $compileDir"
