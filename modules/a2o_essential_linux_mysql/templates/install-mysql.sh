@@ -24,7 +24,7 @@ cd $SRCROOT &&
 ### Set versions and directories
 export PVERSION_MYSQL="<%= softwareVersion %>" &&
 export PVERSION_MYSQL_MAJOR=`echo "$PVERSION_MYSQL" | cut -d. -f1,2` &&
-export PDESTDIR="<%= destDir %>" &&
+export PDESTDIR="<%= destDirReal %>" &&
 export PDESTDIR_OPENSSL="<%= externalDestDir_openssl %>" &&
 
 

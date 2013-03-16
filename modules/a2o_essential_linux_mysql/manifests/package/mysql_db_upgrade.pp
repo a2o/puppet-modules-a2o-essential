@@ -18,7 +18,7 @@ class   a2o_essential_linux_mysql::package::mysql_db_upgrade   inherits   a2o_es
 
     # Get external variables
     $packageTag_mysql = $a2o_essential_linux_mysql::package::mysql::packageTag
-    $destDir_mysql    = $a2o_essential_linux_mysql::package::mysql::destDir
+    $destDir_mysql    = "/usr/local/${a2o_essential_linux_mysql::package::mysql::packageTag}"
 
     # Package / Software details
     $softwareName     = "$packageTag_mysql-mysql-db-upgrade"
