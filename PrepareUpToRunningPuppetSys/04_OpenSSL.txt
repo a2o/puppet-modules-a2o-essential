@@ -1,0 +1,58 @@
+### Init
+export SRCROOT="/var/src/libs" &&
+mkdir -p $SRCROOT &&
+cd $SRCROOT &&
+
+
+
+### OpenSSL
+# CheckURI: http://openssl.org/
+cd $SRCROOT && . ../_functions.sh &&
+export PNAME="openssl" &&
+export PVERSION="0.9.8q" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="http://www.openssl.org/source/$PFILE" &&
+export PDESTDIR="$PDIR" &&
+GetUnpackClean &&
+./config --prefix=/usr/local/$PDESTDIR shared &&
+make &&
+make install &&
+
+# Add 2 symlinks
+ln -sf libcrypto.so.0.9.8 /usr/local/$PDESTDIR/lib/libcrypto.so.0 &&
+ln -sf libssl.so.0.9.8 /usr/local/$PDESTDIR/lib/libssl.so.0 &&
+
+
+
+# Symlink
+rm -f /usr/local/openssl &&
+ln -sf $PDESTDIR /usr/local/openssl &&
+
+# Program symlinks
+ln -sf /usr/local/openssl/bin/openssl /usr/local/bin/openssl &&
+
+
+
+### Create machine cert, for now self-signed
+# TODO edit openssl.cnf to save typing
+
+mkdir -p /etc/ssl/certs &&
+cd /etc/ssl/certs &&
+
+true
+
+#export CERT_HOSTNAME=`hostname -f` &&
+#openssl genrsa 1024 > $CERT_HOSTNAME.key &&
+#chmod 400 $CERT_HOSTNAME.key &&
+#openssl req -new -x509 -nodes -sha1 -days 3000 -key $CERT_HOSTNAME.key > $CERT_HOSTNAME.cert &&
+#openssl x509 -noout -fingerprint -text < $CERT_HOSTNAME.cert > $CERT_HOSTNAME.info &&
+#cat $CERT_HOSTNAME.cert $CERT_HOSTNAME.key > $CERT_HOSTNAME.pem &&
+#chmod 400 `hostname -f`.pem
+#
+## Symlinks for default cert
+#cd /etc/ssl/certs &&
+#ln -sf `hostname -f`.key  _default.key &&
+#ln -sf `hostname -f`.cert _default.cert &&
+#ln -sf `hostname -f`.info _default.info &&
+#ln -sf `hostname -f`.pem  _default.pem

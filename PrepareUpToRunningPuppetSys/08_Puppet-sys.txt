@@ -1,0 +1,113 @@
+### Init
+export SRCROOT="/var/src/puppet-sys" &&
+mkdir -p $SRCROOT &&
+cd $SRCROOT &&
+
+
+
+### Set versions and directories
+export PVERSION_RUBY="1.8.7-p302" &&
+export PVERSION_RUBY_MAJOR=`echo "$PVERSION_RUBY" | cut -d. -f1,2` &&
+export PVERSION_FACTER="1.5.8" &&
+export PVERSION_PUPPET="2.6.4" &&
+export PVERSION_OPENSSL="0.9.8q" &&
+export PDESTDIR="/usr/local/puppet-sys-init" &&
+export PDESTDIR_OPENSSL="/usr/local/openssl-$PVERSION_OPENSSL" &&
+
+
+
+### Ruby
+# CheckURI: http://www.ruby-lang.org/en/downloads/
+cd $SRCROOT && . /var/src/_functions.sh &&
+export PNAME="ruby" &&
+export PVERSION="$PVERSION_RUBY" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="ftp://ftp.ruby-lang.org/pub/ruby/$PVERSION_RUBY_MAJOR/$PFILE" &&
+rm -rf ./$PDIR &&
+GetUnpack &&
+cd $PDIR &&
+./configure --prefix=$PDESTDIR \
+  --enable-shared \
+  --with-openssl-dir=$PDESTDIR_OPENSSL &&
+make &&
+make install &&
+
+
+
+### Fracter
+# CheckURI: http://www.reductivelabs.com/downloads/facter/
+cd $SRCROOT && . /var/src/_functions.sh &&
+export PNAME="facter" &&
+export PVERSION="$PVERSION_FACTER" &&
+export PDIR="$PNAME-$PVERSION" &&
+#export PFILE="$PDIR.tgz" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="http://www.reductivelabs.com/downloads/facter/$PFILE" &&
+GetUnpackClean &&
+$PDESTDIR/bin/ruby install.rb &&
+
+
+
+### Puppet
+# CheckURI: http://reductivelabs.com/trac/puppet/wiki/DownloadingPuppet
+cd $SRCROOT && . /var/src/_functions.sh &&
+export PNAME="puppet" &&
+export PVERSION="$PVERSION_PUPPET" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="http://reductivelabs.com/downloads/puppet/$PFILE" &&
+GetUnpackClean &&
+mkdir -p $PDESTDIR/sbin &&
+$PDESTDIR/bin/ruby install.rb &&
+
+
+
+### Fix the default confdir and vardir
+cat $PDESTDIR/lib/ruby/site_ruby/1.8/puppet/util/run_mode.rb \
+  | sed -e 's#"/etc/puppet"#"/etc/puppet-sys"#' \
+  | sed -e 's#"/var/lib/puppet"#"/var/lib/puppet-sys"#' \
+  > /tmp/run_mode.rb &&
+mv /tmp/run_mode.rb $PDESTDIR/lib/ruby/site_ruby/1.8/puppet/util/run_mode.rb &&
+
+
+
+### Symlink
+rm -f /usr/local/puppet-sys &&
+ln -sf $PDESTDIR /usr/local/puppet-sys &&
+
+
+
+### Improvise configuration
+mkdir -p /etc/puppet-sys &&
+cat <<EOF > /etc/puppet-sys/puppet.conf
+[main]
+server            = puppetmaster.itsis.lan
+masterport        = 18140
+runinterval       = 3600
+pluginsync        = true
+ignorecache       = true
+usecacheonfailure = false
+
+
+
+[agent]
+environment = development
+puppetdlog  = /var/lib/puppet-sys/log/puppetd.log
+certname    = `hostname -f`
+report      = true
+graph       = true
+EOF
+
+
+
+### Improvised startup
+cat <<EOF >> /etc/rc.d/rc.local
+
+/usr/local/puppet-sys/sbin/puppetd
+EOF
+
+
+
+### Start it to request cert
+/usr/local/puppet-sys/sbin/puppetd --test --debug

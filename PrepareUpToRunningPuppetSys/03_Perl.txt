@@ -1,0 +1,49 @@
+#
+# Needed for kernel and openssl and whatever compilation - SUUUCKS
+#
+# This is system wide perl, will install libraries and modules later
+# "make test" takes ages
+#
+
+
+
+### Init
+export SRCROOT="/var/src/perl-sys" &&
+mkdir -p $SRCROOT &&
+cd $SRCROOT &&
+
+
+
+### Perl
+# CheckURI: http://www.cpan.org/src/README.html
+cd $SRCROOT && . ../_functions.sh &&
+export PNAME="perl" &&
+export PVERSION="5.12.2" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="http://www.cpan.org/src/5.0/$PFILE" &&
+export PDESTDIR="$PDIR-sys" &&
+rm -rf $PFILE &&
+rm -rf $PDIR &&
+GetUnpack &&
+cd $PDIR &&
+./Configure -Dprefix=/usr/local/$PDESTDIR -Dusethreads -de &&
+make &&
+make install &&
+
+
+
+### Symlink
+rm -f /usr/local/perl &&
+ln -sf $PDESTDIR /usr/local/perl &&
+
+
+
+### Program symlinks
+ln -sf /usr/local/perl/bin/perl /usr/local/bin/perl &&
+ln -sf /usr/local/bin/perl /usr/bin/perl &&
+ln -sf /usr/local/perl/bin/pod2man /usr/local/bin/pod2man &&
+ln -sf /usr/local/perl/bin/pod2html /usr/local/bin/pod2html &&
+ln -sf /usr/local/perl/bin/podchecker /usr/local/bin/podchecker &&
+
+true

@@ -1,0 +1,31 @@
+
+
+# Stop the old daemon
+kill -15 `cat /var/run/sshd.pid`
+
+# Remove old libs from slackware:
+rm -f /usr/lib/libcrypto.so.0 &&
+rm -f /usr/lib/libcrypto.so.0.9.8 &&
+rm -f /usr/lib/libssl.so.0 &&
+rm -f /usr/lib/libssl.so.0.9.8
+
+# Uninstall original sshd and openssl-solibs
+rm /etc/rc.d/rc.sshd
+removepkg openssh
+rm -rf /etc/ssh
+removepkg openssl-solibs
+ldconfig
+
+
+# Enable new openssl for wget
+#ln -sf /usr/local/openssl/include/openssl /usr/include/openssl
+#ln -sf /usr/local/openssl/lib/libssl.so /usr/lib/libssl.so
+#ln -sf /usr/local/openssl/lib/libssl.so.0 /usr/lib/libssl.so.0
+#ln -sf /usr/local/openssl/lib/libssl.so.0.9.8 /usr/lib/libssl.so.0.9.8
+#ln -sf /usr/local/openssl/lib/libcrypto.so /usr/lib/libcrypto.so
+#ln -sf /usr/local/openssl/lib/libcrypto.so.0 /usr/lib/libcrypto.so.0
+#ln -sf /usr/local/openssl/lib/libcrypto.so.0.9.8 /usr/lib/libcrypto.so.0.9.8
+
+# FIXME tole mora ostat funkcionalno, ker drugac wget res ne bo delal
+#mv /usr/local/openssl /usr/local/openssl.bak
+

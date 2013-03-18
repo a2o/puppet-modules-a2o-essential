@@ -1,0 +1,186 @@
+###########################################################
+#   Slackware 12.2, 13.0 or 13.1 (32 and 64bit version)   #
+###########################################################
+
+
+
+### Basic steps
+- Insert CD
+- Boot server from CD
+- boot   - press ENTER
+- keymap - press ENTER
+- login  - press ENTER
+
+
+
+### Disk partitions
+fdisk /dev/sda or /dev/cciss/c0d0
+- swap: 1-4 GB
+- root: 5-10 GB
+- the rest goest to another partition, which gets mounted on /var
+- make root active partition
+
+
+
+### Start setup
+setup
+- go to ADDSWAP
+- then TARGET (/ in /var, both ext3 or ext4)
+- then SOURCE, auto
+
+
+
+### Package installations
+## Choose these groups:
+- A
+- AP
+- D
+- L
+- N
+
+
+## Choose this instalation variation
+- expert
+
+
+## Group A
+# Everything which is required, and additionally
+- aaa_terminfo
+- bzip2
+- cpio
+- cpufrequtils
+- dialog
+- ed
+- file
+- findutils
+- gawk
+- gettext
+- glibc-solibs
+- glibc-zoneinfo
+- (hdparm FIXME should add remove when installed later from sources)
+- infozip         <--- add to puppet! FIXME
+- inotify-tools
+- jfsutils
+- kernel-huge-smp (kernel-huge on 13.1)
+- lilo
+- lvm2
+- mdadm    <---- ftp://ftp.slackware.at/slackware-13.0/slackware/a/mdadm-2.6.4-i486-1.txz - add to puppet FIXME
+- openssl-solibs
+- patch
+- pciutils
+- rpm2tgz
+- sysfsutils
+- sysklogd
+- sysvinit-functions
+- time
+- tree
+- udev
+- usbutils
+- utempter
+- which
+- xfsprogs
+- xz      <--- ftp://ftp.slackware.at/slackware-13.0/slackware/a/xz-4.999.8beta-i486-1.tgz - add to puppet FIXME
+
+
+## Group AP
+- at <--- FIXME add to puppet
+- diffstat
+- diffutils
+- ghostscript-fonts
+- groff
+- jed
+- joe
+- lsof
+- lsscsi
+- man
+- man-pages
+- mc
+- most
+- nano
+- rpm
+- rzip
+- screen
+- slackpkg
+- sysstat
+- texinfo
+- vim
+- xfsdump
+
+
+## Group D
+- autoconf
+- automake
+- binutils
+- bison
+- cmake
+- flex
+- gcc
+- gcc-g++
+- gdb
+- gettext-tools
+- kernel-headers
+- libtool
+- m4
+- make
+- pkg-config
+- pmake
+- strace
+
+
+## Group L
+- beecrypt  (only in 12.2, required for rpm2targz, not required nor available in 13.0)
+- glibc
+- glibc-i18n
+- libtermcap
+- mpfr   <--- ftp://ftp.slackware.at/slackware-13.0/slackware/l/mpfr-2.3.1-i486-1.txz
+- ncurses
+- readline
+
+
+## Group N
+- bridge-utils
+- ethtool
+- icmpinfo
+- iproute2
+- iptraf
+- iputils
+- links
+- lynx
+- mailx
+- mtr
+- nc
+- net-tools
+- netkit-ftp
+- netpipes
+- network-scripts
+- openssh
+- telnet
+- traceroute
+- wget
+
+
+
+### Ultimate steps
+- skib usb boot stick
+- expert lilo,
+--- begin
+--- non-utf8
+--- standard resolution
+--- MBR
+--- wait 5 seconds
+--- no logo
+--- Add Linux partition
+----- /dev/sda2
+----- name it 'dist'
+--- Install
+- Setup some lan setting (static ip!)
+- HW clock to localtime
+- Timezone to Europe/Ljubljana
+- root password to 'root' or something
+
+
+
+### If you are preparing new image, DO NOT REBOOT
+# Booting server for the first time creates new openssh keys and we do not
+# want the same keys on every server, do we?
+exit & halt

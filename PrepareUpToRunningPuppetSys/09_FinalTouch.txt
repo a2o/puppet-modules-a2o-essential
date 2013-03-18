@@ -1,0 +1,19 @@
+#!/bin/bash
+
+
+
+### Fix homedir
+mkdir /var/home &&
+rmdir /home &&
+ln -s /var/home /home
+
+
+
+### Replace passwd/shadow/group files from etc/
+mcedit /etc/passwd
+mcedit /etc/shadow
+mcedit /etc/group
+mcedit /etc/gshadow (remove everything)
+
+### Remove backup instances
+rm /etc/*-

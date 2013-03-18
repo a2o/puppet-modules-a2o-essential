@@ -1,0 +1,38 @@
+Remove SSH certs from /etc/ssh and /etc/ssh-sys
+Remove certs from /etc/puppet-sys
+Change hostname
+Change network settings
+---> /etc/resolv.conf
+---> /etc/rc.d/rc.inet1.conf
+
+
+FIXME what else?
+
+TODO:
+- fix openssl.bak
+
+TODO watch, remove when installing new packages
+- bridge-utils
+- gettext
+- gettext-tools
+- pciutils
+- procps
+- readline? to nimam na custom - zakaj?
+- sysklogd
+- openssh
+- openssl-solibs
+
+FIXME
+- fix home to link to /var/home
+mkdir /var/home &&
+rmdir /home &&
+ln -s /var/home /home
+
+- update passwd/shadow/group file
+- remove /var/puppet/run/puppetd.pid
+
+
+Reboot
+Create new certs for ssh
+Rerun puppet and sign the cert
+Rerun puppet and enyoj your day because your work is being done automagically :)

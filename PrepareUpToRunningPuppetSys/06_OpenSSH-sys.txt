@@ -1,0 +1,98 @@
+### Init
+export SRCROOT="/var/src/ssh-sys" &&
+mkdir -p $SRCROOT &&
+cd $SRCROOT &&
+
+
+
+### OpenSSL version and directory
+export PVERSION_OPENSSL="0.9.8q" &&
+export PDESTDIR_OPENSSL="/usr/local/openssl-$PVERSION_OPENSSL" &&
+
+
+
+### zlib
+# CheckURI: http://www.zlib.net/
+cd $SRCROOT && . ../_functions.sh &&
+export PNAME="zlib" &&
+export PVERSION="1.2.5" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="http://www.zlib.net/$PFILE" &&
+GetUnpackClean &&
+CFLAGS="-O3 -fPIC" ./configure &&
+make &&
+make install &&
+ldconfig &&
+
+
+
+### OpenSSH - sys
+# CheckURI: http://www.openssh.com/
+# Requires: openssl, zlib
+cd $SRCROOT && . ../_functions.sh &&
+export PNAME="openssh" &&
+export PVERSION="5.6p1" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="http://mirror.switch.ch/ftp/pub/OpenBSD/OpenSSH/portable/$PFILE" &&
+export PDESTDIR="openssh-sys-init"
+rm -rf ./$PDIR &&
+GetUnpackCd &&
+
+export LD_LIBRARY_PATH="$PDESTDIR_OPENSSL/lib" &&
+ldconfig &&
+
+#  --with-ldflags=-static \
+
+./configure --prefix=/usr/local/$PDESTDIR --sysconfdir=/etc/ssh-sys \
+  --with-ssl-dir=$PDESTDIR_OPENSSL \
+  --with-privsep-path=/dev/shm/privsep \
+  --with-default-path=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/ssh-sys/bin &&
+make &&
+make install &&
+
+unset LD_LIBRARY_PATH &&
+ldconfig &&
+
+
+# Symlinks
+rm -f /usr/local/openssh-sys &&
+ln -sf $PDESTDIR /usr/local/openssh-sys &&
+rm -f /usr/local/ssh-sys &&
+ln -sf openssh-sys /usr/local/ssh-sys &&
+
+
+
+# Improvised temporary config
+cat <<EOF > /etc/ssh-sys/sshd_config &&
+Port              10022
+Protocol          2
+PidFile           /dev/shm/sshd-sys.pid
+AllowGroups       root
+PermitRootLogin   yes
+Subsystem         sftp   /usr/local/ssh-sys/libexec/sftp-server
+EOF
+
+
+
+# Improvised temporary startup
+cat <<EOF > /etc/rc.d/rc.local &&
+mkdir -p /dev/shm/privsep
+if [ ! -r /etc/ssh-sys/ssh_host_key ]; then
+    /usr/local/ssh-sys/bin/ssh-keygen -t rsa1 -f /etc/ssh-sys/ssh_host_key -N '' 
+fi
+if [ ! -f /etc/ssh-sys/ssh_host_dsa_key ]; then
+    /usr/local/ssh-sys/bin/ssh-keygen -t dsa -f /etc/ssh-sys/ssh_host_dsa_key -N ''
+fi
+if [ ! -f /etc/ssh-sys/ssh_host_rsa_key ]; then
+    /usr/local/ssh-sys/bin/ssh-keygen -t rsa -f /etc/ssh-sys/ssh_host_rsa_key -N ''
+fi
+/usr/local/ssh-sys/sbin/sshd
+EOF
+chmod 755 /etc/rc.d/rc.local &&
+/etc/rc.d/rc.local
+
+
+
+# Logout, login via new system SSH instance

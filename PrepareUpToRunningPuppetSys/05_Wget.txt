@@ -1,0 +1,30 @@
+### Init
+export SRCROOT="/var/src/tools" &&
+mkdir -p $SRCROOT &&
+cd $SRCROOT &&
+
+
+
+### Version of OpenSSL
+export PVERSION_OPENSSL="0.9.8q" &&
+export PDESTDIR_OPENSSL="/usr/local/openssl-$PVERSION_OPENSSL" &&
+
+
+
+### Wget
+# CheckURI: http://ftp.gnu.org/gnu/wget/
+cd $SRCROOT && . ../_functions.sh &&
+export PNAME="wget" &&
+export PVERSION="1.12" &&
+export PDIR="$PNAME-$PVERSION" &&
+export PFILE="$PDIR.tar.gz" &&
+export PURI="http://ftp.gnu.org/gnu/wget/$PFILE" &&
+rm -rf $PDIR &&
+GetUnpackCd &&
+./configure --with-libssl-prefix=$PDESTDIR_OPENSSL &&
+make &&
+(
+removepkg wget;
+make install;
+) &&
+export PATH=$PATH
