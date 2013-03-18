@@ -17,5 +17,5 @@
 class a2o_essential_linux_interpreters::python::base   inherits   a2o_essential_linux_interpreters::base {
 
     # External software versions
-    $externalDestDir_openssl   = '/usr/local/openssl-1.0.0i-1'
+    $externalDestDir_openssl   = '/usr/local/openssl-1.0.1e-2'
 }

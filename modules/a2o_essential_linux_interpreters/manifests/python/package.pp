@@ -19,7 +19,7 @@ class   a2o_essential_linux_interpreters::python::package   inherits   a2o_essen
     # Package / Software details
     # CheckURI: http://www.python.org/download/
     $softwareName     = 'python'
-    $softwareVersion  = '2.6.7'
+    $softwareVersion  = '2.7.3'
     $packageRelease   = '1'
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
     $destDir          = "/usr/local/$packageTag"
@@ -32,11 +32,23 @@ class   a2o_essential_linux_interpreters::python::package   inherits   a2o_essen
     a2o-essential-unix::compiletool::package::generic { "$packageTag": require => $require, }
 
 
-    ### Symlink
-    file { "/usr/local/$softwareName":
-	ensure  => "$packageTag",
+    ### Major Version Symlink
+    file { "/usr/local/$softwareName-2.7":
+	ensure  => link,
+	target  => "$packageTag",
 	require => [
 	    Package["$softwareName"],
+	],
+	backup   => false,
+    }
+
+    ### Main Symlink
+    file { "/usr/local/$softwareName":
+	ensure  => link,
+	target  => "$softwareName-2.7",
+	require => [
+	    Package["$softwareName"],
+	    File["/usr/local/$softwareName-2.7"],
 	],
 	backup   => false,
     }

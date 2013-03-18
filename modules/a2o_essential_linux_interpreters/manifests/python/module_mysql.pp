@@ -29,7 +29,7 @@ class   a2o_essential_linux_interpreters::python::module_mysql   inherits   a2o_
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
 
     ### External dependencies
-    $externalDestDir_mysql = '/usr/local/mysql-5.1.66-1'
+    $externalDestDir_mysql = '/usr/local/mysql-5.1.68-2'
 
 
     ### Package
