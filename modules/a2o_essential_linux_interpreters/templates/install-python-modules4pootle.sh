@@ -28,6 +28,7 @@ export PDESTDIR_PYTHON="<%= destDir_python %>" &&
 
 ### Set python path
 export PATH="$PDESTDIR_PYTHON/bin:$PATH" &&
+export LD_LIBRARY_PATH="$PDESTDIR_PYTHON/lib" &&
 
 
 

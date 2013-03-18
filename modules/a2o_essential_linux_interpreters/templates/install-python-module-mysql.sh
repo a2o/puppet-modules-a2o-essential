@@ -28,6 +28,12 @@ export PVERSION_MODULE="<%= softwareVersion %>" &&
 
 
 
+### Set python path
+export PATH="$PDESTDIR_PYTHON/bin:$PATH" &&
+export LD_LIBRARY_PATH="$PDESTDIR_PYTHON/lib" &&
+
+
+
 ### Python MySQL module
 # CheckURI: http://pypi.python.org/pypi/MySQL-python
 cd $SRCROOT && . /var/src/build_functions.sh &&

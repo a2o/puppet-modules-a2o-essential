@@ -30,6 +30,7 @@ export PVERSION_DJANGO="<%= softwareVersion_django %>" &&
 
 ### Set python path
 export PATH="$PDESTDIR_PYTHON/bin:$PATH" &&
+export LD_LIBRARY_PATH="$PDESTDIR_PYTHON/lib" &&
 
 
 
