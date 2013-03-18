@@ -20,17 +20,18 @@ class   a2o_essential_linux_interpreters::ruby::package   inherits   a2o_essenti
     # CheckURI: http://www.ruby-lang.org/en/downloads/
     # CheckURI: http://ftp.ruby-lang.org/pub/ruby/
     $softwareName     = 'ruby'
-    $softwareVersion  = '1.9.3_p194'
+    $softwareVersion  = '1.9.3_p392'
     $packageRelease   = '1'
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
     $destDir          = "/usr/local/$packageTag"
 
     ### Additinal versions
     # CheckURI: http://rubygems.org/
-    $softwareVersion_gems = '1.8.24'
+    # WARNING: Do not upgrade past 1.8 without thorough testing, namely with Redmine
+    $softwareVersion_gems = '1.8.25'
 
     ### External dependencies
-    $externalDestDir_openssl = '/usr/local/openssl-1.0.0i-1'
+    $externalDestDir_openssl = '/usr/local/openssl-1.0.1e-2'
 
 
     ### Package

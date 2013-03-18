@@ -28,7 +28,7 @@ class   a2o_essential_linux_interpreters::ruby::gem_mysql   inherits   a2o_essen
     $destDir          = "/usr/local/$packageTag"
 
     ### External dependencies
-    $externalDestDir_mysql = '/usr/local/mysql-5.1.63-1'
+    $externalDestDir_mysql = '/usr/local/mysql-5.1.68-2'
 
 
     ### Package

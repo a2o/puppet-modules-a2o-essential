@@ -27,7 +27,7 @@ class   a2o_essential_linux_interpreters::ruby::gem_postgresql   inherits   a2o_
     $packageTag       = "$softwareName-$softwareVersion-$packageRelease"
 
     ### External dependencies
-    $externalDestDir_postgresql = '/usr/local/postgresql-9.1.4-1'
+    $externalDestDir_postgresql = '/usr/local/postgresql-9.2.3-1'
 
 
     ### Package
