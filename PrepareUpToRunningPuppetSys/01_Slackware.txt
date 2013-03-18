@@ -16,7 +16,7 @@
 ### Disk partitions
 fdisk /dev/sda or /dev/cciss/c0d0
 - swap: 1-4 GB
-- root: 5-10 GB
+- root: 10-20 GB
 - the rest goest to another partition, which gets mounted on /var
 - make root active partition
 
