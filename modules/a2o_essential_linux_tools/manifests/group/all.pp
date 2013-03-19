@@ -37,6 +37,7 @@ class a2o_essential_linux_tools::group::all {
     include 'a2o-essential-linux-tools::nmap'
 # No use ATM
 #    include 'a2o_essential_linux_tools::noweb'
+    include 'a2o_essential_linux_tools::patchelf'
     include 'a2o-essential-linux-tools::pciutils'
     include 'a2o-essential-linux-tools::procps'
     include 'a2o-essential-linux-tools::psmisc'
