@@ -33,6 +33,13 @@ GetUnpackCd &&
 ./configure --prefix=$PDESTDIR \
   --enable-shared \
   --with-openssl-dir=$PDESTDIR_OPENSSL &&
+
+# Fix for Slackware 14.0
+cd ext/dl &&
+ruby mkcallback.rb > callback.func &&
+ruby mkcbtable.rb  > cbtable.func &&
+cd ../.. &&
+
 make &&
 make install &&
 
