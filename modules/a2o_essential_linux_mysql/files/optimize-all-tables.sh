@@ -9,7 +9,7 @@ FORCE_REPAIR="0"
 
 ### Configuration
 MYSQL_CMD="/usr/local/bin/mysql"
-SKIP_DATABASES='information_schema c_geo'
+SKIP_DATABASES='information_schema performance_schema c_geo'
 SKIP_TABLES='mysql.general_log mysql.slow_log'
 SKIP_TABLE_ENGINES='MEMORY NULL InnoDB'
 SKIP_TABLE_ENGINES_OPTIMIZE=' MRG_MyISAM MRG_MYISAM InnoDB ' # Start and end space are mandatory!
