@@ -21,7 +21,7 @@ class   a2o-essential-linux-tools::wget   inherits   a2o-essential-linux-tools::
     $packageSoftware        = 'wget'
     # CheckURI:
     $packageSoftwareVersion = '1.14'
-    $packageRelease         = '1'
+    $packageRelease         = '2'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
     $installScriptTpl       = "install-$packageSoftware.sh"

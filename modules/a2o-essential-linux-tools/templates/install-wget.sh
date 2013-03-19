@@ -39,7 +39,11 @@ export PURI="http://ftp.gnu.org/gnu/wget/$PFILE" &&
 rm -rf $PDIR &&
 GetUnpackCd &&
 
-./configure --with-libssl-prefix=$PDESTDIR_OPENSSL &&
+# Fixup: without this it does not compile with openssl support, and uses gnutls in that case
+export CFLAGS="-I$PDESTDIR_OPENSSL/include" &&
+export LDFLAGS="-L$PDESTDIR_OPENSSL/lib" &&
+
+./configure --with-ssl=openssl --with-libssl-prefix=$PDESTDIR_OPENSSL &&
 make &&
 (
   removepkg wget;
@@ -52,4 +56,4 @@ rm -rf $PDIR &&
 
 
 
-exit 0
+true
