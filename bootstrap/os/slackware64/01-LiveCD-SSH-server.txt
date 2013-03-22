@@ -1,0 +1,35 @@
+###
+### Set up SSH server as fast as possible
+###
+
+
+
+###
+### 1. Conceptual flow
+###
+1. Boot Slackware64 CD
+2. Setup network
+3. Set root password
+4. Start SSH server (dropbear)
+5. STOP! RIGHT THERE, STOP!
+   Now go to your workstation and SSH into this server.
+
+
+
+###
+### 2. Detailed description
+###
+1.  Put Slackware64 CD in, boot, hit enter three times to get to the command prompt
+2a. DHCP way:
+    -> dhcpcd eth0
+2b. Static network configuration:
+    -> ifconfig eth0 1.2.3.4 netmask 255.255.255.0
+    -> route add default gw 1.2.3.4
+    -> echo "nameserver 8.8.8.8 > /etc/resolv.conf"
+3.  Execute "passwd" and set new password
+4.  Execute "/etc/rc.d/rc.dropbear start"
+
+5.  STOP USING THE MACHINE DIRECTLY RIGHT AWAY!
+    Go to your workstation and SSH into the newly booted live OS.
+    This will enable you to copy-paste commands etc.
+

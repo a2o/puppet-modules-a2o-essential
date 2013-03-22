@@ -1,0 +1,13 @@
+- Cleanup
+- fstab (generate, noatimes)
+- lilo.conf
+- lilo
+- hardwareclock
+- shadow, passwd, group
+- network config (ips, gw, dns, /etc/hosts, /etc/networks...)
+- hostname
+- ldconfig
+- root password set
+- zlib
+- openssl
+- openssh-sys
