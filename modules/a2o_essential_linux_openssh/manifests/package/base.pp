@@ -18,17 +18,18 @@ class   a2o_essential_linux_openssh::package::base   inherits   a2o_essential_li
 
     $compileDir = '/var/src/daemons'
 
+
+    ### External destdirs
+    $externalDestDir_openssl = '/usr/local/openssl-1.0.1e-2'
+
+
     # Package / Software details
     # CheckURI: http://www.openssh.org
     $softwareName_openssh     = 'openssh'
-    $softwareVersion_openssh  = '6.1p1'
-    $packageRelease_openssh   = '3'
+    $softwareVersion_openssh  = '6.2p1'
+    $packageRelease_openssh   = '2'
     $packageTag_openssh       = "$softwareName_openssh-$softwareVersion_openssh-$packageRelease_openssh"
     $destDir_openssh          = "/usr/local/$packageTag_openssh"
-
-
-    ### External destdirs
-    # Defined in ../base.php
 
 
     # Package / Software details

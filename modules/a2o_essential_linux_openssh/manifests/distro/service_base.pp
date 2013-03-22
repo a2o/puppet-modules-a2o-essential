@@ -14,7 +14,7 @@
 
 
 ### Service base
-class   a2o_essential_linux_openssh::distro::service_base   inherits   a2o_essential_linux_openssh::base {
+class   a2o_essential_linux_openssh::distro::service_base   inherits   a2o_essential_linux_openssh::package::base {
 
     $require   = [
         File['/var/empty'],

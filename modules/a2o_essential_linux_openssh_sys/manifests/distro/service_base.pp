@@ -14,7 +14,7 @@
 
 
 ### Service base class: sshd-sys
-class   a2o_essential_linux_openssh_sys::distro::service_base   inherits   a2o_essential_linux_openssh_sys::base {
+class   a2o_essential_linux_openssh_sys::distro::service_base   inherits   a2o_essential_linux_openssh_sys::package::base {
 
     ### Requires and subscribes
     $require   = []

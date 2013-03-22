@@ -16,7 +16,4 @@
 ### Base class
 class   a2o_essential_linux_openssh::base {
     $thisPuppetModule = 'a2o_essential_linux_openssh'
-
-    ### Additinal versions - must be here because service definition uses it
-    $externalDestDir_openssl = '/usr/local/openssl-1.0.0i-1'
 }
