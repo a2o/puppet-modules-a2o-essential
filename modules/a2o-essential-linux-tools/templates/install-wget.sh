@@ -43,10 +43,13 @@ GetUnpackCd &&
 export CFLAGS="-I$PDESTDIR_OPENSSL/include" &&
 export LDFLAGS="-L$PDESTDIR_OPENSSL/lib" &&
 
-./configure --with-ssl=openssl --with-libssl-prefix=$PDESTDIR_OPENSSL &&
+./configure \
+  --sysconfdir=/etc \
+  --with-ssl=openssl --with-libssl-prefix=$PDESTDIR_OPENSSL &&
 make &&
 (
   removepkg wget;
+  rm -f /etc/wgetrc;
   make install;
   PATH="$PATH"
 ) &&
