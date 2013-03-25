@@ -312,6 +312,45 @@ _php_installPackage() {
 
 
 
+
+################################################################################
+###
+### ELF patching capabilities
+###
+################################################################################
+
+_patchelf_rpath_orderDesc() {
+
+    # Parameters
+    EXECUTABLE="$1"
+    EXECUTABLE_BACKUP="$EXECUTABLE.orig.patchelf.rpath.orderDesc"
+
+    # Backup first, but do not override previous backup
+    if [ ! -f $EXECUTABLE_BACKUP ]; then
+	cp $EXECUTABLE $EXECUTABLE_BACKUP
+    fi
+
+    # Get and mangle rpath
+    RPATH_ORIG=`readelf -d $PHP_EXECUTABLE | grep RPATH | awk '{print $5}' | sed -e 's/^\[//' | sed -e 's/\]$//'`
+    RPATH_NEW=`echo "$RPATH_ORIG" | tr ':' '\n' | awk '{ print length, $0 }' | sort -nr | cut -d" " -f2- | tr '\n' ':' | sed -e 's/:$//'`
+
+    # Compare length, must be equal
+    if [ "${#RPATH_ORIG}" != "${#RPATH_NEW}" ]; then
+	echo "ERROR: RPATH lengths do not match!"
+	echo "Orig: $RPATH_ORIG"
+	echo "New:  $RPATH_NEW"
+	return 1
+    fi
+
+    # Patch it
+    echo "INFO: Patching PHP in order to modify RPATH directory order"
+    echo "Orig: $RPATH_ORIG"
+    echo "New:  $RPATH_NEW"
+    patchelf --set-rpath "$RPATH_NEW" $EXECUTABLE
+}
+
+
+
 ###
 ### Clean up the environment
 ###
