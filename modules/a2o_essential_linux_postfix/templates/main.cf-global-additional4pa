@@ -24,8 +24,8 @@ smtpd_milters     = unix:/var/run/clamav/clamav-milter.sock
 
 ### MySQL support for Postfix admin
 virtual_mailbox_domains = mysql:/etc/postfix/mysql_virtual_domain_maps.cf
-virtual_mailbox_maps    = mysql:/etc/postfix/mysql_virtual_mailbox_maps.cf
-virtual_alias_maps      = hash:/etc/postfix/virtual, mysql:/etc/postfix/mysql_virtual_alias_maps.cf
+virtual_mailbox_maps    = mysql:/etc/postfix/mysql_virtual_mailbox_maps.cf mysql:/etc/postfix/mysql_virtual_mailbox_alias_maps.cf
+virtual_alias_maps      = hash:/etc/postfix/virtual, mysql:/etc/postfix/mysql_virtual_alias_maps.cf mysql:/etc/postfix/mysql_virtual_alias_alias_maps.cf
 virtual_uid_maps        = static:9997
 virtual_gid_maps        = static:9997
 virtual_minimum_uid     = 9997

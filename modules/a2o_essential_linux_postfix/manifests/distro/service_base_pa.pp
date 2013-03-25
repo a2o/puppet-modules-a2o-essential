@@ -31,8 +31,10 @@ class   a2o_essential_linux_postfix::distro::service_base_pa   inherits   a2o_es
 	Package['postfix-pa'],
 	File['/etc/postfix/mysql_relay_domains.cf'],
 	File['/etc/postfix/mysql_virtual_alias_maps.cf'],
-        File['/etc/postfix/mysql_virtual_domain_maps.cf'],
+	File['/etc/postfix/mysql_virtual_alias_alias_maps.cf'],
+	File['/etc/postfix/mysql_virtual_domain_maps.cf'],
 	File['/etc/postfix/mysql_virtual_mailbox_maps.cf'],
-        File['/etc/postfix/mysql_virtual_mailbox_limit_maps.cf'],
+	File['/etc/postfix/mysql_virtual_mailbox_alias_maps.cf'],
+	File['/etc/postfix/mysql_virtual_mailbox_limit_maps.cf'],
     ]
 }

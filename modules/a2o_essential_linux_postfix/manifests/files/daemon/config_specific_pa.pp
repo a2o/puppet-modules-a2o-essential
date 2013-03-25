@@ -31,8 +31,10 @@ class   a2o_essential_linux_postfix::files::daemon::config_specific_pa   inherit
     # MySQL configuration files
     file { '/etc/postfix/mysql_relay_domains.cf':                content => template("$thisPuppetModule/mysql_relay_domains.cf"),              group => postfix, mode => 640 }
     file { '/etc/postfix/mysql_virtual_alias_maps.cf':           content => template("$thisPuppetModule/mysql_virtual_alias_maps.cf"),         group => postfix, mode => 640 }
+    file { '/etc/postfix/mysql_virtual_alias_alias_maps.cf':     content => template("$thisPuppetModule/mysql_virtual_alias_alias_maps.cf"),   group => postfix, mode => 640 }
     file { '/etc/postfix/mysql_virtual_domain_maps.cf':          content => template("$thisPuppetModule/mysql_virtual_domain_maps.cf"),        group => postfix, mode => 640 }
     file { '/etc/postfix/mysql_virtual_mailbox_maps.cf':         content => template("$thisPuppetModule/mysql_virtual_mailbox_maps.cf"),       group => postfix, mode => 640 }
+    file { '/etc/postfix/mysql_virtual_mailbox_alias_maps.cf':   content => template("$thisPuppetModule/mysql_virtual_mailbox_alias_maps.cf"), group => postfix, mode => 640 }
     file { '/etc/postfix/mysql_virtual_mailbox_limit_maps.cf':   content => template("$thisPuppetModule/mysql_virtual_mailbox_limit_maps.cf"), group => postfix, mode => 640 }
 
     # Virtual mail location

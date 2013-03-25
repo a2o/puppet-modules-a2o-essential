@@ -1,0 +1,9 @@
+hosts    = <%= pa_db_host %>
+user     = <%= pa_db_username %>
+password = <%= pa_db_password %>
+dbname   = <%= pa_db_name %>
+
+query    = SELECT maildir FROM mailbox, alias_domain
+  WHERE alias_domain.alias_domain = CONVERT('%d' USING latin1)
+  AND mailbox.username=concat(CONVERT('%u' USING latin1), '@', alias_domain.target_domain )
+  AND mailbox.active = 1
