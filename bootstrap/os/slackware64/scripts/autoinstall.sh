@@ -29,7 +29,7 @@ _installpkg() {
 
 
 ###
-### Check if URI is given as the ENV variable
+### Sanity check
 ###
 if [ "$A2O_BOOTSTRAP_URI" == "" ]; then
     echo
@@ -38,6 +38,25 @@ if [ "$A2O_BOOTSTRAP_URI" == "" ]; then
     exit 1
 fi
 
+if [ "$WORK_DIR" == "" ]; then
+    echo "Hint:  export WORK_DIR='/root/a2o'"
+    echo "ERROR: Working directory path not specified."
+    exit 1
+fi
+
+if [ "$DEST_ROOT" == "" ]; then
+    echo "Hint:  export DEST_ROOT='/mnt/newroot'"
+    echo "ERROR: Destination root path not specified."
+    exit 1
+fi
+
+if [ "$SRC_REPO" == "" ]; then
+    echo "Hint:  export SRC_REPO='/mnt/slack'"
+    echo "ERROR: Source repository path not specified."
+    exit 1
+fi
+
+
 
 
 ###
@@ -45,15 +64,14 @@ fi
 ###
 PACKAGE_LIST_FILE="slackware64-14.0.pkglist"
 PACKAGE_LIST_URI="$A2O_BOOTSTRAP_URI/package-lists/$PACKAGE_LIST_FILE"
-PACKAGE_REPO_PATH="/mnt/slack/slackware64"
-DEST_ROOT="/mnt/newroot"
+PACKAGE_REPO_PATH="$SRC_REPO/slackware64"
 
 
 
 ###
 ### Do the real stuff
 ###
-cd /root &&
+cd $WORK_DIR &&
 rm -f $PACKAGE_LIST_FILE &&
 wget $PACKAGE_LIST_URI &&
 
@@ -61,7 +79,11 @@ echo &&
 echo "INSTALLING PACKAGES to $DEST_ROOT:" &&
 echo &&
 
+PACKAGE_COUNT=`cat $PACKAGE_LIST_FILE | grep -c .`
+i="0"
 for GROUP_PACKAGE_NAME in `cat $PACKAGE_LIST_FILE`; do
+    i=`expr $i + 1`
+    echo -n "[$i/$PACKAGE_COUNT] "
     _installpkg $GROUP_PACKAGE_NAME $PACKAGE_REPO_PATH $DEST_ROOT
     RES=$?
     if [ "$RES" != "0" ]; then

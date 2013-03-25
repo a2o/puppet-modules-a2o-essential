@@ -5,14 +5,17 @@
 
 
 #
-# These are REQUIRED environmental variables you have to set up.
-# Here are the defaults:
+# These are REQUIRED environmental variables you HAVE TO set up.
+# Here are the defaults to use:
 #
+export NEW_HOSTNAME="slackware.a2o.si"
 export A2O_REPO_URI="https://raw.github.com/a2o/puppet-modules-a2o-essential/master"
 export A2O_BOOTSTRAP_URI="$A2O_REPO_URI/bootstrap/os/slackware64"
 export WORK_DIR="/root/a2o"
+export DEST_DEVICE="/dev/sda"
 export DEST_ROOT="/mnt/newroot"
 export SRC_REPO="/mnt/slack"
+
 
 
 #
@@ -20,9 +23,10 @@ export SRC_REPO="/mnt/slack"
 #
 mkdir -p $WORK_DIR &&
 cd $WORK_DIR &&
-rm -f os_install_functions.sh &&
-wget "$A2O_BOOTSTRAP_URI/scripts/os_install_functions.sh" &&
-. ./os_install_functions.sh
+rm -f _os_install_functions.sh &&
+wget "$A2O_BOOTSTRAP_URI/scripts/_os_install_functions.sh" &&
+. ./_os_install_functions.sh
+
 
 
 ### That is all.

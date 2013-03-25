@@ -5,7 +5,7 @@
 ### Check: if mounted (device, mountpoint, device on mountpoint)
 ###
 _check_if_mounted_device() {
-    DEVICE="$1"
+    local DEVICE="$1"
 
     RES=`mount | grep "^$DEVICE on " -c`
     if [ "$RES" == "1" ]; then
@@ -16,7 +16,7 @@ _check_if_mounted_device() {
 }
 
 _check_if_mounted_mountpoint() {
-    MOUNTPOINT="$1"
+    local MOUNTPOINT="$1"
 
     RES=`mount | grep " on $MOUNTPOINT type " -c`
     if [ "$RES" == "1" ]; then
@@ -27,8 +27,8 @@ _check_if_mounted_mountpoint() {
 }
 
 _check_if_mounted_device_on_mountpoint() {
-    DEVICE="$1"
-    MOUNTPOINT="$2"
+    local DEVICE="$1"
+    local MOUNTPOINT="$2"
 
     RES=`mount | grep "^$DEVICE on $MOUNTPOINT type" -c`
     if [ "$RES" != "1" ]; then
@@ -45,8 +45,8 @@ _check_if_mounted_device_on_mountpoint() {
 }
 
 _check_if_mounted_bind() {
-    DEVICE="$1"
-    MOUNTPOINT="$2"
+    local DEVICE="$1"
+    local MOUNTPOINT="$2"
 
     RES=`mount | grep "^$DEVICE on $MOUNTPOINT type" -c`
     if [ "$RES" != "1" ]; then
@@ -68,9 +68,9 @@ _check_if_mounted_bind() {
 ### Mount normal filesystems
 ###
 _mount() {
-    DEVICE="$1"
-    MOUNTPOINT="$2"
-    FILESYSTEM="$3"
+    local DEVICE="$1"
+    local MOUNTPOINT="$2"
+    local FILESYSTEM="$3"
 
     if _check_if_mounted_mountpoint $MOUNTPOINT; then
 	if _check_if_mounted_device_on_mountpoint $DEVICE $MOUNTPOINT; then
@@ -100,8 +100,8 @@ _mount() {
 ### Mount with --bind option
 ###
 _mount_bind() {
-    DEVICE="$1"
-    MOUNTPOINT="$2"
+    local DEVICE="$1"
+    local MOUNTPOINT="$2"
 
     if _check_if_mounted_mountpoint $MOUNTPOINT; then
 	if _check_if_mounted_bind $DEVICE $MOUNTPOINT; then
@@ -127,49 +127,93 @@ _mount_bind() {
 }
 
 
+
+###
+### Arguments
+###
+MOUNT_BINDS="false"
+if [ "$1" == "binds-also" ]; then
+    MOUNT_BINDS="true"
+fi
+
+
+
 ###
 ### Settings
 ###
-MAIN_DEVICE="/dev/sda"
+DEVICE="$DEST_DEVICE"
 PART_NR_swap="1"
 PART_NR_root="2"
 PART_NR_var="3"
-NEW_ROOT="/mnt/newroot"
+#DEST_ROOT="/mnt/newroot"   # Must be defined in environment
+
+
+
+###
+### Sanity check
+###
+if [ "$DEVICE" == "" ]; then
+    echo "Hint:  export DEST_DEVICE='/dev/sda'"
+    echo "ERROR: Destination device not specified."
+    exit 1
+fi
+if [ ! -b $DEVICE ]; then
+    echo "ERROR: Destination device is not a block device: $DEVICE"
+    exit 1
+fi
+
+if [ "$DEST_ROOT" == "" ]; then
+    echo "Hint:  export DEST_ROOT='/mnt/newroot'"
+    echo "ERROR: Destination root path not specified."
+    exit 1
+fi
+
+if [ "$SRC_REPO" == "" ]; then
+    echo "Hint:  export SRC_REPO='/mnt/slack'"
+    echo "ERROR: Source repository path not specified."
+    exit 1
+fi
+
 
 
 ###
 ### Do the real stuff
 ###
-echo "Turning on swap on ${MAIN_DEVICE}${PART_NR_SWAP}..." &&
+echo "Turning on swap on ${DEVICE}${PART_NR_swap}..." &&
 SWAPSPACE=`free | grep -i swap | awk '{print $2}'`
 if [ "$SWAPSPACE" != "0" ]; then
     echo "  Swap space is already enabled, skipping"
 else
-    mkswap ${MAIN_DEVICE}${PART_NR_swap} &&
-    swapon ${MAIN_DEVICE}${PART_NR_swap}
+    mkswap ${DEVICE}${PART_NR_swap} &&
+    swapon ${DEVICE}${PART_NR_swap}
 fi &&
 
 echo &&
 
-echo "Mounting new root filesystem to $NEW_ROOT..." &&
-_mount ${MAIN_DEVICE}${PART_NR_root} $NEW_ROOT &&
+echo "Mounting new root filesystem to $DEST_ROOT..." &&
+_mount ${DEVICE}${PART_NR_root} $DEST_ROOT &&
 
-echo "Mounting new /var filesystem to $NEW_ROOT/var..." &&
-_mount ${MAIN_DEVICE}${PART_NR_var} $NEW_ROOT/var &&
+echo "Mounting new /var filesystem to $DEST_ROOT/var..." &&
+_mount ${DEVICE}${PART_NR_var} $DEST_ROOT/var &&
 
 echo &&
 
-#export FS="dev" &&
-#echo "Binding /$FS  to $NEW_ROOT/$FS..." &&
-#_mount_bind /$FS $NEW_ROOT/$FS &&
-#
-#export FS="proc" &&
-#echo "Binding /$FS to $NEW_ROOT/$FS..." &&
-#_mount_bind /$FS $NEW_ROOT/$FS &&
-#
-#export FS="sys" &&
-#echo "Binding /$FS  to $NEW_ROOT/$FS..." &&
-#_mount_bind /$FS $NEW_ROOT/$FS &&
+
+if [ "$MOUNT_BINDS" == "true" ]; then
+    export FS="dev" &&
+    echo "Binding /$FS  to $DEST_ROOT/$FS..." &&
+    _mount_bind /$FS $DEST_ROOT/$FS &&
+
+    export FS="proc" &&
+    echo "Binding /$FS to $DEST_ROOT/$FS..." &&
+    _mount_bind /$FS $DEST_ROOT/$FS &&
+
+    export FS="sys" &&
+    echo "Binding /$FS  to $DEST_ROOT/$FS..." &&
+    _mount_bind /$FS $DEST_ROOT/$FS &&
+
+    echo
+fi &&
 
 
 echo "Mounting Slackware64 installation media to /mnt/slack..." &&

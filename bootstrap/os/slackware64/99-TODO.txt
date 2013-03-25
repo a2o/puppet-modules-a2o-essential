@@ -1,13 +1,9 @@
-- Cleanup
-- fstab (generate, noatimes)
-- lilo.conf
-- lilo
-- hardwareclock
-- shadow, passwd, group
-- network config (ips, gw, dns, /etc/hosts, /etc/networks...)
-- hostname
-- ldconfig
-- root password set
+- mdadm.conf, script generation with loop from /proc/mdstat and  mdadm -D
+
+- wget
+- openssl (symlinks!)
 - zlib
-- openssl
 - openssh-sys
+
+
+- root password set at the end

@@ -2,7 +2,7 @@
 
 
 ### Configuration
-export URI_PREFIX="https://raw.github.com/a2o/puppet-modules-a2o-essential/master/bootstrap" &&
+export URI_PREFIX="https://raw.github.com/a2o/puppet-modules-a2o-essential/master/bootstrap/puppet-sys" &&
 export FILES="01-Environment.sh 02-OpenSSL.sh 03-Puppet-sys-01-Ruby.sh 03-Puppet-sys-02-Facter.sh 03-Puppet-sys-03-Puppet.sh 03-Puppet-sys-04-Files.sh 03-Puppet-sys-05-Config.sh" &&
 export LOCAL_BOOTSTRAP_DIR="/var/src/bootstrap" &&
 
