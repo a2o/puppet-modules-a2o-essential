@@ -10,7 +10,7 @@ cd $SRCROOT &&
 
 
 ### Set versions and directories
-export PVERSION_OPENSSL="1.0.0k" &&
+export PVERSION_OPENSSL="1.0.1e" &&
 export PDESTDIR_OPENSSL="/usr/local/openssl-$PVERSION_OPENSSL-init" &&
 
 
@@ -30,8 +30,8 @@ make &&
 make install &&
 
 # Add 2 symlinks
-ln -sf libcrypto.so.1.0.0 $PDESTDIR_OPENSSL/lib/libcrypto.so.0 &&
-ln -sf libssl.so.1.0.0 $PDESTDIR_OPENSSL/lib/libssl.so.0 &&
+ln -sf libcrypto.so.1.0.0 $PDESTDIR_OPENSSL/lib/libcrypto.so.1 &&
+ln -sf libssl.so.1.0.0 $PDESTDIR_OPENSSL/lib/libssl.so.1 &&
 
 cd $SRCROOT &&
 rm -rf $PDIR

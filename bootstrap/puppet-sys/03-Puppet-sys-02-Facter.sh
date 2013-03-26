@@ -10,8 +10,8 @@ cd $SRCROOT &&
 
 
 ### Set versions and directories
-export PVERSION_FACTER="1.6.17" &&
-export PDESTDIR="/usr/local/puppet-sys-2.7.20-init" &&
+export PVERSION_FACTER="1.6.18" &&
+export PDESTDIR="/usr/local/puppet-sys-2.7.21-init" &&
 
 
 
