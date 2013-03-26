@@ -30,16 +30,6 @@ class   a2o_essential_linux_interpreters::python::symlinks_invasive   inherits  
     file { '/usr/local/lib/libpython2.7.so':       ensure => '/usr/local/python-2.7/lib/libpython2.7.so'     }
     file { '/usr/local/lib/libpython2.7.so.1.0':   ensure => '/usr/local/python-2.7/lib/libpython2.7.so.1.0' }
 
-    exec { 'exec sbin ldconfig libpython2.6.so':
-        command     => '/sbin/ldconfig',
-        subscribe   => File['/usr/local/lib/libpython2.6.so'],
-        refreshonly => true,
-    }
-    exec { 'exec sbin ldconfig libpython2.6.so.1.0':
-        command     => '/sbin/ldconfig',
-        subscribe   => File['/usr/local/lib/libpython2.6.so.1.0'],
-        refreshonly => true,
-    }
     exec { 'exec sbin ldconfig libpython2.7.so':
         command     => '/sbin/ldconfig',
         subscribe   => File['/usr/local/lib/libpython2.7.so'],
