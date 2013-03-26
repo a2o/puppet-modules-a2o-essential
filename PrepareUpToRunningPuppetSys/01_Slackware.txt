@@ -46,6 +46,7 @@ setup
 ## Group A
 # Everything which is required, and additionally
 - aaa_terminfo
+- btrfs-progs   # NOT YET, is not yet stable enough, as of 14.0
 - bzip2
 - cpio
 - cpufrequtils
@@ -57,6 +58,7 @@ setup
 - gettext
 - glibc-solibs
 - glibc-zoneinfo
+- gptfdisk         # Since Slack64 14.0
 - (hdparm FIXME should add remove when installed later from sources)
 - infozip         <--- add to puppet! FIXME
 - inotify-tools
@@ -67,7 +69,7 @@ setup
 - mdadm    <---- ftp://ftp.slackware.at/slackware-13.0/slackware/a/mdadm-2.6.4-i486-1.txz - add to puppet FIXME
 - openssl-solibs
 - patch
-- pciutils
+###- pciutils   # Not anymore, we compile those, because DB is updated constantly)
 - rpm2tgz
 - sysfsutils
 - sysklogd
@@ -83,7 +85,6 @@ setup
 
 
 ## Group AP
-- at <--- FIXME add to puppet
 - diffstat
 - diffutils
 - ghostscript-fonts
@@ -112,7 +113,7 @@ setup
 - automake
 - binutils
 - bison
-- cmake
+#- cmake   # Installed by puppet and compiletool
 - flex
 - gcc
 - gcc-g++
@@ -142,7 +143,7 @@ setup
 - ethtool
 - icmpinfo
 - iproute2
-- iptraf
+- iptraf-ng   # "iptraf" was the name in pre 14.0 versions
 - iputils
 - links
 - lynx
@@ -153,7 +154,7 @@ setup
 - netkit-ftp
 - netpipes
 - network-scripts
-- openssh
+- openssh   # Only here to enable fast ssh-ing into machine, to transform typing into copy-pasting:)
 - telnet
 - traceroute
 - wget
@@ -174,9 +175,9 @@ setup
 ----- name it 'dist'
 --- Install
 - Setup some lan setting (static ip!)
-- HW clock to localtime
-- Timezone to Europe/Ljubljana
-- root password to 'root' or something
+- HW clock to UTC   ### Since slack 14.0, earlier this was localtime
+- Timezone to UTC   ### Since slack 14.0, earlier this was Europe/Ljubljana
+- set root password to something sensible (in a secure-password-manner of speaking:)
 
 
 

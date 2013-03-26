@@ -58,7 +58,8 @@ rm -rf /var/rwho
 
 
 ### Create some symlinks
-ln -sf /bin/env /usr/bin/env
+# Already done on Slack64 14.0
+# ln -sf /bin/env /usr/bin/env
 
 
 
@@ -79,21 +80,26 @@ EOF
 
 
 ### Fix fstab
-# Add noatime,nodiratime for / and /var partition
-# Remove floppy
-# Uncomment cdrom
-mcedit /etc/fstab
+# Add noatime,nodiratime for / and /var partition... well, yes :)
+# Remove floppy, not needed
+# Remove cdrom, not needed
+cp /etc/fstab /etc/fstab.orig &&
+cat /etc/fstab.orig \
+| sed -e 's/defaults\s\+1/defaults,noatime,nodiratime   1/' \
+| grep -v '/mnt/floppy' \
+| grep -v '/mnt/cdrom' \
+> /etc/fstab &&
+rm /etc/fstab.orig
+
+
+### Remount / and /var to pickup noatime changes
 mount -o remount /
 mount -o remount /var
 
 
 
 ### Create compilation environment
-mkdir -p /var/src &&
-cd /var/src &&
-wget -c http://source.a2o.si/_functions.sh &&
-chmod 755 _functions.sh
-
-
-
-### Proceed to Fsc*in' perl
+# Downloads basic compilation helper
+wget --no-check-certificate https://github.com/a2o/puppet-modules-a2o-essential/raw/master/bootstrap/01-Environment.sh &&
+bash 01-Environment.sh &&
+rm 01-Environment.sh
