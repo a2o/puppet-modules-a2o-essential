@@ -1,9 +1,6 @@
-- mdadm.conf, script generation with loop from /proc/mdstat and  mdadm -D
+- mdadm.conf, script generation with loop from /proc/mdstat and  mdadm -D ?
 
-- wget
-- openssl (symlinks!)
-- zlib
-- openssh-sys
-
+- wget ? Better with puppet
+- openssh-sys ? Better with puppet
 
 - root password set at the end

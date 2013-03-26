@@ -26,16 +26,30 @@ a2oBootstrap_environmentCheck_inChroot || exit 1
 
 
 ###
-### Get and install environment
+### Get zlib install script and version
 ###
-a2oScript_downloadAndRun "$A2O_REPO_URI/bootstrap/puppet-sys/01-Environment.sh"
+# Version: FIXME, get from zlib/instance.pp file
+export SOFTWARE_VERSION="1.2.7" &&
+mkdir -p /var/src/libs &&
+cd       /var/src/libs &&
+a2oBootstrap_download "$A2O_REPO_URI/modules/a2o_essential_linux_libs/templates/install-zlib.sh" &&
+cp install-zlib.sh install-zlib.sh.dist &&
+cat install-zlib.sh.dist \
+| sed -e 's#<%= compileDir %>#/var/src/libs#' \
+| sed -e 's#<%= destDir %>#/usr/local#' \
+| sed -e "s#<%= softwareVersion %>#$SOFTWARE_VERSION#" \
+> install-zlib.sh &&
+./install-zlib.sh
+
+
+
+###
+### Check final exit status
+###
 if [ "$?" != "0" ]; then
-    echo "ERROR: Unable to set up compilation environment"
+    echo "ERROR: Unable to install zlib"
     exit 1
 fi
-
-
-
 echo
-echo "########## (in chroot) OK: Compilation environment has been set up."
+echo "########## (in chroot) OK: Installation of zlib has been completed."
 echo

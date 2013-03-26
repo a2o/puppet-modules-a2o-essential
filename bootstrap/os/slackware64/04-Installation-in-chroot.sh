@@ -36,12 +36,12 @@ a2oScript_downloadAndRun $A2O_BOOTSTRAP_URI/scripts/in-chroot/setup-compilation-
 # Step 3: Zlib
 a2oScript_downloadAndRun $A2O_BOOTSTRAP_URI/scripts/in-chroot/install-zlib.sh   &&
 
-#cd /var/src/libs &&
-#rm install-zlib.sh &&
-#wget --no-check-certificate $A2O_BOOTSTRAP_URI/modules/a2o_essential_linux_libs/templates/install-zlib.sh &&
+# Step 4: Perl
+a2oScript_downloadAndRun $A2O_BOOTSTRAP_URI/scripts/in-chroot/install-perl.sh   &&
 
+# Step 4: Bootstrap puppet-sys
+a2oScript_downloadAndRun $A2O_REPO_URI/bootstrap/puppet-sys/XX-All.sh   &&
 
-# Step 4: Bootstrap up to runable puppet-sys
 
 
 # Step 4: Final thingies

@@ -60,18 +60,19 @@ a2oBootstrap_environmentCheck() {
 ###
 a2oBootstrap_download() {
     URI="$1"
-    FILENAME=`basename "$SCRIPT_URI"`
+    FILENAME=`basename "$URI"`
 
-    mkdir -p $WORK_DIR &&
-    cd $WORK_DIR &&
-
-    rm -f $FILENAME &&
+    rm -f "$FILENAME" &&
     echo "Downloading $URI..." &&
     wget -q --no-check-certificate "$URI"
 
     if [ "$?" != "0" ]; then
 	echo "ERROR: Download failed."
 	return 1
+    fi
+
+    if [[ "$FILENAME" =~ \.sh$ ]]; then
+	chmod 755 "$FILENAME"
     fi
 }
 
@@ -89,6 +90,9 @@ a2oScript_download() {
     SCRIPT_URI="$1"
     SCRIPT_FILENAME=`basename "$SCRIPT_URI"`
 
+    mkdir -p $WORK_DIR &&
+    cd $WORK_DIR &&
+
     a2oBootstrap_download "$SCRIPT_URI" &&
     chmod 755 $SCRIPT_FILENAME
 }
@@ -96,6 +100,9 @@ a2oScript_download() {
 a2oScript_downloadAndRun() {
     SCRIPT_URI="$1"
     SCRIPT_FILENAME=`basename "$SCRIPT_URI"`
+
+    mkdir -p $WORK_DIR &&
+    cd $WORK_DIR &&
 
     a2oScript_download "$SCRIPT_URI" &&
     cd $WORK_DIR &&
