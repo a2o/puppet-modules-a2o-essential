@@ -17,12 +17,14 @@
 class   a2o_essential_linux_mysql::files::daemon_runtime   inherits   a2o_essential_linux_mysql::base {
 
     File {
-	ensure   => directory,
+        ensure   => directory,
         owner    => mysql,
         group    => mysql,
         mode     => 755,
+        require  => User['mysql'],
     }
 
+    file { '/var/mysql':        }
     file { '/var/mysql/binlog': }
     file { '/var/mysql/data':   mode => 700 }
     file { '/var/mysql/log':    }
