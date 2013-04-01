@@ -31,7 +31,9 @@ class   a2o_essential_linux_subversion::package::subversion   inherits   a2o_ess
 
     ### Package
     $require = [
+        Package['cyrus-sasl'],
         Package['openssl'],
+        Package['sqlite'],
     ]
     a2o-essential-unix::compiletool::package::generic { "$packageTag": require => $require, }
 
