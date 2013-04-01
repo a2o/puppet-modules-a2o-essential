@@ -27,6 +27,7 @@ class   a2o_essential_linux_at::package::at   inherits   a2o_essential_linux_at:
     ### Package
     $require = [
         Package['ntp'],
+        File['/usr/sbin/sendmail'],   # Requires 'sendmail' program to be present
     ]
     a2o-essential-unix::compiletool::package::generic { "$packageTag": require => $require, }
 }
