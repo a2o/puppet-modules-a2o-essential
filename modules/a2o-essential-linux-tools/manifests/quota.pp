@@ -44,6 +44,7 @@ class   a2o-essential-linux-tools::quota   inherits   a2o-essential-linux-tools:
 	source   => "$compileDir/$installScript",
 	require  => [
 	    File["$compileDir/$installScript"],
+	    Package['libxml2'],
 	],
     }
 }

@@ -48,6 +48,7 @@ class   a2o-essential-linux-tools::wget   inherits   a2o-essential-linux-tools::
 	require  => [
 	    File["$compileDir/$installScript"],
 	    Package['openssl'],
+	    Package['zlib'],
 	],
     }
 }

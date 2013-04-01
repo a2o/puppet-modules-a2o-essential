@@ -44,6 +44,7 @@ class   a2o-essential-linux-tools::pv   inherits   a2o-essential-linux-tools::ba
 	source   => "$compileDir/$installScript",
 	require  => [
 	    File["$compileDir/$installScript"],
+	    Package['libxml2'],
 	],
     }
 }
