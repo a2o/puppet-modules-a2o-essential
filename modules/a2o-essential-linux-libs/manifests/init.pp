@@ -132,6 +132,7 @@ class a2o-essential-linux-libs::all {
     include 'a2o-essential-linux-libs::gmp'
     include 'a2o-essential-linux-libs::gnutls'
     include 'a2o_essential_linux_libs::gpgme'
+#    include 'a2o_essential_linux_libs::harfbuzz'
     include 'a2o-essential-linux-libs::icu'
     include 'a2o-essential-linux-libs::imap'
     include 'a2o-essential-linux-libs::intltool'
