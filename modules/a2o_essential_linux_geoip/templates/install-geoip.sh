@@ -37,6 +37,7 @@ export PURI="http://www.maxmind.com/download/geoip/api/c/$PFILE" &&
 rm -rf $PDIR &&
 GetUnpackCd &&
 
+libtoolize -f &&
 ./configure \
   --sysconfdir=/etc \
   --datarootdir=/var/geoip \
