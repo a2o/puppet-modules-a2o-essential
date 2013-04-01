@@ -25,6 +25,7 @@ export PFILE="$PDIR.tar.gz" &&
 export PURI="http://www.openssl.org/source/$PFILE" &&
 rm -rf $PDIR &&
 GetUnpackCd &&
+
 ./config --prefix=$PDESTDIR_OPENSSL shared &&
 make &&
 make install &&
@@ -33,5 +34,14 @@ make install &&
 ln -sf libcrypto.so.1.0.0 $PDESTDIR_OPENSSL/lib/libcrypto.so.1 &&
 ln -sf libssl.so.1.0.0 $PDESTDIR_OPENSSL/lib/libssl.so.1 &&
 
+# Add main symlink in /usr/local
+if [ ! -e /usr/local/openssl-init ]; then
+    ln -s openssl-$PVERSION_OPENSSL-init /usr/local/openssl-init
+fi
+
 cd $SRCROOT &&
-rm -rf $PDIR
+rm -rf $PDIR &&
+
+
+
+true
