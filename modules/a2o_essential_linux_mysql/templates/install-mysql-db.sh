@@ -28,14 +28,26 @@ export PDESTDIR="<%= destDir_mysql %>" &&
 
 # Install database if necessary
 if [ ! -d /var/mysql/data/mysql ]; then
-    $PDESTDIR/bin/mysql_install_db --basedir=$PDESTDIR --datadir=/var/mysql/data &&
+    if [ -e $PDESTDIR/scripts/mysql_install_db ]; then
+	MYSQL_INSTALL_DB="$PDESTDIR/scripts/mysql_install_db"
+    elif [ -e $PDESTDIR/bin/mysql_install_db ]; then
+	MYSQL_INSTALL_DB="$PDESTDIR/bin/mysql_install_db"
+    else
+	echo "ERROR: mysql_install_db not found"
+	exit 1
+    fi
+    $MYSQL_INSTALL_DB --basedir=$PDESTDIR --datadir=/var/mysql/data &&
 
-    /etc/rc.d/rc.mysqld start &&
+    ### Start without access checking, but disable networking for this occasion
+    /bin/bash /etc/rc.d/rc.mysqld start --skip-grant-tables --skip-networking &&
 
+    ### Fix permissions and run upgrade - just in case
     echo "DELETE FROM db"                                                                 | $PDESTDIR/bin/mysql --user=root --password= --database=mysql &&
     echo "DELETE FROM user WHERE User = ''"                                               | $PDESTDIR/bin/mysql --user=root --password= --database=mysql &&
     echo "DELETE FROM user WHERE (Host != '127.0.0.1') AND (Host != 'localhost')"         | $PDESTDIR/bin/mysql --user=root --password= --database=mysql &&
     echo "UPDATE user SET Password='<%= mysql_root_password_hash %>' WHERE Password = ''" | $PDESTDIR/bin/mysql --user=root --password= --database=mysql &&
+    $PDESTDIR/bin/mysql_upgrade &&
 
-    $PDESTDIR/bin/mysql_fix_privilege_tables
+    ### Restart with permission system enabled
+    /bin/bash /etc/rc.d/rc.mysqld restart
 fi
