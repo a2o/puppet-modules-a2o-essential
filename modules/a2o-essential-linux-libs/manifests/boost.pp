@@ -19,7 +19,7 @@ class   a2o-essential-linux-libs::boost   inherits   a2o-essential-linux-libs::b
     # Software details
     $packageName            = 'boost'
     $packageSoftware        = 'boost'
-    $packageSoftwareVersion = '1.48.0'
+    $packageSoftwareVersion = '1.53.0'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
@@ -27,7 +27,7 @@ class   a2o-essential-linux-libs::boost   inherits   a2o-essential-linux-libs::b
     $installScript          = "install-$packageTag.sh"
 
     # External links
-    $externalDestDir_python = '/usr/local/python-2.6.7-1'
+    $externalDestDir_python = '/usr/local/python-2.7.3-1'
 
 
     # Installation
