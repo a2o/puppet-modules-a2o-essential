@@ -20,7 +20,7 @@ class   a2o-essential-linux-tools::iptables   inherits   a2o-essential-linux-too
     $packageName            = 'iptables'
     $packageSoftware        = 'iptables'
     # CheckURI:
-    $packageSoftwareVersion = '1.4.12.1'
+    $packageSoftwareVersion = '1.4.18'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
