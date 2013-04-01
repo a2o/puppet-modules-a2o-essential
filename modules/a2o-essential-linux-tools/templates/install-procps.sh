@@ -38,15 +38,21 @@ export PURI="http://procps.sourceforge.net/$PFILE" &&
 rm -rf $PDIR &&
 GetUnpackCd &&
 
+# Patch to build on Slack64 14.0
+wget http://source.a2o.si/patches/procps-3.2.8-makefile.diff &&
+patch -p1 < procps-3.2.8-makefile.diff &&
+
 make &&
-(
-  removepkg procps;
-  make install;
-) &&
+if [ -f /etc/slackware-version ]; then
+    if [ -f /var/log/packages/procps-* ]; then
+	removepkg procps
+    fi
+fi &&
+make install &&
 
 cd $SRCROOT &&
 rm -rf $PDIR &&
 
 
 
-exit 0
+true

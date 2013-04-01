@@ -47,12 +47,17 @@ export LDFLAGS="-L$PDESTDIR_OPENSSL/lib" &&
   --sysconfdir=/etc \
   --with-ssl=openssl --with-libssl-prefix=$PDESTDIR_OPENSSL &&
 make &&
-(
-  removepkg wget;
-  rm -f /etc/wgetrc;
-  make install;
-  PATH="$PATH"
-) &&
+
+# Remove stock Slack version
+if [ -f /etc/slackware-version ]; then
+    if [ -f /var/log/packages/wget-* ]; then
+	removepkg wget
+	rm -f /etc/wgetrc
+    fi
+fi &&
+
+make install &&
+export PATH="$PATH" &&
 
 cd $SRCROOT &&
 rm -rf $PDIR &&
