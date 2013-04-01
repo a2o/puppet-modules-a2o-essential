@@ -59,25 +59,26 @@ rm -rf $PDIR &&
 
 
 ### Create device files - WORKAROUND, can't do that in puppet.
-mkdir -p /var/named/dev &&
-mkdir -p /var/named/etc &&
+export CHROOT_DIR="/var/named" &&
+mkdir -p $CHROOT_DIR/dev &&
+mkdir -p $CHROOT_DIR/etc &&
 
-if [ ! -e /var/named/dev/log ]; then
-  cp -dpPR /dev/log       /var/named/dev/
+if [ ! -e $CHROOT_DIR/dev/null ]; then
+    mknod $CHROOT_DIR/dev/null c 1 3
 fi &&
 
-if [ ! -e /var/named/dev/random ]; then
-  cp -dpPR /dev/random    /var/named/dev/
+if [ ! -e $CHROOT_DIR/dev/random ]; then
+    mknod $CHROOT_DIR/dev/random c 1 8
 fi &&
 
-if [ ! -e /var/named/dev/zero ]; then
-  cp -dpPR /dev/zero      /var/named/dev/
+if [ ! -e $CHROOT_DIR/dev/zero ]; then
+    mknod $CHROOT_DIR/dev/zero c 1 5
 fi &&
 
-if [ ! -e /var/named/etc/localtime ]; then
-  cp -dpRrL /etc/localtime /var/named/etc/
+if [ ! -e $CHROOT_DIR/etc/localtime ]; then
+  cp -dpRrL /etc/localtime $CHROOT_DIR/etc/
 else
-  if ! diff -q /etc/localtime /var/named/etc/localtime > /dev/null; then
-    cp -dpRrL /etc/localtime /var/named/etc/
+  if ! diff -q /etc/localtime $CHROOT_DIR/etc/localtime > /dev/null; then
+    cp -dpRrL /etc/localtime $CHROOT_DIR/etc/
   fi
 fi
