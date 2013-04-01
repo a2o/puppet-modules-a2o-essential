@@ -45,6 +45,7 @@ class   a2o-essential-linux-libs::cairo   inherits   a2o-essential-linux-libs::b
 	    File["$compileDir/$installScript"],
 	    Package['fontconfig'],
 	    Package['freetype'],
+#	    Package['harfbuzz'],
 	    Package['libpng'],
 	    Package['pixman'],
 	    Package['zlib'],

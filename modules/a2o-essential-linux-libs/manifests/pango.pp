@@ -47,6 +47,7 @@ class   a2o-essential-linux-libs::pango   inherits   a2o-essential-linux-libs::b
 	    Package['fontconfig'],
 	    Package['freetype'],
 	    Package['glib'],
+	    Package['libffi'],
 	    Package['zlib'],
 	],
     }

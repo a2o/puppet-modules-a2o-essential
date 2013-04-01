@@ -19,8 +19,8 @@ class   a2o-essential-linux-libs::cyrus-sasl   inherits   a2o-essential-linux-li
     # Software details
     $packageName            = 'cyrus-sasl'
     $packageSoftware        = 'cyrus-sasl'
-    # CheckURI: ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/
-    # CheckURI: http://cyrusimap.web.cmu.edu/
+    # CheckURI: http://cyrusimap.web.cmu.edu/mediawiki/index.php/Downloads#SASL_Library
+    # CheckURI: ftp://ftp.cyrusimap.org/cyrus-sasl/
     $packageSoftwareVersion = '2.1.25'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"

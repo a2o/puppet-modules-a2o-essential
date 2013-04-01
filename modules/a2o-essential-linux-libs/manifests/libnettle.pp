@@ -43,6 +43,7 @@ class   a2o-essential-linux-libs::libnettle   inherits   a2o-essential-linux-lib
 	source   => "$compileDir/$installScript",
 	require  => [
 	    File["$compileDir/$installScript"],
+	    Package['gmp'],   # http://lists.gnu.org/archive/html/help-gnutls/2012-02/msg00001.html
 	],
     }
 }
