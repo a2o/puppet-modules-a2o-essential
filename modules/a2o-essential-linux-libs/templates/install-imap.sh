@@ -39,6 +39,8 @@ export PURI="ftp://ftp.cac.washington.edu/imap/$PFILE" &&
 rm -rf $PDIR &&
 GetUnpackCd &&
 
+export LD_LIBRARY_PATH="$PDESTDIR_OPENSSL/lib" &&
+
 # Adapt makefiles
 cd src/osdep/unix &&
 mv Makefile Makefile.tmp &&

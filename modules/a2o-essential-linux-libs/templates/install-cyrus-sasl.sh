@@ -33,14 +33,15 @@ export PNAME="cyrus-sasl" &&
 export PVERSION="$PVERSION_CYRUS_SASL" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
-export PURI="ftp://ftp.andrew.cmu.edu/pub/cyrus-mail/$PFILE" &&
+export PURI="ftp://ftp.cyrusimap.org/cyrus-sasl/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&
 
-# Fix for GCC 4.4
-sed -i 's/^#elif WITH_DES$/#elif defined(WITH_DES)/' plugins/digestmd5.c &&
-./configure &&
+# Fix for GCC 4.4 and v2.1.2?, fixed in v2.1.26
+#sed -i 's/^#elif WITH_DES$/#elif defined(WITH_DES)/' plugins/digestmd5.c &&
+
+./configure --without-des &&
 make &&
 make install &&
 

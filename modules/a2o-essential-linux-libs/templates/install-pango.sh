@@ -34,13 +34,13 @@ export PNAME="pango" &&
 export PVERSION="$PVERSION_PANGO" &&
 export PVERSION_MAJOR=`echo $PVERSION | cut -d. -f1,2` &&
 export PDIR="$PNAME-$PVERSION" &&
-export PFILE="$PDIR.tar.bz2" &&
+export PFILE="$PDIR.tar.xz" &&
 export PURI="http://ftp.gnome.org/pub/GNOME/sources/pango/$PVERSION_MAJOR/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&
 
-export PKG_CONFIG_PATH='/usr/local/lib/pkgconfig' &&
+export PKG_CONFIG_PATH="/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib64/pkgconfig:/usr/lib/pkgconfig"
 
 ./configure --without-x &&
 make -j 2 &&

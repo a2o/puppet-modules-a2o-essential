@@ -34,6 +34,7 @@ export PNAME="cairo" &&
 export PVERSION="$PVERSION_CAIRO" &&
 export PDIR="$PNAME-$PVERSION" &&
 export PFILE="$PDIR.tar.gz" &&
+#export PFILE="$PDIR.tar.xz" &&   # post 1.12.x
 export PURI="http://cairographics.org/releases/$PFILE" &&
 rm -rf $PDIR &&
 GetUnpackCd &&
