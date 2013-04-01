@@ -43,9 +43,8 @@ GetUnpackCd &&
 wget http://source.a2o.si/patches/openssl-1.0.1e-symbolVersioning.diff &&
 patch -p1 < openssl-1.0.1e-symbolVersioning.diff &&
 
-./config --prefix=$PDESTDIR_OPENSSL \
+./config --prefix=$PDESTDIR_OPENSSL shared \
   --openssldir=/etc/ssl &&
-
 # WARNING: Don't argument make with -jX, it will compile but it won't work (tnx for notice David {a@t} kuridza.si)
 make &&
 make install &&
@@ -53,12 +52,12 @@ make install &&
 # FIXME remove openssl-solibs if on slackware
 
 # Add 2 symlinks
-ln -sf libcrypto.so.1.0.0 $PDESTDIR_OPENSSL/lib/libcrypto.so.0 &&
-ln -sf libssl.so.1.0.0 $PDESTDIR_OPENSSL/lib/libssl.so.0 &&
+ln -sf libcrypto.so.1.0.0 $PDESTDIR_OPENSSL/lib/libcrypto.so.1 &&
+ln -sf libssl.so.1.0.0 $PDESTDIR_OPENSSL/lib/libssl.so.1 &&
 
 cd $SRCROOT &&
 rm -rf $PDIR &&
 
 
 
-exit 0
+true
