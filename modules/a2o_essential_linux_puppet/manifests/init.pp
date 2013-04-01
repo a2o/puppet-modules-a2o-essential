@@ -20,7 +20,7 @@ class   a2o_essential_linux_puppet::base {
     $thisPuppetModule = 'a2o_essential_linux_puppet'
 
     # External software versions
-    $externalDestDir_openssl = '/usr/local/openssl-1.0.0i-1'
+    $externalDestDir_openssl = '/usr/local/openssl-1.0.1e-2'
 }
 
 
@@ -32,7 +32,7 @@ class   a2o_essential_linux_puppet::package::base   inherits   a2o_essential_lin
     $packageSoftwareName_puppet    = "puppet"
 
     # CheckURI: http://puppetlabs.com/puppet/puppet-enterprise/
-    $packageSoftwareVersion_puppet = '2.7.20'
+    $packageSoftwareVersion_puppet = '2.7.21'
     $packageRelease_puppet         = '1'
     $packageEnsure_puppet          = "${packageSoftwareVersion_puppet}-${packageRelease_puppet}"
     $packageTag_puppet             = "${packageName_puppet}-${packageEnsure_puppet}"
@@ -41,7 +41,7 @@ class   a2o_essential_linux_puppet::package::base   inherits   a2o_essential_lin
     $packageSoftwareName_ruby      = "ruby"
     # CheckURI for compatibility with puppet
     # CheckURI: http://docs.puppetlabs.com/guides/platforms.html
-    $packageSoftwareVersion_ruby   = '1.8.7_p370'
+    $packageSoftwareVersion_ruby   = '1.8.7_p371'
     $packageRelease_ruby           = '1'
     $packageEnsure_ruby            = "${packageSoftwareVersion_ruby}-${packageRelease_ruby}"
     $packageTag_ruby               = "${packageName_ruby}-${packageEnsure_ruby}"
@@ -219,9 +219,9 @@ class   a2o_essential_linux_puppet::dirs   inherits   a2o_essential_linux_puppet
         mode   => 755,
     }
     file { '/etc/puppet':         }
-    file { '/var/lib/puppet':     }
 #    file { '/opt/scripts':        }   # Define it in FHS, which gets included in basic definition
     file { '/opt/scripts/puppet': }
+    file { '/var/lib/puppet':     owner => puppet, group => puppet, require => User['puppet'] }
 }
 class   a2o_essential_linux_puppet::files   inherits   a2o_essential_linux_puppet::base {
     File {
@@ -269,6 +269,7 @@ class   a2o_essential_linux_puppet::cron   inherits   a2o_essential_linux_puppet
 
 ### The final all-containing classes
 class   a2o_essential_linux_puppet {
+    include 'a2o_essential_linux_puppet::users_groups'
     include 'a2o_essential_linux_puppet::packages'
     include 'a2o_essential_linux_puppet::dirs'
     include 'a2o_essential_linux_puppet::files'

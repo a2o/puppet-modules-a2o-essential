@@ -1,4 +1,3 @@
-#!/bin/bash
 ###########################################################################
 # a2o Essential Puppet Modules                                            #
 #-------------------------------------------------------------------------#
@@ -14,36 +13,20 @@
 
 
 
-# Compile directory
-export SRCROOT="<%= compileDir %>" &&
-mkdir -p $SRCROOT &&
-cd $SRCROOT &&
+### Required users and groups
+class   a2o_essential_linux_puppet::users_groups {
 
+    $user  = 'puppet'
+    $uid   = '8140'
+    $gid   = '8140'
+    $home  = '/var/puppet'
+    $shell = '/bin/false'
 
-
-### Set versions and directories
-export PVERSION_FACTER="<%= packageSoftwareVersion %>" &&
-export PDESTDIR="<%= destDir %>" &&
-export PDESTDIR_OPENSSL="<%= externalDestDir_openssl %>" &&
-
-
-
-### Fracter
-# CheckURI: http://www.puppetlabs.com/downloads/facter/
-cd $SRCROOT && . /var/src/build_functions.sh &&
-export PNAME="facter" &&
-export PVERSION="$PVERSION_FACTER" &&
-export PDIR="$PNAME-$PVERSION" &&
-export PFILE="$PDIR.tar.gz" &&
-export PURI="http://www.puppetlabs.com/downloads/facter/$PFILE" &&
-
-rm -rf $PDIR &&
-GetUnpackCd &&
-
-# Make sure that correct openssl library is loaded
-export LD_LIBRARY_PATH="$PDESTDIR_OPENSSL/lib" &&
-
-$PDESTDIR/bin/ruby install.rb &&
-
-cd $SRCROOT &&
-rm -rf $PDIR
+    # Create group, user, homedir
+    a2o-essential-unix::usergroup::daemon { "$user":
+	uid   => "$uid",
+	gid   => "$gid",
+	home  => "$home",
+	shell => "$shell",
+    }
+}

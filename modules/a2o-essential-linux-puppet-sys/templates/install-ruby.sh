@@ -41,9 +41,20 @@ export PURI="http://ftp.ruby-lang.org/pub/ruby/$PVERSION_RUBY_MAJOR/$PFILE" &&
 rm -rf $PDIR &&
 GetUnpackCd &&
 
+# Enable OpenSSL support like this
+export CPPFLAGS="-I$PDESTDIR_OPENSSL/include" &&
+export LDFLAGS="-L$PDESTDIR_OPENSSL/lib" &&
+export LD_LIBRARY_PATH="$PDESTDIR_OPENSSL/lib" &&
+
+# Issues with GCC 4.7.x
+if [ `gcc --version | head -n1 | fgrep " 4.7." -c` == "1" ]; then
+    export CFLAGS="-O2 -fno-tree-dce -fno-optimize-sibling-calls" &&
+    wget http://source.a2o.si/patches/ruby-1.8.7-gcc-4.7.diff &&
+    patch -p0 < ruby-1.8.7-gcc-4.7.diff
+fi &&
+
 ./configure --prefix=$PDESTDIR \
-  --enable-shared \
-  --with-openssl-dir=$PDESTDIR_OPENSSL &&
+  --enable-shared &&
 make &&
 make install &&
 

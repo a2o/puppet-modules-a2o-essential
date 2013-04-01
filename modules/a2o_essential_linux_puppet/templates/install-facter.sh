@@ -24,6 +24,7 @@ cd $SRCROOT &&
 ### Set versions and directories
 export PVERSION_FACTER="<%= packageSoftwareVersion %>" &&
 export PDESTDIR="<%= destDir %>" &&
+export PDESTDIR_OPENSSL="<%= externalDestDir_openssl %>" &&
 
 
 
@@ -38,6 +39,9 @@ export PURI="http://www.puppetlabs.com/downloads/facter/$PFILE" &&
 
 rm -rf $PDIR &&
 GetUnpackCd &&
+
+# Enable usage of correct openssl
+export LD_LIBRARY_PATH="$PDESTDIR_OPENSSL/lib" &&
 
 $PDESTDIR/bin/ruby install.rb &&
 
