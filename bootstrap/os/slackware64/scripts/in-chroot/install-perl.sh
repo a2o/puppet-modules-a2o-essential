@@ -44,6 +44,7 @@ cat install-perl.sh.dist \
 # Symlinks
 ln -sf perl-init /usr/local/perl &&
 ln -sf /usr/local/perl/bin/perl /usr/local/bin/perl &&
+ln -sf /usr/local/perl/bin/pod2man /usr/local/bin/pod2man &&
 ln -sf /usr/local/bin/perl /usr/bin/perl
 
 

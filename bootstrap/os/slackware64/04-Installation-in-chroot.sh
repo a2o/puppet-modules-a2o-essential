@@ -20,26 +20,26 @@
 ### If you want to do something manually, check the scripts what is to be done and how.
 ###
 
-# Step 1: Source the functions again
+# Source the functions again
 mkdir -p $WORK_DIR &&
 cd $WORK_DIR &&
 rm -f _os_install_functions.sh &&
 wget "$A2O_BOOTSTRAP_URI/scripts/_os_install_functions.sh" &&
 . ./_os_install_functions.sh
 
-# Step 1: Misc thingies first
-a2oScript_downloadAndRun $A2O_BOOTSTRAP_URI/scripts/in-chroot/ldconfig.sh   &&
-
-# Step 2: Compilation environment
+# Compilation environment
+a2oScript_downloadAndRun $A2O_BOOTSTRAP_URI/scripts/in-chroot/ldconfig.sh                &&
 a2oScript_downloadAndRun $A2O_BOOTSTRAP_URI/scripts/in-chroot/setup-compilation-env.sh   &&
 
-# Step 3: Zlib
-a2oScript_downloadAndRun $A2O_BOOTSTRAP_URI/scripts/in-chroot/install-zlib.sh   &&
+# Install and remove stuff
+a2oScript_downloadAndRun $A2O_BOOTSTRAP_URI/scripts/in-chroot/install-zlib.sh            &&
+a2oScript_downloadAndRun $A2O_BOOTSTRAP_URI/scripts/in-chroot/install-perl.sh            &&
+a2oScript_downloadAndRun $A2O_BOOTSTRAP_URI/scripts/in-chroot/install-openssl.sh         &&
+a2oScript_downloadAndRun $A2O_BOOTSTRAP_URI/scripts/in-chroot/install-wget.sh            &&
+a2oScript_downloadAndRun $A2O_BOOTSTRAP_URI/scripts/in-chroot/remove-openssl-solibs.sh   &&
+a2oScript_downloadAndRun $A2O_BOOTSTRAP_URI/scripts/in-chroot/install-openssh.sh         &&
 
-# Step 4: Perl
-a2oScript_downloadAndRun $A2O_BOOTSTRAP_URI/scripts/in-chroot/install-perl.sh   &&
-
-# Step 4: Bootstrap puppet-sys
+# Finally bootstrap puppet-sys
 a2oScript_downloadAndRun $A2O_REPO_URI/bootstrap/puppet-sys/XX-All.sh   &&
 
 
