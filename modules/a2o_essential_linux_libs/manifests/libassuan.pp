@@ -25,6 +25,8 @@ class   a2o_essential_linux_libs::libassuan   inherits   a2o_essential_linux_lib
 
     ### Package
     $require = [
+	Package['libgpg-error'],
+	Package['pth'],
     ]
     a2o-essential-unix::compiletool::package::generic { "$packageTag": require => $require }
 }
