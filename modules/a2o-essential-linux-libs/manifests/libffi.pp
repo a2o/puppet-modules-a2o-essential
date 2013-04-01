@@ -19,7 +19,7 @@ class   a2o-essential-linux-libs::libffi   inherits   a2o-essential-linux-libs::
     # Software details
     $packageName            = 'libffi'
     $packageSoftware        = 'libffi'
-    $packageSoftwareVersion = '3.0.10'
+    $packageSoftwareVersion = '3.0.13'
     $packageRelease         = '1'
     $packageEnsure          = "$packageSoftwareVersion-$packageRelease"
     $packageTag             = "$packageSoftware-$packageEnsure"
