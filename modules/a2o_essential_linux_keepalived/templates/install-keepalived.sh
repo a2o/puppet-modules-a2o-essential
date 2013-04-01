@@ -41,6 +41,7 @@ GetUnpackCd &&
 
 export CFLAGS="-I$PDESTDIR_OPENSSL/include" &&
 export LDFLAGS="-L$PDESTDIR_OPENSSL/lib" &&
+export LD_LIBRARY_PATH="$PDESTDIR_OPENSSL/lib" &&
 
 ./configure --prefix=$PDESTDIR &&
 make &&
