@@ -18,7 +18,7 @@ class   a2o-essential-linux-ganglia::base {
     $thisPuppetModule = 'a2o-essential-linux-ganglia'
 
     # External package references
-    $externalPackageDestDir_python = '/usr/local/python-2.6.7-1'
+    $externalPackageDestDir_python = '/usr/local/python-2.7.3-1'
 }
 
 
@@ -52,7 +52,7 @@ class   a2o-essential-linux-ganglia::package   inherits   a2o-essential-linux-ga
     $packageName      = 'ganglia'
     $packageSoftware  = 'ganglia'
     $packageVersion   = '3.4.0'
-    $packageRelease   = '1'
+    $packageRelease   = '2'
     $packageEnsure    = "$packageVersion-$packageRelease"
     $packageTag       = "$packageSoftware-$packageEnsure"
     $installScriptTpl = "install-$packageSoftware.sh"
@@ -108,7 +108,7 @@ class   a2o-essential-linux-ganglia::package::gmond   inherits   a2o-essential-l
     $packageName      = 'ganglia-gmond'
     $packageSoftware  = 'ganglia-gmond'
     $packageVersion   = '3.4.0'
-    $packageRelease   = '1'
+    $packageRelease   = '2'
     $packageEnsure    = "$packageVersion-$packageRelease"
     $packageTag       = "$packageSoftware-$packageEnsure"
     $installScriptTpl = "install-$packageSoftware.sh"
