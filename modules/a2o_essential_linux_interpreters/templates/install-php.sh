@@ -117,6 +117,9 @@ make install &&
 
 unset LD_LIBRARY_PATH &&
 
+# Patch ELF in order to transparently load correct openssl
+_patchelf_rpath_orderDesc $PDESTDIR_PHP/bin/php &&
+
 cd $SRCROOT &&
 rm -rf $PDIR &&
 
