@@ -331,8 +331,14 @@ _patchelf_rpath_orderDesc() {
     fi
 
     # Get and mangle rpath
-    RPATH_ORIG=`readelf -d $PHP_EXECUTABLE | grep RPATH | awk '{print $5}' | sed -e 's/^\[//' | sed -e 's/\]$//'`
+    RPATH_ORIG=`readelf -d $EXECUTABLE | grep RPATH | awk '{print $5}' | sed -e 's/^\[//' | sed -e 's/\]$//'`
     RPATH_NEW=`echo "$RPATH_ORIG" | tr ':' '\n' | awk '{ print length, $0 }' | sort -nr | cut -d" " -f2- | tr '\n' ':' | sed -e 's/:$//'`
+
+    # Check if nonempty
+    if [ "$RPATH_ORIG" == "" ]; then
+	echo "ERROR: RPATH empty or not set!"
+	return 1
+    fi
 
     # Compare length, must be equal
     if [ "${#RPATH_ORIG}" != "${#RPATH_NEW}" ]; then
