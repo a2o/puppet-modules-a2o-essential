@@ -13,8 +13,14 @@
 
 
 
-### Include all scripts
-class   a2o-essential-unix::scripts {
-    include 'a2o-essential-unix::scripts::a2o'
-    include 'a2o-essential-unix::scripts::rrd'
+### a2o basic
+class   a2o-essential-unix::scripts::a2o   inherits   a2o-essential-unix::base {
+
+    File {
+	owner => root,
+	group => root,
+    }
+
+    file { '/opt/scripts/a2o':                      ensure => directory }
+    file { '/opt/scripts/a2o/script-framework':     source => "puppet:///modules/$thisPuppetModule/scripts/a2o/script-framework" }
 }

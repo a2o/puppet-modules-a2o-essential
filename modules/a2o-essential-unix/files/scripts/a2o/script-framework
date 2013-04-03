@@ -1,0 +1,223 @@
+#!/bin/bash
+
+
+
+################################################################################
+################################################################################
+#
+# Process and PID handling functions
+#
+################################################################################
+################################################################################
+
+###
+### private: check if process exists, by process name regex
+###
+#
+# Return 0 if yes, 1 if no
+#
+_a2o_processExists_byRegex()
+{
+    PROCESS_REGEX="$1"
+    RES=`ps ax | grep "$PROCESS_REGEX" | grep -v 'grep' | grep -v '/opt/scripts/cron' | grep -c .`
+    if [ "$RES" -gt 3 ]; then
+	# greater than 0 indeed, but we are running already (1) and backticks create another instance
+	# running in cron with /opt/scripts/cron/* uses 2 slots for this regex, if not excluded
+	# running from cron adds another instance
+	return 0
+    else
+	return 1
+    fi
+}
+
+
+
+###
+### private: check if process exists, by pid AND process name regex
+###
+#
+# Return 0 if yes, 1 if no
+#
+_a2o_processExists_byPidAndRegex()
+{
+    PROCESS_PID="$1"
+    PROCESS_REGEX="$2"
+    RES=`ps ax | grep "^[ ]*$PROCESS_PID" | grep "$PROCESS_REGEX" | grep -v 'grep' | grep -c .`
+    if [ "$RES" -gt 0 ]; then
+	return 0
+    else
+	return 1
+    fi
+}
+
+
+
+###
+### private: create pidfile
+###
+_a2o_createPidFile()
+{
+    PIDFILE="$1"
+    PID="$$"
+    echo "$PID" > $PIDFILE
+}
+
+
+
+###
+### public: create pidfile
+###
+#
+# Return 1 if process already exists, else create pid file and return 0
+#
+a2o_createPidFile()
+{
+    PIDFILE="$1"
+    PROCESS_REGEX="$2"
+
+
+    # Sanity check
+    if [ "$PIDFILE" == "" ]; then
+        a2o_fatalError "Pid file not given" "${FUNCNAME[0]}"
+    fi
+    if [ "$PROCESS_REGEX" == "" ]; then
+        a2o_fatalError "Process regex not given" "${FUNCNAME[0]}"
+    fi
+
+
+    # Check pidfile, process table and create new pidfile if applicable
+    if [ -f $PIDFILE ]; then
+
+	# Verify number of lines
+	RES=`cat $PIDFILE | grep -c .`
+
+	if [ "$RES" -ne 1 ]; then # Invalid pid file
+
+	    # Remove pid file first, stale
+	    if [ "$RES" -eq 0 ]; then
+	        echo "WARNING: Invalid pid file (empty), removing... "
+	    elif [ "$RES" -gt 1 ]; then
+	        echo "WARNING: Invalid pid file (multiple pids), removing... "
+	    fi
+	    rm -f $PIDFILE
+
+	    _a2o_createPidFile "$PIDFILE"
+
+	else # Valid pid file
+
+	    # Seems like valid pidfile, let's see
+	    PIDFILE_PID=`cat $PIDFILE`
+
+	    # Search process by regex
+	    if _a2o_processExists_byPidAndRegex "$PIDFILE_PID" "$PROCESS_REGEX"; then
+		return 1
+	    else
+		echo "WARNING: Invalid pid file, process with pid $PIDFILE_PID does not match regex $PROCESS_REGEX, removing... "
+		rm -f $PIDFILE
+
+		_a2o_createPidFile "$PIDFILE"
+	    fi
+
+	fi
+
+    else # No pid file
+
+	_a2o_createPidFile "$PIDFILE"
+
+    fi
+}
+
+
+
+###
+### public: removePidFile
+###
+#
+# Remove pid file
+#
+a2o_removePidFile()
+{
+    PIDFILE="$1"
+    rm -f $PIDFILE
+}
+
+
+
+
+
+################################################################################
+################################################################################
+#
+# Error handling functions
+#
+################################################################################
+################################################################################
+
+###
+### public: fatalError
+###
+a2o_fatalError()
+{
+    MSG="$1"
+    CALLED_FUNCTION="$2"
+
+    echo
+    a2o_displayStackTrace 1
+    echo
+
+    if [ "$CALLED_FUNCTION" == "" ]; then
+	echo "FATAL ERROR: $MSG"
+    else
+	echo "FATAL ERROR: $MSG"
+	echo "[occured in function $CALLED_FUNCTION()]"
+    fi
+
+    echo
+    exit 120
+}
+
+###
+### public: displayStackTrace
+###
+#
+# param1: how many entries to skip
+#
+a2o_displayStackTrace()
+{
+    if [ "$1" == "" ]; then
+	SKIP_COUNT="1"
+    else
+	SKIP_COUNT=`expr 1 + $1`
+    fi
+
+
+    ### The following snippet has been taken from the following URI and heavily modified.
+    ### URI: http://blog.yjl.im/2012/01/printing-out-call-stack-in-bash.html
+    ### Copyright 2012 Yu-Jie Lin
+    ### MIT License
+    echo "Extended function call trace:"
+    local i=0
+    local j=0
+    local FRAMES=${#BASH_LINENO[@]}
+    for ((i=FRAMES-2; i>=0; i--)); do
+	if [ "$i" -lt "$SKIP_COUNT" ]; then
+	    break
+	fi
+        j=$(($j + 1))
+	echo "  $j: ${BASH_SOURCE[i+1]}, line ${BASH_LINENO[i]}, in ${FUNCNAME[i+1]}()"
+	sed -n "${BASH_LINENO[i]}{s/^[ \t]*/          /p}" "${BASH_SOURCE[i+1]}"
+	echo
+    done
+
+    echo "Brief function call trace (extended version above):"
+    local i=0
+    local j=0
+    local FRAMES=${#BASH_LINENO[@]}
+    for ((i=FRAMES-2; i>=0; i--)); do
+	if [ "$i" -lt "$SKIP_COUNT" ]; then
+	    break
+	fi
+        j=$(($j + 1))
+	echo "  $j: ${FUNCNAME[i]}()"
+    done
+}
