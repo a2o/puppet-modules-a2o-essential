@@ -115,12 +115,10 @@ EOS
 
     ### Various scope lookups - THINK should this be removed? Normally all these things are defined in node definition.
     # Top Scope Variable Lookup (::module_name_varname)
-    notice("::#{module_name}_#{var_name}")
     value = lookupvar("::#{module_name}_#{var_name}")
     return value if (not value.nil?) && (value != :undefined) && (value != '')
 
     # Top Scope Variable Lookup (::module_name_short_varname)
-    notice("::#{module_name_short}_#{var_name}")
     value = lookupvar("::#{module_name_short}_#{var_name}")
     return value if (not value.nil?) && (value != :undefined) && (value != '')
 
