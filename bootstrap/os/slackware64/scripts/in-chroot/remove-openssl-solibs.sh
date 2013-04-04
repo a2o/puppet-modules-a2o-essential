@@ -9,7 +9,7 @@
 # Remove distro-installed openssl-solibs
 if [ -f /etc/slackware-version ]; then
     if [ -f /var/log/packages/openssl-solibs-* ]; then
-	removepkg openssl-solibs &&
+	removepkg openssl-solibs
     fi
 fi &&
 

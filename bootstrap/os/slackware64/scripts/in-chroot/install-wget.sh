@@ -47,7 +47,9 @@ cat $INSTALL_SCRIPT.dist \
 ./$INSTALL_SCRIPT &&
 
 ### Create symlink for just in case
-ln -s /usr/local/bin/wget /usr/bin/wget
+if [ ! -f /usr/bin/wget ]; then
+    ln -s /usr/local/bin/wget /usr/bin/wget
+fi
 
 
 
