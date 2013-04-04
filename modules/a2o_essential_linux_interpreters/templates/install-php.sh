@@ -91,6 +91,7 @@ export LD_LIBRARY_PATH="$PDESTDIR_OPENSSL/lib" &&
   --with-pdo-odbc=unixODBC \
   --with-pdo-pgsql=$PDESTDIR_POSTGRESQL \
   --with-pgsql=$PDESTDIR_POSTGRESQL \
+  --enable-phar \
   --enable-reflection \
   --enable-session \
   --enable-shmop \
