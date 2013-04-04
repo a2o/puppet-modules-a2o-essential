@@ -57,6 +57,25 @@ cd $SRCROOT &&
 rm -rf $PDIR &&
 
 
+### Workaround
+#
+# At initial 'make install' bind creates /etc/named and places in there a file
+# called 'bind.keys'. This breaks puppet catalog run as it tries to create a
+# symlink to CHROOT/etc/named.
+# Therefore - if only this file exists in that dir, move it to chroot and remove
+# the directory to make space for symlink.
+#
+if [ -d /etc/named ]; then
+    if [ -e /etc/named/bind.keys ]; then
+	RES=`ls /etc/named/ | grep -c .`
+	if [ "$RES" == "1" ]; then
+	    mkdir -p /var/named/etc/named &&
+	    mv /etc/named/bind.keys /var/named/etc/named &&
+	    rmdir /etc/named
+	fi
+    fi
+fi &&
+
 
 ### Create device files - WORKAROUND, can't do that in puppet.
 export CHROOT_DIR="/var/named" &&
