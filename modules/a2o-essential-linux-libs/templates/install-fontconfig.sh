@@ -41,18 +41,19 @@ GetUnpackCd &&
 
 ./configure &&
 make -j 2 &&
-make install &&
 
+# WORKAROUND
 # 2.8.0 on 32bit slack, after compilation install would not work correctly for the first time
-if [ "$?" != "0" ]; then
-  ldconfig
-  make install
-  if [ "$?" != "0" ]; then
-    echo "Error installing fontconfig"
-    exit 1
-  fi
-fi &&
+# Also, while doing initial build there is an error for every version.
+#   /usr/local/bin/fc-cache: error while loading shared libraries: libfontconfig.so.1: cannot open shared object file: No such file or directory
+#
+# We can either:
+# - install it twice with ldconfig in between
+# - export LD path to search for 'make install' - YES, cleaner
+export LD_LIBRARY_PATH=`pwd`/src/.libs &&
 
+make install &&
+unset LD_LIBRARY_PATH &&
 ldconfig &&
 
 cd $SRCROOT &&
@@ -60,4 +61,4 @@ rm -rf $PDIR &&
 
 
 
-exit 0
+true
