@@ -45,8 +45,8 @@ class   a2o_essential_linux_mysql::package::mysql   inherits   a2o_essential_lin
     $externalDestDir_openssl = '/usr/local/openssl-1.0.1e-2'
 
     # Older versions - keep them, then move them to cleanup.pp
-    a2o-essential-unix::compiletool::package::multi   { 'mysql-5.1.66-1':   require => $require, installScriptTplUri => "$thisPuppetModule/install-mysql.sh" }
-    a2o-essential-unix::compiletool::package::multi   { 'mysql-5.1.67-1':   require => $require, installScriptTplUri => "$thisPuppetModule/install-mysql.sh" }
+#    a2o-essential-unix::compiletool::package::multi   { 'mysql-5.1.66-1':   require => $require, installScriptTplUri => "$thisPuppetModule/install-mysql.sh" }
+#    a2o-essential-unix::compiletool::package::multi   { 'mysql-5.1.67-1':   require => $require, installScriptTplUri => "$thisPuppetModule/install-mysql.sh" }
 
 
     # Current versions - WARNING! update symlinks below too
