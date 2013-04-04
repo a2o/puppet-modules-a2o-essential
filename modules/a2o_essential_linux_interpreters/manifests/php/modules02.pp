@@ -35,6 +35,7 @@ class   a2o_essential_linux_interpreters::php::modules02   inherits   a2o_essent
     ### Package
     $require = [
         Package['php-cli'],
+        Package['imagemagick'],
     ]
     a2o-essential-unix::compiletool::package::generic { "$packageTag":
 	require             => $require,
