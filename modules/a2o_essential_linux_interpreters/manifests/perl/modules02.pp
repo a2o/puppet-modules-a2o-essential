@@ -33,7 +33,7 @@ class   a2o_essential_linux_interpreters::perl::modules02   inherits   a2o_essen
 
     ### Package
     $require = [
-        Package['perl'],
+	Package['perl'],
 	Package["$packageTag_perl-modules01"],
     ]
     a2o-essential-unix::compiletool::package::generic { "$packageTag":
