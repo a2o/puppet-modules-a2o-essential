@@ -28,6 +28,7 @@ a2oBootstrap_environmentCheck_inChroot || exit 1
 ###
 ### Change root password hash
 ###
+export PATH="/usr/sbin:$PATH" &&
 usermod -p "$ROOT_PASSWORD_HASH" root
 
 
