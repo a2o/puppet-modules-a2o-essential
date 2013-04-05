@@ -1,6 +1,4 @@
+Things to do at the end of bootstrap procedure:
 - mdadm.conf, script generation with loop from /proc/mdstat and  mdadm -D ?
-
-- wget ? Better with puppet
-- openssh-sys ? Better with puppet
-
 - root password set at the end
+- real kernel installation - can also be done at the end of successful puppet run
