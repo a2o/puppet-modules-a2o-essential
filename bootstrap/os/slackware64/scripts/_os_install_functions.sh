@@ -24,7 +24,13 @@ a2oBootstrap_environmentCheck_inChroot() {
 
     if [ "$NEW_HOSTNAME" == "" ]; then
 	echo "Hint:  export NEW_HOSTNAME='my-new-server.example.net'"
-	echo "ERROR: Hostname of this new server not specified."
+	echo "ERROR: Hostname for this new server not specified."
+	return 1
+    fi
+
+    if [ "$ROOT_PASSWORD_HASH" == "" ]; then
+	echo "Hint:  export ROOT_PASSWORD_HASH='my-root-password-hash'"
+	echo "ERROR: Root password hash for this new server not specified."
 	return 1
     fi
 }

@@ -9,12 +9,13 @@
 # Here are the defaults to use:
 #
 export NEW_HOSTNAME="slackware.a2o.si"
-export A2O_REPO_URI="https://raw.github.com/a2o/puppet-modules-a2o-essential/master"
+export A2O_REPO_URI="http://source.a2o.si/git/puppet-modules-a2o-essential/raw/master"
 export A2O_BOOTSTRAP_URI="$A2O_REPO_URI/bootstrap/os/slackware64"
 export WORK_DIR="/root/a2o"
 export DEST_DEVICE="/dev/sda"
 export DEST_ROOT="/mnt/newroot"
 export SRC_REPO="/mnt/slack"
+export ROOT_PASSWORD_HASH=''
 
 
 

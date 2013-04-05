@@ -42,12 +42,18 @@ a2oScript_downloadAndRun $A2O_BOOTSTRAP_URI/scripts/in-chroot/install-openssh.sh
 # Finally bootstrap puppet-sys
 a2oScript_downloadAndRun $A2O_REPO_URI/bootstrap/puppet-sys/XX-All.sh   &&
 
+# Final misc tasks
+a2oScript_downloadAndRun $A2O_BOOTSTRAP_URI/scripts/in-chroot/change-root-password.sh   &&
 
 
-# Step 4: Final thingies
-# - root password
-# - puppet-sys/puppet.conf configuration
+# Notify the user
+echo "In-chroot installation complete.
 
+Next steps:
+- configure the /etc/puppet-sys/puppet.conf
+- reboot
+- after machine comes back up, run 'puppet-sys agent --test'
+" &&
 
 
 true
