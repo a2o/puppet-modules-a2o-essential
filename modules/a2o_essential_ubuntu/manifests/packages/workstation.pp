@@ -65,9 +65,12 @@ class   a2o_essential_ubuntu::packages::workstation   inherits   a2o-essential-d
     package { 'transmission':     }
 
     ### Developer Tools
+    package { 'autoconf':         }
+    package { 'automake':         }
     package { 'default-jre':      }
     package { 'git':              }
     package { 'kcachegrind':      }
+    package { 'm4':               }
     package { 'mercurial':        }
     package { 'netbeans':         }
     package { 'php5-cli':         }
