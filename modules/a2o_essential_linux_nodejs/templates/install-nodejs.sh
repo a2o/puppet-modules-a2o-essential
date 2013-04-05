@@ -24,6 +24,7 @@ cd $SRCROOT &&
 ### Set versions and directories
 export PVERSION_NODEJS="<%= softwareVersion %>" &&
 export PDESTDIR="<%= destDir %>" &&
+export PDESTDIR_PYTHON="<%= destDir_python %>" &&
 
 
 
@@ -39,8 +40,10 @@ export PURI="http://nodejs.org/dist/v$PVERSION/$PFILE" &&
 rm -rf $PDIR &&
 GetUnpackCd &&
 
-# Otherwise it takes system python, which could be not-2.6
-export PATH="/usr/local/python/bin:$PATH" &&
+# Otherwise it takes system python, which could be not-2.7
+export PATH="$PDESTDIR_PYTHON/bin:$PATH" &&
+# Otherwise initial build fails to find libpython
+export LD_LIBRARY_PATH="$PDESTDIR_PYTHON/lib" &&
 
 ./configure --prefix=$PDESTDIR &&
 make &&

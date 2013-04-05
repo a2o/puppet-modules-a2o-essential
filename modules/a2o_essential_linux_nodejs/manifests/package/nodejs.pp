@@ -26,6 +26,7 @@ class   a2o_essential_linux_nodejs::package::nodejs   inherits   a2o_essential_l
 
     ### Python destdir
 #    $destDir_python = $a2o_essential_linux_interpreters::python::package::destDir
+    $destDir_python = '/usr/local/python-2.7.3-1'
 
     ### Package
     $require = [
