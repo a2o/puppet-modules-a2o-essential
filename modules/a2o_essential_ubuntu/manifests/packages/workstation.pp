@@ -77,6 +77,7 @@ class   a2o_essential_ubuntu::packages::workstation   inherits   a2o-essential-d
     package { 'rake':             }
     package { 'ruby':             }
     package { 'subversion':       }
+    package { 'tig':              }
 
     ### Communication tools
     package { 'pidgin':           }
