@@ -219,7 +219,7 @@ class   a2o_essential_linux_puppet::dirs   inherits   a2o_essential_linux_puppet
         mode   => 755,
     }
     file { '/etc/puppet':         }
-#    file { '/opt/scripts':        }   # Define it in FHS, which gets included in basic definition
+    file { '/opt/scripts':        }   # Must be defined here, otherwise bootstraping 'fails'
     file { '/opt/scripts/puppet': }
     file { '/var/lib/puppet':     owner => puppet, group => puppet, require => User['puppet'] }
 }
