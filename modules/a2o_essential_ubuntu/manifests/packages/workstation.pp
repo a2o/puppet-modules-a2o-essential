@@ -56,6 +56,7 @@ class   a2o_essential_ubuntu::packages::workstation   inherits   a2o-essential-d
     }
 
     ### General Tools
+    package { 'filezilla':        }
     package { 'gimp':             }
     package { 'pdftk':            }
     package { 'rsync':            }
