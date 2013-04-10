@@ -21,11 +21,11 @@ class   a2o_essential_linux_collectd::package::base   inherits   a2o_essential_l
     # Package / Software details
     # CheckURI: http://www.collectd.org/downloads.html
     $softwareName_collectd    = 'collectd'
-    $softwareVersion_collectd = '5.2.1'
-    $packageRelease_collectd  = '2'
+    $softwareVersion_collectd = '5.2.2'
+    $packageRelease_collectd  = '1'
     $packageTag_collectd      = "$softwareName_collectd-$softwareVersion_collectd-$packageRelease_collectd"
 
     # External references
     $externalDestDir_openssl = '/usr/local/openssl-1.0.1e-2'
-    $externalDestDir_mysql   = '/usr/local/mysql-5.1.68-2'
+    $externalDestDir_mysql   = '/usr/local/mysql-5.5.30-1'
 }

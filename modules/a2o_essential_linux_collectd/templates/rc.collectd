@@ -15,7 +15,7 @@
 
 
 
-export LD_LIBRARY_PATH="<%= externalDestDir_openssl %>/lib"
+export LD_LIBRARY_PATH="<%= externalDestDir_openssl %>/lib:<%= externalDestDir_mysql %>/lib"
 
 
 
