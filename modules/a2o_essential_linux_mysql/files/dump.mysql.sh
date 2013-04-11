@@ -102,6 +102,9 @@ _echo "done."
 _echo -n "Removing old backup... "
 rm -f $DESTDIR/*.sql
 rm -f $DESTDIR/*.sql.$COMPRESS_EXT
+rm -f $DESTDIR/*.sql.bz2
+rm -f $DESTDIR/*.sql.gz
+rm -f $DESTDIR/*.sql.xz
 _echo "done."
 _echo
 
