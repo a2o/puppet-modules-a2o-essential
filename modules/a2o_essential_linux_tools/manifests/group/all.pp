@@ -33,6 +33,7 @@ class a2o_essential_linux_tools::group::all {
 # Disabled because compilation fails on 64-bit platforms
 #    include 'a2o-essential-linux-tools::latencytop'
     include 'a2o_essential_linux_tools::lftp'
+    include 'a2o_essential_linux_tools::mcelog'
     include 'a2o-essential-linux-tools::mlocate'
     include 'a2o-essential-linux-tools::netcat'
     include 'a2o-essential-linux-tools::nmap'
