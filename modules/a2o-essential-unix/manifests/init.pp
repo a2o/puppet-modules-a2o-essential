@@ -41,12 +41,14 @@ class   a2o-essential-unix::tools-misc    inherits   a2o-essential-unix::base {
 ### The final all-containing class
 class   a2o-essential-unix::server {
     include 'a2o-essential-unix::fhs'
+#    include 'a2o-essential-unix::act'
     include 'a2o-essential-unix::compiletool'
     include 'a2o-essential-unix::rctool'
     include 'a2o-essential-unix::sys'
     include 'a2o-essential-unix::tools-misc'
 }
 class   a2o-essential-unix::server::no-fhs {
+#    include 'a2o-essential-unix::act'
     include 'a2o-essential-unix::compiletool'
     include 'a2o-essential-unix::rctool'
     include 'a2o-essential-unix::sys'
@@ -58,12 +60,14 @@ class   a2o-essential-unix::server::no-fhs {
 ### Minimal variation
 class   a2o-essential-unix::server-minimal {
     include 'a2o-essential-unix::fhs'
+#    include 'a2o-essential-unix::act'
     include 'a2o-essential-unix::compiletool'
     include 'a2o-essential-unix::rctool'
     include 'a2o-essential-unix::sys'
 }
 class   a2o-essential-unix::server::puppetonly {
     include 'a2o-essential-unix::fhs'
+#    include 'a2o-essential-unix::act'
     include 'a2o-essential-unix::compiletool'
     include 'a2o-essential-unix::rctool'
 }

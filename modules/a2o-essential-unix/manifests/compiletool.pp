@@ -16,6 +16,13 @@
 ### Compilation tools
 class   a2o-essential-unix::compiletool   inherits   a2o-essential-unix::base {
 
+
+    ###
+    ### ACT is the future of a2o-essential-modules, we heed it here!
+    ###
+    include 'a2o-essential-unix::act'
+
+
     # Template
     File {
         owner    => root,
@@ -53,13 +60,21 @@ class   a2o-essential-unix::compiletool   inherits   a2o-essential-unix::base {
 
     # Script with compilation helper functions
     file { '/var/src/build_functions.sh':
-        source  => "puppet:///modules/$thisPuppetModule/compiletool/build_functions.sh",
-	require => File['/var/log/packages_compiled'],
+	ensure  => link,
+	target  => 'act_functions.sh',
+	require => [
+	    File['/var/src/act_functions.sh'],
+	    File['/var/log/packages_compiled'],
+	],
     }
+
 
     # FIXME remove at some point
     file { '/var/src/_functions.sh':
-	ensure  => 'build_functions.sh',
-	require => File['/var/src/build_functions.sh'],
+	ensure  => link,
+	target  => 'build_functions.sh',
+	require => [
+	    File['/var/src/build_functions.sh'],
+	],
     }
 }

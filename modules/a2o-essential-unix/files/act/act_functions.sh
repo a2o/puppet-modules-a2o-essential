@@ -11,23 +11,257 @@
 #-------------------------------------------------------------------------#
 # Authors: Bostjan Skufca <my_name [at] a2o {dot} si>                     #
 ###########################################################################
+#
+# ACT installer
+#
+# ACT = a2o Compile Tool
+#
+# This is the initial embryo of what is hoped will once become a fully-
+# featured server software installer.
+#
 
 
 
-export SUCCESS=0
-export FAILURE=255
+################################################################################
+###
+### ACT methods - new way of building/installing packages
+###
+################################################################################
+
+###
+### Output and error handling subroutines
+###
+function _act_echo() {
+    echo "ACT: $1"
+}
+function _act_echo_n() {
+    echo -n "ACT: $1"
+}
+function _act_echo_raw() {
+    echo "$1"
+}
+
+function _act_info() {
+    echo "INFO: $1"
+}
+function _act_warning() {
+    echo "WARNING: $1"
+}
+
+function _act_error_fatal() {
+    MSG="$1"
+
+    echo
+    echo
+    echo "ERROR: $MSG"
+    echo
+    exit 1
+}
+function _act_fatalError() {
+    _act_error_fatal "$1"
+}
 
 
 
-### Get configuration if exists
-if [ -f /var/src/build_functions.conf-site ]; then
-    . /var/src/build_functions.conf-site
-fi
-if [ -f /var/src/build_functions.conf ]; then
-    . /var/src/build_functions.conf
-fi
+###
+### Initialize ACT
+###
+function _act_init() {
+
+    # Default configuration
+    export ACT_DOWNLOAD_PROXY_URI=''
+    export ACT_DOWNLOAD_PROXY_EXCEPTION_REGEX='UNDEFINED'
+    export ACT_DEBUG='false'   # TODO
+
+#    # Source main configuration file
+#    if [ ! -f /etc/act/act.conf ]; then
+#	_act_fatalError "Main configuration file does not exist: /etc/act/act.conf"
+#    fi
+#    source /etc/act/act.conf
+
+    # Source files from configuration directory
+    if [ -d /etc/act/conf.d ]; then
+	for FILE in `ls /etc/act/conf.d`; do
+	    source /etc/act/conf.d/$FILE
+	done
+    fi
+
+    # Remove trailing slash from proxy URI
+    export ACT_DOWNLOAD_PROXY_URI=`echo "$ACT_DOWNLOAD_PROXY_URI" | sed -e 's#/$##'`
+
+    # Misc variables and values
+    export SUCCESS=0
+    export FAILURE=255
+
+    # Get wget version - do not export at the beginning because subsequent if
+    # clause does not detect error from backticks
+    ACT_WGET_VERSION=`wget --version | head -n1 | cut -d' ' -f3 | sed -e 's/\.//'`   #
+    if [ "$?" != "0" ]; then
+	_act_fatalError "Unable to get wget version"
+    fi
+    export ACT_WGET_VERSION
+
+    # Check the environment - TODO
+}
 
 
+
+###
+### DOWNLOAD FILE: Directly from URI
+###
+### If file already exists, verify it's md5 hash and act accordingly
+###
+function _act_downloadFile_fromUri() {
+    URI="$1"
+    FILENAME=`echo "$URI" | awk -F/ '{print $NF}'`
+
+    rm -f $FILENAME
+    _act_echo_n "Downloading from ${URI}... "
+    wget -q --no-check-certificate --inet4-only --timeout=120 --tries=2 --output-document=$FILENAME "${URI}"
+    if [ "$?" != "0" ]; then
+	_act_fatalError "Unable to download from proxy: ${PROXIED_URI_FILE}"
+    fi
+    _act_echo_raw "done."
+}
+
+
+
+###
+### DOWNLOAD FILE: Through proxy
+###
+function _act_downloadFile_fromProxy() {
+    URI="$1"
+    FILENAME=`echo "$URI" | awk -F/ '{print $NF}'`
+    PROXIED_URI_FILE="${ACT_DOWNLOAD_PROXY_URI}/get/source-package/?uri=${URI}"
+    PROXIED_URI_MD5="${ACT_DOWNLOAD_PROXY_URI}/get/source-package-md5/?uri=${URI}"
+
+    # If download is from the proxy itself
+    ACT_PROXY_HOSTNAME=`echo $ACT_DOWNLOAD_PROXY_URI  | cut -d'/' -f3`
+    RES=`echo "$URI" | fgrep -c "$ACT_PROXY_HOSTNAME" | cat`
+    if [ "$RES" -gt "0" ]; then
+	_act_downloadFile_fromUri "$URI"
+	return $?
+    fi
+
+    # If download is from the proxy exception list
+    RES=`echo "$URI" | grep -c "$ACT_DOWNLOAD_PROXY_EXCEPTION_REGEX" | cat`
+    if [ "$RES" -gt "0" ]; then
+	_act_downloadFile_fromUri "$URI"
+	return $?
+    fi
+
+    # If file exist, check md5 and exit if matches
+    if [ -e $FILENAME ]; then
+	_act_echo "File already exist: $FILENAME"
+
+	if [ ! -f $FILENAME ]; then
+	    _act_fatalError "Not a regular file: $FILENAME (from $URI)"
+	fi
+
+	_act_echo_n "Verifying MD5 of $FILENAME... "
+	FILENAME_MD5=$(_act_calculateFileMd5 $FILENAME)
+	URI_MD5=$(_act_downloadMd5_fromProxy "$URI")
+	if [ "$FILENAME_MD5" == "$URI_MD5" ]; then
+	    _act_echo_raw "matches. ($FILENAME_MD5)"
+	    return 0   # md5s match, return successful file retrieval
+	fi
+
+	_act_echo_raw ""
+	_act_warning "MD5 sums of file $FILENAME do not match: file=$FILENAME_MD5, uri=$URI_MD5"
+	_act_info "Removing file and proceeding with normal download from proxy"
+	# Remove or continue download? FIXME THINK TODO
+	rm -f $FILENAME
+    fi
+
+    ### DOWNLOAD
+#    if [ "`wget --help | grep -c content-disposition | cat`" -gt "0" ]; then
+#        wget -c --no-check-certificate --inet4-only --timeout=120 --tries=2 \
+#	    --content-disposition "${ACT_DOWNLOAD_PROXY_URI}${URI}"
+#    else
+
+    # Older wget, does not support --content-disposition switch (1.10 for example)
+    _act_echo_n "Downloading from ${PROXIED_URI_FILE}... "
+#    wget $ACT_DEBUG --no-check-certificate --inet4-only --timeout=120 --tries=2 \
+    wget -q --no-check-certificate --inet4-only --timeout=120 --tries=2 \
+	--output-document=$FILENAME "${PROXIED_URI_FILE}"
+    if [ "$?" != "0" ]; then
+	_act_fatalError "Unable to download from proxy: ${PROXIED_URI_FILE}"
+    fi
+    _act_echo_raw "done."
+
+    ### CHECK MD5
+    _act_echo_n "Verifying MD5 of $FILENAME... "
+    FILENAME_MD5=$(_act_calculateFileMd5 $FILENAME)
+    URI_MD5=$(_act_downloadMd5_fromProxy "$URI")
+    if [ "$FILENAME_MD5" == "$URI_MD5" ]; then
+	_act_echo_raw "matches. ($FILENAME_MD5)"
+	return 0
+    fi
+
+    _act_fatalError "MD5 sums of file $FILENAME do not match: file=$FILENAME_MD5, uri=$URI_MD5"
+}
+
+
+
+###
+### DOWNLOAD FILE: Through proxy
+###
+function _act_downloadFile() {
+    URI="$1"
+
+    if [ "x$ACT_DOWNLOAD_PROXY_URI" != "x" ]; then
+	_act_downloadFile_fromProxy "$PURI"
+    else
+	_act_downloadFile_fromUri "$PURI"
+    fi
+}
+
+
+
+###
+### DOWNLOAD MD5 HASH OF A FILE: From proxy
+###
+function _act_downloadMd5_fromProxy() {
+    URI="$1"
+    PROXIED_URI_MD5="${ACT_DOWNLOAD_PROXY_URI}/get/source-package-md5/?uri=${URI}"
+
+    MD5=`wget --no-check-certificate --inet4-only --timeout=120 --tries=2 --output-document=- -q "${PROXIED_URI_MD5}"`
+    if [ "$?" != "0" ]; then
+	_act_fatalError "Unable to download MD5 from proxy: ${PROXIED_URI_MD5}"
+    fi
+
+    echo $MD5
+}
+
+
+
+###
+### Calculate MD5 hash of a file content, and return it
+###
+function _act_calculateFileMd5() {
+    FILE="$1"
+    if [ ! -e $FILE ]; then
+	_act_fatalError "File does not exist: $FILE"
+    fi
+    if [ ! -f $FILE ]; then
+	_act_fatalError "Not a regular file: $FILE"
+    fi
+
+    MD5=`md5sum $FILE | cut -d' ' -f1`
+    if [ "$?" != "0" ]; then
+	_act_error_fatal "Unable to calculate md5 hash of a file: $FILE"
+    fi
+
+    echo $MD5
+}
+
+
+
+################################################################################
+###
+### OLDER METHODS, now slowly being phased out and rewritten
+###
+################################################################################
 
 CheckSrcRoot ()
 {
@@ -46,39 +280,7 @@ GetNoTestArchive ()
     CheckSrcRoot &&
     cd $SRCROOT &&
 
-    if [ "x$CTOOL_PROXY_URI" != "x" ]; then
-	# Proxy-ed download
-        RES=`echo "$PURI" | grep -c "$CTOOL_PROXY_EXCEPTION_REGEX" | cat` &&
-	if [ "$RES" -gt "0" ]; then
-	    wget -c --no-check-certificate --inet4-only --timeout=10 --tries=4 $PURI
-
-	elif [ "`wget --help | grep -c content-disposition | cat`" -gt "0" ]; then
-    	    wget -c --no-check-certificate --inet4-only --timeout=120 --tries=2 \
-	    --content-disposition "${CTOOL_PROXY_URI}${PURI}"
-
-	else
-	    # Older wget, does not support --content-disposition switch (1.10 for example)
-	    FILENAME=`echo $PURI | awk -F/ '{print $NF}'`
-    	    wget -c --no-check-certificate --inet4-only --timeout=120 --tries=2 \
-	    --output-document=$FILENAME "${CTOOL_PROXY_URI}${PURI}"
-	fi
-
-    else
-
-	# Direct download
-#	if [ "`wget --help | grep -c content-disposition | cat`" -gt "0" ]; then
-#    	    wget -c --no-check-certificate --inet4-only --timeout=120 --tries=2 \
-#	    --content-disposition "${PURI}"
-#
-#	else
-	    # Older wget, does not support --content-disposition switch (1.10 for example)
-	    FILENAME=`echo $PURI | awk -F/ '{print $NF}'`
-    	    wget -c --no-check-certificate --inet4-only --timeout=120 --tries=2 \
-		--output-document=$FILENAME "${PURI}"
-#	fi
-
-    fi # CTOOL_PROXY_URI
-
+    _act_downloadFile "$PURI"
     RES=$?
     if [ "$RES" != "0" ]; then
 	exit 1
@@ -358,10 +560,11 @@ _patchelf_rpath_orderDesc() {
 
 
 ###
-### Clean up the environment
+### Clean up the environment and initialize
 ###
 unset PNAME &&
 unset PVERSION &&
 unset PDIR &&
 unset PFILE &&
-unset PURI
+unset PURI &&
+_act_init

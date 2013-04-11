@@ -18,6 +18,7 @@
 ################################################################################
 
 class a2o-essential-linux::server-puppetonly {
+#    include 'a2o-essential-unix::act'
     include 'a2o-essential-unix::compiletool'
     include 'a2o-essential-linux-openssl'
     include 'a2o_essential_linux_puppet'
