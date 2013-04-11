@@ -5,7 +5,7 @@
 if [ "$A2O_REPO_URI" != "" ]; then
     export URI_PREFIX="$A2O_REPO_URI/bootstrap/puppet-sys"
 else
-    export URI_PREFIX="https://raw.github.com/a2o/puppet-modules-a2o-essential/master/bootstrap/puppet-sys"
+    export URI_PREFIX="http://source.a2o.si/git/puppet-modules-a2o-essential/raw/master/bootstrap/puppet-sys"
 fi &&
 export FILES="01-Environment.sh 02-OpenSSL.sh 03-Puppet-sys-01-Ruby.sh 03-Puppet-sys-02-Facter.sh 03-Puppet-sys-03-Puppet.sh 03-Puppet-sys-04-Files.sh 03-Puppet-sys-05-Config.sh" &&
 export LOCAL_BOOTSTRAP_DIR="/var/src/bootstrap" &&

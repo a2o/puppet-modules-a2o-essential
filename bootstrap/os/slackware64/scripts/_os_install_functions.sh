@@ -6,12 +6,12 @@
 ###
 a2oBootstrap_environmentCheck_inChroot() {
     if [ "$A2O_REPO_URI" == "" ]; then
-	echo "Hint:  export A2O_REPO_URI='https://raw.github.com/a2o/puppet-modules-a2o-essential/master'"
+	echo "Hint:  export A2O_REPO_URI='http://source.a2o.si/git/puppet-modules-a2o-essential/raw/master'"
 	echo "ERROR: A2O_REPO_URI environmental variable must point to a2o repository"
 	return 1
     fi
     if [ "$A2O_BOOTSTRAP_URI" == "" ]; then
-	echo "Hint:  export A2O_BOOTSTRAP_URI='https://raw.github.com/a2o/puppet-modules-a2o-essential/master/bootstrap/os/slackware64'"
+	echo "Hint:  export A2O_BOOTSTRAP_URI='http://source.a2o.si/git/puppet-modules-a2o-essential/raw/master/bootstrap/os/slackware64'"
 	echo "ERROR: A2O_BOOTSTRAP_URI environmental variable must point to download location of this script (for package list retrieval)"
 	return 1
     fi

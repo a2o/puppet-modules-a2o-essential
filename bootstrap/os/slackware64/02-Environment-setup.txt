@@ -17,6 +17,11 @@ export DEST_ROOT="/mnt/newroot"
 export SRC_REPO="/mnt/slack"
 export ROOT_PASSWORD_HASH=''
 
+# These are optional, but they omit manual work later on
+#
+export PUPPET_ENVIRONMENT_SYS='development'
+export PUPPETMASTER_HOST_SYS='puppetmaster.example.net'
+
 
 
 #
